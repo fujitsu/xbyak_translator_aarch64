@@ -354,7 +354,7 @@ public:
 	static const Type tAVX512_BF16 = uint64(1) << 57;
 	static const Type tAVX512_VP2INTERSECT = uint64(1) << 58;
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 	static const Type tSIMD = uint64(1) << 59;
 	static const Type tSVE = uint64(1) << 60;
 #endif

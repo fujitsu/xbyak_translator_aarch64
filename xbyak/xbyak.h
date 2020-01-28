@@ -22,7 +22,7 @@
 #include <iostream>
 #endif
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 #include <deque>
 #include <initializer_list>
 #include <unordered_map>
@@ -44,7 +44,7 @@
 extern "C" {
 #include "xed/xed-interface.h"
 }
-#else //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
 #define UNIMPLEMENTED
 #define SOMETHING_WRONG
 #define NO_MATCHING_INSTRUCTION
@@ -52,7 +52,7 @@ extern "C" {
 #define UNIMPLEMENTED2
 #define SOMETHING_WRONG2
 #define NO_MATCHING_INSTRUCTION2
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
 
 // #define XBYAK_DISABLE_AVX512
 
@@ -145,7 +145,7 @@ extern "C" {
 
 namespace Xbyak {
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 #include "xbyak_aarch64.h"
 #include "xbyak_aarch64_util.h"
 #endif
@@ -912,7 +912,7 @@ class CodeArray {
 	};
 	CodeArray(const CodeArray& rhs);
 	void operator=(const CodeArray&);
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 	bool isAllocType() const { return type_ == ALLOC_BUF || type_ == AUTO_GROW; }
 #endif
 	struct AddrInfo {
@@ -931,7 +931,7 @@ class CodeArray {
 	};
 	typedef std::list<AddrInfo> AddrInfoList;
 	AddrInfoList addrInfoList_;
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 	const Type type_;
 #endif
 #ifdef XBYAK_USE_MMAP_ALLOCATOR
@@ -942,7 +942,7 @@ class CodeArray {
 	Allocator *alloc_;
 protected:
 	size_t maxSize_;
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 	uint8 top_[32];
 	size_t size_;
 	size_t decode_size_;
@@ -952,7 +952,7 @@ protected:
 #endif
 	bool isCalledCalcJmpAddress_;
 
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 	bool useProtect() const { return alloc_->useProtect(); }
 	/*
 		allocate new memory and copy old data to the new area
@@ -979,7 +979,7 @@ protected:
 		}
 		isCalledCalcJmpAddress_ = true;
 	}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 public:
 	enum ProtectMode {
 		PROTECT_RW = 0, // read/write
@@ -987,7 +987,7 @@ public:
 		PROTECT_RE = 2 // read/exec
 	};
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 	explicit CodeArray(size_t maxSize, void *userPtr = 0, Allocator *allocator = 0) : size_(0) {}
 	virtual ~CodeArray() {}
 #else
@@ -1027,11 +1027,11 @@ public:
 		addrInfoList_.clear();
 		isCalledCalcJmpAddress_ = false;
 	}
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
 
 	void db(int code)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		if (size_ >= maxSize_) {
 			if (type_ == AUTO_GROW) {
 				growMemory();
@@ -1039,7 +1039,7 @@ public:
 				throw Error(ERR_CODE_IS_TOO_BIG);
 			}
 		}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 		top_[size_++] = static_cast<uint8>(code);
 	}
 	void db(const uint8 *code, size_t codeSize)
@@ -1056,7 +1056,7 @@ public:
 	void dq(uint64 code) { db(code, 8); }
 
 
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 	const uint8 *getCode() const { return top_; }
 	template<class F>
 	const F getCode() const { return reinterpret_cast<F>(top_); }
@@ -1163,7 +1163,7 @@ public:
 	{
 		return reinterpret_cast<uint8*>((reinterpret_cast<size_t>(addr) + alignedSize - 1) & ~(alignedSize - static_cast<size_t>(1)));
 	}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 };
 
 class Address : public Operand {
@@ -1260,9 +1260,9 @@ struct JmpLabel {
 
 class LabelManager;
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 class Label : public Xbyak_aarch64::LabelAArch64 { };
-#else //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
 class Label {
 	mutable LabelManager *mgr;
 	mutable int id;
@@ -1289,9 +1289,9 @@ public:
 		return buf;
 	}
 };
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
  class LabelManager {
 public:
 	LabelManager()
@@ -1301,7 +1301,7 @@ public:
 	{
 	}
  };
-#else //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
 class LabelManager {
 	// for string label
 	struct SlabelVal {
@@ -1546,9 +1546,9 @@ inline const uint8* Label::getAddress() const
 	if (!mgr->getOffset(&offset, *this)) return 0;
 	return mgr->getCode() + offset;
 }
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 class CodeGenerator : public CodeArray, public Xbyak_aarch64::CodeGeneratorAArch64 {
 #else
 class CodeGenerator : public CodeArray {
@@ -1812,7 +1812,7 @@ private:
 			dd(disp);
 		}
 	}
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 	LabelManager labelMgr_;
 #endif
 	bool isInDisp16(uint32 x) const { return 0xFFFF8000 <= x || x <= 0x7FFF; }
@@ -1852,7 +1852,7 @@ private:
 	{
 		UNIMPLEMENTED2;
 
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		const int shortJmpSize = 2;
 		const int longHeaderSize = longPref ? 2 : 1;
 		const int longJmpSize = longHeaderSize + 4;
@@ -1866,7 +1866,7 @@ private:
 #endif
 	}
 
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 	template<class T>
 	void opJmp(T& label, LabelType type, uint8 shortCode, uint8 longCode, uint8 longPref)
 	{
@@ -1888,13 +1888,13 @@ private:
 			labelMgr_.addUndefinedLabel(label, jmp);
 		}
 	}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 
 	void opJmpAbs(const void *addr, LabelType type, uint8 shortCode, uint8 longCode, uint8 longPref = 0)
 	{
 		UNIMPLEMENTED;
 
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		if (isAutoGrow()) {
 			if (!isNEAR(type)) throw Error(ERR_ONLY_T_NEAR_IS_SUPPORTED_IN_AUTO_GROW);
 			if (size_ + 16 >= maxSize_) growMemory();
@@ -2078,7 +2078,7 @@ private:
 	*/
 	int mov_imm(const Reg& reg, size_t imm)
 	{
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 	  mov_imm__(Xbyak_aarch64::XReg(reg.getIdx()), imm, x25);
 	  return 4;
 #else
@@ -2105,7 +2105,7 @@ private:
 	{
 		UNIMPLEMENTED2;
 
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		const int jmpSize = relative ? 4 : (int)sizeof(size_t);
 		if (isAutoGrow() && size_ + 16 >= maxSize_) growMemory();
 		size_t offset = 0;
@@ -2159,7 +2159,7 @@ private:
 	{
 		UNIMPLEMENTED;
 
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		db(code1); db(code2 | reg.getIdx());
 #endif
 	}
@@ -2355,7 +2355,7 @@ private:
 		throw Error(ERR_BAD_COMBINATION);
 	}
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 	void decodeAndTransToAArch64()
 	{
 		decode_size_ = 0;
@@ -2369,7 +2369,7 @@ private:
 
 public:
 	unsigned int getVersion() const { return VERSION; }
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 	using CodeArray::db;
 #endif
 	const Mmx mm0, mm1, mm2, mm3, mm4, mm5, mm6, mm7;
@@ -2419,7 +2419,7 @@ public:
 	const Segment es, cs, ss, ds, fs, gs;
 #endif
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 	void L(const std::string& label) {}
 	void L(Label& label) {}
 	//	Label L() { label label; L(label); return label; }
@@ -2446,18 +2446,18 @@ public:
 	*/
 	void putL(std::string label) { putL_inner(label); }
 	void putL(const Label& label) { putL_inner(label); }
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
 
 	// set default type of `jmp` of undefined label to T_NEAR
 	void setDefaultJmpNEAR(bool isNear) { isDefaultJmpNEAR_ = isNear; }
 	void jmp(const Operand& op) { opR_ModM(op, BIT, 4, 0xFF, NONE, NONE, true); }
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 	void jmp(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 #else
 	void jmp(std::string label, LabelType type = T_AUTO) { opJmp(label, type, 0xEB, 0xE9, 0); }
 #endif
 	void jmp(const char *label, LabelType type = T_AUTO) { jmp(std::string(label), type); }
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 	void jmp(const Label& label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 #else
 	void jmp(const Label& label, LabelType type = T_AUTO) { opJmp(label, type, 0xEB, 0xE9, 0); }
@@ -2466,13 +2466,13 @@ public:
 
 	void call(const Operand& op) { opR_ModM(op, 16 | i32e, 2, 0xFF, NONE, NONE, true); }
 	// call(string label), not const std::string&
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 	void call(std::string label) { UNIMPLEMENTED; }
 #else
 	void call(std::string label) { opJmp(label, T_NEAR, 0, 0xE8, 0); }
 #endif
 	void call(const char *label) { call(std::string(label)); }
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 	void call(const Label& label) { UNIMPLEMENTED; }
 #else
 	void call(const Label& label) { opJmp(label, T_NEAR, 0, 0xE8, 0); }
@@ -2490,7 +2490,7 @@ public:
 	}
 	void test(const Operand& op, uint32 imm)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		verifyMemHasSize(op);
         int immSize = (std::min)(op.getBit() / 8, 4U);
 		if (op.isREG() && op.getIdx() == 0) { // al, ax, eax
@@ -2500,7 +2500,7 @@ public:
 			opR_ModM(op, 0, 0, 0xF6, NONE, NONE, false, immSize);
 		}
 		db(imm, immSize);
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
 	}
 	void imul(const Reg& reg, const Operand& op)
 	{
@@ -2508,20 +2508,20 @@ public:
 	}
 	void imul(const Reg& reg, const Operand& op, int imm)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		int s = inner::IsInDisp8(imm) ? 1 : 0;
         int immSize = s ? 1 : reg.isREG(16) ? 2 : 4;
 		opModRM(reg, op, op.isREG() && (reg.getKind() == op.getKind()), op.isMEM(), 0x69 | (s << 1), NONE, NONE, immSize);
 		db(imm, immSize);
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 	}
 	void push(const Operand& op) {
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 	  opPushPop(op, 0xFF, 6, 0x50);
 #endif
 	}
 	void pop(const Operand& op) {
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 	  opPushPop(op, 0x8F, 0, 0x58);
 #endif
 	}
@@ -2529,7 +2529,7 @@ public:
 	void pop(const Operand& op) { opPushPop(op, 0x8F, 0, 0x58); }
 	void push(const AddressFrame& af, uint32 imm)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		if (af.bit_ == 8 && inner::IsInDisp8(imm)) {
 			db(0x6A); db(imm);
 		} else if (af.bit_ == 16 && isInDisp16(imm)) {
@@ -2537,22 +2537,22 @@ public:
 		} else {
 			db(0x68); dd(imm);
 		}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 	}
 	/* use "push(word, 4)" if you want "push word 4" */
 	void push(uint32 imm)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		if (inner::IsInDisp8(imm)) {
 			push(byte, imm);
 		} else {
 			push(dword, imm);
 		}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 	}
 	void mov(const Operand& reg1, const Operand& reg2)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		const Reg *reg = 0;
 		const Address *addr = 0;
 		uint8 code = 0;
@@ -2586,11 +2586,11 @@ public:
 		{
 			opRM_RM(reg1, reg2, 0x88);
 		}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 	}
 	void mov(const Operand& op, size_t imm)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		if (op.isREG()) {
 			const int size = mov_imm(op.getReg(), imm);
 			db(imm, size);
@@ -2609,7 +2609,7 @@ public:
 		} else {
 			throw Error(ERR_BAD_COMBINATION);
 		}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 	}
 	void mov(const NativeReg& reg, const char *label) // can't use std::string
 	{
@@ -2618,20 +2618,20 @@ public:
 			return;
 		}
 		mov_imm(reg, dummyAddr);
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		putL(label);
 #endif
 	}
 	void mov(const NativeReg& reg, const Label& label)
 	{
 		mov_imm(reg, dummyAddr);
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		putL(label);
 #endif
 	}
 	void xchg(const Operand& op1, const Operand& op2)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		const Operand *p1 = &op1, *p2 = &op2;
 		if (p1->isMEM() || (p2->isREG(16 | i32e) && p2->getIdx() == 0)) {
 			p1 = &op2; p2 = &op1;
@@ -2646,13 +2646,13 @@ public:
 			return;
 		}
 		opModRM(*p1, *p2, (p1->isREG() && p2->isREG() && (p1->getBit() == p2->getBit())), p2->isMEM(), 0x86 | (p1->isBit(8) ? 0 : 1));
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 	}
 
 #ifndef XBYAK_DISABLE_SEGMENT
 	void push(const Segment& seg)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		switch (seg.getIdx()) {
 		case Segment::es: db(0x06); break;
 		case Segment::cs: db(0x0E); break;
@@ -2663,11 +2663,11 @@ public:
 		default:
 			assert(0);
 		}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 	}
 	void pop(const Segment& seg)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		switch (seg.getIdx()) {
 		case Segment::es: db(0x07); break;
 		case Segment::cs: throw Error(ERR_BAD_COMBINATION);
@@ -2678,11 +2678,11 @@ public:
 		default:
 			assert(0);
 		}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 	}
 	void putSeg(const Segment& seg)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		switch (seg.getIdx()) {
 		case Segment::es: db(0x2E); break;
 		case Segment::cs: db(0x36); break;
@@ -2693,7 +2693,7 @@ public:
 		default:
 			assert(0);
 		}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 	}
 	void mov(const Operand& op, const Segment& seg)
 	{
@@ -2707,7 +2707,7 @@ public:
 
 	enum { NONE = 256 };
 	// constructor
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
  CodeGenerator(size_t maxSize = DEFAULT_MAX_CODE_SIZE, void *userPtr = 0, Allocator *allocator = 0, Xbyak_aarch64::AllocatorAArch64 *alloc_aarch64 = 0)
    : CodeArray(maxSize, userPtr, allocator), Xbyak_aarch64::CodeGeneratorAArch64(maxSize, userPtr, alloc_aarch64)
 #else
@@ -2765,19 +2765,19 @@ public:
 #endif
 		, isDefaultJmpNEAR_(false)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		labelMgr_.set(this);
 #endif
 	}
 	void reset()
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		resetSize();
 		labelMgr_.reset();
 		labelMgr_.set(this);
 #endif
 	}
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 	bool hasUndefinedLabel() const { return labelMgr_.hasUndefSlabel() || labelMgr_.hasUndefClabel(); }
 	/*
 		MUST call ready() to complete generating code if you use AutoGrow mode.
@@ -2793,7 +2793,7 @@ public:
 	}
 	// set read/exec
 	void readyRE() { return ready(PROTECT_RE); }
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 
 #ifdef XBYAK_TEST
 	void dump(bool doClear = true)
@@ -2812,7 +2812,7 @@ public:
 	*/
 	void nop(size_t size = 1, bool useMultiByteNop = true)
 	{
-#ifndef DNNL_AARCH64_JIT_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		if (!useMultiByteNop) {
 			for (size_t i = 0; i < size; i++) {
 				db(0x90);
@@ -2843,7 +2843,7 @@ public:
 			db(seq, len);
 			size -= len;
 		}
-#endif //#ifndef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 	}
 
 #ifndef XBYAK_DONT_READ_LIST
@@ -2906,13 +2906,13 @@ static const Segment es(Segment::es), cs(Segment::cs), ss(Segment::ss), ds(Segme
 
 } // end of namespace
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 #undef UNIMPLEMENTED
 #undef SOMETHING_WRONG
 #undef NO_MATCHING_INSTRUCTION
 #undef UNIMPLEMENTED2
 #undef SOMETHING_WRONG2
 #undef NO_MATCHING_INSTRUCTION2
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
 
 #endif // XBYAK_XBYAK_H_

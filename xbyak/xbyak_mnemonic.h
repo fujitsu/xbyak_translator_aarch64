@@ -331,7 +331,7 @@ void inc(const Operand& op) { opIncDec(op, 0x40, 0); UNIMPLEMENTED; }
 void insertps(const Xmm& xmm, const Operand& op, uint8 imm) { opGen(xmm, op, 0x21, 0x66, isXMM_XMMorMEM, imm, 0x3A); UNIMPLEMENTED; }
 void int3() { db(0xCC); UNIMPLEMENTED; }
 void int_(uint8 x) { db(0xCD); db(x); UNIMPLEMENTED; }
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 void ja(const Label& label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void ja(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void ja(const void *addr) { UNIMPLEMENTED; }
@@ -454,7 +454,7 @@ void jz(const Label& label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jz(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jz(const void *addr) { UNIMPLEMENTED; }
 void jz(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
-#else //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
 void ja(const Label& label, LabelType type = T_AUTO) { opJmp(label, type, 0x77, 0x87, 0x0F); UNIMPLEMENTED; }//-V524
 void ja(const char *label, LabelType type = T_AUTO) { ja(std::string(label), type); UNIMPLEMENTED; }//-V524
 void ja(const void *addr) { opJmpAbs(addr, T_NEAR, 0x77, 0x87, 0x0F); UNIMPLEMENTED; }//-V524
@@ -575,7 +575,7 @@ void jz(const Label& label, LabelType type = T_AUTO) { opJmp(label, type, 0x74, 
 void jz(const char *label, LabelType type = T_AUTO) { jz(std::string(label), type); UNIMPLEMENTED; }//-V524
 void jz(const void *addr) { opJmpAbs(addr, T_NEAR, 0x74, 0x84, 0x0F); UNIMPLEMENTED; }//-V524
 void jz(std::string label, LabelType type = T_AUTO) { opJmp(label, type, 0x74, 0x84, 0x0F); UNIMPLEMENTED; }//-V524
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
 void lahf() { db(0x9F); UNIMPLEMENTED; }
 void lddqu(const Xmm& xmm, const Address& addr) { db(0xF2); opModM(addr, xmm, 0x0F, 0xF0); UNIMPLEMENTED; }
 void ldmxcsr(const Address& addr) { opModM(addr, Reg32(2), 0x0F, 0xAE); UNIMPLEMENTED; }
@@ -588,7 +588,7 @@ void lock() { db(0xF0); UNIMPLEMENTED; }
 void lodsb() { db(0xAC); UNIMPLEMENTED; }
 void lodsd() { db(0xAD); UNIMPLEMENTED; }
 void lodsw() { db(0x66); db(0xAD); UNIMPLEMENTED; }
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 void loop(const Label& label) { UNIMPLEMENTED; }
 void loop(const char *label) { UNIMPLEMENTED; }
 void loop(std::string label) { UNIMPLEMENTED; }
@@ -598,7 +598,7 @@ void loope(std::string label) { UNIMPLEMENTED; }
 void loopne(const Label& label) { UNIMPLEMENTED; }
 void loopne(const char *label) { UNIMPLEMENTED; }
 void loopne(std::string label) { UNIMPLEMENTED; }
-#else //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
 void loop(const Label& label) { opJmp(label, T_SHORT, 0xE2, 0, 0); }
 void loop(const char *label) { loop(std::string(label)); }
 void loop(std::string label) { opJmp(label, T_SHORT, 0xE2, 0, 0); }
@@ -853,7 +853,7 @@ void repe() { db(0xF3); UNIMPLEMENTED; }
 void repne() { db(0xF2); UNIMPLEMENTED; }
 void repnz() { db(0xF2); UNIMPLEMENTED; }
 void repz() { db(0xF3); UNIMPLEMENTED; }
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 void ret(int imm = 0) { if (imm) { db(0xC2); CodeArray::dw(imm); UNIMPLEMENTED; } else { ret__(); } }
 #else
 void ret(int imm = 0) { if (imm) { db(0xC2); dw(imm); } else { db(0xC3); } }
@@ -1740,17 +1740,17 @@ void vunpcklpd(const Xmm& x, const Operand& op) { vunpcklpd(x, x, op); UNIMPLEME
 void vunpcklps(const Xmm& x, const Operand& op) { vunpcklps(x, x, op); UNIMPLEMENTED; }
 #endif
 #ifdef XBYAK64
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 void jecxz(std::string label) { UNIMPLEMENTED; }
 void jecxz(const Label& label) { UNIMPLEMENTED; }
 void jrcxz(std::string label) { UNIMPLEMENTED; }
 void jrcxz(const Label& label) { UNIMPLEMENTED; }
-#else //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
 void jecxz(std::string label) { db(0x67); opJmp(label, T_SHORT, 0xe3, 0, 0); }
 void jecxz(const Label& label) { db(0x67); opJmp(label, T_SHORT, 0xe3, 0, 0); }
 void jrcxz(std::string label) { opJmp(label, T_SHORT, 0xe3, 0, 0); }
 void jrcxz(const Label& label) { opJmp(label, T_SHORT, 0xe3, 0, 0); }
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
 void cdqe() { db(0x48); db(0x98); UNIMPLEMENTED; }
 void cqo() { db(0x48); db(0x99); UNIMPLEMENTED; }
 void cmpsq() { db(0x48); db(0xA7); UNIMPLEMENTED; }
