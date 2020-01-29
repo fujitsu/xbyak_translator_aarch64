@@ -1,3 +1,48 @@
+/*******************************************************************************
+* Copyright 2016-2019 Intel Corporation
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*******************************************************************************/
+
+/*******************************************************************************
+* Copyright (c) 2007 MITSUNARI Shigeo
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* Redistributions of source code must retain the above copyright notice, this
+* list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice,
+* this list of conditions and the following disclaimer in the documentation
+* and/or other materials provided with the distribution.
+* Neither the name of the copyright owner nor the names of its contributors may
+* be used to endorse or promote products derived from this software without
+* specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+* CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+* THE POSSIBILITY OF SUCH DAMAGE.
+*******************************************************************************/
+
 #pragma once
 #ifndef XBYAK_XBYAK_H_
 #define XBYAK_XBYAK_H_
@@ -9,8 +54,13 @@
 	@note modified new BSD license
 	http://opensource.org/licenses/BSD-3-Clause
 */
-#if (not +0) && !defined(XBYAK_NO_OP_NAMES) // trick to detect whether 'not' is operator or not
+#if !defined(XBYAK_USE_OP_NAMES) && !defined(XBYAK_NO_OP_NAMES)
 	#define XBYAK_NO_OP_NAMES
+#endif
+#ifndef XBYAK_NO_OP_NAMES
+	#if not +0 // trick to detect whether 'not' is operator or not
+		#error "use -fno-operator-names option if you want to use and(), or(), xor(), not() as function names, Or define XBYAK_NO_OP_NAMES and use and_(), or_(), xor_(), not_()."
+	#endif
 #endif
 
 #include <stdio.h> // for debug print
@@ -18,7 +68,7 @@
 #include <list>
 #include <string>
 #include <algorithm>
-#ifndef NDEBUG
+#if !defined(NDEBUG) || defined(XBYAK_TRANSLATE_AARCH64)
 #include <iostream>
 #endif
 
@@ -147,12 +197,12 @@ namespace Xbyak {
 
 #ifdef XBYAK_TRANSLATE_AARCH64
 #include "xbyak_aarch64.h"
-#include "xbyak_aarch64_util.h"
+//#include "xbyak_aarch64_util.h"
 #endif
 
 enum {
 	DEFAULT_MAX_CODE_SIZE = 4096,
-	VERSION = 0x5890 /* 0xABCD = A.BC(D) */
+	VERSION = 0x5850 /* 0xABCD = A.BC(D) */
 };
 
 #ifndef MIE_INTEGER_TYPE_DEFINED
@@ -168,6 +218,12 @@ typedef unsigned int uint32;
 typedef unsigned short uint16;
 typedef unsigned char uint8;
 #endif
+
+//#ifdef XBYAK_TRANSLATE_AARCH64
+//typedef uint32_t xbyak_code_ptr_t;
+//#else
+//typedef uint8_t xbyak_code_ptr_t;
+//#endif
 
 #ifndef MIE_ALIGN
 	#ifdef _MSC_VER
@@ -587,7 +643,7 @@ inline void Operand::setBit(int bit)
 {
 	if (bit != 8 && bit != 16 && bit != 32 && bit != 64 && bit != 128 && bit != 256 && bit != 512) goto ERR;
 	if (isBit(bit)) return;
-	if (is(MEM | OPMASK)) {
+	if (is(MEM)) {
 		bit_ = bit;
 		return;
 	}
@@ -1667,7 +1723,7 @@ private:
 	{
 	  UNIMPLEMENTED2;
 
-		int w = (type & T_W1) ? 1 : 0;
+	  int w = (type & T_W1) ? 1 : 0;
 		bool is256 = (type & T_L1) ? true : (type & T_L0) ? false : reg.isYMM();
 		bool r = reg.isExtIdx();
 		bool b = base.isExtIdx();
@@ -1759,7 +1815,7 @@ private:
 	}
 	void setSIB(const RegExp& e, int reg, int disp8N = 0)
 	{
-		size_t disp64 = e.getDisp();
+	  size_t disp64 = e.getDisp();
 #ifdef XBYAK64
 		size_t high = disp64 >> 32;
 		if (high != 0 && high != 0xFFFFFFFF) throw Error(ERR_OFFSET_IS_TOO_BIG);
@@ -1876,7 +1932,7 @@ private:
 			makeJmp(inner::VerifyInInt32(offset - size_), type, shortCode, longCode, longPref);
 		} else {
 			int jmpSize = 0;
-			if (isNEAR(type)) {
+			if (type == T_NEAR) {
 				jmpSize = 4;
 				if (longPref) db(longPref);
 				db(longCode); dd(0);
@@ -1896,7 +1952,7 @@ private:
 
 #ifndef XBYAK_TRANSLATE_AARCH64
 		if (isAutoGrow()) {
-			if (!isNEAR(type)) throw Error(ERR_ONLY_T_NEAR_IS_SUPPORTED_IN_AUTO_GROW);
+			if (type != T_NEAR) throw Error(ERR_ONLY_T_NEAR_IS_SUPPORTED_IN_AUTO_GROW);
 			if (size_ + 16 >= maxSize_) growMemory();
 			if (longPref) db(longPref);
 			db(longCode);
@@ -2424,10 +2480,6 @@ public:
 	void L(Label& label) {}
 	//	Label L() { label label; L(label); return label; }
 #else
-
-private:
-	bool isDefaultJmpNEAR_;
-public:
 	void L(const std::string& label) { labelMgr_.defineSlabel(label); }
 	void L(Label& label) { labelMgr_.defineClabel(label); }
 	Label L() { Label label; L(label); return label; }
@@ -2448,8 +2500,6 @@ public:
 	void putL(const Label& label) { putL_inner(label); }
 #endif //#ifdef XBYAK_TRANSLATE_AARCH64
 
-	// set default type of `jmp` of undefined label to T_NEAR
-	void setDefaultJmpNEAR(bool isNear) { isDefaultJmpNEAR_ = isNear; }
 	void jmp(const Operand& op) { opR_ModM(op, BIT, 4, 0xFF, NONE, NONE, true); }
 #ifdef XBYAK_TRANSLATE_AARCH64
 	void jmp(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
@@ -2525,8 +2575,6 @@ public:
 	  opPushPop(op, 0x8F, 0, 0x58);
 #endif
 	}
-	void push(const Operand& op) { opPushPop(op, 0xFF, 6, 0x50); }
-	void pop(const Operand& op) { opPushPop(op, 0x8F, 0, 0x58); }
 	void push(const AddressFrame& af, uint32 imm)
 	{
 #ifndef XBYAK_TRANSLATE_AARCH64
@@ -2763,7 +2811,6 @@ public:
 #ifndef XBYAK_DISABLE_SEGMENT
 		, es(Segment::es), cs(Segment::cs), ss(Segment::ss), ds(Segment::ds), fs(Segment::fs), gs(Segment::gs)
 #endif
-		, isDefaultJmpNEAR_(false)
 	{
 #ifndef XBYAK_TRANSLATE_AARCH64
 		labelMgr_.set(this);
