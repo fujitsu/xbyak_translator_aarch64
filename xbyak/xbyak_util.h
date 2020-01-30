@@ -399,8 +399,9 @@ public:
 	static const Type tAVX512_VP2INTERSECT = uint64(1) << 58;
 
 #ifdef XBYAK_TRANSLATE_AARCH64
-	static const Type tSIMD = uint64(1) << 59;
-	static const Type tSVE = uint64(1) << 60;
+	static const Type tA64FX = uint64(1) << 59;
+	static const Type tSIMD = uint64(1) << 60;
+	static const Type tSVE = uint64(1) << 61;
 #endif
 
 	Cpu()
@@ -411,6 +412,11 @@ public:
 		, coresSharignDataCache_()
 		, dataCacheLevels_(0)
 	{
+#ifdef XBYAK_TRANSLATE_AARCH64
+	  type_ |= tA64FX;
+	  type_ |= tSIMD;
+	  type_ |= tSVE;
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
 		unsigned int data[4] = {};
 		const unsigned int& EAX = data[0];
 		const unsigned int& EBX = data[1];
@@ -507,7 +513,7 @@ public:
 			if (ECX & (1U << 0)) type_ |= tPREFETCHWT1;
 		}
 
-#ifdef XBYAK_TRANSLATE_AARCH64
+#ifdef 0
 		/* model name	: Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz */
 		type_ |= tSIMD;
 		type_ |= tSVE;
@@ -517,6 +523,7 @@ public:
 		setFamily();
 		setNumCores();
 		setCacheHierarchy();
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
 	}
 	void putFamily() const
 	{
