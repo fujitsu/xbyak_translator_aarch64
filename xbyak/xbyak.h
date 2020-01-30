@@ -2135,7 +2135,7 @@ private:
 	int mov_imm(const Reg& reg, size_t imm)
 	{
 #ifdef XBYAK_TRANSLATE_AARCH64
-	  mov_imm__(Xbyak_aarch64::XReg(reg.getIdx()), imm, x25);
+	  //	  mov_imm__(Xbyak_aarch64::XReg(reg.getIdx()), imm, x25);
 	  return 4;
 #else
 		int bit = reg.getBit();

@@ -60,11 +60,10 @@ enum xt_operand_type_t {
   A64_OP_MBCST,
 };
 
-
 void db_clear() { CodeArray::size_ = 0; }
 
 xt_reg_idx_t xt_get_register_index(const xed_decoded_inst_t *p,
-                                    unsigned int i) {
+                                   unsigned int i) {
   const xed_inst_t *xi = xed_decoded_inst_inst(p);
   const xed_operand_t *op = xed_inst_operand(xi, i);
   xed_operand_enum_t op_name = xed_operand_name(op);
@@ -112,9 +111,9 @@ unsigned int xt_get_register_index(const xed_reg_enum_t r) {
 }
 
 void xt_decode_memory_operand(const xed_decoded_inst_t *p, unsigned int i,
-                               unsigned int *base, xed_int64_t *disp,
-                               unsigned int *index, xed_uint_t *scale,
-                               unsigned int *seg) {
+                              unsigned int *base, xed_int64_t *disp,
+                              unsigned int *index, xed_uint_t *scale,
+                              unsigned int *seg) {
   unsigned int width = xed_decoded_inst_get_memop_address_width(p, i);
   unsigned int memops = xed_decoded_inst_number_of_memory_operands(p);
 
@@ -161,11 +160,9 @@ void xt_decode_memory_operand(const xed_decoded_inst_t *p, unsigned int i,
 }
 
 void xt_decode_memory_operand_designated(const xed_decoded_inst_t *p,
-                                          unsigned int i, unsigned int *base,
-                                          xed_int64_t *disp,
-                                          unsigned int *index,
-                                          xed_uint_t *scale,
-                                          unsigned int *seg) {
+                                         unsigned int i, unsigned int *base,
+                                         xed_int64_t *disp, unsigned int *index,
+                                         xed_uint_t *scale, unsigned int *seg) {
   unsigned int width = xed_decoded_inst_get_memop_address_width(p, i);
   unsigned int memops = xed_decoded_inst_number_of_memory_operands(p);
 
@@ -213,9 +210,10 @@ void xt_decode_memory_operand_designated(const xed_decoded_inst_t *p,
 }
 
 Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
-                                     unsigned int index, xed_uint_t scale,
-                                     const Xbyak_aarch64::XReg tmp0,
-                                     const Xbyak_aarch64::XReg tmp1) {
+                                    unsigned int index, xed_uint_t scale,
+                                    const Xbyak_aarch64::XReg tmp0,
+                                    const Xbyak_aarch64::XReg tmp1,
+                                    const Xbyak_aarch64::XReg tmp2) {
 
   unsigned int shift = 0;
   if (scale == 0) {
@@ -240,14 +238,14 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
 
   } else if (base != XT_REG_INVALID && disp != 0 /* Base + disp */
              && index == XT_REG_INVALID) {
-    add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
+    //    add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
     return retReg;
   } else if (base != XT_REG_INVALID && disp != 0 &&
              index != XT_REG_INVALID) { /* Base + disp + index (*scale) */
-    add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
+    //    add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
 
     if (shift == 0) {
-        CodeGeneratorAArch64::add(retReg, retReg, Xbyak_aarch64::XReg(index));
+      CodeGeneratorAArch64::add(retReg, retReg, Xbyak_aarch64::XReg(index));
       return retReg; /* Base + disp + index */
     } else {
       lsl(tmp1, Xbyak_aarch64::XReg(index), shift);
@@ -257,7 +255,7 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
   } else if (base == XT_REG_INVALID /* disp + index (*scale) */
              && index != XT_REG_INVALID && disp != 0) {
     if (shift == 0) {
-      add_imm(retReg, Xbyak_aarch64::XReg(index), disp, tmp1);
+      //      add_imm(retReg, Xbyak_aarch64::XReg(index), disp, tmp1);
       return retReg; /* disp + index */
     } else {
       lsl(tmp1, Xbyak_aarch64::XReg(index), shift);
@@ -273,19 +271,13 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
   return retReg;
 }
 
-unsigned int xt_push_vreg() {
-  return 31;
-}
+unsigned int xt_push_vreg() { return 31; }
 
-unsigned int xt_push_zreg() {
-  return 31;
-}
+unsigned int xt_push_zreg() { return 31; }
 
-void xt_pop_vreg() {
-}
-    
-void xt_pop_zreg() {
-}
+void xt_pop_vreg() {}
+
+void xt_pop_zreg() {}
 
 #include "xbyak_translate_inc.h"
 
@@ -821,7 +813,6 @@ bool decodeOpcode() {
   case XED_ICLASS_MOV:
     //    translateMOV(&xedd);
     break;
-
 
   case XED_ICLASS_MOVAPD:
   case XED_ICLASS_MOVAPS:
@@ -1384,8 +1375,6 @@ bool decodeOpcode() {
   case XED_ICLASS_VFMADD231PS:
   case XED_ICLASS_VFMADD231SD:
   case XED_ICLASS_VFMADD231SS:
-
-
 
   case XED_ICLASS_VFMADDPD:
   case XED_ICLASS_VFMADDPS:
