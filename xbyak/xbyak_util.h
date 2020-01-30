@@ -506,6 +506,12 @@ public:
 			if (EBX & (1U << 29)) type_ |= tSHA;
 			if (ECX & (1U << 0)) type_ |= tPREFETCHWT1;
 		}
+
+#ifdef XBYAK_TRANSLATE_AARCH64
+		/* model name	: Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz */
+		type_ = 0x2871ffdf8f7ff;
+#endif
+
 		setFamily();
 		setNumCores();
 		setCacheHierarchy();
