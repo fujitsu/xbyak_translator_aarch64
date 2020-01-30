@@ -509,7 +509,9 @@ public:
 
 #ifdef XBYAK_TRANSLATE_AARCH64
 		/* model name	: Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz */
-		type_ = 0x2871ffdf8f7ff;
+		type_ |= tSIMD;
+		type_ |= tSVE;
+		type_ |= 0x2871ffdf8f7ff;
 #endif
 
 		setFamily();
