@@ -7,7 +7,7 @@ CFLAGS=""
 CFLAGS="${CFLAGS} -std=c++11"
 CFLAGS="${CFLAGS} -g"
 CFLAGS="${CFLAGS} -DDEBUG"
-CFLAGS="${CFLAGS} -I../xbyak -I../xbyak_aarch64"
+CFLAGS="${CFLAGS} -I../../xbyak -I../third_party/xbyak_aarch64/xbyak_aarch64"
 #CFLAGS="${CFLAGS} -fstack-usage"
 
 
