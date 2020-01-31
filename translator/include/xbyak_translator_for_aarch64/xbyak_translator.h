@@ -279,7 +279,7 @@ void xt_pop_vreg() {}
 
 void xt_pop_zreg() {}
 
-#include "xbyak_translate_inc.h"
+#include "xbyak_translator_inc.h"
 
 bool decodeOpcode() {
   xed_state_t dstate;
