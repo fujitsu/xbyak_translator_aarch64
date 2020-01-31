@@ -750,7 +750,7 @@ public:
 #ifdef DNNL_AARCH64_JIT_AARCH64
     fwrite(CodeArrayAArch64::top_, CodeArrayAArch64::size_, 4, fp);
 #else
-    fwrite(top_, size_, 1, fp);
+    fwrite(CodeArray::top_, CodeArray::size_, 1, fp);
 #endif
     fclose(fp);
   }

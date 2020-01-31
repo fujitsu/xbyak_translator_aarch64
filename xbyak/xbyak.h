@@ -2418,7 +2418,7 @@ private:
 		decodeOpcode();
 		db_clear();
 	}
-#include "xbyak_translate.h"
+#include "xbyak_translator.h"
 #else
 	void decodeAndTransToAArch64() {}
 #endif

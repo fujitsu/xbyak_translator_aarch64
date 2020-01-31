@@ -1,45 +1,266 @@
 #!/bin/bash
+#*******************************************************************************
+# Copyright 2019-2020 FUJITSU LIMITED
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#*******************************************************************************/
+
+#*******************************************************************************
+# Memo
+#*******************************************************************************
+# HOST_ARCH:Architecture of host computer, where this script is executed, x86_64 or aarch64.
+# JIT_ARCH:Architectur of JIT code, x86_64 or aarch64.
+# EXEC_ARCH:Architecture of execution file, x86_64 or aarch64.
+#*******************************************************************************
+# HOST_ARCH, JIT_ARCH, EXEC_ARCH, this script supports?
+# x86_64   , x86_64  , x86_64   , OK
+# x86_64   , x86_64  , aarch64  , OK (Executable on qemu)
+# x86_64   , aarch64 , x86_64   , OK
+# x86_64   , aarch64 , aarch64  , OK (Executable on qemu)
+# aarch64  , x86_64  , x86_64   , NG
+# aarch64  , x86_64  , aarch64  , NG
+# aarch64  , aarch64 , x86_64   , NG
+# aarch64  , aarch64 , aarch64  , OK (Executable on native environment)
+#*******************************************************************************
+
 CXX=g++
 OBJDUMP=objdump
-
 
 CFLAGS=""
 CFLAGS="${CFLAGS} -std=c++11"
 CFLAGS="${CFLAGS} -g"
 CFLAGS="${CFLAGS} -DDEBUG"
 CFLAGS="${CFLAGS} -I../../xbyak -I../third_party/xbyak_aarch64/xbyak_aarch64"
-#CFLAGS="${CFLAGS} -fstack-usage"
 
 
-CFLAGS_AARCH64=""
-CFLAGS_AARCH64="${CFLAGS_AARCH64} -DDNNL_AARCH64_JIT_AARCH64"
-CFLAGS_AARCH64="${CFLAGS_AARCH64} -I../xed/build_xed/kits/xed/include"
-CFLAGS_AARCH64="${CFLAGS_AARCH64} -L../xed/build_xed/kits/xed/lib"
-#CFLAGS_AARCH64="${CLFAGS_AARCH64} -mstrict-align"
-#CFLAGS="${CFLAGS} ${CFLAGS_AARCH64}"
-
-
-
+#*******************************************************************************
+# Function definition
+#*******************************************************************************
 usage_exit() {
-    echo "Usage: $0 (-a|-x) (-e) TEST_SOURCE_FILE"
-    echo "  -a  Generate JIT code for AArch64"
-    echo "  -x  Generate JIT code for x86_64"
-    echo "  -e  Execute  JIT code"
+    echo "Usage: $0 (-a|-x) (-A|-X) [-e|-E] TEST_SOURCE_FILE"
+    echo "  -a  Select AArch64 as JIT code output"
+    echo "  -x  Select x86_64 as JIT code output"
+    echo "  -A  Select AArch64 as exec file type"
+    echo "  -X  Select x86_64 as exec file type"
+    echo "  -e  Execute exec file only to JIT code output part"
+    echo "  -E  Execute exec file"
+    exit 1
+}
+
+get_host_arch() {
+    HOST_ARCH=`uname -m`
+    HOST_ARCH=${HOST_ARCH:="unknown"}
+}
+
+bad_combination_exit() {
+    echo "Bad architecture combination"
+    usage_exit
     exit 1
 }
 
 
-while getopts a:x:h OPT
+check_option() {
+    case ${HOST_ARCH:-"unknown"} in
+	"x86_64")
+	    case ${JIT_ARCH:-"unknown"} in
+		"x86_64")
+		    case ${EXEC_ARCH:-"unknown"} in
+			"x86_64")
+			    QEMU_ON=0
+			    TOOL_PREFIX=""
+			    DUMP_OPT="i386:x86-64"
+			    DUMP_PREFIX=""
+			    ;;
+			"aarch64")
+			    QEMU_ON=1
+			    TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
+			    DUMP_OPT="i386:x86-64"
+			    DUMP_PREFIX=""
+			    ;;
+			*)
+			    bad_combination_exit
+			    ;;
+		    esac
+		    ;;
+		"aarch64")
+		    case ${EXEC_ARCH:-"unknown"} in
+			"x86_64")
+			    QEMU_ON=0
+			    TOOL_PREFIX=""
+			    DUMP_OPT="AArch64"
+			    DUMP_PREFIX="/usr/bin/aarch64-linux-gnu-"
+			;;
+			"aarch64")
+			    QEMU_ON=1
+			    TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
+			    DUMP_OPT="AArch64"
+			    DUMP_PREFIX="/usr/bin/aarch64-linux-gnu-"
+			    ;;
+			*)
+			    bad_combination_exit
+			    ;;
+		    esac
+		    ;;
+		*)
+		    bad_combination_exit
+		    ;;
+		esac
+	    ;;
+	"aarch64")
+	    case ${JIT_ARCH:-"unknown"} in
+		"x86_64")
+		    case ${EXEC_ARCH:-"unknown"} in
+			"x86_64")
+			    bad_combination_exit
+			    ;;
+			"aarch64")
+			    bad_combination_exit
+			    ;;
+			*)
+			    bad_combination_exit
+			    ;;
+		    esac
+		    ;;
+		"aarch64")
+		    case ${EXEC_ARCH:-"unknown"} in
+			"x86_64")
+			    bad_combination_exit
+			    ;;
+			"aarch64")
+			    QEMU_ON=0
+			    TOOL_PREFIX=""
+			    DUMP_OPT="AArch64"
+			    DUMP_PREFIX=""
+			    ;;
+			*)
+			    bad_combination_exit
+			    ;;
+		    esac
+		    ;;
+		*)
+		    bad_combination_exit
+		    ;;
+		esac
+	    ;;
+	*)
+	    bad_combination_exit
+	    ;;
+    esac
+}		
+
+
+gen_compile_option() {
+    LIBXED_PATH="../third_party/build_xed_${EXEC_ARCH}/kits/xed/lib"
+
+    if [ ${JIT_ARCH} = "aarch64" ] ; then
+	CFLAGS="${CFLAGS} -DDNNL_AARCH64_JIT_AARCH64"
+	CFLAGS="${CFLAGS} -DXBYAK_TRANSLATE_AARCH64"
+	CFLAGS="${CFLAGS} -I../include/xbyak_translator_for_aarch64"
+	CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64/xbyak_aarch64"
+	CFLAGS="${CFLAGS} -I../third_party/build_xed_${EXEC_ARCH}/kits/xed/include"
+	CFLAGS="${CFLAGS} -L${LIBXED_PATH}"
+	LIB_OPT="${LIB_OPT} -lxed"
+    fi
+
+    TP_NAME=`basename $1 .cpp`
+}
+
+compile_test_file() {
+    # Compile, execute, dissassemble
+    ${TOOL_PREFIX:-""}${CXX} ${CFLAGS} -o ${TP_NAME} ${TP_NAME}.cpp ${LIB_OPT}
+    if [ ! $? -eq 0 ] ; then
+	echo "compile error!"
+	exit
+    fi
+}
+
+exec_test() {
+    if [ ${QEMU_LD_PREFIX:-0} != 0 ] ; then
+	export QEMU_LD_PREFIX=/usr/aarch64-linux-gnu
+    fi
+
+    if [ ${QEMU_ON:-0} = 1 ] ; then
+	export LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib:${LD_LIBRARY_PATH}
+    fi
+
+    if [ ${LIBXED_PATH:-0} != 0 ] ; then
+	export LD_LIBRARY_PATH="${LIBXED_PATH}:${LD_LIBRARY_PATH}"
+    fi
+
+    if [ ${QEMU_ON:-0} = 1 ] ; then
+	qemu-aarch64  ./${TP_NAME}
+    else
+	./${TP_NAME} ${EXEC_JIT_ON} ${EXEC_LAST_ON}
+    fi
+}
+
+dump_disassemble() {
+    local BIN_FILE=${TP_NAME}.${JIT_ARCH}.${DATE_STR}.bin
+    local ASM_FILE=${TP_NAME}.${JIT_ARCH}.${DATE_STR}.asm
+    
+    if [ -f hoge ] ; then
+	mv hoge ${BIN_FILE}
+    else
+	echo "JIT code dump file not found!"
+    fi
+
+    ${DUMP_PREFIX}${OBJDUMP} -D -b binary -m ${DUMP_OPT} -M intel ${BIN_FILE} > ${ASM_FILE}
+}
+
+debug_dump_option() {
+    echo "HOST_ARCH=${HOST_ARCH}"
+    echo "JIT_ARCH =${JIT_ARCH}"
+    echo "EXEC_ARCH=${EXEC_ARCH}"
+    echo "QEMU     =${QEMU_ON}"
+    echo "DUMP_OPT =${DUMP_OPT}"
+}
+
+#echo "num of args=$#"
+#echo "args=$@"
+
+#*******************************************************************************
+# Main routine
+#*******************************************************************************
+unset QEMU_ON
+unset EXEC_ON
+unset EXEC_JIT_ON
+unset EXEC_LAST_ON
+
+DATE_STR=`date +"%Y%m%d-%H%M%S"`
+
+while getopts axAXeEhH OPT
 do
     case $OPT in
-	a) JIT_TYPE=AARCH64
+	a) JIT_ARCH=aarch64
 	   CFLAGS="${CFLAGS} ${CFLAGS_AARCH64}"
 	   TP_NAME=${OPTARG%.*}
 	   ;;
-	x) JIT_TYPE=X86_64
+	x) JIT_ARCH=x86_64
 	   TP_NAME=${OPTARG%.*}
 	   ;;
+	A) EXEC_ARCH=aarch64
+	   ;;
+	X) EXEC_ARCH=x86_64
+	   ;;
+	e) EXEC_JIT_ON=1
+	   EXEC_LAST_ON=0
+	   ;;
+	E) EXEC_JIT_ON=1
+	   EXEC_LAST_ON=1
+	   ;;
 	h) usage_exit
+	   ;;
+	H) usage_exit
 	   ;;
 	\?) usage_exit
 	    ;;
@@ -48,40 +269,20 @@ done
 shift $((OPTIND - 1))
 
 
-if [ ${JIT_TYPE:-0} = 0 ] ; then
+
+
+#echo "num of args=$#"
+if [ ! $# = 1 ] ; then
     usage_exit
 fi
-
-ARCH=$(uname -m)
-
-if [ ${ARCH:-unknown} = "x86_64" -a ${JIT_TYPE} = "X86_64" ] ; then
-    echo "Env=x86_64, Jit=x86_64"
-    DUMP_TYPE="i386:x86-64"
-elif [ ${ARCH:-unknown} = "x86_64" -a ${JIT_TYPE} = "AARCH64" ] ; then
-    echo "Env=x86_64, Jit=AArch64"
-    TOOL_PREFIX="aarch64-linux-gnu-"
-    LIB_OPT="-lxed"
-    USE_QEMU=1
-    DUMP_TYPE="AARch64"
-elif [ ${ARCH:-unknown} = "aarch64" -a ${JIT_TYPE} = "AARCH64" ] ; then
-    echo "Env=AArch64, Jit=AArch64"
-    LIB_OPT="-lxed"
-    DUMP_TYPE="AARch64"
+get_host_arch
+check_option
+debug_dump_option
+gen_compile_option $@
+compile_test_file
+if [ ${EXEC_JIT_ON:-0} = 1 ] ; then
+    exec_test
 fi
-
-
-
-# Compile, execute, dissassemble
-${TOOL_PREFIX:-""}${CXX} ${CFLAGS} -o ${TP_NAME} ${TP_NAME}.cpp ${LIB_OPT}
-if [ $? -eq 0 ] ; then
-    if [ ${USE_QEMU:-0} = 1 ] ; then
-	env QEMU_LD_PREFIX=/usr/aarch64-linux-gnu qemu-aarch64 ./${TP_NAME}
-    else
-	./${TP_NAME}
-    fi
-
-    if [ -f hoge ] ; then
-	${TOOL_PREFIX}${OBJDUMP} -D -b binary -m ${DUMP_TYPE} -M intel hoge > hoge.asm
-    fi
+if [ ${EXEC_JIT_ON:-0} = 1 ] ; then
+    dump_disassemble
 fi
-
