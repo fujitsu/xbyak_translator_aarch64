@@ -412,11 +412,7 @@ public:
 		, coresSharignDataCache_()
 		, dataCacheLevels_(0)
 	{
-#ifdef XBYAK_TRANSLATE_AARCH64
-	  type_ |= tA64FX;
-	  type_ |= tSIMD;
-	  type_ |= tSVE;
-#else //#ifdef XBYAK_TRANSLATE_AARCH64
+#ifndef XBYAK_TRANSLATE_AARCH64
 		unsigned int data[4] = {};
 		const unsigned int& EAX = data[0];
 		const unsigned int& EBX = data[1];
@@ -513,17 +509,16 @@ public:
 			if (ECX & (1U << 0)) type_ |= tPREFETCHWT1;
 		}
 
-#ifdef 0
-		/* model name	: Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz */
-		type_ |= tSIMD;
-		type_ |= tSVE;
-		type_ |= 0x2871ffdf8f7ff;
-#endif
-
 		setFamily();
 		setNumCores();
 		setCacheHierarchy();
-#endif //#ifdef XBYAK_TRANSLATE_AARCH64
+#else //#ifndef XBYAK_TRANSLATE_AARCH64
+		/* model name	: Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz */
+		//		type_ |= 0x2871ffdf8f7ff;
+		type_ |= tA64FX;
+		type_ |= tSIMD;
+		type_ |= tSVE;
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
 	}
 	void putFamily() const
 	{
