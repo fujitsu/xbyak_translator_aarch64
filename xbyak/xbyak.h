@@ -2412,13 +2412,13 @@ private:
 	}
 
 #ifdef XBYAK_TRANSLATE_AARCH64
+#include "xbyak_translator.h"
 	void decodeAndTransToAArch64()
 	{
 		decode_size_ = 0;
 		decodeOpcode();
 		db_clear();
 	}
-#include "xbyak_translator.h"
 #else
 	void decodeAndTransToAArch64() {}
 #endif

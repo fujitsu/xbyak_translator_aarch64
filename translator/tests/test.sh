@@ -32,7 +32,6 @@
 # aarch64  , aarch64 , x86_64   , NG
 # aarch64  , aarch64 , aarch64  , OK (Executable on native environment)
 #*******************************************************************************
-
 CXX=g++
 OBJDUMP=objdump
 
@@ -40,14 +39,16 @@ CFLAGS=""
 CFLAGS="${CFLAGS} -std=c++11"
 CFLAGS="${CFLAGS} -g"
 CFLAGS="${CFLAGS} -DDEBUG"
-CFLAGS="${CFLAGS} -I../../xbyak -I../third_party/xbyak_aarch64/xbyak_aarch64"
-
+CFLAGS="${CFLAGS} -I../../xbyak"
+CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64/xbyak_aarch64"
+CFLAGS="${CFLAGS} -I../include/xbyak_translator_for_aarch64"
 
 #*******************************************************************************
 # Function definition
 #*******************************************************************************
 usage_exit() {
-    echo "Usage: $0 (-a|-x) (-A|-X) [-e|-E] TEST_SOURCE_FILE"
+    echo "Usage: $0 (-a|-x) (-A|-X) (-e|-E) TEST_SOURCE_FILE"
+    echo "export QEMU_AARCH64=PATH_TO_QEMU-AARCH64"
     echo "  -a  Select AArch64 as JIT code output"
     echo "  -x  Select x86_64 as JIT code output"
     echo "  -A  Select AArch64 as exec file type"
@@ -158,12 +159,24 @@ check_option() {
     esac
 }		
 
+check_qemu_aarch64() {
+    if [ ${QEMU_AARCH64:-0} = 0 ] ; then
+	echo "set QEMU_AARCH64 environment variable"
+	usage_exit
+    fi
+
+    if [ ! -f ${QEMU_AARCH64} ] ; then
+	echo "qemu-aarch64=${QEMU_AARCH64} not found"
+	usage_exit
+    fi
+}
 
 gen_compile_option() {
     LIBXED_PATH="../third_party/build_xed_${EXEC_ARCH}/kits/xed/lib"
 
     if [ ${JIT_ARCH} = "aarch64" ] ; then
 	CFLAGS="${CFLAGS} -DDNNL_AARCH64_JIT_AARCH64"
+	CFLAGS="${CFLAGS} -DXBYAK_AARCH64_FOR_DNNL"
 	CFLAGS="${CFLAGS} -DXBYAK_TRANSLATE_AARCH64"
 	CFLAGS="${CFLAGS} -I../include/xbyak_translator_for_aarch64"
 	CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64/xbyak_aarch64"
@@ -173,11 +186,12 @@ gen_compile_option() {
     fi
 
     TP_NAME=`basename $1 .cpp`
+    TP_NAME_ARCH=${TP_NAME}.jit_${JIT_ARCH}.exec_${EXEC_ARCH}
 }
 
 compile_test_file() {
     # Compile, execute, dissassemble
-    ${TOOL_PREFIX:-""}${CXX} ${CFLAGS} -o ${TP_NAME} ${TP_NAME}.cpp ${LIB_OPT}
+    ${TOOL_PREFIX:-""}${CXX} ${CFLAGS} -o ${TP_NAME_ARCH} ${TP_NAME}.cpp ${LIB_OPT}
     if [ ! $? -eq 0 ] ; then
 	echo "compile error!"
 	exit
@@ -198,15 +212,15 @@ exec_test() {
     fi
 
     if [ ${QEMU_ON:-0} = 1 ] ; then
-	qemu-aarch64  ./${TP_NAME}
+	env QEMU_LD_PREFIX=/usr/aarch64-linux-gnu ${QEMU_AARCH64} ./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON}
     else
-	./${TP_NAME} ${EXEC_JIT_ON} ${EXEC_LAST_ON}
+	./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON}
     fi
 }
 
 dump_disassemble() {
-    local BIN_FILE=${TP_NAME}.${JIT_ARCH}.${DATE_STR}.bin
-    local ASM_FILE=${TP_NAME}.${JIT_ARCH}.${DATE_STR}.asm
+    local BIN_FILE=${TP_NAME_ARCH}.bin
+    local ASM_FILE=${TP_NAME_ARCH}.asm
     
     if [ -f hoge ] ; then
 	mv hoge ${BIN_FILE}
@@ -214,7 +228,7 @@ dump_disassemble() {
 	echo "JIT code dump file not found!"
     fi
 
-    ${DUMP_PREFIX}${OBJDUMP} -D -b binary -m ${DUMP_OPT} -M intel ${BIN_FILE} > ${ASM_FILE}
+    ${DUMP_PREFIX}${OBJDUMP} -D -b binary -m ${DUMP_OPT} ${BIN_FILE} > ${ASM_FILE}
 }
 
 debug_dump_option() {
@@ -233,8 +247,8 @@ debug_dump_option() {
 #*******************************************************************************
 unset QEMU_ON
 unset EXEC_ON
+unset OUTPUT_JIT_ON
 unset EXEC_JIT_ON
-unset EXEC_LAST_ON
 
 DATE_STR=`date +"%Y%m%d-%H%M%S"`
 
@@ -252,11 +266,11 @@ do
 	   ;;
 	X) EXEC_ARCH=x86_64
 	   ;;
-	e) EXEC_JIT_ON=1
-	   EXEC_LAST_ON=0
+	e) OUTPUT_JIT_ON=1
+	   EXEC_JIT_ON=0
 	   ;;
-	E) EXEC_JIT_ON=1
-	   EXEC_LAST_ON=1
+	E) OUTPUT_JIT_ON=1
+	   EXEC_JIT_ON=1
 	   ;;
 	h) usage_exit
 	   ;;
@@ -277,12 +291,13 @@ if [ ! $# = 1 ] ; then
 fi
 get_host_arch
 check_option
+check_qemu_aarch64
 debug_dump_option
 gen_compile_option $@
 compile_test_file
-if [ ${EXEC_JIT_ON:-0} = 1 ] ; then
+if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
     exec_test
 fi
-if [ ${EXEC_JIT_ON:-0} = 1 ] ; then
+if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
     dump_disassemble
 fi

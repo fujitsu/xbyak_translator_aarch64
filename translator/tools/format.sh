@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu
+set -u
 unset tmpfile
 
 CLANG_FORMAT=${CLANG_FORMAT:="clang-format"}
@@ -36,8 +36,12 @@ format_files() {
 
     for i in ${LIST} ; do
 	echo "formatting:${i}"
-	clang-format -style=LLVM ${i} > ${tmpfile}
-	mv ${tmpfile} ${i}
+	if [ -f ${i} ] ; then
+	    clang-format -style=LLVM ${i} > ${tmpfile}
+	    mv ${tmpfile} ${i}
+	else
+	    echo "not found"
+	fi
     done
 }
 

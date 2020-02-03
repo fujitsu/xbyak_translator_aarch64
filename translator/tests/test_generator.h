@@ -59,6 +59,9 @@ union ZReg_t {
 
 class TestGenerator : public CodeGenerator {
 private:
+  bool output_jit_on_ = 0;
+  bool exec_jit_on_ = 0;
+
   unsigned char testData[16] = {
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
   };
@@ -83,8 +86,8 @@ private:
 #ifdef DNNL_AARCH64_JIT_AARCH64
     for (i = 0; i < NUM_GEN_REG; i += 2) {
       // sp address must be aligned by 16.
-      stp__(Xbyak_aarch64::XReg(i), Xbyak_aarch64::XReg(i + 1),
-            Xbyak_aarch64::pre_ptr(sp_, -16));
+      stp(Xbyak_aarch64::XReg(i), Xbyak_aarch64::XReg(i + 1),
+          Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16));
     }
 #else
     for (i = 0; i < NUM_GEN_REG; i++) {
@@ -100,8 +103,8 @@ private:
 
 #ifdef DNNL_AARCH64_JIT_AARCH64
     for (i = NUM_GEN_REG - 1; i >= 0; i -= 2) {
-      ldp__(Xbyak_aarch64::XReg(i), Xbyak_aarch64::XReg(i - 1),
-            Xbyak_aarch64::post_ptr(sp_, 16));
+      ldp(Xbyak_aarch64::XReg(i), Xbyak_aarch64::XReg(i - 1),
+          Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 16));
     }
 #else
     for (i = NUM_GEN_REG - 1; i >= 0; i--) {
@@ -117,17 +120,19 @@ private:
   void _genJitLoadGenReg() {
 #ifdef DNNL_AARCH64_JIT_AARCH64
     /* x0 contains memory address. */
-    mov_imm__(x0, reinterpret_cast<uint64_t>(inputGenReg) + 16, x1);
+    CodeGeneratorAArch64::mov_imm(
+        x0, reinterpret_cast<uint64_t>(inputGenReg) + 16, x1);
     for (int i = 2; i < NUM_GEN_REG; i++) {
       if (i != SP_REG_IDX_AARCH64) { /* Avoid overwriting stack pointer */
-        ldr__(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
+        ldr(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
       } else {
-        add__(x0, x8, 8); /* Incremente address for next register. */
+        CodeGeneratorAArch64::add(
+            x0, x8, 8); /* Incremente address for next register. */
       }
     }
-    mov_imm__(x0, reinterpret_cast<uint64_t>(inputGenReg), x1);
-    ldp__(Xbyak_aarch64::XReg(0), Xbyak_aarch64::XReg(1),
-          Xbyak_aarch64::ptr(x0));
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(inputGenReg),
+                                  x1);
+    ldp(Xbyak_aarch64::XReg(0), Xbyak_aarch64::XReg(1), Xbyak_aarch64::ptr(x0));
 #else  //#ifdef DNNL_AARCH64_JIT_AARCH64
     mov(rax, reinterpret_cast<uint64_t>(inputGenReg) + 8);
 
@@ -147,17 +152,22 @@ private:
   void _genJitStoreGenReg() {
 #ifdef DNNL_AARCH64_JIT_AARCH64
     /* x0 contains memory address. */
-    stp__(x0, x1, Xbyak_aarch64::pre_ptr(sp_, -16)); // push data of x0 and x1
+    stp(x0, x1,
+        Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp,
+                               -16)); // push data of x0 and x1
 
-    mov_imm__(x0, reinterpret_cast<uint64_t>(outputGenReg) + 16, x1);
+    CodeGeneratorAArch64::mov_imm(
+        x0, reinterpret_cast<uint64_t>(outputGenReg) + 16, x1);
     for (int i = 2; i < NUM_GEN_REG; i++) {
-      str__(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
+      str(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
     }
 
-    mov_imm__(x0, reinterpret_cast<uint64_t>(outputGenReg), x1);
-    ldp__(Xbyak_aarch64::XReg(2), Xbyak_aarch64::XReg(3),
-          Xbyak_aarch64::post_ptr(sp_, 16)); // pop data of x0, x1
-    stp__(x2, x3, Xbyak_aarch64::ptr(x0));
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputGenReg),
+                                  x1);
+    ldp(Xbyak_aarch64::XReg(2), Xbyak_aarch64::XReg(3),
+        Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp,
+                                16)); // pop data of x0, x1
+    stp(x2, x3, Xbyak_aarch64::ptr(x0));
 #else  //#ifdef DNNL_AARCH64_JIT_AARCH64
     push(rax);
     mov(rax, reinterpret_cast<uint64_t>(outputGenReg) + 8);
@@ -177,15 +187,18 @@ private:
 
   void _genJitLoadPredReg() {
 #ifdef DNNL_AARCH64_JIT_AARCH64
-    stp__(x0, x1, Xbyak_aarch64::pre_ptr(sp_, -16)); // push x0, x1
+    stp(x0, x1,
+        Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
-    mov_imm__(x0, reinterpret_cast<uint64_t>(inputPredReg), x1);
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(inputPredReg),
+                                  x1);
 
     for (int i = 0; i < NUM_PRED_REG; i++) {
-      ldr__(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x0, i));
+      ldr(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x0, i));
     }
 
-    ldp__(x0, x1, Xbyak_aarch64::post_ptr(sp_, 16)); // pop x0, x1
+    ldp(x0, x1,
+        Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 16)); // pop x0, x1
 #else  //#ifdef DNNL_AARCH64_JIT_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(inputPredReg));
@@ -201,15 +214,18 @@ private:
 
   void _genJitStorePredReg() {
 #ifdef DNNL_AARCH64_JIT_AARCH64
-    stp__(x0, x1, Xbyak_aarch64::pre_ptr(sp_, -16)); // push x0, x1
+    stp(x0, x1,
+        Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
-    mov_imm__(x0, reinterpret_cast<uint64_t>(outputPredReg), x1);
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputPredReg),
+                                  x1);
 
     for (int i = 0; i < NUM_PRED_REG; i++) {
-      str__(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x0, i));
+      str(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x0, i));
     }
 
-    ldp__(x0, x1, Xbyak_aarch64::post_ptr(sp_, 16)); // pop x0, x1
+    ldp(x0, x1,
+        Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 16)); // pop x0, x1
 #else  //#ifdef DNNL_AARCH64_JIT_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(outputPredReg));
@@ -225,15 +241,18 @@ private:
 
   void _genJitLoadZReg() {
 #ifdef DNNL_AARCH64_JIT_AARCH64
-    stp__(x0, x1, Xbyak_aarch64::pre_ptr(sp_, -16)); // push x0, x1
+    stp(x0, x1,
+        Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
-    mov_imm__(x0, reinterpret_cast<uint64_t>(inputZReg), x1);
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(inputZReg),
+                                  x1);
 
     for (int i = 0; i < NUM_Z_REG; i++) {
-      ldr__(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(x0, i));
+      ldr(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(x0, i));
     }
 
-    ldp__(x0, x1, Xbyak_aarch64::post_ptr(sp_, 16)); // pop x0, x1
+    ldp(x0, x1,
+        Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 16)); // pop x0, x1
 #else  //#ifdef DNNL_AARCH64_JIT_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(inputZReg));
@@ -249,15 +268,18 @@ private:
 
   void _genJitStoreZReg() {
 #ifdef DNNL_AARCH64_JIT_AARCH64
-    stp__(x0, x1, Xbyak_aarch64::pre_ptr(sp_, -16)); // push x0, x1
+    stp(x0, x1,
+        Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
-    mov_imm__(x0, reinterpret_cast<uint64_t>(outputZReg), x1);
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputZReg),
+                                  x1);
 
     for (int i = 0; i < NUM_Z_REG; i++) {
-      str__(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(x0, i));
+      str(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(x0, i));
     }
 
-    ldp__(x0, x1, Xbyak_aarch64::post_ptr(sp_, 16)); // pop x0, x1
+    ldp(x0, x1,
+        Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 16)); // pop x0, x1
 #else  //#ifdef DNNL_AARCH64_JIT_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(outputZReg));
@@ -288,7 +310,7 @@ private:
     for (int i = 0; i < NUM_GEN_REG; i++) {
       if (i != SP_REG_IDX_AARCH64) {
         Xbyak_aarch64::XReg xreg(i);
-        eor__(xreg, xreg, xreg);
+        eor(xreg, xreg, xreg);
       }
     }
 #else
@@ -305,7 +327,7 @@ private:
 #ifdef DNNL_AARCH64_JIT_AARCH64
     for (int i = 0; i < NUM_PRED_REG; i++) {
       Xbyak_aarch64::PReg preg(i);
-      eor__(preg.b, preg / Xbyak_aarch64::T_z, preg.b, preg.b);
+      eor(preg.b, preg / Xbyak_aarch64::T_z, preg.b, preg.b);
     }
 #else
     for (int i = 0; i < NUM_GEN_REG; i++) {
@@ -319,7 +341,7 @@ private:
 #ifdef DNNL_AARCH64_JIT_AARCH64
     for (int i = 0; i < NUM_Z_REG; i++) {
       Xbyak_aarch64::ZRegD zreg(i);
-      eor__(zreg, zreg, zreg);
+      eor(zreg, zreg, zreg);
     }
 #else
     for (int i = 0; i < NUM_Z_REG; i++) {
@@ -408,6 +430,42 @@ private:
 
 public:
   TestGenerator() {}
+
+  bool isOutputJitOn() { return output_jit_on_; }
+
+  bool isExecJitOn() { return exec_jit_on_; }
+
+  void msg_warn(const std::string &msg) {
+    std::cerr << "[WANR]:" << msg << std::endl;
+  }
+
+  void msg_err(const std::string &msg) {
+    std::cerr << "[ERRR]:" << msg << std::endl;
+  }
+
+  void parseArgs(int argc, char *argv[]) {
+    switch (argc) {
+    case 3:
+      output_jit_on_ = std::stoi(argv[1]);
+      exec_jit_on_ = std::stoi(argv[2]);
+      break;
+    case 2:
+      msg_warn("Invalid # of args=" + std::to_string(argc));
+      output_jit_on_ = std::stoi(argv[1]);
+      exec_jit_on_ = 1;
+      break;
+    case 1:
+      msg_warn("Invalid # of args=" + std::to_string(argc));
+      output_jit_on_ = 1;
+      exec_jit_on_ = 1;
+      break;
+    default:
+      msg_warn("Invalid # of args=" + std::to_string(argc));
+      output_jit_on_ = 1;
+      exec_jit_on_ = 1;
+      break;
+    }
+  }
 
   void clearInputReg() {
     int i, j;
@@ -726,7 +784,7 @@ public:
     _genJitLoadGenReg();  // Generate jit code to set initial value to gen
                           // registers.
     _genJitLoadPredReg(); // Generate jit code to set initial value to pred
-                          // registers.
+    // registers.
     _genJitLoadZReg(); // Generate jit code to set initial value to z registers.
 
     genJitTestCode();
@@ -741,10 +799,14 @@ public:
     _genJitPostamble();
 
     ready();
+#ifdef XBYAK_AARCH64_FOR_DNNL
+    return getCode32();
+#else
     return getCode();
+#endif
   }
 
-  void dump() {
+  void dumpJitCode() {
     FILE *fp = fopen("hoge", "w");
 
 #ifdef DNNL_AARCH64_JIT_AARCH64

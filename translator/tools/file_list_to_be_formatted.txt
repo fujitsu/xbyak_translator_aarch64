@@ -1,2 +1,5 @@
 xbyak_translator.h
 xbyak_translator_inc.h
+xbyak_aarch64_meta_mnemonic.h
+test_generator.h
+test.cpp
