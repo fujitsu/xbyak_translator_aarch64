@@ -1721,8 +1721,6 @@ private:
 	};
 	void vex(const Reg& reg, const Reg& base, const Operand *v, int type, int code, bool x = false)
 	{
-	  UNIMPLEMENTED2;
-
 	  int w = (type & T_W1) ? 1 : 0;
 		bool is256 = (type & T_L1) ? true : (type & T_L0) ? false : reg.isYMM();
 		bool r = reg.isExtIdx();

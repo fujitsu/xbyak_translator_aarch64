@@ -55,17 +55,41 @@ union ZReg_t {
   uint16_t h_dt[32];
   uint32_t s_dt[16];
   uint64_t d_dt[8];
+  float sp_dt[16];
+  double dp_dt[8];
 };
+
+#ifdef XBYAK_TRANSLATE_AARCH64
+constexpr Xbyak_aarch64::Operand::Code callee_saved_gregs[] = {
+    Xbyak::Xbyak_aarch64::Operand::Code::X19,
+    Xbyak::Xbyak_aarch64::Operand::Code::X20,
+    Xbyak::Xbyak_aarch64::Operand::Code::X21,
+    Xbyak::Xbyak_aarch64::Operand::Code::X22,
+    Xbyak::Xbyak_aarch64::Operand::Code::X23,
+    Xbyak::Xbyak_aarch64::Operand::Code::X24,
+    Xbyak::Xbyak_aarch64::Operand::Code::X25,
+    Xbyak::Xbyak_aarch64::Operand::Code::X26,
+    Xbyak::Xbyak_aarch64::Operand::Code::X27,
+    Xbyak::Xbyak_aarch64::Operand::Code::X28,
+};
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
+constexpr Xbyak::Operand::Code callee_saved_gregs[] = {
+    Xbyak::Operand::R12, Xbyak::Operand::R13, Xbyak::Operand::R14,
+    Xbyak::Operand::R15, Xbyak::Operand::RBX, Xbyak::Operand::RBP,
+};
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
 
 class TestGenerator : public CodeGenerator {
 private:
   bool output_jit_on_ = 0;
   bool exec_jit_on_ = 0;
 
+#if 0
   unsigned char testData[16] = {
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
   };
-
+#endif
+  
   unsigned char inputData[NUM_INPUT_DATA];
   uint64_t inputGenReg[NUM_GEN_REG];
   uint64_t inputPredReg[NUM_PRED_REG];
@@ -90,27 +114,24 @@ private:
           Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16));
     }
 #else
-    for (i = 0; i < NUM_GEN_REG; i++) {
-      if (i != SP_REG_IDX_X86_64) {
-        push(Reg64(i));
-      }
+    for (int i = 0; i < num_callee_saved_gregs; i++) {
+      push(Reg64(callee_saved_gregs[i]));
     }
 #endif
   }
 
-  void _genJitPostamble() {
-    int i;
+  const size_t num_callee_saved_gregs =
+      sizeof(callee_saved_gregs) / sizeof(Xbyak::Operand);
 
+  void _genJitPostamble() {
 #ifdef DNNL_AARCH64_JIT_AARCH64
-    for (i = NUM_GEN_REG - 1; i >= 0; i -= 2) {
+    for (int i = NUM_GEN_REG - 1; i >= 0; i -= 2) {
       ldp(Xbyak_aarch64::XReg(i), Xbyak_aarch64::XReg(i - 1),
           Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 16));
     }
 #else
-    for (i = NUM_GEN_REG - 1; i >= 0; i--) {
-      if (i != SP_REG_IDX_X86_64) {
-        pop(Reg64(i));
-      }
+    for (int i = num_callee_saved_gregs - 1; i >= 0; i--) {
+      pop(Reg64(callee_saved_gregs[i]));
     }
 #endif
     ret();
@@ -381,15 +402,15 @@ private:
                 << std::right << std::setw(2) << i << "]:" << std::hex;
 
       char fillSaved = std::cout.fill('0');
-      for (int j = 0; j < 8; j++) {
+      for (int j = (sizeof(ZReg_t) / sizeof(uint64_t)) - 1; j >= 0; j--) {
         std::cout << std::setw(width) << (((ptr[i].d_dt[j]) >> 32) & 0xFFFFFFFF)
                   << "_" << std::setw(width)
                   << (((ptr[i].d_dt[j]) >> 0) & 0xFFFFFFFF);
-        if (j != 7) {
+        if (j != 0) {
           std::cout << "_";
         }
 
-        if (j % 2 && j != 7) {
+        if ((j % 2 == 0) && (j != 0)) {
           std::cout << "_";
         }
       }
@@ -429,7 +450,11 @@ private:
   }
 
 public:
-  TestGenerator() {}
+  TestGenerator() {
+    clearInputDataAll();
+    clearOutputDataAll();
+    setExpectDataAll();
+  }
 
   bool isOutputJitOn() { return output_jit_on_; }
 
@@ -547,7 +572,7 @@ public:
   }
 
   void clearInputDataForGenReg() {
-#if 1
+#if 0
     clearData(NUM_GEN_REG, inputGenReg);
 #else
     inputGenReg[0] = 0x0001020304050607;
@@ -595,13 +620,32 @@ public:
   void clearInputDataForZReg() {
 #if 0
     clearDataForZReg(NUM_Z_REG, inputZReg);
-#else
+#endif
+#if 0
     for (int i = 0; i < NUM_Z_REG; i++) {
-      for (int j = 0; j < 32; j++) {
-        inputZReg[i].h_dt[j] = i * 32 + j;
+      for (int j = 0; j < 8; j++) {
+        inputZReg[i].d_dt[j] = j + (i << 16);
       }
     }
 #endif
+    for (int j = 0; j < 8; j++) {
+      inputZReg[0].d_dt[j] = j + (0 << 16);
+    }
+
+    for (int j = 0; j < 16; j++) {
+      inputZReg[1].s_dt[j] = j + (0 << 16);
+    }
+
+    for (int j = 0; j < 32; j++) {
+      inputZReg[2].h_dt[j] = j + (0 << 16);
+    }
+
+    for (int j = 0; j < 64; j++) {
+      inputZReg[3].b_dt[j] = j + (0 << 16);
+    }
+
+    inputZReg[1].sp_dt[0] = float(0.125);
+    inputZReg[2].sp_dt[0] = float(0.125);
   }
 
   void clearOutputDataForGenReg() { clearData(NUM_GEN_REG, outputGenReg); }
@@ -703,7 +747,7 @@ public:
                 << std::right << std::setw(2) << i << "]:" << std::hex;
 
       char fillSaved = std::cout.fill('0');
-      for (int j = 0; j < 8; j++) {
+      for (int j = (sizeof(ZReg_t) / sizeof(uint64_t)) - 1; j >= 0; j--) {
         for (int k = 15; k >= 0; k--) {
           unsigned tmpExp = (expPtr[i].d_dt[j] >> (4 * k)) & 0xF;
           unsigned tmpData = (ptr[i].d_dt[j] >> (4 * k)) & 0xF;
@@ -716,12 +760,16 @@ public:
             std::cout << ".";
           }
 
-          if (k % 8 == 0 && !(j == 7 && k == 0)) {
+          if ((k % 15 == 8) || ((k == 0) && (j % 2 == 0) && (j != 0))) {
             std::cout << "_";
           }
+
+          //          if ((k % 4 == 0) && (k!=0)) {
+          //            std::cout << "_";
+          //          }
         }
 
-        if (j != 7) {
+        if (j != 0) {
           std::cout << "_";
         }
       }
