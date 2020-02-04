@@ -1,5 +1,7 @@
-#if 0
 #include "instructions/add.h"
+#include "instructions/vbroadcastss.h"
+#include "instructions/vmulps.h"
+#if 0
 #include "instructions/cmp.h"
 #include "instructions/kmovq.h"
 #include "instructions/kmovb.h"
@@ -17,7 +19,6 @@
 #include "instructions/vcmpps.h"
 #include "instructions/vmovdqu16.h"
 #include "instructions/vmovups.h"
-#include "instructions/vmulps.h"
 //#include "instructions/vfmadd132ps.h"
 //#include "instructions/vfmadd213ps.h"
 //#include "instructions/vfmadd231ps.h"

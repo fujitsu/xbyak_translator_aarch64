@@ -55,6 +55,8 @@ union ZReg_t {
   uint16_t h_dt[32];
   uint32_t s_dt[16];
   uint64_t d_dt[8];
+  float sp_dt[16];
+  double dp_dt[8];
 };
 
 #ifdef XBYAK_TRANSLATE_AARCH64
@@ -82,10 +84,12 @@ private:
   bool output_jit_on_ = 0;
   bool exec_jit_on_ = 0;
 
+#if 0
   unsigned char testData[16] = {
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
   };
-
+#endif
+  
   unsigned char inputData[NUM_INPUT_DATA];
   uint64_t inputGenReg[NUM_GEN_REG];
   uint64_t inputPredReg[NUM_PRED_REG];
@@ -639,6 +643,9 @@ public:
     for (int j = 0; j < 64; j++) {
       inputZReg[3].b_dt[j] = j + (0 << 16);
     }
+
+    inputZReg[1].sp_dt[0] = float(0.125);
+    inputZReg[2].sp_dt[0] = float(0.125);
   }
 
   void clearOutputDataForGenReg() { clearData(NUM_GEN_REG, outputGenReg); }

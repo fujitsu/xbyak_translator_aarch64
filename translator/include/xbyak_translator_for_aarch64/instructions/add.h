@@ -14,7 +14,8 @@ void translateADD(xed_decoded_inst_t *p) {
   xed_uint_t isDstSize = xed_decoded_inst_operand_length_bits(p, 0);
   xed_uint_t isSrcSize = xed_decoded_inst_operand_length_bits(p, 1);
 
-  Xbyak_aarch64::XReg tmp(26);
+  Xbyak_aarch64::XReg tmp(25);
+  Xbyak_aarch64::XReg tmp1(26);
   Xbyak_aarch64::XReg ans(27);
 
   unsigned int a64_dstIdx;
@@ -35,7 +36,7 @@ void translateADD(xed_decoded_inst_t *p) {
   }
   if (false || (isDstSize == 64 && isSrcSize == 64 &&
                 isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    add__(Xbyak_aarch64::XReg(a64_dstIdx), Xbyak_aarch64::XReg(a64_dstIdx),
+    CodeGeneratorAArch64::add(Xbyak_aarch64::XReg(a64_dstIdx), Xbyak_aarch64::XReg(a64_dstIdx),
           tmp);
   }
   if (false ||
@@ -43,12 +44,12 @@ void translateADD(xed_decoded_inst_t *p) {
        isSrc == XED_OPERAND_REG1) ||
       (isDstSize == 64 && isSrcSize == 64 && isDst == XED_OPERAND_REG0 &&
        isSrc == XED_OPERAND_REG1)) {
-    add__(Xbyak_aarch64::XReg(a64_dstIdx), Xbyak_aarch64::XReg(a64_dstIdx),
+    CodeGeneratorAArch64::add(Xbyak_aarch64::XReg(a64_dstIdx), Xbyak_aarch64::XReg(a64_dstIdx),
           Xbyak_aarch64::XReg(a64_srcIdx));
   }
   if (false || (isDstSize == 64 && isSrcSize == 64 &&
                 isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    add__(ans, ans, Xbyak_aarch64::XReg(a64_srcIdx));
+    CodeGeneratorAArch64::add(ans, ans, Xbyak_aarch64::XReg(a64_srcIdx));
   }
   if (false ||
       (isDstSize == 64 && isSrcSize == 32 && isDst == XED_OPERAND_REG0 &&
@@ -61,7 +62,7 @@ void translateADD(xed_decoded_inst_t *p) {
     xed_uint64_t y = XED_STATIC_CAST(
         xed_uint64_t, xed_sign_extend_arbitrary_to_64((xed_uint64_t)x, ibits));
     add_imm(Xbyak_aarch64::XReg(a64_dstIdx), Xbyak_aarch64::XReg(a64_dstIdx), y,
-            tmp);
+            tmp, tmp1);
   }
   if (false || (isDstSize == 64 && isSrcSize == 32 &&
                 isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_IMM0)) {
@@ -70,8 +71,8 @@ void translateADD(xed_decoded_inst_t *p) {
     xed_int32_t x = xed_decoded_inst_get_signed_immediate(p);
     xed_uint64_t y = XED_STATIC_CAST(
         xed_uint64_t, xed_sign_extend_arbitrary_to_64((xed_uint64_t)x, ibits));
-    unsigned int rax = xed_get_register_index(p, 0);
-    add_imm(Xbyak_aarch64::XReg(rax), Xbyak_aarch64::XReg(rax), y, tmp);
+    unsigned int rax = xt_get_register_index(p, 0);
+    add_imm(Xbyak_aarch64::XReg(rax), Xbyak_aarch64::XReg(rax), y, tmp, tmp1);
   }
   if (false ||
       (isDstSize == 64 && isSrcSize == 32 && isDst == XED_OPERAND_MEM0 &&
@@ -83,7 +84,7 @@ void translateADD(xed_decoded_inst_t *p) {
     xed_int32_t x = xed_decoded_inst_get_signed_immediate(p);
     xed_uint64_t y = XED_STATIC_CAST(
         xed_uint64_t, xed_sign_extend_arbitrary_to_64((xed_uint64_t)x, ibits));
-    add_imm(ans, ans, y, tmp);
+    add_imm(ans, ans, y, tmp, tmp1);
   }
   if (false ||
       (isDstSize == 64 && isSrcSize == 32 && isDst == XED_OPERAND_MEM0 &&

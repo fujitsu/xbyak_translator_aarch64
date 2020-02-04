@@ -402,9 +402,8 @@ bool decodeOpcode() {
   case XED_ICLASS_ADCX:
   case XED_ICLASS_ADC_LOCK:
   case XED_ICLASS_ADD:
-    //    translateADD(&xedd);
+    translateADD(&xedd);
     break;
-
   case XED_ICLASS_ADDPD:
   case XED_ICLASS_ADDPS:
   case XED_ICLASS_ADDSD:
@@ -1279,7 +1278,7 @@ bool decodeOpcode() {
     break;
 
   case XED_ICLASS_VBROADCASTSS:
-    //    translateVBROADCASTSS(&xedd);
+    translateVBROADCASTSS(&xedd);
     break;
 
   case XED_ICLASS_VCMPPD:
@@ -1552,6 +1551,8 @@ bool decodeOpcode() {
   case XED_ICLASS_VMSAVE:
   case XED_ICLASS_VMULPD:
   case XED_ICLASS_VMULPS:
+    translateVMULPS(&xedd);
+    break;
   case XED_ICLASS_VMULSD:
   case XED_ICLASS_VMULSS:
   case XED_ICLASS_VMWRITE:
