@@ -23,7 +23,6 @@ const float testData[16] = {3.5, 4.6, 5.8, 100.0,
 class TestPtnGenerator : public TestGenerator {
 public:
   void genJitTestCode() {
-
     vmulps(Zmm(0), Zmm(1), Zmm(2));
   }
 };
@@ -35,18 +34,15 @@ int main(int argc, char *argv[]) {
   TestPtnGenerator gen;
   gen.parseArgs(argc, argv);
 
-  //  void (*f)(const float *);
   void (*f)();
   if (gen.isOutputJitOn()) {
-    //    f = (void (*)(const float *))gen.gen(); // Generate JIT code
     f = (void (*)())gen.gen(); // Generate JIT code
   }
 
-  //  gen.dumpInputReg(); // Dump data for initializing registers.
+  gen.dumpInputReg(); // Dump data for initializing registers.
   gen.dumpJitCode(); // Dump JIT code
 
   if (gen.isExecJitOn()) {
-    //    f(&(testData[0])); // Execute JIT code
     f(); // Execute JIT code
     gen.dumpOutputReg(); // Dump register data.
     gen.dumpExpectReg(); // Dump register data for checking.
