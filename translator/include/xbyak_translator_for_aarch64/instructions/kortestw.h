@@ -1,50 +1,54 @@
 void translateKORTESTW(xed_decoded_inst_t *p) {
-    unsigned int srcIdx1, srcIdx2;
-    uint32_t zflag = 8;
-    uint32_t cflag = 2;
-	uint32_t zcond = 0;
-    //uint32_t ccond = 65535;
-    enum Xbyak::Xbyak_aarch64::Cond condEQ = Xbyak::Xbyak_aarch64::EQ;
+  unsigned int srcIdx1, srcIdx2;
+  uint32_t zflag = 8;
+  uint32_t cflag = 2;
+  uint32_t zcond = 0;
+  // uint32_t ccond = 65535;
+  enum Xbyak::Xbyak_aarch64::Cond condEQ = Xbyak::Xbyak_aarch64::EQ;
 
-    Xbyak_aarch64::PReg ptmp1(8);
-    Xbyak_aarch64::PReg ptmp2(9);
-    Xbyak_aarch64::PReg condR(
-            10); // PRegのand演算の条件レジスタ。いったん形だけ。なんか値を入れる必要あるはず。全部1?
-    Xbyak_aarch64::XReg addrtmp(25);
-    Xbyak_aarch64::XReg presult(26);
-    Xbyak_aarch64::XReg comp(27);
-    //Xbyak_aarch64::WReg presult(26);
+  Xbyak_aarch64::PReg ptmp1(8);
+  Xbyak_aarch64::PReg ptmp2(9);
+  Xbyak_aarch64::PReg condR(
+      10); // PRegのand演算の条件レジスタ。いったん形だけ。なんか値を入れる必要あるはず。全部1?
+  Xbyak_aarch64::XReg addrtmp(25);
+  Xbyak_aarch64::XReg presult(26);
+  Xbyak_aarch64::XReg comp(27);
+  // Xbyak_aarch64::WReg presult(26);
 
-    srcIdx1 = xed_get_register_index(p, 0);
-    Xbyak_aarch64::PReg src1(srcIdx1);
-    srcIdx2 = xed_get_register_index(p, 1);
-    Xbyak_aarch64::PReg src2(srcIdx2);
+  srcIdx1 = xed_get_register_index(p, 0);
+  Xbyak_aarch64::PReg src1(srcIdx1);
+  srcIdx2 = xed_get_register_index(p, 1);
+  Xbyak_aarch64::PReg src2(srcIdx2);
 
-    mov__(addrtmp, ALL1_BIT16_ADDRESS); //アドレスはいったん適当な値
-    Xbyak_aarch64::AdrNoOfs adr_reg(addrtmp);
-    ldr(ptmp1, adr_reg);
-    ldr(ptmp2, adr_reg);
-    ldr(condR, adr_reg);
-    Xbyak_aarch64::CodeGeneratorAArch64::AND_(
-            ptmp1.b, condR/Xbyak::Xbyak_aarch64::T_z, src1.b, ptmp1.b); // get src1[15:0]
-    Xbyak_aarch64::CodeGeneratorAArch64::AND_(
-            ptmp2.b, condR/Xbyak::Xbyak_aarch64::T_z, src2.b, ptmp2.b); // get src2[15:0]
-    orr(ptmp1.b, condR/Xbyak::Xbyak_aarch64::T_z, ptmp1.b, ptmp2.b);
+  mov__(addrtmp, ALL1_BIT16_ADDRESS); //アドレスはいったん適当な値
+  Xbyak_aarch64::AdrNoOfs adr_reg(addrtmp);
+  ldr(ptmp1, adr_reg);
+  ldr(ptmp2, adr_reg);
+  ldr(condR, adr_reg);
+  Xbyak_aarch64::CodeGeneratorAArch64::AND_(ptmp1.b,
+                                            condR / Xbyak::Xbyak_aarch64::T_z,
+                                            src1.b, ptmp1.b); // get src1[15:0]
+  Xbyak_aarch64::CodeGeneratorAArch64::AND_(ptmp2.b,
+                                            condR / Xbyak::Xbyak_aarch64::T_z,
+                                            src2.b, ptmp2.b); // get src2[15:0]
+  orr(ptmp1.b, condR / Xbyak::Xbyak_aarch64::T_z, ptmp1.b, ptmp2.b);
 
-    // push result of "or k1, k2"
-    mov__(addrtmp, sp_);
-    Xbyak_aarch64::AdrNoOfs adr_sp(addrtmp);
-    str(ptmp1, adr_sp);
-    sub__(addrtmp, addrtmp, 64);
-    mov__(sp_, addrtmp);
+  // push result of "or k1, k2"
+  mov__(addrtmp, sp_);
+  Xbyak_aarch64::AdrNoOfs adr_sp(addrtmp);
+  str(ptmp1, adr_sp);
+  sub__(addrtmp, addrtmp, 64);
+  mov__(sp_, addrtmp);
 
-    // pop result of "or k1, k2"
-    ldr(presult, post_ptr(sp_, 64));
-    ldr(comp, ALL1_BIT16_ADDRESS);
-    // set Z or C flags
-    //ccmn(presult, 0, 8, 0x0); // if presult == 0 then Z flag = 1. (0x0 means EQ)
-    //ccmn(presult, 65535, 2,
-    //       0x0); // if presult == 0xFFFF(65535) the  C flag = 1 (0x0 means EQ)
-    ccmn(presult, zcond, zflag, condEQ); // if presult == 0 then Z flag = 1. (0x0 means EQ)
-    ccmn(presult, comp, cflag, condEQ); // if presult == 0xFFFF(65535) the  C flag = 1 (0x0 means EQ)
+  // pop result of "or k1, k2"
+  ldr(presult, post_ptr(sp_, 64));
+  ldr(comp, ALL1_BIT16_ADDRESS);
+  // set Z or C flags
+  // ccmn(presult, 0, 8, 0x0); // if presult == 0 then Z flag = 1. (0x0 means
+  // EQ) ccmn(presult, 65535, 2,
+  //       0x0); // if presult == 0xFFFF(65535) the  C flag = 1 (0x0 means EQ)
+  ccmn(presult, zcond, zflag,
+       condEQ); // if presult == 0 then Z flag = 1. (0x0 means EQ)
+  ccmn(presult, comp, cflag,
+       condEQ); // if presult == 0xFFFF(65535) the  C flag = 1 (0x0 means EQ)
 }
