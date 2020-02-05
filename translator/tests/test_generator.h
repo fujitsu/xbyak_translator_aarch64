@@ -22,17 +22,19 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cstring>
 #include <iomanip>
 #include <iostream>
 #include <limits>
 #include <sstream>
 #include <string>
+#include <typeinfo>
 #include <vector>
 
 #include "xbyak.h"
 #include "xbyak_util.h"
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
 typedef uint32_t xbyak_code_ptr_t;
 #else
 typedef uint8_t xbyak_code_ptr_t;
@@ -40,13 +42,19 @@ typedef uint8_t xbyak_code_ptr_t;
 
 #define NUM_INPUT_DATA 16
 /* x86_64 has 16 gen registers. AArch64 has 32 gen registers. */
-#define NUM_GEN_REG 16
+#define NUM_GEN_REG 32
+#define NUM_GEN_REG_INTEL 16
 /* x86_64 has 8 predicate registers. AArch64 has 16 predicate registers. */
-#define NUM_PRED_REG 8
+#define NUM_PRED_REG 16
+#define NUM_PRED_REG_INTEL 8
 #define NUM_Z_REG 32
+#define NUM_Z_REG_INTEL 32
 
 #define SP_REG_IDX_X86_64 4
 #define SP_REG_IDX_AARCH64 31
+#define NUM_BYTES_GEN_REG 8
+#define NUM_BYTES_PRED_REG 8
+#define NUM_BYTES_Z_REG 64
 
 using namespace Xbyak;
 
@@ -83,35 +91,69 @@ class TestGenerator : public CodeGenerator {
 private:
   bool output_jit_on_ = 0;
   bool exec_jit_on_ = 0;
+  const std::string checkOK = "@@";
+  const std::string checkNG = "!!";
+  const std::string checkIgnore = "##";
 
-#if 0
-  unsigned char testData[16] = {
-      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+  enum CheckMode {
+    NO_CHECK,     // No comparison is needed
+    CMP_INTEL,    // Compare to Intel's result
+    CMP_INIT_VAL, // Compare to initial value
   };
-#endif
-  
-  unsigned char inputData[NUM_INPUT_DATA];
-  uint64_t inputGenReg[NUM_GEN_REG];
-  uint64_t inputPredReg[NUM_PRED_REG];
-  ZReg_t inputZReg[NUM_Z_REG];
 
   unsigned char outputData[NUM_INPUT_DATA];
   uint64_t outputGenReg[NUM_GEN_REG];
   uint64_t outputPredReg[NUM_PRED_REG];
   ZReg_t outputZReg[NUM_Z_REG];
 
-  uint64_t expectGenReg[NUM_GEN_REG];
-  uint64_t expectPredReg[NUM_PRED_REG];
-  ZReg_t expectZReg[NUM_Z_REG];
+  std::array<const uint64_t, 3> rsvdPredIdx = {{13, 14, 15}};
+#ifdef XBYAK_TRANSLATE_AARCH64
+  const size_t xreg_bytes = 8;
+  const size_t vreg_bytes_to_be_preserved = 8;
+  const size_t vreg_to_preserve_start = 8;
+  const size_t num_vreg_to_preserve = 8; // VREG8 - VREG15
+  const size_t num_callee_saved_gregs =
+      sizeof(callee_saved_gregs) / sizeof(Xbyak_aarch64::Operand::Code);
+  const size_t preserved_stack_size =
+      xreg_bytes * (2 + num_callee_saved_gregs) +
+      vreg_bytes_to_be_preserved * num_vreg_to_preserve;
+#else
+  const size_t num_callee_saved_gregs =
+      sizeof(callee_saved_gregs) / sizeof(Xbyak::Operand);
+#endif
 
   void _genJitPreamble() {
-    int i;
+#ifdef XBYAK_TRANSLATE_AARCH64
+    if (num_callee_saved_gregs % 2) {
+      /* Even number is assumed. If it's odd number,
+         STR instruction should be used, because STP instruction requires
+         16-byte-aligned address. */
+      msg_err(__FILE__, __LINE__, "Unimplemented");
+    }
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
-    for (i = 0; i < NUM_GEN_REG; i += 2) {
-      // sp address must be aligned by 16.
-      stp(Xbyak_aarch64::XReg(i), Xbyak_aarch64::XReg(i + 1),
-          Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16));
+    /* sp address must be aligned by 16. */
+    CodeGeneratorAArch64::stp(
+        x29, x30,
+        Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp,
+                               -(static_cast<int64_t>(preserved_stack_size))));
+    CodeGeneratorAArch64::add(x29, CodeGeneratorAArch64::sp, xreg_bytes * 2);
+    if (num_vreg_to_preserve) {
+      if (num_vreg_to_preserve != 8) {
+        msg_err(__FILE__, __LINE__, "Unimplemented");
+      }
+      CodeGeneratorAArch64::st4(
+          (Xbyak_aarch64::VReg2D(vreg_to_preserve_start) -
+           Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 3))[0],
+          Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
+      CodeGeneratorAArch64::st4(
+          (Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 4) -
+           Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 7))[0],
+          Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
+    }
+    for (size_t i = 0; i < num_callee_saved_gregs; i += 2) {
+      CodeGeneratorAArch64::stp(Xbyak_aarch64::XReg(callee_saved_gregs[i]),
+                                Xbyak_aarch64::XReg(callee_saved_gregs[i + 1]),
+                                Xbyak_aarch64::post_ptr(x29, xreg_bytes * 2));
     }
 #else
     for (int i = 0; i < num_callee_saved_gregs; i++) {
@@ -120,15 +162,40 @@ private:
 #endif
   }
 
-  const size_t num_callee_saved_gregs =
-      sizeof(callee_saved_gregs) / sizeof(Xbyak::Operand);
-
   void _genJitPostamble() {
-#ifdef DNNL_AARCH64_JIT_AARCH64
-    for (int i = NUM_GEN_REG - 1; i >= 0; i -= 2) {
-      ldp(Xbyak_aarch64::XReg(i), Xbyak_aarch64::XReg(i - 1),
-          Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 16));
+#ifdef XBYAK_TRANSLATE_AARCH64
+    if (num_callee_saved_gregs % 2) {
+      /* Even number is assumed. If it's odd number,
+         STR instruction should be used, because STP instruction requires
+         16-byte-aligned address. */
+      msg_err(__FILE__, __LINE__, "Unimplemented");
     }
+
+    CodeGeneratorAArch64::add(x29, CodeGeneratorAArch64::sp, xreg_bytes * 2);
+
+    if (num_vreg_to_preserve) {
+      if (num_vreg_to_preserve != 8) {
+        msg_err(__FILE__, __LINE__, "Unimplemented");
+      }
+      CodeGeneratorAArch64::ld4(
+          (Xbyak_aarch64::VReg2D(vreg_to_preserve_start) -
+           Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 3))[0],
+          Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
+      CodeGeneratorAArch64::ld4(
+          (Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 4) -
+           Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 7))[0],
+          Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
+    }
+    for (size_t i = 0; i < num_callee_saved_gregs; i += 2) {
+      CodeGeneratorAArch64::ldp(Xbyak_aarch64::XReg(callee_saved_gregs[i]),
+                                Xbyak_aarch64::XReg(callee_saved_gregs[i + 1]),
+                                Xbyak_aarch64::post_ptr(x29, xreg_bytes * 2));
+    }
+
+    CodeGeneratorAArch64::ldp(
+        x29, x30,
+        Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp,
+                                static_cast<int64_t>(preserved_stack_size)));
 #else
     for (int i = num_callee_saved_gregs - 1; i >= 0; i--) {
       pop(Reg64(callee_saved_gregs[i]));
@@ -137,9 +204,10 @@ private:
     ret();
   }
 
-  /* Load data from memory to all general purpose registers */
+  /* Load data from memory to all general purpose registers,
+     except x86_64's sp and aarch64 sp */
   void _genJitLoadGenReg() {
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
     /* x0 contains memory address. */
     CodeGeneratorAArch64::mov_imm(
         x0, reinterpret_cast<uint64_t>(inputGenReg) + 16, x1);
@@ -154,10 +222,10 @@ private:
     CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(inputGenReg),
                                   x1);
     ldp(Xbyak_aarch64::XReg(0), Xbyak_aarch64::XReg(1), Xbyak_aarch64::ptr(x0));
-#else  //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     mov(rax, reinterpret_cast<uint64_t>(inputGenReg) + 8);
 
-    for (int i = 1; i < NUM_GEN_REG; i++) {
+    for (int i = 1; i < NUM_GEN_REG_INTEL; i++) {
       if (i != SP_REG_IDX_X86_64) { /* Avoid overwriting stack pointer */
         mov(Reg64(i), ptr[rax]);
       }
@@ -166,12 +234,13 @@ private:
 
     mov(rax, reinterpret_cast<uint64_t>(inputGenReg));
     mov(rax, ptr[rax]);
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
   }
 
-  /* Store data from all general purpose registers to memory */
+  /* Store data from all general purpose registers to memory,
+     except x86_64's sp and aarch64 sp */
   void _genJitStoreGenReg() {
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
     /* x0 contains memory address. */
     stp(x0, x1,
         Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp,
@@ -180,7 +249,9 @@ private:
     CodeGeneratorAArch64::mov_imm(
         x0, reinterpret_cast<uint64_t>(outputGenReg) + 16, x1);
     for (int i = 2; i < NUM_GEN_REG; i++) {
-      str(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
+      if (i != SP_REG_IDX_AARCH64) {
+        str(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
+      }
     }
 
     CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputGenReg),
@@ -189,12 +260,12 @@ private:
         Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp,
                                 16)); // pop data of x0, x1
     stp(x2, x3, Xbyak_aarch64::ptr(x0));
-#else  //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(rax);
     mov(rax, reinterpret_cast<uint64_t>(outputGenReg) + 8);
 
     // r1 - r31
-    for (int i = 1; i < NUM_GEN_REG; i++) {
+    for (int i = 1; i < NUM_GEN_REG_INTEL; i++) {
       mov(ptr[rax], Reg64(i));
       add(rax, 8);
     }
@@ -203,11 +274,11 @@ private:
     mov(rax, reinterpret_cast<uint64_t>(outputGenReg));
     pop(rbx);
     mov(ptr[rax], rbx);
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
   }
 
   void _genJitLoadPredReg() {
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
     stp(x0, x1,
         Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
@@ -220,21 +291,21 @@ private:
 
     ldp(x0, x1,
         Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 16)); // pop x0, x1
-#else  //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(inputPredReg));
 
-    for (int i = 0; i < NUM_PRED_REG; i++) {
+    for (int i = 0; i < NUM_PRED_REG_INTEL; i++) {
       kmovq(Opmask(i), ptr[r8]);
       add(r8, 8);
     }
 
     pop(r8);
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
   }
 
   void _genJitStorePredReg() {
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
     stp(x0, x1,
         Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
@@ -247,21 +318,21 @@ private:
 
     ldp(x0, x1,
         Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 16)); // pop x0, x1
-#else  //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(outputPredReg));
 
-    for (int i = 0; i < NUM_PRED_REG; i++) {
+    for (int i = 0; i < NUM_PRED_REG_INTEL; i++) {
       kmovq(ptr[r8], Opmask(i));
       add(r8, 8);
     }
 
     pop(r8);
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
   }
 
   void _genJitLoadZReg() {
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
     stp(x0, x1,
         Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
@@ -274,7 +345,7 @@ private:
 
     ldp(x0, x1,
         Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 16)); // pop x0, x1
-#else  //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(inputZReg));
 
@@ -284,11 +355,11 @@ private:
     }
 
     pop(r8);
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
   }
 
   void _genJitStoreZReg() {
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
     stp(x0, x1,
         Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
@@ -301,7 +372,7 @@ private:
 
     ldp(x0, x1,
         Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 16)); // pop x0, x1
-#else  //#ifdef DNNL_AARCH64_JIT_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(outputZReg));
 
@@ -311,7 +382,7 @@ private:
     }
 
     pop(r8);
-#endif //#ifdef DNNL_AARCH64_JIT_AARCH64
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
   }
 
   void _genJitLoadAllReg() {
@@ -327,7 +398,7 @@ private:
   }
 
   void _genJitClearGenReg() {
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
     for (int i = 0; i < NUM_GEN_REG; i++) {
       if (i != SP_REG_IDX_AARCH64) {
         Xbyak_aarch64::XReg xreg(i);
@@ -345,7 +416,7 @@ private:
   }
 
   void _genJitClearPredReg() {
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
     for (int i = 0; i < NUM_PRED_REG; i++) {
       Xbyak_aarch64::PReg preg(i);
       eor(preg.b, preg / Xbyak_aarch64::T_z, preg.b, preg.b);
@@ -359,7 +430,7 @@ private:
   }
 
   void _genJitClearZReg() {
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
     for (int i = 0; i < NUM_Z_REG; i++) {
       Xbyak_aarch64::ZRegD zreg(i);
       eor(zreg, zreg, zreg);
@@ -453,19 +524,109 @@ public:
   TestGenerator() {
     clearInputDataAll();
     clearOutputDataAll();
-    setExpectDataAll();
+    initExpectModeAll();
+  }
+
+  enum DataType {
+    B_DT,
+    H_DT,
+    S_DT,
+    D_DT,
+    SP_DT,
+    DP_DT,
+  };
+
+  unsigned char inputData[NUM_INPUT_DATA];
+  uint64_t inputGenReg[NUM_GEN_REG];
+  uint64_t inputPredReg[NUM_PRED_REG];
+  ZReg_t inputZReg[NUM_Z_REG];
+
+  CheckMode checkGenRegMode[NUM_GEN_REG][NUM_BYTES_GEN_REG];
+  CheckMode checkPredRegMode[NUM_PRED_REG][NUM_BYTES_PRED_REG];
+  CheckMode checkZRegMode[NUM_Z_REG][NUM_BYTES_Z_REG];
+
+  void setExpectData(CheckMode *ar, size_t row, size_t col, CheckMode mode) {
+    for (size_t r = 0; r < row; r++) {
+      for (size_t c = 0; c < col; c++) {
+        ar[col * r + c] = mode;
+      }
+    }
+  }
+
+  void initExpectModeAll() {
+    /* Basically, compare to x86_64's value */
+    setExpectData(&(checkGenRegMode[0][0]), NUM_GEN_REG, NUM_BYTES_GEN_REG,
+                  CMP_INTEL);
+    setExpectData(&(checkPredRegMode[0][0]), NUM_PRED_REG, NUM_BYTES_PRED_REG,
+                  CMP_INTEL);
+    setExpectData(&(checkZRegMode[0][0]), NUM_Z_REG, NUM_BYTES_Z_REG,
+                  CMP_INTEL);
+
+    /* AArch64's Stack Pointer */
+    for (size_t i = 0; i < NUM_BYTES_GEN_REG; i++) {
+      checkGenRegMode[SP_REG_IDX_AARCH64][i] = CMP_INIT_VAL;
+    }
+
+    /* x86_64's Stack Pointer
+       This register's value will not change,
+       because this register is not used by x86_64's JIT code */
+    for (size_t i = 0; i < NUM_BYTES_GEN_REG; i++) {
+      checkGenRegMode[SP_REG_IDX_X86_64][i] = CMP_INIT_VAL;
+    }
+
+    /* x16 - x27: temporary use
+       x28:translator frame use */
+    for (int j = 16; j <= 27; j++) {
+      for (size_t i = 0; i < NUM_BYTES_GEN_REG; i++) {
+        checkGenRegMode[j][i] = NO_CHECK;
+      }
+    }
+
+    /* x29, x30: no use */
+    for (size_t i = 0; i < NUM_BYTES_GEN_REG; i++) {
+      checkGenRegMode[29][i] = CMP_INIT_VAL;
+      checkGenRegMode[30][i] = CMP_INIT_VAL;
+    }
+
+    /* p8 - p12: temporary use */
+    for (int j = 8; j <= 12; j++) {
+      for (size_t i = 0; i < NUM_BYTES_PRED_REG; i++) {
+        checkPredRegMode[j][i] = NO_CHECK;
+      }
+    }
+
+    /* p13, p14, p15 is used by xbyak_translator frame work.
+     so that these are basically not changed. */
+    for (auto &e : rsvdPredIdx) {
+      for (size_t i = 0; i < NUM_BYTES_PRED_REG; i++) {
+        checkPredRegMode[e][i] = CMP_INIT_VAL;
+      }
+    }
   }
 
   bool isOutputJitOn() { return output_jit_on_; }
 
   bool isExecJitOn() { return exec_jit_on_; }
 
-  void msg_warn(const std::string &msg) {
-    std::cerr << "[WANR]:" << msg << std::endl;
+  void msg_warn(const char *fileName, const int lineNum,
+                const std::string &msg) {
+    msg_warn(fileName, lineNum, msg.c_str());
   }
 
-  void msg_err(const std::string &msg) {
-    std::cerr << "[ERRR]:" << msg << std::endl;
+  void msg_warn(const char *fileName, const int lineNum, const char *msg) {
+    std::cerr << "[WARN]:" << fileName << ":" << lineNum << ":" << msg
+              << std::endl;
+  }
+
+  void msg_err(const char *fileName, const int lineNum,
+               const std::string &msg) {
+    msg_err(fileName, lineNum, msg.c_str());
+  }
+
+  void msg_err(const char *fileName, const int lineNum, const char *msg) {
+    std::cerr << "[ERR ]:" << fileName << ":" << lineNum << ":" << msg
+              << std::endl;
+    exit(1);
   }
 
   void parseArgs(int argc, char *argv[]) {
@@ -475,17 +636,17 @@ public:
       exec_jit_on_ = std::stoi(argv[2]);
       break;
     case 2:
-      msg_warn("Invalid # of args=" + std::to_string(argc));
+      msg_warn(__FILE__, __LINE__, "Invalid # of args=" + std::to_string(argc));
       output_jit_on_ = std::stoi(argv[1]);
       exec_jit_on_ = 1;
       break;
     case 1:
-      msg_warn("Invalid # of args=" + std::to_string(argc));
+      msg_warn(__FILE__, __LINE__, "Invalid # of args=" + std::to_string(argc));
       output_jit_on_ = 1;
       exec_jit_on_ = 1;
       break;
     default:
-      msg_warn("Invalid # of args=" + std::to_string(argc));
+      msg_warn(__FILE__, __LINE__, "Invalid # of args=" + std::to_string(argc));
       output_jit_on_ = 1;
       exec_jit_on_ = 1;
       break;
@@ -543,12 +704,6 @@ public:
     }
   }
 
-  template <class T> void clearData(int num, T *ptr) {
-    for (int i = 0; i < num; i++) {
-      ptr[i] = 0;
-    }
-  }
-
   void clearDataForZReg(int num, ZReg_t *ptr) {
     for (int i = 0; i < num; i++) {
       for (int j = 0; j < 8; j++) {
@@ -572,8 +727,8 @@ public:
   }
 
   void clearInputDataForGenReg() {
-#if 0
-    clearData(NUM_GEN_REG, inputGenReg);
+#if 1
+    clearData(inputGenReg);
 #else
     inputGenReg[0] = 0x0001020304050607;
     inputGenReg[1] = 0x08090a0b0c0d0e0f;
@@ -596,7 +751,7 @@ public:
 
   void clearInputDataForPredReg() {
 #if 1
-    clearData(NUM_PRED_REG, inputPredReg);
+    //    clearData(NUM_PRED_REG, inputPredReg);
 #else
     inputPredReg[0] = 0x0001020304050607;
     inputPredReg[1] = 0x08090a0b0c0d0e0f;
@@ -617,71 +772,34 @@ public:
 #endif
   }
 
-  void clearInputDataForZReg() {
-#if 0
-    clearDataForZReg(NUM_Z_REG, inputZReg);
-#endif
-#if 0
-    for (int i = 0; i < NUM_Z_REG; i++) {
-      for (int j = 0; j < 8; j++) {
-        inputZReg[i].d_dt[j] = j + (i << 16);
-      }
-    }
-#endif
-    for (int j = 0; j < 8; j++) {
-      inputZReg[0].d_dt[j] = j + (0 << 16);
-    }
+  template <class T> void clearData(T &ar) { memset(ar, 0, sizeof(ar)); }
 
-    for (int j = 0; j < 16; j++) {
-      inputZReg[1].s_dt[j] = j + (0 << 16);
-    }
+  //  void clearExpectDataForGenReg() { clearExpectData(checkGenRegMode); }
 
-    for (int j = 0; j < 32; j++) {
-      inputZReg[2].h_dt[j] = j + (0 << 16);
-    }
+  //  void clearExpectDataForPredReg() { clearData(NUM_PRED_REG,
+  //  checkPredRegMode);
+  //  }
 
-    for (int j = 0; j < 64; j++) {
-      inputZReg[3].b_dt[j] = j + (0 << 16);
-    }
+  //  void clearExpectDataForZReg() { clearDataForZReg(NUM_Z_REG,
+  //  checkZRegMode); }
 
-    inputZReg[1].sp_dt[0] = float(0.125);
-    inputZReg[2].sp_dt[0] = float(0.125);
-  }
+  //  void setExpectDataForGenReg() { setData(NUM_GEN_REG, checkGenRegMode); }
 
-  void clearOutputDataForGenReg() { clearData(NUM_GEN_REG, outputGenReg); }
+  //  void setExpectDataForPredReg() { setData(NUM_PRED_REG, checkPredRegMode);
+  //  }
 
-  void clearOutputDataForPredReg() { clearData(NUM_PRED_REG, outputPredReg); }
-
-  void clearOutputDataForZReg() { clearDataForZReg(NUM_Z_REG, outputZReg); }
-
-  void clearExpectDataForGenReg() { clearData(NUM_GEN_REG, expectGenReg); }
-
-  void clearExpectDataForPredReg() { clearData(NUM_PRED_REG, expectPredReg); }
-
-  void clearExpectDataForZReg() { clearDataForZReg(NUM_Z_REG, expectZReg); }
-
-  void setExpectDataForGenReg() { setData(NUM_GEN_REG, expectGenReg); }
-
-  void setExpectDataForPredReg() { setData(NUM_PRED_REG, expectPredReg); }
-
-  void setExpectDataForZReg() { setDataForZReg(NUM_Z_REG, expectZReg); }
+  //  void setExpectDataForZReg() { setDataForZReg(NUM_Z_REG, checkZRegMode); }
 
   void clearInputDataAll() {
-    clearInputDataForGenReg();
-    clearInputDataForPredReg();
-    clearInputDataForZReg();
+    clearData(inputGenReg);
+    clearData(inputPredReg);
+    clearData(inputZReg);
   }
 
   void clearOutputDataAll() {
-    clearOutputDataForGenReg();
-    clearOutputDataForPredReg();
-    clearOutputDataForZReg();
-  }
-
-  void setExpectDataAll() {
-    setExpectDataForGenReg();
-    setExpectDataForPredReg();
-    setExpectDataForZReg();
+    clearData(outputGenReg);
+    clearData(outputPredReg);
+    clearData(outputZReg);
   }
 
   void dumpInputReg() {
@@ -696,154 +814,166 @@ public:
     _dumpOutputZReg();
   }
 
-  template <class T>
-  void _dumpExpectReg(std::string msg, std::string reg, int num, T *ptr,
-                      T *expPtr) {
+  void _dumpCheckRegCore(uint64_t dut, uint64_t initData, CheckMode *checkMode,
+                         bool isLast = false) {
 
-    int width = sizeof(T);
+    for (int c = sizeof(uint64_t) - 1; c >= 0; c--) {
+      const uint64_t dut_mskd_shftd = (dut >> (8 * c)) & 0xFF;
+      const uint64_t init_mskd_shftd = (initData >> (8 * c)) & 0xFF;
+      CheckMode mode = checkMode[c];
+
+      if (mode == CMP_INTEL) { /* Compare to x86_64's result */
+        std::cout << std::hex << std::setw(2) << dut_mskd_shftd;
+      } else if (mode == CMP_INIT_VAL) { /* Compare to own initial value */
+#ifdef XBYAK_TRANSLATE_AARCH64
+        if (dut_mskd_shftd == init_mskd_shftd) {
+          std::cout << checkOK;
+        } else {
+          std::cout << checkNG;
+        }
+#else                                //#ifdef XBYAK_TRANSLATE_AARCH64
+        std::cout << checkOK;
+#endif                               //#ifdef XBYAK_TRANSLATE_AARCH64
+      } else if (mode == NO_CHECK) { /* No need to compare */
+        std::cout << checkIgnore;
+      } else { /* Something wrong */
+        msg_err(__FILE__, __LINE__,
+                std::string(":Invalid CheckMode=") + std::to_string(mode));
+      }
+
+      /* Every 32 bits, except last */
+      if (c % 4 == 0 && c != 0) {
+        std::cout << "_";
+      }
+    }
+
+    if (isLast) {
+      std::cout << "_";
+    }
+  }
+
+  void _dumpCheckRegOK(size_t num) {
+    for (int i = 0; i < num; i++) {
+      std::cout << checkOK;
+
+      /* Every 32 bits, except last */
+      if ((i + 1) % 4 == 0 && i + 1 != num) {
+        std::cout << "_";
+      }
+
+      /* Every128 bits, except last */
+      if ((i + 1) % 16 == 0 && i + 1 != num) {
+        std::cout << "_";
+      }
+    }
+
+    std::cout << std::endl;
+  }
+
+  template <class T>
+  void _dumpCheckReg(std::string msg, std::string reg, const int row,
+                     const int row_intel, const int col, T *output,
+                     CheckMode *expPtr, T *input) {
     std::ios::fmtflags flagsSaved = std::cout.flags();
 
-    for (int i = 0; i < num; i++) {
-      char fillSaved;
+    /* It is assumed AArch64 has greater or equal num of registers. */
+    if (row < row_intel) {
+      msg_err(__FILE__, __LINE__, "Unimplemented");
+    }
+    /* It is assumed register size is aligned by 8 bytes. */
+    if (sizeof(T) % sizeof(uint64_t)) {
+      msg_err(__FILE__, __LINE__, "Unimplemented");
+    }
 
-      std::cout << std::left << std::setw(6) << msg << ":" << reg << "["
-                << std::oct << std::right << std::setw(2) << i
-                << "]:" << std::hex;
+    for (int r = 0; r < row; r++) {
+      std::cout << std::dec << std::setw(6) << std::left << msg << ":" << reg
+                << "[" << std::right << std::setw(2) << r << "]:";
 
-      fillSaved = std::cout.fill('0');
+      char fillSaved = std::cout.fill('0');
 
-      for (int j = 15; j >= 0; j--) {
-        unsigned tmpExp = (expPtr[i] >> (4 * j)) & 0xF;
-        unsigned tmpData = (ptr[i] >> (4 * j)) & 0xF;
+#if 0
+#ifndef XBYAK_TRANSLATE_AARCH64
+      if (r >= row_intel) {
+	_dumpCheckRegOK(sizeof(T));
+	std::cout.fill(fillSaved);
+        continue;
+      }
+#endif //#ifndef XBYAK_TRANSLATE_AARCH64
+#endif
 
-        assert(tmpExp == 0xF || tmpExp == 0);
+      const size_t num64 = sizeof(T) / sizeof(uint64_t);
+      for (int sub_r = num64 - 1; sub_r >= 0; sub_r--) {
+        uint64_t dut;
+        uint64_t initData;
+        void *addrOut = &(output[r]);
+        void *addrIn = &(input[r]);
+        void *addrExp = &(expPtr[r]);
+        std::memcpy(&dut, addrOut + sizeof(uint64_t) * sub_r, sizeof(uint64_t));
+        std::memcpy(&initData, addrIn + sizeof(uint64_t) * sub_r,
+                    sizeof(uint64_t));
 
-        if (tmpExp) {
-          std::cout << tmpData;
-        } else {
-          std::cout << ".";
-        }
+        _dumpCheckRegCore(dut, initData,
+                          expPtr + sizeof(T) * r + sizeof(uint64_t) * sub_r,
+                          sub_r != 0);
 
-        if (j == 8) {
+        if ((sub_r % 2 == 0) && (sub_r != 0)) {
           std::cout << "_";
         }
       }
 
       std::cout << std::endl;
       std::cout.fill(fillSaved);
-    }
+    } //    for (int r = 0; r < row; r++) {
 
     std::cout.flags(flagsSaved);
   }
 
-  void _dumpExpectZReg(std::string msg, std::string reg, int num, ZReg_t *ptr,
-                       ZReg_t *expPtr) {
-    const int width = 8;
-
-    for (int i = 0; i < num; i++) {
-      std::ios::fmtflags flagsSaved = std::cout.flags();
-
-      std::cout << std::left << std::setw(6) << msg << ":" << reg << "["
-                << std::right << std::setw(2) << i << "]:" << std::hex;
-
-      char fillSaved = std::cout.fill('0');
-      for (int j = (sizeof(ZReg_t) / sizeof(uint64_t)) - 1; j >= 0; j--) {
-        for (int k = 15; k >= 0; k--) {
-          unsigned tmpExp = (expPtr[i].d_dt[j] >> (4 * k)) & 0xF;
-          unsigned tmpData = (ptr[i].d_dt[j] >> (4 * k)) & 0xF;
-
-          assert(tmpExp == 0xF || tmpExp == 0);
-
-          if (tmpExp) {
-            std::cout << tmpData;
-          } else {
-            std::cout << ".";
-          }
-
-          if ((k % 15 == 8) || ((k == 0) && (j % 2 == 0) && (j != 0))) {
-            std::cout << "_";
-          }
-
-          //          if ((k % 4 == 0) && (k!=0)) {
-          //            std::cout << "_";
-          //          }
-        }
-
-        if (j != 0) {
-          std::cout << "_";
-        }
-      }
-
-      std::cout << std::dec << std::endl;
-
-      std::cout.flags(flagsSaved);
-      std::cout.fill(fillSaved);
-    }
+  void _dumpCheckGenReg() {
+    _dumpCheckReg(std::string("Check "), std::string("G"), NUM_GEN_REG,
+                  NUM_GEN_REG_INTEL, NUM_BYTES_GEN_REG, &(outputGenReg[0]),
+                  &(checkGenRegMode[0][0]), &(inputGenReg[0]));
   }
 
-  void _dumpExpectGenReg() {
-    _dumpExpectReg(std::string("Expect"), std::string("G"), NUM_GEN_REG,
-                   outputGenReg, expectGenReg);
+  void _dumpCheckPredReg() {
+    _dumpCheckReg(std::string("Check "), std::string("P"), NUM_PRED_REG,
+                  NUM_PRED_REG_INTEL, NUM_BYTES_PRED_REG, &(outputPredReg[0]),
+                  &(checkPredRegMode[0][0]), &(inputPredReg[0]));
   }
 
-  void _dumpExpectPredReg() {
-    _dumpExpectReg(std::string("Expect"), std::string("P"), NUM_PRED_REG,
-                   outputPredReg, expectPredReg);
+  void _dumpCheckZReg() {
+    _dumpCheckReg(std::string("Check "), std::string("Z"), NUM_Z_REG,
+                  NUM_Z_REG_INTEL, NUM_BYTES_Z_REG, &(outputZReg[0]),
+                  &(checkZRegMode[0][0]), &(inputZReg[0]));
   }
 
-  void _dumpExpectZReg() {
-    _dumpExpectZReg(std::string("Expect"), std::string("Z"), NUM_Z_REG,
-                    outputZReg, expectZReg);
+  void dumpCheckReg() {
+    _dumpCheckGenReg();
+    _dumpCheckPredReg();
+    _dumpCheckZReg();
   }
 
-  void dumpExpectReg() {
-    _dumpExpectGenReg();
-    _dumpExpectPredReg();
-    _dumpExpectZReg();
-  }
-
-  virtual void genJitTestCode() = 0; // Pure virtual function.
-
-  void setExpectGenReg(Reg64 &reg) { expectGenReg[reg.getIdx()] |= 0xFFFFFFFF; }
-
-  void setExpectPredReg(Opmask &reg) {
-    expectGenReg[reg.getIdx()] |= 0xFFFFFFFF;
-  }
-
-  void setExpectZReg(Zmm &reg) {
-    for (int i = 0; i < 8; i++) {
-      expectZReg[reg.getIdx()].d_dt[i] |= 0xFFFFFFFF;
-    }
-  }
-
-  void clearExpectGenReg(Reg64 &reg) { expectGenReg[reg.getIdx()] = 0; }
-
-  void clearExpectPredReg(Opmask &reg) { expectGenReg[reg.getIdx()] = 0; }
-
-  void clearExpectZReg(Zmm &reg) {
-    for (int i = 0; i < 8; i++) {
-      expectZReg[reg.getIdx()].d_dt[i] = 0;
-    }
-  }
+  virtual void genJitTestCode() = 0;     // Pure virtual function.
+  virtual void setInitialRegValue() = 0; // Pure virtual function.
+  virtual void setCheckRegFlagAll() = 0; // Pure virtual function.
 
   const xbyak_code_ptr_t *gen() {
+    setInitialRegValue();
+    setCheckRegFlagAll();
+
+    /* Save values of callee saved registers */
     _genJitPreamble();
 
-    _genJitLoadGenReg();  // Generate jit code to set initial value to gen
-                          // registers.
-    _genJitLoadPredReg(); // Generate jit code to set initial value to pred
-    // registers.
-    _genJitLoadZReg(); // Generate jit code to set initial value to z registers.
+    /* Generate jit code to set initial value to GenReg, PredReg, ZReg,
+       except x86_64's sp and aarch64 sp */
+    _genJitLoadAllReg();
 
+    /* Generate JIT code to be tested. */
     genJitTestCode();
 
-    _genJitStoreGenReg();  // Generate jit code to dump last value to gen
-                           // registers.
-    _genJitStorePredReg(); // Generate jit code to dump last value to gen
-                           // registers.
-    _genJitStoreZReg();    // Generate jit code to dump last value to gen
-    // registers.
+    /* Generate jit code to store GenReg, PredReg, ZReg values to memory */
+    _genJitStoreAllReg();
 
+    /* Recover values of callee saved registers */
     _genJitPostamble();
 
     ready();
@@ -857,7 +987,7 @@ public:
   void dumpJitCode() {
     FILE *fp = fopen("hoge", "w");
 
-#ifdef DNNL_AARCH64_JIT_AARCH64
+#ifdef XBYAK_TRANSLATE_AARCH64
     fwrite(CodeArrayAArch64::top_, CodeArrayAArch64::size_, 4, fp);
 #else
     fwrite(CodeArray::top_, CodeArray::size_, 1, fp);
