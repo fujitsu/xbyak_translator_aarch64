@@ -1,0 +1,25 @@
+#!/bin/sh
+
+formatting_files() {
+    file="${1}"
+    if [ -f $file ]; then
+	case "$file" in
+	    *.c | *.h | *.hpp | *.cpp )
+		clang-format -i ${1}
+		git add ${1}
+		;;
+	    *)
+		;;
+	esac
+    fi
+}
+
+_main(){
+    echo "Running clang-format."
+    for file in `git diff-index --cached --name-only HEAD`
+    do
+	formatting_files "${file}"
+    done
+}
+
+_main
