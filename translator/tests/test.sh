@@ -228,7 +228,7 @@ dump_disassemble() {
 	echo "JIT code dump file not found!"
     fi
 
-    ${DUMP_PREFIX}${OBJDUMP} -D -b binary -m ${DUMP_OPT} ${BIN_FILE} > ${ASM_FILE}
+    ${DUMP_PREFIX}${OBJDUMP} -D -b binary -M intel -m ${DUMP_OPT} ${BIN_FILE} > ${ASM_FILE}
 }
 
 debug_dump_option() {
