@@ -86,6 +86,7 @@ xt_reg_idx_t xt_get_register_index(const xed_decoded_inst_t *p,
   } else {
     std::cerr << __FILE__ << ":" << __LINE__ << ":Under construction!"
               << std::endl;
+    assert(NULL);
     exit(1);
   }
 }
@@ -106,6 +107,7 @@ unsigned int xt_get_register_index(const xed_reg_enum_t r) {
   } else {
     std::cerr << __FILE__ << ":" << __LINE__ << ":Under construction!"
               << std::endl;
+    assert(NULL);
     exit(1);
   }
 }
@@ -2205,5 +2207,133 @@ void print_operands(xed_decoded_inst_t *xedd) {
                         xed_decoded_inst_operand_element_type(xedd, i)));
     printf(" %10s\n", xed_reg_class_enum_t2str(xed_reg_class(
                           xed_decoded_inst_get_reg(xedd, op_name))));
+  }
+}
+
+struct xt_a64fx_operands_struct_t {
+  unsigned int dstIdx = XT_REG_INVALID;
+  unsigned int maskIdx = XT_REG_INVALID;
+  unsigned int srcIdx = XT_REG_INVALID;
+  unsigned int src2Idx = XT_REG_INVALID;
+  unsigned int vTmpIdx = XT_REG_INVALID;
+  unsigned int zTmpIdx = XT_REG_INVALID;
+  xt_predicate_type_t PredType = A64_PRED_NO;
+  xt_operand_type_t dstType;
+  xt_operand_type_t srcType;
+  xt_operand_type_t src2Type;
+
+  xed_uint_t EVEXb;
+  xed_uint_t dstWidth;
+  xed_uint64_t uimm;
+  xed_int64_t simm;
+};
+
+void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
+                                 xt_a64fx_operands_struct_t *a64) {
+  unsigned int i, noperands;
+
+  unsigned int baseIdx = XT_REG_INVALID;
+  unsigned int indexIdx = XT_REG_INVALID;
+  unsigned int segIdx = XT_REG_INVALID;
+
+  xed_uint_t scale = 0;
+  xed_int64_t disp = 0;
+  xed_bool_t isRegOperand;
+  xed_bool_t isMasking = xed_decoded_inst_masking(p);
+  xed_bool_t isMerging = xed_decoded_inst_merging(p);
+  xed_bool_t isZeroing = xed_decoded_inst_zeroing(p);
+  const xed_inst_t *xi = xed_decoded_inst_inst(p);
+  //  xed_reg_enum_t dstReg = xed_decoded_inst_get_reg(p, opDst);
+  xed_reg_enum_t seg, base, indx;
+  xed_memop_t mem_op;
+  xed_uint_t ibits;
+
+  /* Decode predicate information */
+  if (!isMasking) {
+    a64->PredType = A64_PRED_NO;
+  } else if (isMerging) {
+    a64->PredType = A64_PRED_MERG;
+  } else if (isZeroing) {
+    a64->PredType = A64_PRED_ZERO;
+  } else {
+    std::cerr << __FILE__ << ":" << __LINE__
+              << ":Unsupported predicate type. Please contact to "
+                 "system administrator!"
+              << std::endl;
+    exit(1);
+  }
+
+  /* Get # of operands */
+  noperands = xed_inst_noperands(xi);
+  if (!(noperands == 3 || noperands == 4)) { /* Either (Dst, src, src2) or (Dst,
+                                                mask, src, src2) is assumed. */
+    std::cerr << __FILE__ << ":" << __LINE__
+              << ":Unsupported # of operands. Please contact to "
+                 "system administrator!"
+              << std::endl;
+    exit(1);
+  }
+
+  /* Get Dst register index */
+  const xed_operand_t *opDst = xed_inst_operand(xi, 0);
+  assert((static_cast<xed_bool_t>(
+      xed_operand_is_register(xed_operand_name(opDst)))));
+  a64->dstType = A64_OP_REG;
+  a64->dstIdx = xt_get_register_index(p, 0);
+  /* Check if dst is xmm, ymm, or zmm. */
+  a64->dstWidth = xed_decoded_inst_operand_length_bits(p, 0);
+  xed_assert(a64->dstWidth == 128 || dstBits == 256 || dstBits == 512);
+
+  /* If mask info exist, get mask register index */
+  if (noperands == 4) {
+    const xed_operand_t *opMask = xed_inst_operand(xi, 1);
+    assert((static_cast<xed_bool_t>(
+        xed_operand_is_register(xed_operand_name(opMask)))));
+    a64->maskIdx = xt_get_register_index(p, 1);
+  }
+
+  /* Get Src register index */
+  i = noperands == 3 ? 1 : 2;
+  const xed_operand_t *opSrc = xed_inst_operand(xi, i);
+  assert((static_cast<xed_bool_t>(
+      xed_operand_is_register(xed_operand_name(opSrc)))));
+  a64->srcType = A64_OP_REG;
+  a64->srcIdx = xt_get_register_index(p, i);
+
+  /* Get Src2 information */
+  i = noperands == 3 ? 2 : 3;
+  const xed_operand_t *opSrc2 = xed_inst_operand(xi, i);
+
+  if ((static_cast<xed_bool_t>(
+          xed_operand_is_register(xed_operand_name(opSrc))))) {
+    a64->src2Type = A64_OP_REG;
+    a64->src2Idx = xt_get_register_index(p, i);
+  } else {
+    if (xed_decoded_inst_is_broadcast(p)) {
+      a64->src2Type = A64_OP_MBCST;
+    } else {
+      a64->src2Type = A64_OP_MEM;
+    }
+
+    xt_decode_memory_operand_designated(p, i, &baseIdx, &disp, &indexIdx,
+                                        &scale, &segIdx);
+    if (segIdx != XT_REG_INVALID) {
+      std::cerr << __FILE__ << ":" << __LINE__
+                << ":Unsupported addressing mode. Please contact to "
+                   "system administrator!"
+                << std::endl;
+      exit(1);
+    }
+    xed_assert(segIdx == XT_REG_INVALID);
+
+    /* Construct address register */
+    xt_get_addr_reg(base, disp, indexIdx, scale, X_TMP_ADDR, X_TMP_0, X_TMP_1);
+  }
+
+  ibits = xed_decoded_inst_get_immediate_width_bits(p);
+  if (xed_decoded_inst_get_immediate_is_signed(p)) {
+    xed_int64_t x = xed_decoded_inst_get_signed_immediate(p);
+  } else {
+    xed_uint64_t x = xed_decoded_inst_get_unsigned_immediate(p);
   }
 }
