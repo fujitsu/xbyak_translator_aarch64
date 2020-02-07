@@ -15,39 +15,50 @@
  *******************************************************************************/
 #include "test_generator.h"
 
-const float testData[16] = {3.5, 4.6, 5.8, 100.0,
-			    3.5, 4.6, 5.8, 100.0,
-			    3.5, 4.6, 5.8, 100.0,
-			    3.5, 4.6, 5.8, 100.0};
-
 class TestPtnGenerator : public TestGenerator {
 public:
+  void setInitialRegValue() {
+    /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+  }
+
+  void setCheckRegFlagAll() {
+    /* Here modify arrays of checkGenRegMode, checkPredRegMode, checkZRegMode */
+  }
+
   void genJitTestCode() {
+    /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vmulps(Zmm(0), Zmm(1), Zmm(2));
   }
 };
 
-
-  
-  
 int main(int argc, char *argv[]) {
+  /* Initializing arrays of inputData, inputGenReg, inputPredReg, inputZReg,
+   * checkGenRegMode, checkPredRegMode,checkZRegMode */
   TestPtnGenerator gen;
+
+  /* Set bool output_jit_on_, bool exec_jit_on_ = 0; */
   gen.parseArgs(argc, argv);
 
+  /* Generate JIT code and get function pointer */
   void (*f)();
   if (gen.isOutputJitOn()) {
-    f = (void (*)())gen.gen(); // Generate JIT code
+    f = (void (*)())gen.gen();
   }
 
-  gen.dumpInputReg(); // Dump data for initializing registers.
-  gen.dumpJitCode(); // Dump JIT code
+  /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
+   * inputZReg. */
+  gen.dumpInputReg();
 
+  /* Dump generated JIT code to a binary file */
+  gen.dumpJitCode();
+
+  /* 1:Execute JIT code, 2:dump all register values, 3:dump register values to
+   * be checked */
   if (gen.isExecJitOn()) {
-    f(); // Execute JIT code
-    gen.dumpOutputReg(); // Dump register data.
-    gen.dumpExpectReg(); // Dump register data for checking.
+    f();                 /* Execute JIT code */
+    gen.dumpOutputReg(); /* Dump all register values */
+    gen.dumpCheckReg();  /* Dump register values to be checked */
   }
-
 
   return 0;
 }
