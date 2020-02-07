@@ -59,10 +59,14 @@ typedef uint8_t xbyak_code_ptr_t;
 using namespace Xbyak;
 
 union ZReg_t {
-  uint8_t b_dt[64];
-  uint16_t h_dt[32];
-  uint32_t s_dt[16];
-  uint64_t d_dt[8];
+  uint8_t ub_dt[64];
+  uint16_t uh_dt[32];
+  uint32_t us_dt[16];
+  uint64_t ud_dt[8];
+  int8_t sb_dt[64];
+  int16_t sh_dt[32];
+  int32_t ss_dt[16];
+  int64_t sd_dt[8];
   float sp_dt[16];
   double dp_dt[8];
 };
@@ -474,9 +478,10 @@ private:
 
       char fillSaved = std::cout.fill('0');
       for (int j = (sizeof(ZReg_t) / sizeof(uint64_t)) - 1; j >= 0; j--) {
-        std::cout << std::setw(width) << (((ptr[i].d_dt[j]) >> 32) & 0xFFFFFFFF)
-                  << "_" << std::setw(width)
-                  << (((ptr[i].d_dt[j]) >> 0) & 0xFFFFFFFF);
+        std::cout << std::setw(width)
+                  << (((ptr[i].ud_dt[j]) >> 32) & 0xFFFFFFFF) << "_"
+                  << std::setw(width)
+                  << (((ptr[i].ud_dt[j]) >> 0) & 0xFFFFFFFF);
         if (j != 0) {
           std::cout << "_";
         }
@@ -537,6 +542,7 @@ public:
   };
 
   unsigned char inputData[NUM_INPUT_DATA];
+
   uint64_t inputGenReg[NUM_GEN_REG];
   uint64_t inputPredReg[NUM_PRED_REG];
   ZReg_t inputZReg[NUM_Z_REG];
@@ -669,7 +675,7 @@ public:
     // Z reg (Zmm and ZReg)
     for (i = 0; i < NUM_Z_REG; i++) {
       for (j = 0; j < 8; j++) {
-        inputZReg[i].d_dt[j] = 0;
+        inputZReg[i].ud_dt[j] = 0;
       }
     }
   }
@@ -690,7 +696,7 @@ public:
     // Z reg (Zmm and ZReg)
     for (i = 0; i < NUM_Z_REG; i++) {
       for (j = 0; j < 8; j++) {
-        outputZReg[i].d_dt[j] = 0;
+        outputZReg[i].ud_dt[j] = 0;
       }
     }
   }
@@ -707,7 +713,7 @@ public:
   void clearDataForZReg(int num, ZReg_t *ptr) {
     for (int i = 0; i < num; i++) {
       for (int j = 0; j < 8; j++) {
-        ptr[i].d_dt[j] = 0;
+        ptr[i].ud_dt[j] = 0;
       }
     }
   }
@@ -721,7 +727,7 @@ public:
   void setDataForZReg(int num, ZReg_t *ptr) {
     for (int i = 0; i < num; i++) {
       for (int j = 0; j < 8; j++) {
-        ptr[i].d_dt[j] = std::numeric_limits<uint64_t>::max();
+        ptr[i].ud_dt[j] = std::numeric_limits<uint64_t>::max();
       }
     }
   }
