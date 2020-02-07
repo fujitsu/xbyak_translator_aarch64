@@ -1,7 +1,7 @@
 void translateVMULPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_struct_t a64;
-  xt_construct_a64fx_operands(p, a64);
+  xt_construct_a64fx_operands(p, &a64);
 
   if (false ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&

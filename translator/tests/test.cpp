@@ -17,43 +17,47 @@
 
 class TestPtnGenerator : public TestGenerator {
 public:
-  void genJitTestCode() {
-    for (int i = 0; i < 31; i++) {
-      //      vmulps(Zmm(i), Zmm((i+1)%32), Zmm((i+2)%32));
-    }
+  void setInitialRegValue() {
+    /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+  }
 
-    // vmulps(zmm0, zmm1, zmm2);
+  void setCheckRegFlagAll() {
+    /* Here modify arrays of checkGenRegMode, checkPredRegMode, checkZRegMode */
+  }
+
+  void genJitTestCode() {
+    /* Here write JIT code with x86_64 mnemonic function to be tested. */
   }
 };
 
 int main(int argc, char *argv[]) {
+  /* Initializing arrays of inputData, inputGenReg, inputPredReg, inputZReg,
+   * checkGenRegMode, checkPredRegMode,checkZRegMode */
   TestPtnGenerator gen;
+
+  /* Set bool output_jit_on_, bool exec_jit_on_ = 0; */
   gen.parseArgs(argc, argv);
 
-  printf("%d\n", __LINE__);
-
-  gen.clearInputDataAll();  // Clear memory storing initial data for register.
-  gen.clearOutputDataAll(); // Clear memory region for register data dump.
-  gen.setExpectDataAll();
-  printf("%d\n", __LINE__);
-
+  /* Generate JIT code and get function pointer */
   void (*f)();
   if (gen.isOutputJitOn()) {
     f = (void (*)())gen.gen();
   }
-  printf("%d\n", __LINE__);
 
-  gen.dumpInputReg(); // Dump data for initializing registers.
+  /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
+   * inputZReg. */
+  gen.dumpInputReg();
+
+  /* Dump generated JIT code to a binary file */
   gen.dumpJitCode();
-  printf("%d\n", __LINE__);
 
+  /* 1:Execute JIT code, 2:dump all register values, 3:dump register values to
+   * be checked */
   if (gen.isExecJitOn()) {
-    f();
+    f();                 /* Execute JIT code */
+    gen.dumpOutputReg(); /* Dump all register values */
+    gen.dumpCheckReg();  /* Dump register values to be checked */
   }
-  printf("%d\n", __LINE__);
-
-  gen.dumpOutputReg(); // Dump register data.
-  gen.dumpExpectReg(); // Dump register data for checking.
 
   return 0;
 }
