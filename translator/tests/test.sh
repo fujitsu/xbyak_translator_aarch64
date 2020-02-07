@@ -79,13 +79,13 @@ check_option() {
 			"x86_64")
 			    QEMU_ON=0
 			    TOOL_PREFIX=""
-			    DUMP_OPT="i386:x86-64"
+			    DUMP_OPT="-m i386:x86-64 -M intel"
 			    DUMP_PREFIX=""
 			    ;;
 			"aarch64")
 			    QEMU_ON=1
 			    TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
-			    DUMP_OPT="i386:x86-64"
+			    DUMP_OPT="-m i386:x86-64 -M intel"
 			    DUMP_PREFIX=""
 			    ;;
 			*)
@@ -98,13 +98,13 @@ check_option() {
 			"x86_64")
 			    QEMU_ON=0
 			    TOOL_PREFIX=""
-			    DUMP_OPT="AArch64"
+			    DUMP_OPT="-m AArch64"
 			    DUMP_PREFIX="/usr/bin/aarch64-linux-gnu-"
 			;;
 			"aarch64")
 			    QEMU_ON=1
 			    TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
-			    DUMP_OPT="AArch64"
+			    DUMP_OPT="-m AArch64"
 			    DUMP_PREFIX="/usr/bin/aarch64-linux-gnu-"
 			    ;;
 			*)
@@ -140,7 +140,7 @@ check_option() {
 			"aarch64")
 			    QEMU_ON=0
 			    TOOL_PREFIX=""
-			    DUMP_OPT="AArch64"
+			    DUMP_OPT="-m AArch64"
 			    DUMP_PREFIX=""
 			    ;;
 			*)
@@ -228,7 +228,7 @@ dump_disassemble() {
 	echo "JIT code dump file not found!"
     fi
 
-    ${DUMP_PREFIX}${OBJDUMP} -D -b binary -M intel -m ${DUMP_OPT} ${BIN_FILE} > ${ASM_FILE}
+    ${DUMP_PREFIX}${OBJDUMP} -D -b binary ${DUMP_OPT} ${BIN_FILE} > ${ASM_FILE}
 }
 
 debug_dump_option() {
