@@ -22,5 +22,6 @@ vblendmps.h
 vcmpps.h
 vmovdqu16.h
 vmovups.h
+vmulps.h
 vzeroupper.h
 xor.h
