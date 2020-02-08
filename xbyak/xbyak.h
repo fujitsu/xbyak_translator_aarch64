@@ -184,13 +184,13 @@ extern "C" {
 #define XBYAK_STD_UNORDERED_MULTIMAP std::multimap
 #endif
 #ifdef _WIN32
-#include <winsock2.h>
-#include <windows.h>
 #include <malloc.h>
+#include <windows.h>
+#include <winsock2.h>
 #elif defined(__GNUC__)
-#include <unistd.h>
-#include <sys/mman.h>
 #include <stdlib.h>
+#include <sys/mman.h>
+#include <unistd.h>
 #endif
 #if defined(__APPLE__) && defined(MAP_JIT)
 #define XBYAK_USE_MAP_JIT
@@ -1808,9 +1808,10 @@ private:
   CodeGenerator operator=(const CodeGenerator &); // don't call
 #ifdef XBYAK_TRANSLATE_AARCH64
   static const size_t AARCH64_NUM_VREG = 32;
+  static const size_t AARCH64_NUM_PREG = 16;
   static const size_t AARCH64_NUM_ZREG = 32;
 
-  bool vreg_tmp_used[AARCH64_NUM_VREG] = {};
+  bool preg_tmp_used[AARCH64_NUM_PREG] = {};
   bool zreg_tmp_used[AARCH64_NUM_ZREG] = {};
 #endif //#ifdef XBYAK_TRANSLATE_AARCH64
 
@@ -2741,16 +2742,7 @@ private:
     throw Error(ERR_BAD_COMBINATION);
   }
 
-#ifdef XBYAK_TRANSLATE_AARCH64
 #include "xbyak_translator.h"
-  void decodeAndTransToAArch64() {
-    decode_size_ = 0;
-    decodeOpcode();
-    db_clear();
-  }
-#else
-  void decodeAndTransToAArch64() {}
-#endif
 
 public:
   unsigned int getVersion() const { return VERSION; }

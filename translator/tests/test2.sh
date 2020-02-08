@@ -100,13 +100,13 @@ check_option() {
 			    QEMU_ON=0
 			    TOOL_PREFIX=""
 			    DUMP_OPT="-m AArch64"
-			    DUMP_PREFIX="/usr/bin/aarch64-linux-gnu-"
+			    DUMP_PREFIX=${DUMP_PREFIX:="/usr/bin/aarch64-linux-gnu-"}
 			;;
 			"aarch64")
 			    QEMU_ON=1
 			    TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
 			    DUMP_OPT="-m AArch64"
-			    DUMP_PREFIX="/usr/bin/aarch64-linux-gnu-"
+			    DUMP_PREFIX=${DUMP_PREFIX:="/usr/bin/aarch64-linux-gnu-"}
 			    ;;
 			*)
 			    bad_combination_exit
@@ -188,6 +188,7 @@ gen_compile_option() {
 
     TP_NAME=`dirname $1`/`basename $1 .cpp`
     TP_NAME_ARCH=${TP_NAME}.jit_${JIT_ARCH}.exec_${EXEC_ARCH}
+    LOG_NAME=`basename ${TP_NAME_ARCH}`
 }
 
 compile_test_file() {
@@ -213,15 +214,17 @@ exec_test() {
     fi
 
     if [ ${QEMU_ON:-0} = 1 ] ; then
-	env QEMU_LD_PREFIX=/usr/aarch64-linux-gnu ${QEMU_AARCH64} ./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON}
+	env QEMU_LD_PREFIX=/usr/aarch64-linux-gnu ${QEMU_AARCH64} ./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON} 2>&1 | tee ${LOG_NAME}.log
     else
-	./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON}
+	./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON} 2>&1 | tee ${LOG_NAME}.log
     fi
 }
 
 dump_disassemble() {
-    local BIN_FILE=${TP_NAME_ARCH}.bin
-    local ASM_FILE=${TP_NAME_ARCH}.asm
+#    local BIN_FILE=${TP_NAME_ARCH}.bin
+#    local ASM_FILE=${TP_NAME_ARCH}.asm
+    local BIN_FILE=${LOG_NAME}.bin
+    local ASM_FILE=${LOG_NAME}.asm
     
     if [ -f hoge ] ; then
 	mv hoge ${BIN_FILE}

@@ -41,22 +41,6 @@ typedef uint32_t xbyak_code_ptr_t;
 typedef uint8_t xbyak_code_ptr_t;
 #endif
 
-#define NUM_INPUT_DATA 16
-/* x86_64 has 16 gen registers. AArch64 has 32 gen registers. */
-#define NUM_GEN_REG 32
-#define NUM_GEN_REG_INTEL 16
-/* x86_64 has 8 predicate registers. AArch64 has 16 predicate registers. */
-#define NUM_PRED_REG 16
-#define NUM_PRED_REG_INTEL 8
-#define NUM_Z_REG 32
-#define NUM_Z_REG_INTEL 32
-
-#define SP_REG_IDX_X86_64 4
-#define SP_REG_IDX_AARCH64 31
-#define NUM_BYTES_GEN_REG 8
-#define NUM_BYTES_PRED_REG 8
-#define NUM_BYTES_Z_REG 64
-
 using namespace Xbyak;
 
 union ZReg_t {
@@ -73,16 +57,16 @@ union ZReg_t {
 };
 
 enum DataType {
-  UB_DT,
-  UH_DT,
-  US_DT,
-  UD_DT,
-  SB_DT,
-  SH_DT,
-  SS_DT,
-  SD_DT,
-  SP_DT,
-  DP_DT,
+  UB_DT, /* uint8_t */
+  UH_DT, /* uint16_t */
+  US_DT, /* uint32_t */
+  UD_DT, /* uint64_t */
+  SB_DT, /* int8_t */
+  SH_DT, /* int16_t */
+  SS_DT, /* int32_t */
+  SD_DT, /* int64_t */
+  SP_DT, /* float */
+  DP_DT, /* double */
 };
 
 #ifdef XBYAK_TRANSLATE_AARCH64
@@ -1034,7 +1018,7 @@ public:
         inputZReg[idx].uh_dt[i * 2 + 0] = getLfsr();
         inputZReg[idx].uh_dt[i * 2 + 1] = getLfsr();
         //	std::cout << "[" << idx << "]" << inputZReg[idx].sp_dt[i] <<
-        //std::endl;
+        // std::endl;
       } while (std::isinf(inputZReg[idx].sp_dt[i]) ||
                std::isnan(inputZReg[idx].sp_dt[i]));
     }
@@ -1046,7 +1030,7 @@ public:
         inputZReg[idx].uh_dt[i * 2 + 0] = getLfsr();
         inputZReg[idx].uh_dt[i * 2 + 1] = getLfsr();
         //	std::cout << "[" << idx << "]" << inputZReg[idx].sp_dt[i] <<
-        //std::endl;
+        // std::endl;
       } while (std::isinf(inputZReg[idx].sp_dt[i]) ||
                std::isnan(inputZReg[idx].sp_dt[i]));
     }

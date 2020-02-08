@@ -1,20 +1,34 @@
 #pragma once
+
+#define NUM_INPUT_DATA 16
+/* x86_64 has 16 gen registers. AArch64 has 32 gen registers. */
+#define NUM_GEN_REG 32
+#define NUM_GEN_REG_INTEL 16
+/* x86_64 has 8 predicate registers. AArch64 has 16 predicate registers. */
+#define NUM_PRED_REG 16
+#define NUM_PRED_REG_INTEL 8
+#define NUM_Z_REG 32
+#define NUM_Z_REG_INTEL 32
+
+#define SP_REG_IDX_X86_64 4
+#define SP_REG_IDX_AARCH64 31
+#define NUM_BYTES_GEN_REG 8
+#define NUM_BYTES_PRED_REG 8
+#define NUM_BYTES_Z_REG 64
+
+#ifdef XBYAK_TRANSLATE_AARCH64
 #pragma GCC diagnostic warning "-Wunused-but-set-variable"
 #pragma GCC diagnostic warning "-Wunused-variable"
-
-#define W_TMP_0 w25
-#define X_TMP_0 x25
-#define X_TMP_1 x26
-#define X_TMP_2 x27
-#define X_TMP_3 x28
-#define X_TMP_ADDR x29
-#define P_TMP_0 p9
-#define P_LSB_128 p10
-#define P_LSB_256 p11
-#define P_MSB_256 p12
-#define P_MSB_384 p13
-#define P_ALL_ZERO p14
-#define P_ALL_ONE p15
+// namespace xbyak_translator {
+Xbyak_aarch64::WReg W_TMP_0 = w25;
+Xbyak_aarch64::XReg X_TMP_0 = x25;
+Xbyak_aarch64::XReg X_TMP_1 = x26;
+Xbyak_aarch64::XReg X_TMP_2 = x27;
+Xbyak_aarch64::XReg X_TMP_3 = x28;
+Xbyak_aarch64::XReg X_TMP_ADDR = x29;
+Xbyak_aarch64::PReg P_MSB_256 = p13;
+Xbyak_aarch64::PReg P_MSB_384 = p14;
+Xbyak_aarch64::PReg P_ALL_ONE = p15;
 
 typedef unsigned int xt_reg_idx_t;
 typedef xed_int64_t xt_disp_t;
@@ -273,24 +287,7 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
   return retReg;
 }
 
-unsigned int xt_push_vreg() {
-  for (size_t i = AARCH64_NUM_VREG - 1; i >= 0; i--) {
-    if (vreg_tmp_used[i] == false) {
-      vreg_tmp_used[i] == true;
-      CodeGeneratorAArch64::str(
-          Xbyak_aarch64::QReg(i),
-          Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp,
-                                 -Xbyak_aarch64::NUM_VREG_BYTES));
-      return i;
-    }
-  }
-
-  std::cerr << __FILE__ << ":" << __LINE__ << ":Temporal VReg allocation failed"
-            << ". Please contact to system administrator!" << std::endl;
-  assert(NULL);
-
-  return 31;
-}
+unsigned int xt_push_vreg() { xt_push_zreg(); }
 
 unsigned int xt_push_zreg() {
   for (size_t i = AARCH64_NUM_ZREG - 1; i >= 0; i--) {
@@ -298,8 +295,7 @@ unsigned int xt_push_zreg() {
       zreg_tmp_used[i] == true;
 
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
-                                CodeGeneratorAArch64::sp,
-                                -Xbyak_aarch64::NUM_ZREG_BYTES);
+                                CodeGeneratorAArch64::sp, -NUM_BYTES_Z_REG);
       CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
                                 Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
       return i;
@@ -313,21 +309,27 @@ unsigned int xt_push_zreg() {
   return 31;
 }
 
-void xt_pop_vreg() {
-  for (size_t i = 0; i < AARCH64_NUM_VREG; i++) {
-    if (vreg_tmp_used[i] == true) {
-      CodeGeneratorAArch64::ldr(
-          Xbyak_aarch64::QReg(i),
-          Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp,
-                                  Xbyak_aarch64::NUM_VREG_BYTES));
-      vreg_tmp_used[i] == false;
+unsigned int xt_push_preg() {
+  for (size_t i = AARCH64_NUM_PREG - 1; i >= 0; i--) {
+    if (preg_tmp_used[i] == false) {
+      preg_tmp_used[i] == true;
+
+      CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
+                                CodeGeneratorAArch64::sp, -NUM_BYTES_PRED_REG);
+      CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
+                                Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+      return i;
     }
   }
 
-  std::cerr << __FILE__ << ":" << __LINE__ << ":Restoreing temporal VReg failed"
+  std::cerr << __FILE__ << ":" << __LINE__ << ":Temporal PReg allocation failed"
             << ". Please contact to system administrator!" << std::endl;
   assert(NULL);
+
+  return 31;
 }
+
+void xt_pop_vreg() { xt_pop_zreg(); }
 
 void xt_pop_zreg() {
   for (size_t i = 0; i < AARCH64_NUM_ZREG; i++) {
@@ -335,13 +337,28 @@ void xt_pop_zreg() {
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i),
                                 Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
-                                CodeGeneratorAArch64::sp,
-                                Xbyak_aarch64::NUM_ZREG_BYTES);
+                                CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
       zreg_tmp_used[i] == false;
     }
   }
 
   std::cerr << __FILE__ << ":" << __LINE__ << ":Restoreing temporal ZReg failed"
+            << ". Please contact to system administrator!" << std::endl;
+  assert(NULL);
+}
+
+void xt_pop_preg() {
+  for (size_t i = 0; i < AARCH64_NUM_ZREG; i++) {
+    if (preg_tmp_used[i] == true) {
+      CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i),
+                                Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+      CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
+                                CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+      preg_tmp_used[i] == false;
+    }
+  }
+
+  std::cerr << __FILE__ << ":" << __LINE__ << ":Restoreing temporal PReg failed"
             << ". Please contact to system administrator!" << std::endl;
   assert(NULL);
 }
@@ -1334,7 +1351,7 @@ bool decodeOpcode() {
     break;
 
   case XED_ICLASS_VBROADCASTSS:
-    translateVBROADCASTSS(&xedd);
+    //    translateVBROADCASTSS(&xedd);
     break;
 
   case XED_ICLASS_VCMPPD:
@@ -2269,6 +2286,7 @@ struct xt_a64fx_operands_struct_t {
   unsigned int maskIdx = XT_REG_INVALID;
   unsigned int srcIdx = XT_REG_INVALID;
   unsigned int src2Idx = XT_REG_INVALID;
+  unsigned int pTmpIdx = XT_REG_INVALID;
   unsigned int vTmpIdx = XT_REG_INVALID;
   unsigned int zTmpIdx = XT_REG_INVALID;
   xt_predicate_type_t PredType = A64_PRED_NO;
@@ -2288,6 +2306,7 @@ void xt_dump_a64fx_operands(xt_a64fx_operands_struct_t *a64) {
   std::cout << "srcIdx=" << a64->srcIdx << std::endl;
   std::cout << "src2Idx=" << a64->src2Idx << std::endl;
   std::cout << "vTmpIdx=" << a64->vTmpIdx << std::endl;
+  std::cout << "pTmpIdx=" << a64->pTmpIdx << std::endl;
   std::cout << "zTmpIdx=" << a64->zTmpIdx << std::endl;
   std::cout << "PredType=" << a64->PredType << std::endl;
   std::cout << "dstType=" << a64->dstType << std::endl;
@@ -2414,16 +2433,13 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
   xt_dump_a64fx_operands(a64);
 }
 
-#undef W_TMP_0
-#undef X_TMP_0
-#undef X_TMP_1
-#undef X_TMP_2
-#undef X_TMP_3
-#undef X_TMP_ADDR
-#undef P_TMP_0
-#undef P_LSB_128
-#undef P_LSB_256
-#undef P_MSB_256
-#undef P_MSB_384
-#undef P_ALL_ZERO
-#undef P_ALL_ONE
+void decodeAndTransToAArch64() {
+  decode_size_ = 0;
+  decodeOpcode();
+  db_clear();
+}
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
+void decodeAndTransToAArch64() {}
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
+
+//} //namespace xbyak_translator {
