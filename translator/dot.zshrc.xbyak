@@ -1,0 +1,89 @@
+#!/bin/bash
+export PATH=/home/kawakami/local_xbyak/bin:${PATH}
+export QEMU_LD_PREFIX=/usr/aarch64-linux-gnu
+export DUMP_PREFIX=/home/kawakami/local_xbyak/bin/aarch64-linux-gnu-
+
+alias qa='env LD_LIBRARY_PATH=/home/kawakami/mkldnn_trial/xbyak_kaiseki/translator/third_party/build_xed_aarch64/kits/xed/lib:${LD_LIBRARY_PATH} qemu-aarch64'
+
+DIFF() {
+    # example:DIFF vmulps000
+    X86=$1.jit_x86_64.exec_x86_64.log
+    AARCH64=$1.jit_aarch64.exec_aarch64.log
+
+    if [ ! -f ${X86} ] ; then
+	echo "${X86} not found"
+	exit 1
+    fi   
+
+    if [ ! -f ${aarch64} ] ; then
+	echo "${aarch64} not found"
+	exit 1
+    fi   
+
+    diff -y -W 150 $1.jit_x86_64.exec_x86_64.log $1.jit_aarch64.exec_aarch64.log | less
+}
+
+DI() {
+# example:DI vmulps000
+    DIFF $@
+}
+
+ASM() {
+# example:ASM vmulps000
+    X86=$1.jit_x86_64.exec_x86_64.asm
+    AARCH64=$1.jit_aarch64.exec_aarch64.asm
+
+    if [ ! -f ${X86} ] ; then
+	echo "${X86} not found"
+	exit 1
+    fi   
+
+    if [ ! -f ${aarch64} ] ; then
+	echo "${aarch64} not found"
+	exit 1
+    fi   
+
+    diff -y -W 150 $1.jit_x86_64.exec_x86_64.asm $1.jit_aarch64.exec_aarch64.asm | less
+}
+
+AS() {
+# example:AS vmulps000
+    ASM $@
+}
+
+TEST() {
+# example:TEST vmulps000
+# example:TEST vmulps000 -x
+# example:TEST vmulps000 -a
+    TP_BASE=`echo ${1} | sed -e "s/[0-9]\+//"`
+
+    if [ ${2:-"-x"} = "-x" ] ; then
+	./test2.sh -x -X -E pattern/${TP_BASE}/${1}.cpp
+    fi
+
+    if [ ${2:-"-a"} = "-a" ] ; then
+	./test2.sh -a -A -E pattern/${TP_BASE}/${1}.cpp
+    fi
+}
+
+TE() {
+# example:TE vmulps000
+# example:TE vmulps000 -x
+# example:TE vmulps000 -a
+    TEST $@
+}
+
+TX() {
+# example:TX vmulps000
+    TP_BASE=`echo ${1} | sed -e "s/[0-9]\+//"`
+
+    ./test2.sh -x -X -E pattern/${TP_BASE}/${1}.cpp
+}
+
+TA() {
+# example:TA vmulps000
+    TP_BASE=`echo ${1} | sed -e "s/[0-9]\+//"`
+
+    ./test2.sh -a -A -E pattern/${TP_BASE}/${1}.cpp
+}
+
