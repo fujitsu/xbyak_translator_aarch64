@@ -1,5 +1,6 @@
 #!/bin/bash
 export PATH=/home/kawakami/local_xbyak/bin:${PATH}
+export PATH=/home/kawakami/mkldnn_trial/xbyak_kaiseki/translator/third_party/build_xed_x86_64/kits/xed/bin:${PATH}
 export QEMU_LD_PREFIX=/usr/aarch64-linux-gnu
 export DUMP_PREFIX=/home/kawakami/local_xbyak/bin/aarch64-linux-gnu-
 
