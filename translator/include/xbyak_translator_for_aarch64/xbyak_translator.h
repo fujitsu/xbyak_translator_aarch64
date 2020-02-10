@@ -154,6 +154,9 @@ struct xt_a64fx_operands_struct_t {
   xed_int64_t simm;   /* signedな */
   xed_uint64_t uimm2; /* 2nd immediate and its type is unsigned */
   xed_int64_t simm2;  /* 2nd immediate and its type is signed */
+
+  xed_bool_t isDstMask =
+      false; /* ture:dst operand is mask register, false:otherwise */
 };
 
 void db_clear() { CodeArray::size_ = 0; }
@@ -209,55 +212,6 @@ xt_reg_idx_t xt_get_register_index(const xed_decoded_inst_t *p,
   xed_reg_enum_t r = xed_decoded_inst_get_reg(p, op_name);
 
   return xt_get_register_index(r);
-}
-
-void xt_decode_memory_operand(const xed_decoded_inst_t *p, unsigned int i,
-                              unsigned int *base, xed_int64_t *disp,
-                              unsigned int *index, xed_uint_t *scale,
-                              unsigned int *seg) {
-  unsigned int width = xed_decoded_inst_get_memop_address_width(p, i);
-  unsigned int memops = xed_decoded_inst_number_of_memory_operands(p);
-
-  *base = XT_REG_INVALID;
-  *index = XT_REG_INVALID;
-  *seg = XT_REG_INVALID;
-
-  if (width != 64) {
-    std::cerr << __FILE__ << ":" << __LINE__
-              << ":Unsupported address width=" << width
-              << ". Please contact to system administrator!" << std::endl;
-    exit(1);
-  }
-
-  for (unsigned int j = 0; j < memops; j++) {
-    xed_reg_enum_t tmpReg;
-    xed_int64_t tmpDisp;
-    xed_uint32_t tmpScale;
-
-    tmpReg = xed_decoded_inst_get_seg_reg(p, j);
-    if (tmpReg != XED_REG_INVALID) {
-      *seg = xt_get_register_index(tmpReg);
-    }
-
-    tmpReg = xed_decoded_inst_get_base_reg(p, j);
-    if (tmpReg != XED_REG_INVALID) {
-      *base = xt_get_register_index(tmpReg);
-    }
-
-    tmpReg = xed_decoded_inst_get_index_reg(p, j);
-    if (tmpReg != XED_REG_INVALID) {
-      *index = xt_get_register_index(tmpReg);
-      tmpScale = xed_decoded_inst_get_scale(p, j);
-      if (tmpScale) {
-        *scale = tmpScale;
-      }
-    }
-
-    tmpDisp = xed_decoded_inst_get_memory_displacement(p, j);
-    if (tmpDisp) {
-      *disp = tmpDisp;
-    }
-  }
 }
 
 Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
@@ -514,6 +468,7 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
         if (isDstSet ==
             false) { /* Mask create instruction. Dst is a mask register. */
           a64->dstIdx = tmpIdx;
+          a64->isDstMask = true;
           isDstSet = true;
         } else {
           a64->maskIdx = tmpIdx;
