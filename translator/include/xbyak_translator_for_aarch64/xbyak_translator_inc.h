@@ -1,4 +1,5 @@
 #include "instructions/add.h"
+#include "instructions/vmovhlps.h"
 #include "instructions/vbroadcastss.h"
 #include "instructions/vmulps.h"
 #if 0
