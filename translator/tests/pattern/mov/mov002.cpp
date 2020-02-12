@@ -27,8 +27,12 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7])));
+    size_t addr;
 
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rax, addr);
     mov(r8d, uint32_t(0xaaaaaaaa));
     mov(ptr[rax], r8d);
     mov(r13d, ptr[rax]);

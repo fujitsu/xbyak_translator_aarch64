@@ -30,19 +30,23 @@ public:
     size_t addr;
 
     /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
-    std::cout << "Address is " << std::hex << addr << std::endl;
-    mov(rax, addr);
-    mov(r8, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(ptr[rax], r8);
-    mov(r9, ptr[rax]);
-
-    /* Address is unaligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7])) + 1;
     std::cout << "Address is " << std::hex << addr << std::endl;
     mov(rax, addr);
-    mov(ptr[rax], r8);
-    mov(r10, ptr[rax]);
+    mov(r8d, uint32_t(0xaaaaaaaa));
+    mov(ptr[rax], r8d);
+    mov(r13d, ptr[rax]);
+
+    mov(r9, uint64_t(0xbbbbbbbbbbbbbbbb));
+    mov(ptr[rax], r9d);
+    mov(r14d, ptr[rax]);
+
+    mov(r15, ptr[rax]);
+
+    mov(r10d, r9d);
+    mov(r11, r9d);
+
+    mov(r12, r9);
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64

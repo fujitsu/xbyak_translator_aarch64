@@ -27,25 +27,33 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
+    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7])) + 9);
+    mov(dword[rax], int64_t(0xffffffff));
+    mov(rcx, dword[rax]);
+    mov(edx, dword[rax]);
 
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
-    std::cout << "Address is " << std::hex << addr << std::endl;
-    mov(rax, addr);
-    mov(r8, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(ptr[rax], r8);
-    mov(r9, ptr[rax]);
+#if 0
+    /* xbyak does not support mov immediate value to memory */
+    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[6]))+10);
+    mov(qword[rax], int64_t(0xffffffff));
+    mov(rbx, qword[rax]);
+    mov(ebp, qword[rax]);
+#endif
 
-    /* Address is unaligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7])) + 1;
-    std::cout << "Address is " << std::hex << addr << std::endl;
-    mov(rax, addr);
-    mov(ptr[rax], r8);
-    mov(r10, ptr[rax]);
+#if 0
+    /* xbyak does not support mov immediate value to memory */
+    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[5]))+11);
+    mov(qword[rax], int64_t(0xffffffff));
+    mov(rsi, dword[rax]);
+    mov(edi, dword[rax]);
+#endif
 
-    mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[4])) + 13);
+    mov(dword[rax], int64_t(0xffffffff));
+    mov(r8, qword[rax]);
+    mov(r9d, qword[rax]);
+
+    mov(rax, uint32_t(5));
   }
 };
 
