@@ -218,6 +218,11 @@ exec_test() {
     else
 	./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON} 2>&1 | tee ${LOG_NAME}.log
     fi
+
+    if [ ! $? -eq 0 ] ; then
+	echo "exec error!"
+	exit
+    fi
 }
 
 dump_disassemble() {

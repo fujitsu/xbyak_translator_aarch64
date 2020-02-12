@@ -400,17 +400,17 @@ void print_operands(xed_decoded_inst_t *xedd) {
 }
 
 void xt_dump_a64fx_operands(xt_a64fx_operands_struct_t *a64) {
-  std::cout << "dstIdx=" << a64->dstIdx << std::endl;
-  std::cout << "maskIdx=" << a64->maskIdx << std::endl;
-  std::cout << "srcIdx=" << a64->srcIdx << std::endl;
-  std::cout << "src2Idx=" << a64->src2Idx << std::endl;
-  std::cout << "vTmpIdx=" << a64->vTmpIdx << std::endl;
-  std::cout << "pTmpIdx=" << a64->pTmpIdx << std::endl;
-  std::cout << "zTmpIdx=" << a64->zTmpIdx << std::endl;
-  std::cout << "PredType=" << a64->PredType << std::endl;
-  std::cout << "dstType=" << a64->dstType << std::endl;
-  std::cout << "srcType=" << a64->srcType << std::endl;
-  std::cout << "src2Type" << a64->src2Type << std::endl;
+  std::cout << "dstIdx=" << xt_to_string(a64->dstIdx) << std::endl;
+  std::cout << "maskIdx=" << xt_to_string(a64->maskIdx) << std::endl;
+  std::cout << "srcIdx=" << xt_to_string(a64->srcIdx) << std::endl;
+  std::cout << "src2Idx=" << xt_to_string(a64->src2Idx) << std::endl;
+  std::cout << "vTmpIdx=" << xt_to_string(a64->vTmpIdx) << std::endl;
+  std::cout << "pTmpIdx=" << xt_to_string(a64->pTmpIdx) << std::endl;
+  std::cout << "zTmpIdx=" << xt_to_string(a64->zTmpIdx) << std::endl;
+  std::cout << "PredType=" << xt_to_string(a64->PredType) << std::endl;
+  std::cout << "dstType=" << xt_to_string(a64->dstType) << std::endl;
+  std::cout << "srcType=" << xt_to_string(a64->srcType) << std::endl;
+  std::cout << "src2Type" << xt_to_string(a64->src2Type) << std::endl;
 
   std::cout << "EVEXb=" << a64->EVEXb << std::endl;
   std::cout << "dstWidth=" << a64->dstWidth << std::endl;

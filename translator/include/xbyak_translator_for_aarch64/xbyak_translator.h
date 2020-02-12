@@ -47,14 +47,6 @@ Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
 
-typedef unsigned int xt_reg_idx_t;
-typedef xed_int64_t xt_disp_t;
-typedef xed_uint_t xt_scale_t;
-
-#define XT_REG_INVALID std::numeric_limits<xt_reg_idx_t>::max()
-#define XT_DISP_INVALID std::numeric_limits<xt_disp_t>::max()
-#define XT_SCALE_INVALID std::numeric_limits<xt_scale_t>::max()
-
 #define XT_UNIMPLEMENTED                                                       \
   std::cerr << __FILE__ << ":" << __LINE__ << ":Unimplemented" << std::endl;   \
   assert(NULL);
@@ -77,20 +69,6 @@ enum VecLen_t {
   VL512 = 2,
 };
 
-enum xt_predicate_type_t {
-  A64_PRED_INIT = 0,
-  A64_PRED_NO,
-  A64_PRED_MERG,
-  A64_PRED_ZERO,
-};
-
-enum xt_operand_type_t {
-  A64_OP_INIT = 0,
-  A64_OP_REG,
-  A64_OP_MEM,
-  A64_OP_MBCST,
-};
-
 enum xt_cmp_type_t {
   A64_CMP_EQ,
   A64_CMP_LT,
@@ -104,16 +82,17 @@ enum xt_cmp_type_t {
 
 struct xt_a64fx_operands_struct_t {
   /* Index of DST register(1st operand) */
-  unsigned int dstIdx = XT_REG_INVALID;
+  //  unsigned int dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
 
   /* Index of MASK register{k} */
-  unsigned int maskIdx = XT_REG_INVALID;
+  xt_reg_idx_t maskIdx = XT_REG_INVALID;
 
   /* Index of SRC register(2nd operand) */
-  unsigned int srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
 
   /* Index of SRC2 register(3rd operand) */
-  unsigned int src2Idx = XT_REG_INVALID;
+  xt_reg_idx_t src2Idx = XT_REG_INVALID;
 
   /* In xt_construct_a64fx_operands function,
      pTmpIdx, vTmpIdx, zTmpIdx are not substituted values.
@@ -122,15 +101,11 @@ struct xt_a64fx_operands_struct_t {
      After instruction translation is done,
      return temporary P register by calling xt_pop_preg().
      The same holds for V and Z registers. */
-  unsigned int pTmpIdx = XT_REG_INVALID;
-  unsigned int vTmpIdx = XT_REG_INVALID;
-  unsigned int zTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t pTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t vTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
 
-  /* Type of predicate (mask) mode
-     A64_PRED_NO:No mask mode exist
-     A64_PRED_MERG:Merge predicate
-     A64_PRED_ZERO:Zeroing predicate */
-  xt_predicate_type_t PredType = A64_PRED_NO;
+  xt_predicate_type_t PredType = A64_PRED_INIT;
 
   /* Type of operand
      A64_OP_REG:register operand
@@ -160,28 +135,6 @@ struct xt_a64fx_operands_struct_t {
 };
 
 void db_clear() { CodeArray::size_ = 0; }
-
-void xt_msg_warn(const char *fileName, const int lineNum,
-                 const std::string &msg) {
-  xt_msg_warn(fileName, lineNum, msg.c_str());
-}
-
-void xt_msg_warn(const char *fileName, const int lineNum, const char *msg) {
-  std::cerr << "[WARN]:" << fileName << ":" << lineNum << ":" << msg
-            << std::endl;
-}
-
-void xt_msg_err(const char *fileName, const int lineNum,
-                const std::string &msg) {
-  xt_msg_err(fileName, lineNum, msg.c_str());
-}
-
-void xt_msg_err(const char *fileName, const int lineNum, const char *msg) {
-  std::cerr << "[ERR ]:" << fileName << ":" << lineNum << ":" << msg
-            << std::endl;
-  assert(NULL);
-  exit(1);
-}
 
 xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
   if (XED_REG_RAX <= r && r <= XED_REG_R15) {
