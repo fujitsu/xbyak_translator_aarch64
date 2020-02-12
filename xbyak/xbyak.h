@@ -2410,10 +2410,6 @@ private:
           mov(r, imm) = db(imm, mov_imm(r, imm))
   */
   int mov_imm(const Reg &reg, size_t imm) {
-#ifdef XBYAK_TRANSLATE_AARCH64
-    //	  mov_imm__(Xbyak_aarch64::XReg(reg.getIdx()), imm, x25);
-    return 4;
-#else
     int bit = reg.getBit();
     const int idx = reg.getIdx();
     int code = 0xB0 | ((bit == 8 ? 0 : 1) << 3);
@@ -2430,7 +2426,6 @@ private:
     }
     db(code | (idx & 7));
     return bit / 8;
-#endif
   }
   template <class T>
   void putL_inner(T &label, bool relative = false, size_t disp = 0) {
@@ -2945,7 +2940,6 @@ public:
 #endif //#ifndef XBYAK_TRANSLATE_AARCH64
   }
   void mov(const Operand &reg1, const Operand &reg2) {
-#ifndef XBYAK_TRANSLATE_AARCH64
     const Reg *reg = 0;
     const Address *addr = 0;
     uint8 code = 0;
@@ -2981,10 +2975,9 @@ public:
     {
       opRM_RM(reg1, reg2, 0x88);
     }
-#endif //#ifndef XBYAK_TRANSLATE_AARCH64
+    decodeAndTransToAArch64();
   }
   void mov(const Operand &op, size_t imm) {
-#ifndef XBYAK_TRANSLATE_AARCH64
     if (op.isREG()) {
       const int size = mov_imm(op.getReg(), imm);
       db(imm, size);
@@ -3006,22 +2999,28 @@ public:
     } else {
       throw Error(ERR_BAD_COMBINATION);
     }
-#endif //#ifndef XBYAK_TRANSLATE_AARCH64
+    decodeAndTransToAArch64();
   }
   void mov(const NativeReg &reg, const char *label) // can't use std::string
   {
+#ifdef XBYAK_TRANSLATE_AARCH64
+    /* Unimplemented */
+    assert(NULL);
+#else
     if (label == 0) {
       mov(static_cast<const Operand &>(reg), 0); // call imm
       return;
     }
     mov_imm(reg, dummyAddr);
-#ifndef XBYAK_TRANSLATE_AARCH64
     putL(label);
 #endif
   }
   void mov(const NativeReg &reg, const Label &label) {
+#ifdef XBYAK_TRANSLATE_AARCH64
+    /* Unimplemented */
+    assert(NULL);
+#else
     mov_imm(reg, dummyAddr);
-#ifndef XBYAK_TRANSLATE_AARCH64
     putL(label);
 #endif
   }
@@ -3133,6 +3132,7 @@ public:
   }
   void mov(const Operand &op, const Segment &seg) {
     opModRM(Reg8(seg.getIdx()), op, op.isREG(16 | i32e), op.isMEM(), 0x8C);
+    decodeAndTransToAArch64();
   }
   void mov(const Segment &seg, const Operand &op) {
     opModRM(Reg8(seg.getIdx()),
@@ -3140,6 +3140,7 @@ public:
                 ? static_cast<const Operand &>(op.getReg().cvt32())
                 : op,
             op.isREG(16 | i32e), op.isMEM(), 0x8E);
+    decodeAndTransToAArch64();
   }
 #endif
 

@@ -431,6 +431,11 @@ void xt_dump_a64fx_operands(xt_a64fx_operands_struct_t *a64) {
             << std::endl;
   std::cout << std::left << std::setw(9) << "uimm=" << a64->uimm << std::endl;
   std::cout << std::left << std::setw(9) << "simm=" << a64->simm << std::endl;
+  std::cout << std::left << std::setw(9) << "immWidth=" << a64->immWidth
+            << std::endl;
+
+  std::cout << std::left << std::setw(9) << "uimm2=" << a64->uimm << std::endl;
+  std::cout << std::left << std::setw(9) << "simm2=" << a64->simm << std::endl;
 }
 
 void xt_dump_x86_64_decoded_info(xed_decoded_inst_t *p) {

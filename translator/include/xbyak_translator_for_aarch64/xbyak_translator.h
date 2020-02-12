@@ -37,7 +37,11 @@
 #pragma GCC diagnostic warning "-Wunused-but-set-variable"
 #pragma GCC diagnostic warning "-Wunused-variable"
 // namespace xbyak_translator {
+public:
 Xbyak_aarch64::WReg W_TMP_0 = w25;
+Xbyak_aarch64::WReg W_TMP_1 = w26;
+Xbyak_aarch64::WReg W_TMP_2 = w27;
+Xbyak_aarch64::WReg W_TMP_3 = w28;
 Xbyak_aarch64::XReg X_TMP_0 = x25;
 Xbyak_aarch64::XReg X_TMP_1 = x26;
 Xbyak_aarch64::XReg X_TMP_2 = x27;
@@ -47,6 +51,7 @@ Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
 
+private:
 #define XT_UNIMPLEMENTED                                                       \
   std::cerr << __FILE__ << ":" << __LINE__ << ":Unimplemented" << std::endl;   \
   assert(NULL);
@@ -117,7 +122,7 @@ struct xt_a64fx_operands_struct_t {
   xt_operand_type_t src2Type;
 
   /* Is EVEX.b set? */
-  xed_uint_t EVEXb;
+  xed_uint_t EVEXb = 0;
 
   /* Bit width of destination operand.
      8(i.e. AL, etc),   16(i.e. AX, etc), 32(i.e. EAX, etc), 64(i.e. RAX, etc),
@@ -125,10 +130,12 @@ struct xt_a64fx_operands_struct_t {
   xed_uint_t dstWidth;
 
   /* Immediate value opoerand */
-  xed_uint64_t uimm;  /* unsigned */
-  xed_int64_t simm;   /* signedな */
-  xed_uint64_t uimm2; /* 2nd immediate and its type is unsigned */
-  xed_int64_t simm2;  /* 2nd immediate and its type is signed */
+  xed_uint64_t uimm = 0; /* unsigned */
+  xed_int64_t simm = 0;  /* signedな */
+  xed_uint_t immWidth;   /* IMM value width. 8, 16, 32, 64 */
+
+  xed_uint64_t uimm2 = 0; /* 2nd immediate and its type is unsigned */
+  xed_int64_t simm2 = 0;  /* 2nd immediate and its type is signed */
 
   xed_bool_t isDstMask =
       false; /* ture:dst operand is mask register, false:otherwise */
@@ -535,13 +542,33 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
     /* End: parsing memory operand */
 
     /* Begin: parsing immediate value operand */
-    if (opName == XED_OPERAND_IMM0) {
-      a64->uimm = xed_decoded_inst_get_unsigned_immediate(p);
-      continue;
-    }
-    if (opName == XED_OPERAND_IMM0SIGNED) {
-      a64->simm = xed_decoded_inst_get_signed_immediate(p);
-      continue;
+
+    if (opName == XED_OPERAND_IMM0 || opName == XED_OPERAND_IMM0SIGNED) {
+      if (isDstSet == false) { /* This memory operand is for DST operand. */
+        a64->dstType = A64_OP_IMM;
+        isDstSet = true;
+        a64->dstWidth = xed_decoded_inst_operand_length_bits(p, 0);
+      } else if (isSrcSet == false) {
+        a64->srcType = A64_OP_IMM;
+        isSrcSet = true;
+      } else if (isSrc2Set == false) {
+        a64->src2Type = A64_OP_IMM;
+        isSrc2Set = true;
+      } else {
+        xt_msg_err(__FILE__, __LINE__,
+                   "Unknwon # of register operands. Please contact to "
+                   "system administrator!");
+      }
+      if (opName == XED_OPERAND_IMM0) {
+        a64->immWidth = xed_decoded_inst_get_immediate_width(p);
+        a64->uimm = xed_decoded_inst_get_unsigned_immediate(p);
+        continue;
+      }
+      if (opName == XED_OPERAND_IMM0SIGNED) {
+        a64->immWidth = xed_decoded_inst_get_immediate_width(p);
+        a64->simm = xed_decoded_inst_get_signed_immediate(p);
+        continue;
+      }
     }
     if (opName == XED_OPERAND_IMM1) {
       a64->uimm2 = xed_decoded_inst_get_second_immediate(p);

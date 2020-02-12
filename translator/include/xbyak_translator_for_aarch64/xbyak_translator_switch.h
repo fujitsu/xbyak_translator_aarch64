@@ -431,7 +431,7 @@ case XED_ICLASS_MINSS:
 case XED_ICLASS_MONITOR:
 case XED_ICLASS_MONITORX:
 case XED_ICLASS_MOV:
-  //    translateMOV(&xedd);
+  translateMOV(&xedd);
   break;
 
 case XED_ICLASS_MOVAPD:
@@ -1172,7 +1172,7 @@ case XED_ICLASS_VMRUN:
 case XED_ICLASS_VMSAVE:
 case XED_ICLASS_VMULPD:
 case XED_ICLASS_VMULPS:
-  translateVMULPS(&xedd);
+  //  translateVMULPS(&xedd);
   break;
 case XED_ICLASS_VMULSD:
 case XED_ICLASS_VMULSS:
