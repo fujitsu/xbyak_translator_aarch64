@@ -14,6 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
+
+/*BEGIN_LEGAL
+
+Copyright (c) 2019 Intel Corporation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+END_LEGAL */
 #include <ostream>
 
 typedef unsigned int xt_reg_idx_t;
@@ -99,7 +117,7 @@ enum xt_operand_type_t {
   A64_OP_INIT = 0,
   A64_OP_REG,
   A64_OP_MEM,
-  A64_OP_MBCST,
+  A64_OP_IMM,
 };
 
 const std::string xt_to_string(const xt_operand_type_t type) {
@@ -115,8 +133,8 @@ const std::string xt_to_string(const xt_operand_type_t type) {
   case A64_OP_MEM:
     msg = "A64_OP_MEM";
     break;
-  case A64_OP_MBCST:
-    msg = "A64_OP_MBCST";
+  case A64_OP_IMM:
+    msg = "A64_OP_IMM";
     break;
   default:
     msg = "Undefined xt_operand_type_t";
@@ -124,4 +142,20 @@ const std::string xt_to_string(const xt_operand_type_t type) {
   }
 
   return msg;
+}
+
+/* This implementation is copied from Intel's xed/src/common/xed-util.c
+   arbitrary sign extension from a qty of "bits" length to 64b */
+xed_int64_t xed_sign_extend_arbitrary_to_64(xed_uint64_t x, unsigned int bits) {
+  xed_uint64_t one = 1;
+  xed_int64_t mask = one << (bits - 1);
+  xed_int64_t vmask, o = 0;
+  if (bits < 64) {
+    vmask = (one << bits) - 1;
+    o = ((x & vmask) ^ mask) - mask;
+  } else if (bits == 64)
+    o = x;
+  else
+    xed_assert(0);
+  return o;
 }

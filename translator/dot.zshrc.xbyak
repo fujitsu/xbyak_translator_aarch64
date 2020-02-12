@@ -56,7 +56,7 @@ TEST() {
 # example:TEST vmulps000
 # example:TEST vmulps000 -x
 # example:TEST vmulps000 -a
-    TP_BASE=`echo ${1} | sed -e "s/[0-9]\+//"`
+    TP_BASE=`echo ${1} | sed -e "s/[0-9]\+//" | sed -e "s/_[0-9]\+//"`
 
     if [ ${2:-"-x"} = "-x" ] ; then
 	./test2.sh -x -X -E pattern/${TP_BASE}/${1}.cpp

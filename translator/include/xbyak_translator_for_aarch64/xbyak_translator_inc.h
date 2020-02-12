@@ -1,6 +1,7 @@
 #include "instructions/add.h"
+#include "instructions/mov.h"
 //#include "instructions/vbroadcastss.h"
-#include "instructions/vmulps.h"
+//#include "instructions/vmulps.h"
 #if 0
 #include "instructions/cmp.h"
 #include "instructions/kmovb.h"
@@ -10,7 +11,6 @@
 #include "instructions/kortestd.h"
 #include "instructions/kortestq.h"
 #include "instructions/kortestw.h"
-#include "instructions/mov.h"
 #include "instructions/movq.h"
 #include "instructions/movss.h"
 #include "instructions/sub.h"
