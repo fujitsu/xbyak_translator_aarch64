@@ -3,7 +3,7 @@ void translateMOV(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-  /* 2020/02/12 19:56 */
+  /* 2020/02/12 21:19 */
 
   /* Col=M103*/
   if (false ||
@@ -104,8 +104,10 @@ void translateMOV(xed_decoded_inst_t *p) {
       CodeGeneratorAArch64::mov_imm(X_TMP_0, static_cast<int64_t>(a64.simm),
                                     X_TMP_1);
     } else {
-      CodeGeneratorAArch64::mov_imm(X_TMP_0, static_cast<uint64_t>(a64.uimm),
-                                    X_TMP_1);
+      xed_uint64_t mask = ~uint64_t(0xffffffff);
+      unsigned bits = (mask & a64.uimm) ? 64 : 32;
+      xed_int64_t tmp = xed_sign_extend_arbitrary_to_64(a64.uimm, bits);
+      CodeGeneratorAArch64::mov_imm(X_TMP_0, tmp, X_TMP_1);
     }
     CodeGeneratorAArch64::str(X_TMP_0, xa::ptr(X_TMP_ADDR));
   }
@@ -113,11 +115,13 @@ void translateMOV(xed_decoded_inst_t *p) {
   if (false || (a64.dstWidth == 32 && a64.dstType == A64_OP_MEM &&
                 a64.srcType == A64_OP_IMM)) {
     if (a64.simm != 0) {
-      CodeGeneratorAArch64::mov_imm(W_TMP_0, static_cast<int32_t>(a64.simm),
-                                    W_TMP_1);
+      CodeGeneratorAArch64::mov_imm(X_TMP_0, static_cast<int64_t>(a64.simm),
+                                    X_TMP_1);
     } else {
-      CodeGeneratorAArch64::mov_imm(W_TMP_0, static_cast<uint32_t>(a64.uimm),
-                                    W_TMP_1);
+      xed_uint64_t mask = ~uint64_t(0xffffffff);
+      unsigned bits = (mask & a64.uimm) ? 64 : 32;
+      xed_int64_t tmp = xed_sign_extend_arbitrary_to_64(a64.uimm, bits);
+      CodeGeneratorAArch64::mov_imm(X_TMP_0, tmp, X_TMP_1);
     }
     CodeGeneratorAArch64::str(W_TMP_0, xa::ptr(X_TMP_ADDR));
   }
