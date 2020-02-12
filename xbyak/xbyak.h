@@ -226,6 +226,10 @@ extern "C" {
 #pragma warning(disable : 4127) /* constant expresison */
 #endif
 
+#ifdef XBYAK_TRANSLATE_AARCH64
+#include "xbyak_translator_utils.h"
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
+
 namespace Xbyak {
 
 #ifdef XBYAK_TRANSLATE_AARCH64
