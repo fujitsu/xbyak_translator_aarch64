@@ -3,7 +3,7 @@ void translateMOV(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-  /* 2020/02/12 19:28 */
+  /* 2020/02/12 19:56 */
 
   /* Col=M103*/
   if (false ||
@@ -90,7 +90,9 @@ void translateMOV(xed_decoded_inst_t *p) {
       CodeGeneratorAArch64::mov_imm(xa::XReg(a64.dstIdx),
                                     static_cast<int64_t>(a64.simm), X_TMP_0);
     } else {
-      xed_int64_t tmp = xed_sign_extend_arbitrary_to_64(a64.uimm, 32);
+      xed_uint64_t mask = ~uint64_t(0xffffffff);
+      unsigned bits = (mask & a64.uimm) ? 64 : 32;
+      xed_int64_t tmp = xed_sign_extend_arbitrary_to_64(a64.uimm, bits);
       CodeGeneratorAArch64::mov_imm(xa::XReg(a64.dstIdx), tmp, X_TMP_0);
     }
   }
