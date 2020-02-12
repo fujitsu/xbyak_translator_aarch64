@@ -221,9 +221,8 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
       return retReg; /* disp + index*scale */
     }
   } else {
-    std::cerr << __FILE__ << ":" << __LINE__ << ":Something wrong"
-              << ". Please contact to system administrator!" << std::endl;
-    exit(1);
+    xt_msg_err(__FILE__, __LINE__,
+               ":Something wrong. Please contact to system administrator!");
   }
 
   return retReg;
@@ -234,10 +233,10 @@ unsigned int xt_push_vreg() { xt_push_zreg(); }
 unsigned int xt_push_zreg() {
   for (size_t i = AARCH64_NUM_ZREG - 1; i >= 0; i--) {
     if (zreg_tmp_used[i] == false) {
-      zreg_tmp_used[i] == true;
+      zreg_tmp_used[i] = true;
 
-      CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
-                                CodeGeneratorAArch64::sp, -NUM_BYTES_Z_REG);
+      CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
+                                CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
       CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
                                 Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
       return i;
@@ -254,10 +253,10 @@ unsigned int xt_push_zreg() {
 unsigned int xt_push_preg() {
   for (size_t i = AARCH64_NUM_PREG - 1; i >= 0; i--) {
     if (preg_tmp_used[i] == false) {
-      preg_tmp_used[i] == true;
+      preg_tmp_used[i] = true;
 
-      CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
-                                CodeGeneratorAArch64::sp, -NUM_BYTES_PRED_REG);
+      CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
+                                CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
       CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
                                 Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
       return i;
@@ -280,8 +279,9 @@ void xt_pop_zreg() {
                                 Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
-      zreg_tmp_used[i] == false;
+      zreg_tmp_used[i] = false;
     }
+    return;
   }
 
   std::cerr << __FILE__ << ":" << __LINE__ << ":Restoreing temporal ZReg failed"
@@ -296,8 +296,9 @@ void xt_pop_preg() {
                                 Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
-      preg_tmp_used[i] == false;
+      preg_tmp_used[i] = false;
     }
+    return;
   }
 
   std::cerr << __FILE__ << ":" << __LINE__ << ":Restoreing temporal PReg failed"
@@ -468,14 +469,16 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
     /* End: parsing register operand */
 
     /* Begin: parsing memory operand */
-    xed_uint_t isMem = xed_operand_is_memory_addressing_register(opName);
-    if (isMem == 1) {
+    if (opName == XED_OPERAND_MEM0) {
       if (isMemOpSet == true) {
         /* Two memory operands exist in one instruction? */
         xt_msg_err(__FILE__, __LINE__,
                    "Unsupported # of memory operands. Please contact to "
                    "system administrator!");
       }
+
+      //      unsigned int memops =
+      //      xed_decoded_inst_number_of_memory_operands(xedd);
 
       unsigned int width = xed_decoded_inst_get_memop_address_width(p, i);
       if (width != 64) {
@@ -488,31 +491,31 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
       xed_int64_t tmpDisp;
       xed_uint32_t tmpScale;
 
-      tmpReg = xed_decoded_inst_get_seg_reg(p, i);
+      tmpReg = xed_decoded_inst_get_seg_reg(p, 0);
       if (tmpReg != XED_REG_INVALID) {
         segIdx = xt_get_register_index(tmpReg);
       }
 
-      tmpReg = xed_decoded_inst_get_base_reg(p, i);
+      tmpReg = xed_decoded_inst_get_base_reg(p, 0);
       if (tmpReg != XED_REG_INVALID) {
         baseIdx = xt_get_register_index(tmpReg);
       }
 
-      tmpReg = xed_decoded_inst_get_index_reg(p, i);
+      tmpReg = xed_decoded_inst_get_index_reg(p, 0);
       if (tmpReg != XED_REG_INVALID) {
         indexIdx = xt_get_register_index(tmpReg);
-        tmpScale = xed_decoded_inst_get_scale(p, i);
+        tmpScale = xed_decoded_inst_get_scale(p, 0);
         if (tmpScale) {
           scale = tmpScale;
         }
       }
 
-      disp = xed_decoded_inst_get_memory_displacement(p, i);
+      disp = xed_decoded_inst_get_memory_displacement(p, 0);
 
       if (isDstSet == false) { /* This memory operand is for DST operand. */
         a64->dstType = A64_OP_MEM;
         isDstSet = true;
-        a64->dstWidth = xed_decoded_inst_operand_length_bits(p, i);
+        a64->dstWidth = xed_decoded_inst_operand_length_bits(p, 0);
       } else if (isSrcSet == false) {
         a64->srcType = A64_OP_MEM;
         isSrcSet = true;
@@ -525,18 +528,27 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
                    "system administrator!");
       }
 
+      X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
+                                   X_TMP_1, X_TMP_2);
       continue;
     }
     /* End: parsing memory operand */
 
     /* Begin: parsing immediate value operand */
-    if (xed_decoded_inst_get_immediate_is_signed(p)) {
-      a64->simm = xed_decoded_inst_get_signed_immediate(p);
-    } else {
+    if (opName == XED_OPERAND_IMM0) {
       a64->uimm = xed_decoded_inst_get_unsigned_immediate(p);
+      continue;
     }
-    a64->uimm2 = xed_decoded_inst_get_second_immediate(p);
+    if (opName == XED_OPERAND_IMM0SIGNED) {
+      a64->simm = xed_decoded_inst_get_signed_immediate(p);
+      continue;
+    }
+    if (opName == XED_OPERAND_IMM1) {
+      a64->uimm2 = xed_decoded_inst_get_second_immediate(p);
+      continue;
+    }
 
+    xt_msg_err(__FILE__, __LINE__, "Unsupported opName");
   } // for (int i = 0; i < num_operands; i++) {
 
   xt_dump_a64fx_operands(a64);
