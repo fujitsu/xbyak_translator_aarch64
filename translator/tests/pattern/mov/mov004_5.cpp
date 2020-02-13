@@ -27,25 +27,26 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
+    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7])) + 1);
+    mov(dword[rax], ~uint64_t(0));
+    mov(rcx, dword[rax]);
+    mov(edx, dword[rax]);
 
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
-    std::cout << "Address is " << std::hex << addr << std::endl;
-    mov(rax, addr);
-    mov(r8, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(ptr[rax], r8);
-    mov(r9, ptr[rax]);
+    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[6])) + 2);
+    mov(qword[rax], ~uint64_t(0));
+    mov(rbx, qword[rax]);
+    mov(ebp, qword[rax]);
 
-    /* Address is unaligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7])) + 1;
-    std::cout << "Address is " << std::hex << addr << std::endl;
-    mov(rax, addr);
-    mov(ptr[rax], r8);
-    mov(r10, ptr[rax]);
+    mov(qword[rax], ~uint64_t(0));
+    mov(rsi, dword[rax]);
+    mov(edi, dword[rax]);
 
-    mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[6])) + 3);
+    mov(dword[rax], ~uint64_t(0));
+    mov(r8, qword[rax]);
+    mov(r9d, qword[rax]);
+
+    mov(rax, uint32_t(5));
   }
 };
 

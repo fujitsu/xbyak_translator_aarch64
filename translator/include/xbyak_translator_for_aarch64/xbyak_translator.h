@@ -31,6 +31,9 @@
 #define NUM_BYTES_PRED_REG 8
 #define NUM_BYTES_Z_REG 64
 
+#define TMP_PREG_START 7
+#define TMP_PREG_END 0
+
 #ifdef XBYAK_TRANSLATE_AARCH64
 #include "xbyak_translator_debug.h"
 
@@ -257,16 +260,19 @@ unsigned int xt_push_zreg() {
   return 31;
 }
 
-unsigned int xt_push_preg() {
-  for (size_t i = AARCH64_NUM_PREG - 1; i >= 0; i--) {
-    if (preg_tmp_used[i] == false) {
-      preg_tmp_used[i] = true;
+unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
+  for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
+    if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i &&
+        a64->maskIdx != i) {
+      if (preg_tmp_used[i] == false) {
+        preg_tmp_used[i] = true;
 
-      CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
-                                CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
-      CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
-                                Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
-      return i;
+        CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
+                                  CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+        CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
+                                  Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+        return i;
+      }
     }
   }
 
@@ -297,15 +303,15 @@ void xt_pop_zreg() {
 }
 
 void xt_pop_preg() {
-  for (size_t i = 0; i < AARCH64_NUM_ZREG; i++) {
+  for (size_t i = TMP_PREG_END; i <= TMP_PREG_START; i++) {
     if (preg_tmp_used[i] == true) {
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i),
                                 Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
       preg_tmp_used[i] = false;
+      return;
     }
-    return;
   }
 
   std::cerr << __FILE__ << ":" << __LINE__ << ":Restoreing temporal PReg failed"

@@ -19,6 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -28,24 +29,54 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr;
+    size_t addr1;
 
     /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
-    std::cout << "Address is " << std::hex << addr << std::endl;
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
     mov(rax, addr);
-    mov(r8, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(ptr[rax], r8);
-    mov(r9, ptr[rax]);
+    mov(rbx, addr);
+    vmovdqu(Xmm(0), ptr[rax]);
+    vmovdqu(ptr[rbx], Xmm(0));
+    vmovdqu(Xmm(1), ptr[rbx]);
+#endif
+
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[12].ud_dt[0]));
+    mov(rax, addr);
+    mov(rbx, addr);
+    vmovdqu(Ymm(2), ptr[rax]);
+    vmovdqu(ptr[rbx], Ymm(2));
+    vmovdqu(Ymm(3), ptr[rbx]);
+#endif
 
     /* Address is unaligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7])) + 1;
-    std::cout << "Address is " << std::hex << addr << std::endl;
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 5;
     mov(rax, addr);
-    mov(ptr[rax], r8);
-    mov(r10, ptr[rax]);
+    mov(rbx, addr);
+    vmovdqu(Xmm(4), ptr[rax]);
+    vmovdqu(ptr[rbx], Xmm(4));
+    vmovdqu(Xmm(5), ptr[rbx]);
+#endif
+
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[7].ud_dt[0])) + 1;
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 7;
+    mov(rax, addr);
+    mov(rbx, addr);
+    vmovdqu(Ymm(6), ptr[rax]);
+    vmovdqu(ptr[rbx], Ymm(6));
+    vmovdqu(Ymm(7), ptr[rbx]);
+#endif
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(rbx,
+        size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 
