@@ -4952,11 +4952,11 @@ void vmovdqa(const Xmm &xm, const Operand &op) {
 }
 void vmovdqu(const Address &addr, const Xmm &xmm) {
   opAVX_X_XM_IMM(xmm, addr, T_F3 | T_0F | T_YMM, 0x7F);
-  UNIMPLEMENTED;
+  decodeAndTransToAArch64();
 }
 void vmovdqu(const Xmm &xm, const Operand &op) {
   opAVX_X_XM_IMM(xm, op, T_F3 | T_0F | T_YMM, 0x6F);
-  UNIMPLEMENTED;
+  decodeAndTransToAArch64();
 }
 void vmovhlps(const Xmm &x1, const Xmm &x2, const Operand &op = Operand()) {
   if (!op.isNone() && !op.isXMM())

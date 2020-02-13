@@ -2,6 +2,7 @@
 #include "instructions/dec.h"
 #include "instructions/mov.h"
 //#include "instructions/vbroadcastss.h"
+#include "instructions/vmovdqu.h"
 //#include "instructions/vmulps.h"
 #if 0
 #include "instructions/cmp.h"

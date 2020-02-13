@@ -19,6 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -27,25 +28,8 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
-    std::cout << "Address is " << std::hex << addr << std::endl;
-    mov(rax, addr);
-    mov(r8, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(ptr[rax], r8);
-    mov(r9, ptr[rax]);
-
-    /* Address is unaligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7])) + 1;
-    std::cout << "Address is " << std::hex << addr << std::endl;
-    mov(rax, addr);
-    mov(ptr[rax], r8);
-    mov(r10, ptr[rax]);
-
-    mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    vmovdqu(Xmm(0), Xmm(1));
+    vmovdqu(Ymm(2), Ymm(3));
   }
 };
 
