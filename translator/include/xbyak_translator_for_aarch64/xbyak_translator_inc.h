@@ -1,6 +1,7 @@
 #include "instructions/add.h"
 #include "instructions/vbroadcastss.h"
 #include "instructions/vmulps.h"
+#include "instructions/vandps.h"
 #if 0
 #include "instructions/cmp.h"
 #include "instructions/kmovq.h"

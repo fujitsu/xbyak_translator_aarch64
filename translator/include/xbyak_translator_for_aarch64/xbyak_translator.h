@@ -1255,6 +1255,8 @@ bool decodeOpcode() {
   case XED_ICLASS_VALIGNQ:
   case XED_ICLASS_VANDNPD:
   case XED_ICLASS_VANDNPS:
+	translateVANDPS(&xedd);
+	break;
   case XED_ICLASS_VANDPD:
   case XED_ICLASS_VANDPS:
   case XED_ICLASS_VBLENDMPD:
