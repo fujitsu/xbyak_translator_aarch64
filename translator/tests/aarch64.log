@@ -1,0 +1,6 @@
+HOST_ARCH=x86_64
+JIT_ARCH =aarch64
+EXEC_ARCH=aarch64
+QEMU     =1
+DUMP_OPT =-m AArch64
+compile error!
