@@ -158,6 +158,9 @@ xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
     return r - XED_REG_ZMM0;
   } else if (XED_REG_EAX <= r && r <= XED_REG_R15D) {
     return r - XED_REG_EAX;
+  } else if (r == XED_REG_RFLAGS) {
+    /* In case of 2nd operand of DEC instruction, this "else if" is passed */
+    return XT_REG_INVALID;
   } else {
     xt_msg_err(__FILE__, __LINE__, ":Under construction!");
     assert(NULL);

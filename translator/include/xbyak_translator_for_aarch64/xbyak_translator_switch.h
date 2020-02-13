@@ -166,6 +166,8 @@ case XED_ICLASS_CWDE:
 case XED_ICLASS_DAA:
 case XED_ICLASS_DAS:
 case XED_ICLASS_DEC:
+  translateDEC(&xedd);
+  break;
 case XED_ICLASS_DEC_LOCK:
 case XED_ICLASS_DIV:
 case XED_ICLASS_DIVPD:
