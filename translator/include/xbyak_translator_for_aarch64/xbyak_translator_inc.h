@@ -9,6 +9,7 @@
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
 #include "instructions/xor.h"
+#include "instructions/vandps.h"
 #if 0
 #include "instructions/cmp.h"
 #include "instructions/kmovb.h"
