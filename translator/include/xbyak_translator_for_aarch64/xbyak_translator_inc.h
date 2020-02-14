@@ -4,6 +4,7 @@
 //#include "instructions/vbroadcastss.h"
 #include "instructions/vmovdqu.h"
 //#include "instructions/vmulps.h"
+#include "instructions/vpinsrb.h"
 #if 0
 #include "instructions/cmp.h"
 #include "instructions/kmovb.h"

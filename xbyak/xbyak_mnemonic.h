@@ -5461,7 +5461,7 @@ void vpinsrb(const Xmm &x1, const Xmm &x2, const Operand &op, uint8 imm) {
   if (!(x1.isXMM() && x2.isXMM() && (op.isREG(32) || op.isMEM())))
     throw Error(ERR_BAD_COMBINATION);
   opVex(x1, &x2, op, T_0F3A | T_66 | T_EVEX | T_N1, 0x20, imm);
-  UNIMPLEMENTED;
+  decodeAndTransToAArch64();
 }
 void vpinsrd(const Xmm &x1, const Xmm &x2, const Operand &op, uint8 imm) {
   if (!(x1.isXMM() && x2.isXMM() && (op.isREG(32) || op.isMEM())))
@@ -6771,7 +6771,7 @@ void vphsubw(const Xmm &x, const Operand &op) {
 }
 void vpinsrb(const Xmm &x, const Operand &op, uint8 imm) {
   vpinsrb(x, x, op, imm);
-  UNIMPLEMENTED;
+  decodeAndTransToAArch64();
 }
 void vpinsrd(const Xmm &x, const Operand &op, uint8 imm) {
   vpinsrd(x, x, op, imm);

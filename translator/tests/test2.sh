@@ -240,6 +240,11 @@ dump_disassemble() {
     ${DUMP_PREFIX}${OBJDUMP} -D -b binary ${DUMP_OPT} ${BIN_FILE} > ${ASM_FILE}
 }
 
+extract_log() {
+    tmpfile=/tmp/${LOG_NAME}.`whoami`.check.log
+    grep -w Check ${LOG_NAME}.log > ${tmpfile}
+}
+
 debug_dump_option() {
     echo "HOST_ARCH=${HOST_ARCH}"
     echo "JIT_ARCH =${JIT_ARCH}"
@@ -310,3 +315,4 @@ fi
 if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
     dump_disassemble
 fi
+extract_log

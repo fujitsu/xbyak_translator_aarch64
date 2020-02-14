@@ -564,9 +564,8 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
         a64->src2Type = A64_OP_IMM;
         isSrc2Set = true;
       } else {
-        xt_msg_err(__FILE__, __LINE__,
-                   "Unknwon # of register operands. Please contact to "
-                   "system administrator!");
+        /* For example, VPINSRB instruction has dstReg, srcReg, src2Reg, and
+           IMM, so that if program comes here, it's not a bug. */
       }
       if (opName == XED_OPERAND_IMM0) {
         a64->immWidth = xed_decoded_inst_get_immediate_width(p);

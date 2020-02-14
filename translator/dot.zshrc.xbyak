@@ -52,6 +52,18 @@ AS() {
     ASM $@
 }
 
+msg_ok() {
+    echo "###################################"
+    echo " OK, Congratulation! "
+    echo "###################################"
+}
+
+msg_ng() {
+    echo "###################################"
+    echo " NG, It seems a little different. "
+    echo "###################################"
+}
+
 TEST() {
 # example:TEST vmulps000
 # example:TEST vmulps000 -x
@@ -64,6 +76,16 @@ TEST() {
 
     if [ ${2:-"-a"} = "-a" ] ; then
 	./test2.sh -a -A -E pattern/${TP_BASE}/${1}.cpp
+    fi
+
+    X86_LOG=/tmp/${1}.jit_x86_64.exec_x86_64.`whoami`.check.log
+    AARCH64_LOG=/tmp/${1}.jit_aarch64.exec_aarch64.`whoami`.check.log
+
+    diff -y -W 300 ${X86_LOG} ${AARCH64_LOG}
+    if [ $? = 0 ] ; then
+	msg_ok
+    else
+	msg_ng
     fi
 }
 
