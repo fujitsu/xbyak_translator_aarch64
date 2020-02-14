@@ -27,12 +27,13 @@ public:
 	inputZReg[1].ud_dt[i] = 0xFFFFFFFFFFFFFFFF;
     }
 	
-    for (int i=0; i< 8; i++){
-	inputZReg[2].ud_dt[i] = 0xDDDDDDDDDDDDDDDD;
-    }
-
-    inputPredReg[15] = 0x00000000000000FF;
-		
+//    for (int i=0; i< 8; i++){
+//	inputZReg[2].ud_dt[i] = 0x12345;
+//    }
+    
+//    for (int i=0; i< 15; i++){
+//    	inputPredReg[i] = 0xFFFFFFFFFFFFFFFF;
+//    }		
   }
 
   void setCheckRegFlagAll() {
@@ -41,8 +42,16 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vandps(Ymm(0), Ymm(1), Ymm(2));
+    static const uint64_t maskFF = uint64_t(0xFF);
+    mov(rax, (size_t)&maskFF);
+    vandps(Ymm(0), Ymm(1), ptr[rax]);
+
+
   }
+
+//  struct xt_a64fx_operands_struct_t a64;
+//  xt_dump_a64fx_operands(&a64);
+
 };
 
 int main(int argc, char *argv[]) {

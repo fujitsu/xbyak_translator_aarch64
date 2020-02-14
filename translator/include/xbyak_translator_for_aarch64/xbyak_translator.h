@@ -387,7 +387,7 @@ bool decodeOpcode() {
   xt_dump_x86_64_decoded_info(&xedd);
 
   xed_iclass_enum_t p = xed_decoded_inst_get_iclass(&xedd);
-
+	std::cout << "xbyak_translator_switch.h" << std::endl;
 #include "xbyak_translator_switch.h"
 
   return true;

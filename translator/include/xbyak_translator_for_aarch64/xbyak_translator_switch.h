@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
+
+std::cout << xed_iclass_enum_t2str(p) << std::endl;
+
 switch (p) {
 case XED_ICLASS_INVALID:
 case XED_ICLASS_AAA:
@@ -878,8 +881,8 @@ case XED_ICLASS_VANDNPD:
 case XED_ICLASS_VANDNPS:
 case XED_ICLASS_VANDPD:
 case XED_ICLASS_VANDPS:
-  //  translateVANDPS(&xedd);
-  break;
+	translateVANDPS(&xedd);
+	break;
 case XED_ICLASS_VBLENDMPD:
 case XED_ICLASS_VBLENDMPS:
 case XED_ICLASS_VBLENDPD:
