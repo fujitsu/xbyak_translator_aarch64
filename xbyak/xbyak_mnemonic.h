@@ -728,7 +728,7 @@ void cwde() {
 }
 void dec(const Operand &op) {
   opIncDec(op, 0x48, 1);
-  decodeAndTransToAArch64();
+  UNIMPLEMENTED;
 }
 void div(const Operand &op) {
   opR_ModM(op, 0, 6, 0xF6);
@@ -4952,11 +4952,11 @@ void vmovdqa(const Xmm &xm, const Operand &op) {
 }
 void vmovdqu(const Address &addr, const Xmm &xmm) {
   opAVX_X_XM_IMM(xmm, addr, T_F3 | T_0F | T_YMM, 0x7F);
-  decodeAndTransToAArch64();
+  UNIMPLEMENTED;
 }
 void vmovdqu(const Xmm &xm, const Operand &op) {
   opAVX_X_XM_IMM(xm, op, T_F3 | T_0F | T_YMM, 0x6F);
-  decodeAndTransToAArch64();
+  UNIMPLEMENTED;
 }
 void vmovhlps(const Xmm &x1, const Xmm &x2, const Operand &op = Operand()) {
   if (!op.isNone() && !op.isXMM())
@@ -5461,7 +5461,7 @@ void vpinsrb(const Xmm &x1, const Xmm &x2, const Operand &op, uint8 imm) {
   if (!(x1.isXMM() && x2.isXMM() && (op.isREG(32) || op.isMEM())))
     throw Error(ERR_BAD_COMBINATION);
   opVex(x1, &x2, op, T_0F3A | T_66 | T_EVEX | T_N1, 0x20, imm);
-  decodeAndTransToAArch64();
+  UNIMPLEMENTED;
 }
 void vpinsrd(const Xmm &x1, const Xmm &x2, const Operand &op, uint8 imm) {
   if (!(x1.isXMM() && x2.isXMM() && (op.isREG(32) || op.isMEM())))
@@ -6771,7 +6771,7 @@ void vphsubw(const Xmm &x, const Operand &op) {
 }
 void vpinsrb(const Xmm &x, const Operand &op, uint8 imm) {
   vpinsrb(x, x, op, imm);
-  decodeAndTransToAArch64();
+  UNIMPLEMENTED;
 }
 void vpinsrd(const Xmm &x, const Operand &op, uint8 imm) {
   vpinsrd(x, x, op, imm);
