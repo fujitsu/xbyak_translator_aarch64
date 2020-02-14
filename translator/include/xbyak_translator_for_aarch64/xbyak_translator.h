@@ -133,6 +133,7 @@ struct xt_a64fx_operands_struct_t {
   xed_uint_t dstWidth;
 
   /* Immediate value opoerand */
+  xed_uint_t ibits = 0;
   xed_uint64_t uimm = 0; /* unsigned */
   xed_int64_t simm = 0;  /* signedな */
   xed_uint_t immWidth;   /* IMM value width. 8, 16, 32, 64 */
@@ -568,8 +569,22 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
            IMM, so that if program comes here, it's not a bug. */
       }
       if (opName == XED_OPERAND_IMM0) {
+        const unsigned int no_leading_zeros = 0;
+        xed_uint_t ibits;
+        const xed_bool_t lowercase = 1;
+
+        ibits = xed_decoded_inst_get_immediate_width_bits(p);
+        if (xed_decoded_inst_get_immediate_is_signed(p)) {
+          xed_uint_t rbits = ibits ? ibits : 8;
+          xed_int32_t x = xed_decoded_inst_get_signed_immediate(p);
+          a64->uimm = XED_STATIC_CAST(
+              xed_uint64_t,
+              xed_sign_extend_arbitrary_to_64((xed_uint64_t)x, ibits));
+        } else {
+          a64->uimm = xed_decoded_inst_get_unsigned_immediate(p);
+        }
+
         a64->immWidth = xed_decoded_inst_get_immediate_width(p);
-        a64->uimm = xed_decoded_inst_get_unsigned_immediate(p);
         continue;
       }
       if (opName == XED_OPERAND_IMM0SIGNED) {
