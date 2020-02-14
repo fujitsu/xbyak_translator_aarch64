@@ -586,6 +586,16 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
     xt_msg_err(__FILE__, __LINE__, "Unsupported opName");
   } // for (int i = 0; i < num_operands; i++) {
 
+  /* Support for legacy xbyak_translate frame work */
+  xed_iclass_enum_t iclass = xed_decoded_inst_get_iclass(p);
+  if (iclass == XED_ICLASS_VANDPS && a64->EVEXb) {
+    if (a64->src2Type != A64_OP_MEM) {
+      xt_msg_err(__FILE__, __LINE__,
+                 ":Something wrong. Please contact to system administrator!");
+    }
+    a64->src2Type = A64_OP_MBCST;
+  }
+
   xt_dump_a64fx_operands(a64);
 }
 

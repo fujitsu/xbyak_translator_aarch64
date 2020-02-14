@@ -118,6 +118,7 @@ enum xt_operand_type_t {
   A64_OP_REG,
   A64_OP_MEM,
   A64_OP_IMM,
+  A64_OP_MBCST, /* This type will be emitted in the near future. */
 };
 
 const std::string xt_to_string(const xt_operand_type_t type) {
