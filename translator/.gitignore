@@ -2,5 +2,7 @@
 *.o
 *.asm
 *.bin
-
-
+*.exec_x86_64
+*.exec_aarch64
+*.exec_x86_64.log
+*.exec_aarch64.log

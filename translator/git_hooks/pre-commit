@@ -18,7 +18,12 @@ _main(){
     echo "Running clang-format."
     for file in `git diff-index --cached --name-only HEAD`
     do
-	formatting_files "${file}"
+	DIR_NAME=$(dirname ${file})
+	if [ ${DIR_NAME:-xbyak} != xbyak ] ; then
+	    formatting_files "${file}"
+	else
+	    echo "${file} is not indented by clang-format, because it seems to be the original xbyak file."
+	fi
     done
 }
 
