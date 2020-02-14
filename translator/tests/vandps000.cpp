@@ -42,9 +42,17 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    static const uint64_t maskFF = uint64_t(0xFF);
-    mov(rax, (size_t)&maskFF);
-    vandps(Ymm(0), Ymm(1), ptr[rax]);
+//    static const uint64_t maskFF = uint64_t(0xFF);
+//    mov(rax, (size_t)&maskFF);
+	size_t addr;
+	addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+
+	mov(rax, addr);
+	vandps(Ymm(2), Ymm(0), ptr[rax]);
+
+	mov(rax, 5);
+
+//    vandps(Ymm(0), Ymm(1), ptr[rax]);
 
 
   }
