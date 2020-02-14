@@ -1,7 +1,12 @@
 xbyak_translator.h
+xbyak_translator_debug.h
 xbyak_translator_inc.h
+xbyak_translator_switch.h
+xbyak_translator_utils.h
+xed-examples-util_aarch64.h
 xbyak_aarch64_meta_mnemonic.h
 test_generator.h
+test_generator2.h
 test.cpp
 template.cpp
 add.h
@@ -22,5 +27,6 @@ vblendmps.h
 vcmpps.h
 vmovdqu16.h
 vmovups.h
+vmulps.h
 vzeroupper.h
 xor.h

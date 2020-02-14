@@ -36,16 +36,17 @@ void translateADD(xed_decoded_inst_t *p) {
   }
   if (false || (isDstSize == 64 && isSrcSize == 64 &&
                 isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    CodeGeneratorAArch64::add(Xbyak_aarch64::XReg(a64_dstIdx), Xbyak_aarch64::XReg(a64_dstIdx),
-          tmp);
+    CodeGeneratorAArch64::add(Xbyak_aarch64::XReg(a64_dstIdx),
+                              Xbyak_aarch64::XReg(a64_dstIdx), tmp);
   }
   if (false ||
       (isDstSize == 64 && isSrcSize == 64 && isDst == XED_OPERAND_REG0 &&
        isSrc == XED_OPERAND_REG1) ||
       (isDstSize == 64 && isSrcSize == 64 && isDst == XED_OPERAND_REG0 &&
        isSrc == XED_OPERAND_REG1)) {
-    CodeGeneratorAArch64::add(Xbyak_aarch64::XReg(a64_dstIdx), Xbyak_aarch64::XReg(a64_dstIdx),
-          Xbyak_aarch64::XReg(a64_srcIdx));
+    CodeGeneratorAArch64::add(Xbyak_aarch64::XReg(a64_dstIdx),
+                              Xbyak_aarch64::XReg(a64_dstIdx),
+                              Xbyak_aarch64::XReg(a64_srcIdx));
   }
   if (false || (isDstSize == 64 && isSrcSize == 64 &&
                 isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
