@@ -34,18 +34,17 @@ public:
     mov(rcx, 1);
     and_(rax, rcx);
 
-    mov(rax, ~uint64_t(1));
+    mov(rdx, ~uint64_t(1));
     mov(rcx, 1);
-    and_(rax, rcx);
+    and_(rdx, rcx);
 
     mov(rbp, ~uint64_t(0));
     mov(rsi, ~uint64_t(0));
     and_(rbp, rsi);
 
     mov(r9, ~uint64_t(0));
-    mov(r10, ~uint64_t(0));
+    xor_(r10, r10); // 0 clear
     and_(r9d, r10d);
-
   }
 };
 
