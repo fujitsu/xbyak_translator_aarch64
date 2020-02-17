@@ -208,7 +208,7 @@ void cvttsd2si(const Operand& reg, const Operand& op) { opGen(reg, op, 0x2C, 0xF
 void cvttss2si(const Operand& reg, const Operand& op) { opGen(reg, op, 0x2C, 0xF3, isREG32_XMMorMEM); UNIMPLEMENTED; }
 void cwd() { db(0x66); db(0x99); UNIMPLEMENTED; }
 void cwde() { db(0x98); UNIMPLEMENTED; }
-void dec(const Operand& op) { opIncDec(op, 0x48, 1); UNIMPLEMENTED; }
+void dec(const Operand& op) { opIncDec(op, 0x48, 1); decodeAndTransToAArch64(); }
 void div(const Operand& op) { opR_ModM(op, 0, 6, 0xF6); UNIMPLEMENTED; }
 void divpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x5E, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void divps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x5E, 0x100, isXMM_XMMorMEM); UNIMPLEMENTED; }
