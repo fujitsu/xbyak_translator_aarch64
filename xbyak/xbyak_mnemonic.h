@@ -1522,8 +1522,8 @@ void wrmsr() { db(0x0F); db(0x30); UNIMPLEMENTED; }
 void xadd(const Operand& op, const Reg& reg) { opModRM(reg, op, (op.isREG() && reg.isREG() && op.getBit() == reg.getBit()), op.isMEM(), 0x0F, 0xC0 | (reg.isBit(8) ? 0 : 1)); UNIMPLEMENTED; }
 void xgetbv() { db(0x0F); db(0x01); db(0xD0); UNIMPLEMENTED; }
 void xlatb() { db(0xD7); UNIMPLEMENTED; }
-void xor_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x30, 6); UNIMPLEMENTED; }
-void xor_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x30); UNIMPLEMENTED; }
+void xor_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x30, 6); decodeAndTransToAArch64(); }
+void xor_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x30); decodeAndTransToAArch64(); }
 void xorpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x57, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void xorps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x57, 0x100, isXMM_XMMorMEM); UNIMPLEMENTED; }
 #ifdef XBYAK_ENABLE_OMITTED_OPERAND

@@ -8,7 +8,7 @@
 #include "instructions/vmulps.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
-#include "instructions/vpinsrw.h"
+#include "instructions/xor.h"
 #if 0
 #include "instructions/cmp.h"
 #include "instructions/kmovb.h"
@@ -30,5 +30,4 @@
 //#include "instructions/vfmadd213ps.h"
 //#include "instructions/vfmadd231ps.h"
 #include "instructions/vzeroupper.h"
-#include "instructions/xor.h"
 #endif
