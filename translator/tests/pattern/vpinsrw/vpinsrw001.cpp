@@ -19,13 +19,8 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setDumpZRegMode(SP_DT);
-    setInputZregAllRandomFloat();
-
-    for (int i = 0; i < 16; i++) {
-      inputZReg[0].sp_dt[i] = 0.5 + float(i);
-      inputZReg[1].sp_dt[i] = float(2.0);
-    }
+    setInputZregAllRandomHex();
+    inputZReg[31].ub_dt[0] = uint8_t(0xff);
   }
 
   void setCheckRegFlagAll() {
@@ -34,8 +29,22 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[0])));
-    vmulps(Ymm(2), Ymm(1), ptr[rax]);
+    size_t addr;
+
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[4].ub_dt[0]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rax, addr);
+    for (int i = 0; i < 8; i++) {
+      vpinsrw(Xmm(i), Xmm(8), ptr[rax], i);
+    }
+
+    addr = reinterpret_cast<size_t>(&(inputZReg[25].ub_dt[0]) + 3);
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rax, addr);
+    for (int i = 16; i < 24; i++) {
+      vpinsrw(Xmm(i), Xmm(24), ptr[rax], i % 8);
+    }
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
