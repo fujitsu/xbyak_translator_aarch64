@@ -35,7 +35,7 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[0])));
-    vmulps(Ymm(2), Ymm(1), ptr[rax]);
+    vmulps(Zmm(2), Zmm(1), ptr[rax]);
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64

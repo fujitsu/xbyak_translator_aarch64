@@ -41,15 +41,15 @@
 #pragma GCC diagnostic warning "-Wunused-variable"
 // namespace xbyak_translator {
 public:
-Xbyak_aarch64::WReg W_TMP_0 = w25;
-Xbyak_aarch64::WReg W_TMP_1 = w26;
-Xbyak_aarch64::WReg W_TMP_2 = w27;
-Xbyak_aarch64::WReg W_TMP_3 = w28;
-Xbyak_aarch64::XReg X_TMP_0 = x25;
-Xbyak_aarch64::XReg X_TMP_1 = x26;
-Xbyak_aarch64::XReg X_TMP_2 = x27;
-Xbyak_aarch64::XReg X_TMP_3 = x28;
-Xbyak_aarch64::XReg X_TMP_ADDR = x29;
+Xbyak_aarch64::WReg W_TMP_0 = w24;
+Xbyak_aarch64::WReg W_TMP_1 = w25;
+Xbyak_aarch64::WReg W_TMP_2 = w26;
+Xbyak_aarch64::WReg W_TMP_3 = w27;
+Xbyak_aarch64::XReg X_TMP_0 = x24;
+Xbyak_aarch64::XReg X_TMP_1 = x25;
+Xbyak_aarch64::XReg X_TMP_2 = x26;
+Xbyak_aarch64::XReg X_TMP_3 = x27;
+Xbyak_aarch64::XReg X_TMP_ADDR = x28;
 Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
@@ -113,7 +113,7 @@ struct xt_a64fx_operands_struct_t {
   xt_reg_idx_t vTmpIdx = XT_REG_INVALID;
   xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
 
-  xt_predicate_type_t PredType = A64_PRED_INIT;
+  xt_predicate_type_t PredType = A64_PRED_NO;
 
   /* Type of operand
      A64_OP_REG:register operand
@@ -242,18 +242,22 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
   return retReg;
 }
 
-unsigned int xt_push_vreg() { xt_push_zreg(); }
+unsigned int xt_push_vreg(xt_a64fx_operands_struct_t *a64) {
+  xt_push_zreg(a64);
+}
 
-unsigned int xt_push_zreg() {
+unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
   for (size_t i = AARCH64_NUM_ZREG - 1; i >= 0; i--) {
-    if (zreg_tmp_used[i] == false) {
-      zreg_tmp_used[i] = true;
+    if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i) {
+      if (zreg_tmp_used[i] == false) {
+        zreg_tmp_used[i] = true;
 
-      CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
-                                CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
-      CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
-                                Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
-      return i;
+        CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
+                                  CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
+        CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
+                                  Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+        return i;
+      }
     }
   }
 
@@ -297,8 +301,8 @@ void xt_pop_zreg() {
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
       zreg_tmp_used[i] = false;
+      return;
     }
-    return;
   }
 
   std::cerr << __FILE__ << ":" << __LINE__ << ":Restoreing temporal ZReg failed"

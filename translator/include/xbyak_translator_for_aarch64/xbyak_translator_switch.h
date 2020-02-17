@@ -878,7 +878,7 @@ case XED_ICLASS_VANDNPD:
 case XED_ICLASS_VANDNPS:
 case XED_ICLASS_VANDPD:
 case XED_ICLASS_VANDPS:
-  translateVANDPS(&xedd);
+  //  translateVANDPS(&xedd);
   break;
 case XED_ICLASS_VBLENDMPD:
 case XED_ICLASS_VBLENDMPS:
@@ -1180,7 +1180,7 @@ case XED_ICLASS_VMRUN:
 case XED_ICLASS_VMSAVE:
 case XED_ICLASS_VMULPD:
 case XED_ICLASS_VMULPS:
-  //  translateVMULPS(&xedd);
+  translateVMULPS(&xedd);
   break;
 case XED_ICLASS_VMULSD:
 case XED_ICLASS_VMULSS:
