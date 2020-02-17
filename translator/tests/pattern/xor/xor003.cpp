@@ -20,8 +20,7 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     //    setInputZregAllRandomHex();
-    inputZReg[0].ud_dt[7] = ~uint64_t(0);
-    inputZReg[1].ud_dt[7] = ~uint64_t(0);
+    inputZReg[0].ud_dt[7] = uint64_t(0x12345678ffffffff);
   }
 
   void setCheckRegFlagAll() {
@@ -37,21 +36,16 @@ public:
     size_t addr1;
     /* Address is aligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[1].ud_dt[7]));
     mov(rax, addr);
-    mov(rcx, addr1);
+    mov(r9, ptr[rax]); // r9 holds value before xor instruction.
 
     mov(r8, uint64_t(0xabcd));
+    xor_(ptr[rax], r8d);
 
-    //add(ptr[rax], r8);
-    xor_(ptr[rcx], r8d);
-
-    mov(r9, ptr[rax]);
-    mov(r10, ptr[rcx]);
+    mov(r10,
+        ptr[rax]); // Lower 32-bit of r10 holds value after xor instruction.
 
     mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-    mov(rcx,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
