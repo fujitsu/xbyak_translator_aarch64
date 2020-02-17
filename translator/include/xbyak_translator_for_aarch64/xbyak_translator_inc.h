@@ -1,4 +1,5 @@
 #include "instructions/add.h"
+#include "instructions/and.h"
 #include "instructions/dec.h"
 #include "instructions/mov.h"
 #include "instructions/vandps.h"
