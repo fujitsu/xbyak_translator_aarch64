@@ -1626,6 +1626,8 @@ case XED_ICLASS_XEND:
 case XED_ICLASS_XGETBV:
 case XED_ICLASS_XLAT:
 case XED_ICLASS_XOR:
+  translateXOR(&xedd);
+  break;
 case XED_ICLASS_XORPD:
 case XED_ICLASS_XORPS:
 case XED_ICLASS_XOR_LOCK:

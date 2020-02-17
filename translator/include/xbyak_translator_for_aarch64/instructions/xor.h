@@ -1,155 +1,99 @@
 void translateXOR(xed_decoded_inst_t *p) {
-  // unsigned int i, noperands, dstIdx, srcIdx;
-  const xed_inst_t *xi = xed_decoded_inst_inst(p);
+  namespace xa = Xbyak_aarch64;
+  struct xt_a64fx_operands_struct_t a64;
+  xt_construct_a64fx_operands(p, &a64);
 
-  const xed_operand_t *op1 =
-      xed_inst_operand(xi, 0); // dstのオペランドのポインタを取得
-  const xed_operand_t *op2 =
-      xed_inst_operand(xi, 1); // dstのオペランドのポインタを取得
-  xed_operand_enum_t isDst =
-      xed_operand_name(op1); // dstのオペランドの名前を取得？;
-  xed_operand_enum_t isSrc =
-      xed_operand_name(op2); // srcのオペランドの名前を取得？;
+  /* 2020/02/17 17:59 */
+  /* Col=S103*/
+  if(false ||(a64.dstWidth==8&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==16&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==8&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==8&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==8&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==8&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==8&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==8&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==16&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==16&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==8&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==8&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==16&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==16&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==8&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==16&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+    XT_UNIMPLEMENTED;
+  }
+  /* Col=T103*/
+  if(false ||(a64.dstWidth==32&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_IMM&&true)) {
+    if(std::numeric_limits<uint32_t>::max() < a64.uimm && a64.uimm < ~uint64_t(0xFFFFFFFF)) {
+      xt_msg_err(__FILE__, __LINE__, "Invalid uimm="+std::to_string(a64.uimm));
+    }
+    CodeGeneratorAArch64::eor(Xbyak_aarch64::WReg(a64.dstIdx), Xbyak_aarch64::WReg(a64.dstIdx), static_cast<uint32_t>(a64.uimm));
+  }
+  /* Col=U103*/
+  if(false ||(a64.dstWidth==64&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_IMM&&true)) {
+    if(a64.simm != 0) {CodeGeneratorAArch64::mov_imm(X_TMP_1, static_cast<int64_t>(a64.simm), X_TMP_0);} else {
+      xed_uint64_t mask = ~uint64_t(0xffffffff);
+      unsigned bits = (mask & a64.uimm) ? 64 : 32;
+      xed_int64_t tmp = xed_sign_extend_arbitrary_to_64(a64.uimm, bits);
+      CodeGeneratorAArch64::mov_imm(X_TMP_1, tmp, X_TMP_0);
+    }
+    CodeGeneratorAArch64::eor(Xbyak_aarch64::XReg(a64.dstIdx), Xbyak_aarch64::XReg(a64.dstIdx), X_TMP_1);
+  }
 
-  xed_uint_t isDstSize = xed_decoded_inst_operand_length_bits(p, 0);
-  xed_uint_t isSrcSize = xed_decoded_inst_operand_length_bits(p, 1);
 
-  Xbyak_aarch64::XReg tmp(26);
-  Xbyak_aarch64::XReg ans(27);
+  /* Col=X103*/
+  if(false ||(a64.dstWidth==32&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==32&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==32&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+    CodeGeneratorAArch64::ldr(W_TMP_0, xa::ptr(X_TMP_ADDR));
 
-  unsigned int a64_dstIdx;
-  unsigned int a64_srcIdx;
+  }
+  /* Col=Y103*/
+  if(false ||(a64.dstWidth==64&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==64&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==64&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+    CodeGeneratorAArch64::ldr(X_TMP_0, xa::ptr(X_TMP_ADDR));
 
-  if (false || (isDstSize == 64 && isSrcSize == 64 &&
-                isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    ldr(tmp, Xbyak_aarch64::ptr(X_TMP_ADDR));
   }
-  if (false ||
-      (isDstSize == 64 && isSrcSize == 32 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 64 && isSrcSize == 8 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 64 && isSrcSize == 64 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_REG0)) {
-    ldr(ans, Xbyak_aarch64::ptr(X_TMP_ADDR));
+
+
+  /* Col=AB103*/
+  if(false ||(a64.dstWidth==32&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_IMM&&true)) {
+    if(std::numeric_limits<uint32_t>::max() < a64.uimm && a64.uimm < ~uint64_t(0xFFFFFFFF)) {
+      xt_msg_err(__FILE__, __LINE__, "Invalid uimm="+std::to_string(a64.uimm));
+    }
+    CodeGeneratorAArch64::eor(W_TMP_0, W_TMP_0, static_cast<uint32_t>(a64.uimm));
   }
-  if (false || (isDstSize == 64 && isSrcSize == 64 &&
-                isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    eor__(Xbyak_aarch64::XReg(a64_dstIdx), Xbyak_aarch64::XReg(a64_dstIdx),
-          tmp);
+  /* Col=AC103*/
+  if(false ||(a64.dstWidth==64&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_IMM&&true)) {
+    CodeGeneratorAArch64::eor(X_TMP_0, X_TMP_0, a64.uimm);
+
   }
-  if (false ||
-      (isDstSize == 64 && isSrcSize == 64 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_REG1) ||
-      (isDstSize == 64 && isSrcSize == 64 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_REG1)) {
-    eor__(Xbyak_aarch64::XReg(a64_dstIdx), Xbyak_aarch64::XReg(a64_dstIdx),
-          Xbyak_aarch64::XReg(a64_srcIdx));
+
+
+  /* Col=AF103*/
+  if(false ||(a64.dstWidth==32&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)) {
+    CodeGeneratorAArch64::eor(xa::WReg(a64.dstIdx), xa::WReg(a64.dstIdx), xa::WReg(a64.srcIdx));
   }
-  if (false || (isDstSize == 64 && isSrcSize == 64 &&
-                isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    eor__(ans, ans, Xbyak_aarch64::XReg(a64_srcIdx));
+  /* Col=AG103*/
+  if(false ||(a64.dstWidth==64&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)) {
+    CodeGeneratorAArch64::eor(xa::XReg(a64.dstIdx), xa::XReg(a64.dstIdx), xa::XReg(a64.srcIdx));
   }
-  if (false ||
-      (isDstSize == 64 && isSrcSize == 32 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 64 && isSrcSize == 8 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_IMM0)) {
-    xed_uint_t ibits;
-    ibits = xed_decoded_inst_get_immediate_width_bits(p);
-    xed_int32_t x = xed_decoded_inst_get_signed_immediate(p);
-    xed_uint64_t y = XED_STATIC_CAST(
-        xed_uint64_t, xed_sign_extend_arbitrary_to_64((xed_uint64_t)x, ibits));
-    eor_imm(Xbyak_aarch64::XReg(a64_dstIdx), Xbyak_aarch64::XReg(a64_dstIdx), y,
-            tmp);
+
+
+
+  /* Col=AK103*/
+  if(false ||(a64.dstWidth==32&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+    CodeGeneratorAArch64::eor(W_TMP_0, W_TMP_0, xa::WReg(a64.srcIdx));
   }
-  if (false || (isDstSize == 64 && isSrcSize == 32 &&
-                isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_IMM0)) {
-    xed_uint_t ibits;
-    ibits = xed_decoded_inst_get_immediate_width_bits(p);
-    xed_int32_t x = xed_decoded_inst_get_signed_immediate(p);
-    xed_uint64_t y = XED_STATIC_CAST(
-        xed_uint64_t, xed_sign_extend_arbitrary_to_64((xed_uint64_t)x, ibits));
-    unsigned int rax = xed_get_register_index(p, 0);
-    eor_imm(Xbyak_aarch64::XReg(rax), Xbyak_aarch64::XReg(rax), y, tmp);
+  /* Col=AL103*/
+  if(false ||(a64.dstWidth==64&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+    CodeGeneratorAArch64::eor(X_TMP_0, X_TMP_0, xa::XReg(a64.srcIdx));
   }
-  if (false ||
-      (isDstSize == 64 && isSrcSize == 32 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 64 && isSrcSize == 8 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0)) {
-    xed_uint_t ibits;
-    ibits = xed_decoded_inst_get_immediate_width_bits(p);
-    xed_int32_t x = xed_decoded_inst_get_signed_immediate(p);
-    xed_uint64_t y = XED_STATIC_CAST(
-        xed_uint64_t, xed_sign_extend_arbitrary_to_64((xed_uint64_t)x, ibits));
-    eor_imm(ans, ans, y, tmp);
+
+
+
+
+
+  /* Col=AR103*/
+  if(false ||(a64.dstWidth==32&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+    CodeGeneratorAArch64::eor(xa::WReg(a64.dstIdx), xa::WReg(a64.dstIdx), W_TMP_0);
   }
-  if (false ||
-      (isDstSize == 64 && isSrcSize == 32 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 64 && isSrcSize == 8 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 64 && isSrcSize == 64 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_REG0)) {
-    str(ans, Xbyak_aarch64::ptr(X_TMP_ADDR));
+  /* Col=AS103*/
+  if(false ||(a64.dstWidth==64&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+    CodeGeneratorAArch64::eor(xa::XReg(a64.dstIdx), xa::XReg(a64.dstIdx), X_TMP_0);
   }
-  if (false ||
-      (isDstSize == 8 && isSrcSize == 8 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 16 && isSrcSize == 16 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 32 && isSrcSize == 32 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 8 && isSrcSize == 8 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 8 && isSrcSize == 8 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 8 && isSrcSize == 8 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 8 && isSrcSize == 8 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 8 && isSrcSize == 8 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 8 && isSrcSize == 8 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 32 && isSrcSize == 32 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 32 && isSrcSize == 32 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 16 && isSrcSize == 8 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 16 && isSrcSize == 8 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 32 && isSrcSize == 8 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 32 && isSrcSize == 8 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_IMM0) ||
-      (isDstSize == 8 && isSrcSize == 8 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_REG1) ||
-      (isDstSize == 8 && isSrcSize == 8 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_REG0) ||
-      (isDstSize == 16 && isSrcSize == 16 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_REG1) ||
-      (isDstSize == 16 && isSrcSize == 16 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_REG0) ||
-      (isDstSize == 32 && isSrcSize == 32 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_REG1) ||
-      (isDstSize == 32 && isSrcSize == 32 && isDst == XED_OPERAND_MEM0 &&
-       isSrc == XED_OPERAND_REG0) ||
-      (isDstSize == 8 && isSrcSize == 8 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_REG1) ||
-      (isDstSize == 8 && isSrcSize == 8 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_MEM0) ||
-      (isDstSize == 16 && isSrcSize == 16 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_REG1) ||
-      (isDstSize == 16 && isSrcSize == 16 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_MEM0) ||
-      (isDstSize == 32 && isSrcSize == 32 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_REG1) ||
-      (isDstSize == 32 && isSrcSize == 32 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_MEM0)) {
-    std::cerr << "Unimplemented" << std::endl;
-    assert(NULL);
+  /* Col=AU103*/
+  if(false ||(a64.dstWidth==32&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==32&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+    CodeGeneratorAArch64::str(W_TMP_0, xa::ptr(X_TMP_ADDR));
   }
+  /* Col=AV103*/
+  if(false ||(a64.dstWidth==64&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_IMM&&true)||(a64.dstWidth==64&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+    CodeGeneratorAArch64::str(X_TMP_0, xa::ptr(X_TMP_ADDR));
+  }
+
+
+  
 }
