@@ -72,10 +72,18 @@ TEST() {
 
     if [ ${2:-"-x"} = "-x" ] ; then
 	./test2.sh -x -X -E pattern/${TP_BASE}/${1}.cpp
+	if [ $? -ne 0 ] ; then
+	    echo "x86_64 failed"
+	    exit 1
+	fi
     fi
 
     if [ ${2:-"-a"} = "-a" ] ; then
 	./test2.sh -a -A -E pattern/${TP_BASE}/${1}.cpp
+	if [ $? -ne 0 ] ; then
+	    echo "aarch64 failed"
+	    exit 1
+	fi
     fi
 
     X86_LOG=/tmp/${1}.jit_x86_64.exec_x86_64.`whoami`.check.log

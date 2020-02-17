@@ -196,7 +196,7 @@ compile_test_file() {
     ${TOOL_PREFIX:-""}${CXX} ${CFLAGS} -o ${TP_NAME_ARCH} ${TP_NAME}.cpp ${LIB_OPT}
     if [ ! $? -eq 0 ] ; then
 	echo "compile error!"
-	exit
+	exit 1
     fi
 }
 
@@ -219,9 +219,10 @@ exec_test() {
 	./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON} 2>&1 | tee ${LOG_NAME}.log
     fi
 
-    if [ ! $? -eq 0 ] ; then
+    RC=${PIPESTATUS[0]}
+    if [ ${RC} -ne 0 ] ; then
 	echo "exec error!"
-	exit
+	exit 1
     fi
 }
 
