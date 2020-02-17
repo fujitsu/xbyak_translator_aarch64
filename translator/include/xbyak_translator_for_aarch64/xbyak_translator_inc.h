@@ -8,6 +8,7 @@
 //#include "instructions/vmulps.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
+#include "instructions/vpinsrw.h"
 #if 0
 #include "instructions/cmp.h"
 #include "instructions/kmovb.h"

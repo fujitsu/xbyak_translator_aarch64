@@ -1341,6 +1341,8 @@ case XED_ICLASS_VPINSRQ:
   translateVPINSRQ(&xedd);
   break;
 case XED_ICLASS_VPINSRW:
+  translateVPINSRW(&xedd);
+  break;
 case XED_ICLASS_VPLZCNTD:
 case XED_ICLASS_VPLZCNTQ:
 case XED_ICLASS_VPMACSDD:
