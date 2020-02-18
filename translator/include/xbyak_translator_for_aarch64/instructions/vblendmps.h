@@ -3,7 +3,7 @@ void translateVBLENDMPS(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-  /* 2020/02/18 22:05 */
+  /* 2020/02/18 22:13 */
 
   /* Col=T103*/
   if (false ||
@@ -280,6 +280,8 @@ void translateVBLENDMPS(xed_decoded_inst_t *p) {
 
   /* Col=BB103*/
   if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
        a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
