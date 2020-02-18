@@ -30,30 +30,20 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
        r13, r14, r15 */
+    mov(r8, std::numeric_limits<uint64_t>::max());
+    mov(r9, std::numeric_limits<uint64_t>::max());
+    mov(r10, std::numeric_limits<uint64_t>::max());
+    mov(r11, std::numeric_limits<uint64_t>::max());
+    mov(r12, std::numeric_limits<uint64_t>::max());
+    mov(r13, std::numeric_limits<uint64_t>::max());
+    mov(r14, std::numeric_limits<uint64_t>::max());
+    mov(r15, std::numeric_limits<uint64_t>::max());
 
-    /* 64-bit -> 64-bit */
-    mov(rax, ~uint64_t(0));
-    mov(rcx, 1);
-    or_(rax, rcx);
-    mov(rbp, ~uint64_t(0));
-    mov(rsi, ~uint64_t(0));
-    or_(rbp, rsi);
+    or_(r8, 1);
+    or_(r10, std::numeric_limits<uint32_t>::max());
 
-    /* 64-bit -> 32-bit */
-    mov(r9, ~uint64_t(0));
-    mov(r10, uint64_t(0xaaaaaaaaaaaaaaaa));
-    or_(r9d, r10d);
-    
-    /* 32-bit -> 64-bit */
-    mov(r11d, ~uint32_t(0));
-    mov(r12d, uint32_t(0xaaaaaaaa));
-    or_(r11, r12);
-
-    /* 32-bit -> 32-bit */
-    mov(r13d, ~uint32_t(0));
-    mov(r14d, uint32_t(0x55555555));
-    or_(r13d, r14d);
-    
+    or_(r12d, 1);
+    or_(r14d, std::numeric_limits<uint32_t>::max());
   }
 };
 

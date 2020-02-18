@@ -1,6 +1,7 @@
 #include "instructions/add.h"
 #include "instructions/dec.h"
 #include "instructions/mov.h"
+#include "instructions/or.h"
 //#include "instructions/vandps.h"
 //#include "instructions/vbroadcastss.h"
 #include "instructions/vmovdqu.h"
