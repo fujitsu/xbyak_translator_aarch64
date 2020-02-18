@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -20,6 +19,8 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    //    setInputZregAllRandomHex();
+    inputZReg[0].ud_dt[7] = uint64_t(0x12345678ffffffff);
   }
 
   void setCheckRegFlagAll() {
@@ -28,20 +29,24 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(r8, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(r9, uint32_t(0xaaaaaaaa));
-    mov(r10, uint16_t(0xaaaa));
-    mov(r11, uint8_t(0xaa));
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
+       r13, r14, r15 */
 
-    mov(r12, int64_t(0xaaaaaaaaaaaaaaaa));
-    mov(r13, int32_t(0xaaaaaaaa));
-    mov(r14, int16_t(0xaaaa));
-    mov(r15, int8_t(0xaa));
+    size_t addr;
+    size_t addr1;
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
+    mov(rax, addr);
+    mov(r9, ptr[rax]); // r9 holds value before xor instruction.
 
-    mov(rax, int64_t(0x5555555555555555));
-    mov(rcx, int32_t(0x55555555));
-    mov(rdx, int16_t(0x5555));
-    mov(rbx, int8_t(0x55));
+    mov(r8, uint64_t(0xabcd));
+    or_(ptr[rax], r8d);
+
+    mov(r10,
+        ptr[rax]); // Lower 32-bit of r10 holds value after xor instruction.
+
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 
