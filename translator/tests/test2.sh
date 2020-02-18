@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 #*******************************************************************************
 # Copyright 2019-2020 FUJITSU LIMITED
 #
@@ -32,6 +32,8 @@
 # aarch64  , aarch64 , x86_64   , NG
 # aarch64  , aarch64 , aarch64  , OK (Executable on native environment)
 #*******************************************************************************
+QEMU_AARCH64_KAWAKAMI=/home/kawakami/local_xbyak/bin/qemu-aarch64
+
 CXX=g++
 OBJDUMP=objdump
 
@@ -161,7 +163,7 @@ check_option() {
 }		
 
 check_qemu_aarch64() {
-    if [ ${QEMU_AARCH64:-0} = 0 ] ; then
+    if [ ${QEMU_AARCH64:=${QEMU_AARCH64_KAWAKAMI}} = 0 ] ; then
 	echo "set QEMU_AARCH64 environment variable"
 	usage_exit
     fi

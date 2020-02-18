@@ -1,13 +1,14 @@
 #include "instructions/add.h"
 #include "instructions/dec.h"
 #include "instructions/mov.h"
-#include "instructions/vandps.h"
+//#include "instructions/vandps.h"
 //#include "instructions/vbroadcastss.h"
 #include "instructions/vmovdqu.h"
 #include "instructions/vmovhlps.h"
-//#include "instructions/vmulps.h"
+#include "instructions/vmulps.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
+#include "instructions/xor.h"
 #if 0
 #include "instructions/cmp.h"
 #include "instructions/kmovb.h"
@@ -29,5 +30,4 @@
 //#include "instructions/vfmadd213ps.h"
 //#include "instructions/vfmadd231ps.h"
 #include "instructions/vzeroupper.h"
-#include "instructions/xor.h"
 #endif

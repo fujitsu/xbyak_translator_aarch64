@@ -26,6 +26,29 @@ public:
       inputZReg[0].sp_dt[i] = 0.5 + float(i);
       inputZReg[1].sp_dt[i] = float(2.0);
     }
+
+    inputPredReg[2] = uint64_t(0x1);
+    inputPredReg[3] = (0x1 << 0) | (0x1 << 1) | (0x1 << 4) | /* x86_64 */
+                      (0x1 << 0) | (0x1 << 4) | (0x1 << 16); /* aarch64 */
+
+    inputPredReg[4] =
+        (0x1 << 0) | (0x1 << 1) | (0x1 << 2) | (0x1 << 4) | /* x86_64 */
+        (0x1 << 0) | (0x1 << 4) | (0x1 << 8) | (0x1 << 16); /* aarch64 */
+
+    inputPredReg[5] = (0x1 << 0) | (0x1 << 1) | (0x1 << 2) | (0x1 << 3) |
+                      (0x1 << 4) | /* x86_64 */
+                      (0x1 << 0) | (0x1 << 4) | (0x1 << 8) | (0x1 << 12) |
+                      (0x1 << 16); /* aarch64 */
+
+    inputPredReg[6] = (0x1 << 0) | (0x1 << 1) | (0x1 << 2) | (0x1 << 3) |
+                      (0x1 << 4) | (0x1 << 8) | /* x86_64 */
+                      (0x1 << 0) | (0x1 << 4) | (0x1 << 8) | (0x1 << 12) |
+                      (0x1 << 16) | (0x1 << 20); /* aarch64 */
+
+    inputPredReg[7] = (0x1 << 0) | (0x1 << 1) | (0x1 << 2) | (0x1 << 3) |
+                      (0x1 << 4) | (0x1 << 5) | (0x1 << 15) | /* x86_64 */
+                      (0x1 << 0) | (0x1 << 4) | (0x1 << 8) | (0x1 << 12) |
+                      (0x1 << 16) | (0x1 << 20) | (0x1 << 60); /* aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -35,7 +58,12 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[0])));
-    vmulps(Ymm(2), Ymm(1), ptr[rax]);
+    //    vmulps(Zmm(2), Zmm(1)|k2, ptr[rax]);
+    vmulps(Zmm(3), Zmm(1) | k3, ptr[rax]);
+    //    vmulps(Zmm(4), Zmm(1)|k4, ptr[rax]);
+    //    vmulps(Zmm(5), Zmm(1)|k5, ptr[rax]);
+    //    vmulps(Zmm(6), Zmm(1)|k6, ptr[rax]);
+    //    vmulps(Zmm(7), Zmm(1)|k7, ptr[rax]);
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64

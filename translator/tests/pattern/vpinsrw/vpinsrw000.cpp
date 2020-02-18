@@ -13,21 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-#include "test_generator.h"
+#include "test_generator2.h"
 
 class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    for (int i = 0; i < 8; i++) {
-      inputZReg[0].ud_dt[i] = 0xFFFFFFFFFFFFFFFF;
-    }
-    for (int i = 0; i < 8; i++) {
-      inputZReg[1].ud_dt[i] = 0xEEEEEEEEEEEEEEEE;
-    }
-    for (int i = 0; i < 8; i++) {
-      inputZReg[2].ud_dt[i] = 0xDDDDDDDDDDDDDDDD;
-    }
+    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -36,7 +28,10 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vmovhlps(Xmm(0), Xmm(1), Xmm(2));
+    mov(rax, 0xFFAABBCC88664422);
+    for (int i = 0; i < 8; i++) {
+      vpinsrw(Xmm(i), Xmm(31), eax, i % 8);
+    }
   }
 };
 
@@ -54,16 +49,15 @@ int main(int argc, char *argv[]) {
     f = (void (*)())gen.gen();
   }
 
-  /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
-   * inputZReg. */
-  gen.dumpInputReg();
-
   /* Dump generated JIT code to a binary file */
   gen.dumpJitCode();
 
   /* 1:Execute JIT code, 2:dump all register values, 3:dump register values to
    * be checked */
   if (gen.isExecJitOn()) {
+    /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
+     * inputZReg. */
+    gen.dumpInputReg();
     f();                 /* Execute JIT code */
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */

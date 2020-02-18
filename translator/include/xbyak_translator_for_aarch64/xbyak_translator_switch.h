@@ -878,7 +878,7 @@ case XED_ICLASS_VANDNPD:
 case XED_ICLASS_VANDNPS:
 case XED_ICLASS_VANDPD:
 case XED_ICLASS_VANDPS:
-  translateVANDPS(&xedd);
+  //  translateVANDPS(&xedd);
   break;
 case XED_ICLASS_VBLENDMPD:
 case XED_ICLASS_VBLENDMPS:
@@ -1180,7 +1180,7 @@ case XED_ICLASS_VMRUN:
 case XED_ICLASS_VMSAVE:
 case XED_ICLASS_VMULPD:
 case XED_ICLASS_VMULPS:
-  //  translateVMULPS(&xedd);
+  translateVMULPS(&xedd);
   break;
 case XED_ICLASS_VMULSD:
 case XED_ICLASS_VMULSS:
@@ -1341,6 +1341,8 @@ case XED_ICLASS_VPINSRQ:
   translateVPINSRQ(&xedd);
   break;
 case XED_ICLASS_VPINSRW:
+  //  translateVPINSRW(&xedd);
+  break;
 case XED_ICLASS_VPLZCNTD:
 case XED_ICLASS_VPLZCNTQ:
 case XED_ICLASS_VPMACSDD:
@@ -1626,6 +1628,8 @@ case XED_ICLASS_XEND:
 case XED_ICLASS_XGETBV:
 case XED_ICLASS_XLAT:
 case XED_ICLASS_XOR:
+  translateXOR(&xedd);
+  break;
 case XED_ICLASS_XORPD:
 case XED_ICLASS_XORPS:
 case XED_ICLASS_XOR_LOCK:

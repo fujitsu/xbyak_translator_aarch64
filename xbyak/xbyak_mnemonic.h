@@ -208,7 +208,7 @@ void cvttsd2si(const Operand& reg, const Operand& op) { opGen(reg, op, 0x2C, 0xF
 void cvttss2si(const Operand& reg, const Operand& op) { opGen(reg, op, 0x2C, 0xF3, isREG32_XMMorMEM); UNIMPLEMENTED; }
 void cwd() { db(0x66); db(0x99); UNIMPLEMENTED; }
 void cwde() { db(0x98); UNIMPLEMENTED; }
-void dec(const Operand& op) { opIncDec(op, 0x48, 1); UNIMPLEMENTED; }
+void dec(const Operand& op) { opIncDec(op, 0x48, 1); decodeAndTransToAArch64(); }
 void div(const Operand& op) { opR_ModM(op, 0, 6, 0xF6); UNIMPLEMENTED; }
 void divpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x5E, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void divps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x5E, 0x100, isXMM_XMMorMEM); UNIMPLEMENTED; }
@@ -1396,7 +1396,7 @@ void vphsubw(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1,
 void vpinsrb(const Xmm& x1, const Xmm& x2, const Operand& op, uint8 imm) { if (!(x1.isXMM() && x2.isXMM() && (op.isREG(32) || op.isMEM()))) throw Error(ERR_BAD_COMBINATION); opVex(x1, &x2, op, T_0F3A | T_66 | T_EVEX | T_N1, 0x20, imm); decodeAndTransToAArch64(); }
 void vpinsrd(const Xmm& x1, const Xmm& x2, const Operand& op, uint8 imm) { if (!(x1.isXMM() && x2.isXMM() && (op.isREG(32) || op.isMEM()))) throw Error(ERR_BAD_COMBINATION); opVex(x1, &x2, op, T_0F3A | T_66 | T_W0 | T_EVEX | T_EW0 | T_N4, 0x22, imm); UNIMPLEMENTED; }
 void vpinsrq(const Xmm& x1, const Xmm& x2, const Operand& op, uint8 imm) { if (!(x1.isXMM() && x2.isXMM() && (op.isREG(64) || op.isMEM()))) throw Error(ERR_BAD_COMBINATION); opVex(x1, &x2, op, T_0F3A | T_66 | T_W1 | T_EVEX | T_EW1 | T_N8, 0x22, imm); decodeAndTransToAArch64(); }
-void vpinsrw(const Xmm& x1, const Xmm& x2, const Operand& op, uint8 imm) { if (!(x1.isXMM() && x2.isXMM() && (op.isREG(32) || op.isMEM()))) throw Error(ERR_BAD_COMBINATION); opVex(x1, &x2, op, T_0F | T_66 | T_EVEX | T_N2, 0xC4, imm); UNIMPLEMENTED; }
+void vpinsrw(const Xmm& x1, const Xmm& x2, const Operand& op, uint8 imm) { if (!(x1.isXMM() && x2.isXMM() && (op.isREG(32) || op.isMEM()))) throw Error(ERR_BAD_COMBINATION); opVex(x1, &x2, op, T_0F | T_66 | T_EVEX | T_N2, 0xC4, imm); decodeAndTransToAArch64(); }
 void vpmaddubsw(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F38 | T_YMM | T_EVEX, 0x04); UNIMPLEMENTED; }
 void vpmaddwd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0xF5); UNIMPLEMENTED; }
 void vpmaskmovd(const Address& addr, const Xmm& x1, const Xmm& x2) { opAVX_X_X_XM(x2, x1, addr, T_0F38 | T_66 | T_W0 | T_YMM, 0x8E); UNIMPLEMENTED; }
@@ -1522,8 +1522,8 @@ void wrmsr() { db(0x0F); db(0x30); UNIMPLEMENTED; }
 void xadd(const Operand& op, const Reg& reg) { opModRM(reg, op, (op.isREG() && reg.isREG() && op.getBit() == reg.getBit()), op.isMEM(), 0x0F, 0xC0 | (reg.isBit(8) ? 0 : 1)); UNIMPLEMENTED; }
 void xgetbv() { db(0x0F); db(0x01); db(0xD0); UNIMPLEMENTED; }
 void xlatb() { db(0xD7); UNIMPLEMENTED; }
-void xor_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x30, 6); UNIMPLEMENTED; }
-void xor_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x30); UNIMPLEMENTED; }
+void xor_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x30, 6); decodeAndTransToAArch64(); }
+void xor_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x30); decodeAndTransToAArch64(); }
 void xorpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x57, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void xorps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x57, 0x100, isXMM_XMMorMEM); UNIMPLEMENTED; }
 #ifdef XBYAK_ENABLE_OMITTED_OPERAND

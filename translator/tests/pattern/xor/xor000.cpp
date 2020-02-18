@@ -19,13 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setDumpZRegMode(SP_DT);
-    setInputZregAllRandomFloat();
-
-    for (int i = 0; i < 16; i++) {
-      inputZReg[0].sp_dt[i] = 0.5 + float(i);
-      inputZReg[1].sp_dt[i] = float(2.0);
-    }
+    //    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -34,11 +28,31 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[0])));
-    vmulps(Ymm(2), Ymm(1), ptr[rax]);
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
+       r13, r14, r15 */
 
-    mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    /* 64-bit -> 64-bit */
+    mov(rax, ~uint64_t(0));
+    mov(rcx, 1);
+    xor_(rax, rcx);
+    mov(rbp, ~uint64_t(0));
+    mov(rsi, ~uint64_t(0));
+    xor_(rbp, rsi);
+
+    /* 64-bit -> 32-bit */
+    mov(r9, ~uint64_t(0));
+    mov(r10, uint64_t(0xaaaaaaaaaaaaaaaa));
+    xor_(r9d, r10d);
+
+    /* 32-bit -> 64-bit */
+    mov(r11d, ~uint32_t(0));
+    mov(r12d, uint32_t(0xaaaaaaaa));
+    xor_(r11, r12);
+
+    /* 32-bit -> 32-bit */
+    mov(r13d, ~uint32_t(0));
+    mov(r14d, uint32_t(0x55555555));
+    xor_(r13d, r14d);
   }
 };
 

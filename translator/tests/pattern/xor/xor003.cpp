@@ -19,13 +19,8 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setDumpZRegMode(SP_DT);
-    setInputZregAllRandomFloat();
-
-    for (int i = 0; i < 16; i++) {
-      inputZReg[0].sp_dt[i] = 0.5 + float(i);
-      inputZReg[1].sp_dt[i] = float(2.0);
-    }
+    //    setInputZregAllRandomHex();
+    inputZReg[0].ud_dt[7] = uint64_t(0x12345678ffffffff);
   }
 
   void setCheckRegFlagAll() {
@@ -34,8 +29,21 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[0])));
-    vmulps(Ymm(2), Ymm(1), ptr[rax]);
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
+       r13, r14, r15 */
+
+    size_t addr;
+    size_t addr1;
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
+    mov(rax, addr);
+    mov(r9, ptr[rax]); // r9 holds value before xor instruction.
+
+    mov(r8, uint64_t(0xabcd));
+    xor_(ptr[rax], r8d);
+
+    mov(r10,
+        ptr[rax]); // Lower 32-bit of r10 holds value after xor instruction.
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
