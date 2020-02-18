@@ -458,9 +458,10 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
           } else if (isZeroing) {
             a64->PredType = A64_PRED_ZERO;
           } else {
-            xt_msg_err(__FILE__, __LINE__,
+            a64->PredType = A64_PRED_MERG;
+            /*            xt_msg_err(__FILE__, __LINE__,
                        "Unknwon predicate type. Please contact to "
-                       "system administrator!");
+                       "system administrator!");*/
           }
 
           isMaskSet = true;
