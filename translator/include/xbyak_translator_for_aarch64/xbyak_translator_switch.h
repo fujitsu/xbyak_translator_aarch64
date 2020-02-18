@@ -903,7 +903,7 @@ case XED_ICLASS_VBROADCASTSD:
   break;
 
 case XED_ICLASS_VBROADCASTSS:
-  //    translateVBROADCASTSS(&xedd);
+  translateVBROADCASTSS(&xedd);
   break;
 
 case XED_ICLASS_VCMPPD:

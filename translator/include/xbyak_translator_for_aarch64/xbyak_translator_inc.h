@@ -2,7 +2,7 @@
 #include "instructions/dec.h"
 #include "instructions/mov.h"
 //#include "instructions/vandps.h"
-//#include "instructions/vbroadcastss.h"
+#include "instructions/vbroadcastss.h"
 #include "instructions/vmovdqu.h"
 #include "instructions/vmovhlps.h"
 #include "instructions/vmulps.h"
