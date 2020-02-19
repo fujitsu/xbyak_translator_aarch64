@@ -19,11 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
-
-    inputZReg[31].ud_dt[0] = ~uint64_t(0);
-    inputZReg[31].ud_dt[2] = ~uint64_t(0);
-    inputZReg[31].ud_dt[3] = ~uint64_t(0);
+    //    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -32,27 +28,35 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
+       r13, r14, r15 */
 
-    mov(rax, addr);
-    //    vandps(Xmm(1), Xmm(0), ptr[rax]);
-    vandps(Ymm(2), Ymm(0), ptr[rax]);
-    //    vandps(Zmm(3), Zmm(0), ptr[rax]);
+    /* 64-bit -> 64-bit */
+    mov(rax, ~uint64_t(0));
+    mov(rcx, 1);
+    or_(rax, rcx);
+    mov(rbp, ~uint64_t(0));
+    mov(rsi, ~uint64_t(0));
+    or_(rbp, rsi);
+    or_(rsi, rsi);
 
-    //    vandps(Xmm(4), Xmm(0), ptr_b[rax]);
-    //    vandps(Ymm(5), Ymm(0), ptr_b[rax]);
-    //    vandps(Zmm(6), Zmm(0), ptr_b[rax]);
+    /* 64-bit -> 32-bit */
+    mov(r9, ~uint64_t(0));
+    mov(r10, uint64_t(0xaaaaaaaaaaaaaaaa));
+    or_(r9d, r10d);
+    or_(r10d, r10d);
 
-    //    vandps(Xmm(7), Xmm(7), ptr[rax]);
-    vandps(Ymm(8), Ymm(8), ptr[rax]);
-    //    vandps(Zmm(9), Zmm(9), ptr[rax]);
+    /* 32-bit -> 64-bit */
+    mov(r11d, ~uint32_t(0));
+    mov(r12d, uint32_t(0xaaaaaaaa));
+    or_(r11, r12);
+    or_(r12, r12);
 
-    //    vandps(Xmm(10), Xmm(10), ptr_b[rax]);
-    //    vandps(Ymm(11), Ymm(11), ptr_b[rax]);
-    //    vandps(Zmm(12), Zmm(12), ptr_b[rax]);
-
-    mov(rax, 5);
+    /* 32-bit -> 32-bit */
+    mov(r13d, ~uint32_t(0));
+    mov(r14d, uint32_t(0x55555555));
+    or_(r13d, r14d);
+    or_(r14d, r14d);
   }
 };
 

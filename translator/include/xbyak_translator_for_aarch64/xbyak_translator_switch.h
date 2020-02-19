@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
+
+std::cout << xed_iclass_enum_t2str(p) << std::endl;
+
 switch (p) {
 case XED_ICLASS_INVALID:
 case XED_ICLASS_AAA:
@@ -40,6 +43,8 @@ case XED_ICLASS_AESENCLAST:
 case XED_ICLASS_AESIMC:
 case XED_ICLASS_AESKEYGENASSIST:
 case XED_ICLASS_AND:
+  translateAND(&xedd);
+  break;
 case XED_ICLASS_ANDN:
 case XED_ICLASS_ANDNPD:
 case XED_ICLASS_ANDNPS:
@@ -502,6 +507,8 @@ case XED_ICLASS_NOP9:
 case XED_ICLASS_NOT:
 case XED_ICLASS_NOT_LOCK:
 case XED_ICLASS_OR:
+  translateOR(&xedd);
+  break;
 case XED_ICLASS_ORPD:
 case XED_ICLASS_ORPS:
 case XED_ICLASS_OR_LOCK:
@@ -878,7 +885,7 @@ case XED_ICLASS_VANDNPD:
 case XED_ICLASS_VANDNPS:
 case XED_ICLASS_VANDPD:
 case XED_ICLASS_VANDPS:
-  //  translateVANDPS(&xedd);
+  translateVANDPS(&xedd);
   break;
 case XED_ICLASS_VBLENDMPD:
 case XED_ICLASS_VBLENDMPS:
@@ -1159,6 +1166,8 @@ case XED_ICLASS_VMOVHPS:
 case XED_ICLASS_VMOVLHPS:
 case XED_ICLASS_VMOVLPD:
 case XED_ICLASS_VMOVLPS:
+  translateVMOVLPS(&xedd);
+  break;
 case XED_ICLASS_VMOVMSKPD:
 case XED_ICLASS_VMOVMSKPS:
 case XED_ICLASS_VMOVNTDQ:

@@ -62,8 +62,8 @@ void aesenc(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0xDC, 0x66, isXM
 void aesenclast(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0xDD, 0x66, isXMM_XMMorMEM, NONE, 0x38); UNIMPLEMENTED; }
 void aesimc(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0xDB, 0x66, isXMM_XMMorMEM, NONE, 0x38); UNIMPLEMENTED; }
 void aeskeygenassist(const Xmm& xmm, const Operand& op, uint8 imm) { opGen(xmm, op, 0xDF, 0x66, isXMM_XMMorMEM, imm, 0x3A); UNIMPLEMENTED; }
-void and_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x20, 4); UNIMPLEMENTED; }
-void and_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x20); UNIMPLEMENTED; }
+void and_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x20, 4); decodeAndTransToAArch64(); }
+void and_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x20); decodeAndTransToAArch64(); }
 void andn(const Reg32e& r1, const Reg32e& r2, const Operand& op) { opGpr(r1, r2, op, T_0F38, 0xf2, true); UNIMPLEMENTED; }
 void andnpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x55, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void andnps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x55, 0x100, isXMM_XMMorMEM); UNIMPLEMENTED; }
@@ -728,8 +728,8 @@ void mwait() { db(0x0F); db(0x01); db(0xC9); UNIMPLEMENTED; }
 void mwaitx() { db(0x0F); db(0x01); db(0xFB); UNIMPLEMENTED; }
 void neg(const Operand& op) { opR_ModM(op, 0, 3, 0xF6); UNIMPLEMENTED; }
 void not_(const Operand& op) { opR_ModM(op, 0, 2, 0xF6); UNIMPLEMENTED; }
-void or_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x08, 1); UNIMPLEMENTED; }
-void or_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x08); UNIMPLEMENTED; }
+void or_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x08, 1); decodeAndTransToAArch64(); }
+void or_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x08); decodeAndTransToAArch64(); }
 void orpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x56, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void orps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x56, 0x100, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void out_(const Reg& d, const Reg& a) { opInOut(a, d, 0xEE); UNIMPLEMENTED; }
@@ -1296,8 +1296,8 @@ void vmovhps(const Xmm& x, const Operand& op1, const Operand& op2 = Operand()) {
 void vmovlhps(const Xmm& x1, const Xmm& x2, const Operand& op = Operand()) { if (!op.isNone() && !op.isXMM()) throw Error(ERR_BAD_COMBINATION); opAVX_X_X_XM(x1, x2, op, T_0F | T_EVEX | T_EW0, 0x16); UNIMPLEMENTED; }
 void vmovlpd(const Address& addr, const Xmm& x) { opAVX_X_X_XM(x, xm0, addr, T_0F | T_66 | T_EVEX | T_EW1 | T_N8, 0x13); UNIMPLEMENTED; }
 void vmovlpd(const Xmm& x, const Operand& op1, const Operand& op2 = Operand()) { if (!op2.isNone() && !op2.isMEM()) throw Error(ERR_BAD_COMBINATION); opAVX_X_X_XM(x, op1, op2, T_0F | T_66 | T_EVEX | T_EW1 | T_N8, 0x12); UNIMPLEMENTED; }
-void vmovlps(const Address& addr, const Xmm& x) { opAVX_X_X_XM(x, xm0, addr, T_0F | T_EVEX | T_EW0 | T_N8, 0x13); UNIMPLEMENTED; }
-void vmovlps(const Xmm& x, const Operand& op1, const Operand& op2 = Operand()) { if (!op2.isNone() && !op2.isMEM()) throw Error(ERR_BAD_COMBINATION); opAVX_X_X_XM(x, op1, op2, T_0F | T_EVEX | T_EW0 | T_N8, 0x12); UNIMPLEMENTED; }
+void vmovlps(const Address& addr, const Xmm& x) { opAVX_X_X_XM(x, xm0, addr, T_0F | T_EVEX | T_EW0 | T_N8, 0x13); decodeAndTransToAArch64(); }
+void vmovlps(const Xmm& x, const Operand& op1, const Operand& op2 = Operand()) { if (!op2.isNone() && !op2.isMEM()) throw Error(ERR_BAD_COMBINATION); opAVX_X_X_XM(x, op1, op2, T_0F | T_EVEX | T_EW0 | T_N8, 0x12); decodeAndTransToAArch64(); }
 void vmovmskpd(const Reg& r, const Xmm& x) { if (!r.isBit(i32e)) throw Error(ERR_BAD_COMBINATION); opAVX_X_X_XM(x.isXMM() ? Xmm(r.getIdx()) : Ymm(r.getIdx()), cvtIdx0(x), x, T_0F | T_66 | T_W0 | T_YMM, 0x50); UNIMPLEMENTED; }
 void vmovmskps(const Reg& r, const Xmm& x) { if (!r.isBit(i32e)) throw Error(ERR_BAD_COMBINATION); opAVX_X_X_XM(x.isXMM() ? Xmm(r.getIdx()) : Ymm(r.getIdx()), cvtIdx0(x), x, T_0F | T_W0 | T_YMM, 0x50); UNIMPLEMENTED; }
 void vmovntdq(const Address& addr, const Xmm& x) { opVex(x, 0, addr, T_0F | T_66 | T_YMM | T_EVEX | T_EW0, 0xE7); UNIMPLEMENTED; }
@@ -1846,8 +1846,8 @@ void and(const Operand& op1, const Operand& op2) { and_(op1, op2); UNIMPLEMENTED
 void and(const Operand& op, uint32 imm) { and_(op, imm); UNIMPLEMENTED; }
 void or(const Operand& op1, const Operand& op2) { or_(op1, op2); UNIMPLEMENTED; }
 void or(const Operand& op, uint32 imm) { or_(op, imm); UNIMPLEMENTED; }
-void xor(const Operand& op1, const Operand& op2) { xor_(op1, op2); UNIMPLEMENTED; }
-void xor(const Operand& op, uint32 imm) { xor_(op, imm); UNIMPLEMENTED; }
+void xor(const Operand& op1, const Operand& op2) { xor_(op1, op2); decodeAndTransToAArch64(); }
+void xor(const Operand& op, uint32 imm) { xor_(op, imm); decodeAndTransToAArch64(); }
 void not(const Operand& op) { not_(op); UNIMPLEMENTED; }
 #endif
 #ifndef XBYAK_DISABLE_AVX512
