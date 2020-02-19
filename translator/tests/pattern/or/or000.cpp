@@ -38,22 +38,25 @@ public:
     mov(rbp, ~uint64_t(0));
     mov(rsi, ~uint64_t(0));
     or_(rbp, rsi);
+    or_(rsi, rsi);
 
     /* 64-bit -> 32-bit */
     mov(r9, ~uint64_t(0));
     mov(r10, uint64_t(0xaaaaaaaaaaaaaaaa));
     or_(r9d, r10d);
-    
+    or_(r10d, r10d);
+
     /* 32-bit -> 64-bit */
     mov(r11d, ~uint32_t(0));
     mov(r12d, uint32_t(0xaaaaaaaa));
     or_(r11, r12);
+    or_(r12, r12);
 
     /* 32-bit -> 32-bit */
     mov(r13d, ~uint32_t(0));
     mov(r14d, uint32_t(0x55555555));
     or_(r13d, r14d);
-    
+    or_(r14d, r14d);
   }
 };
 
