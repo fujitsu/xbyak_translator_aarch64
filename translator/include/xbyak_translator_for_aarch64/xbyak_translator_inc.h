@@ -2,6 +2,7 @@
 #include "instructions/and.h"
 #include "instructions/dec.h"
 #include "instructions/mov.h"
+#include "instructions/or.h"
 #include "instructions/vandps.h"
 #include "instructions/vblendmps.h"
 #include "instructions/vbroadcastss.h"

@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -20,6 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    //    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -28,20 +28,22 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(r8, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(r9, uint32_t(0xaaaaaaaa));
-    mov(r10, uint16_t(0xaaaa));
-    mov(r11, uint8_t(0xaa));
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
+       r13, r14, r15 */
+    mov(r8, std::numeric_limits<uint64_t>::max());
+    mov(r9, std::numeric_limits<uint64_t>::max());
+    mov(r10, std::numeric_limits<uint64_t>::max());
+    mov(r11, std::numeric_limits<uint64_t>::max());
+    mov(r12, std::numeric_limits<uint64_t>::max());
+    mov(r13, std::numeric_limits<uint64_t>::max());
+    mov(r14, std::numeric_limits<uint64_t>::max());
+    mov(r15, std::numeric_limits<uint64_t>::max());
 
-    mov(r12, int64_t(0xaaaaaaaaaaaaaaaa));
-    mov(r13, int32_t(0xaaaaaaaa));
-    mov(r14, int16_t(0xaaaa));
-    mov(r15, int8_t(0xaa));
+    or_(r8, 1);
+    or_(r10, std::numeric_limits<uint32_t>::max());
 
-    mov(rax, int64_t(0x5555555555555555));
-    mov(rcx, int32_t(0x55555555));
-    mov(rdx, int16_t(0x5555));
-    mov(rbx, int8_t(0x55));
+    or_(r12d, 1);
+    or_(r14d, std::numeric_limits<uint32_t>::max());
   }
 };
 

@@ -728,8 +728,8 @@ void mwait() { db(0x0F); db(0x01); db(0xC9); UNIMPLEMENTED; }
 void mwaitx() { db(0x0F); db(0x01); db(0xFB); UNIMPLEMENTED; }
 void neg(const Operand& op) { opR_ModM(op, 0, 3, 0xF6); UNIMPLEMENTED; }
 void not_(const Operand& op) { opR_ModM(op, 0, 2, 0xF6); UNIMPLEMENTED; }
-void or_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x08, 1); UNIMPLEMENTED; }
-void or_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x08); UNIMPLEMENTED; }
+void or_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x08, 1); decodeAndTransToAArch64(); }
+void or_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x08); decodeAndTransToAArch64(); }
 void orpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x56, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void orps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x56, 0x100, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void out_(const Reg& d, const Reg& a) { opInOut(a, d, 0xEE); UNIMPLEMENTED; }

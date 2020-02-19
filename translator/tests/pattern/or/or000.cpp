@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -20,6 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    //    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -28,20 +28,35 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(r8, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(r9, uint32_t(0xaaaaaaaa));
-    mov(r10, uint16_t(0xaaaa));
-    mov(r11, uint8_t(0xaa));
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
+       r13, r14, r15 */
 
-    mov(r12, int64_t(0xaaaaaaaaaaaaaaaa));
-    mov(r13, int32_t(0xaaaaaaaa));
-    mov(r14, int16_t(0xaaaa));
-    mov(r15, int8_t(0xaa));
+    /* 64-bit -> 64-bit */
+    mov(rax, ~uint64_t(0));
+    mov(rcx, 1);
+    or_(rax, rcx);
+    mov(rbp, ~uint64_t(0));
+    mov(rsi, ~uint64_t(0));
+    or_(rbp, rsi);
+    or_(rsi, rsi);
 
-    mov(rax, int64_t(0x5555555555555555));
-    mov(rcx, int32_t(0x55555555));
-    mov(rdx, int16_t(0x5555));
-    mov(rbx, int8_t(0x55));
+    /* 64-bit -> 32-bit */
+    mov(r9, ~uint64_t(0));
+    mov(r10, uint64_t(0xaaaaaaaaaaaaaaaa));
+    or_(r9d, r10d);
+    or_(r10d, r10d);
+
+    /* 32-bit -> 64-bit */
+    mov(r11d, ~uint32_t(0));
+    mov(r12d, uint32_t(0xaaaaaaaa));
+    or_(r11, r12);
+    or_(r12, r12);
+
+    /* 32-bit -> 32-bit */
+    mov(r13d, ~uint32_t(0));
+    mov(r14d, uint32_t(0x55555555));
+    or_(r13d, r14d);
+    or_(r14d, r14d);
   }
 };
 

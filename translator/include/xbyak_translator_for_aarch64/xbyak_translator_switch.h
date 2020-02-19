@@ -507,6 +507,8 @@ case XED_ICLASS_NOP9:
 case XED_ICLASS_NOT:
 case XED_ICLASS_NOT_LOCK:
 case XED_ICLASS_OR:
+  translateOR(&xedd);
+  break;
 case XED_ICLASS_ORPD:
 case XED_ICLASS_ORPS:
 case XED_ICLASS_OR_LOCK:
