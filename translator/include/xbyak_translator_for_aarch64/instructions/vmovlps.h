@@ -2,7 +2,6 @@ void translateVMOVLPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
-  xt_dump_a64fx_operands(&a64);
 
   /* 2020/02/19 13:02 */
   /* Col=U103*/
