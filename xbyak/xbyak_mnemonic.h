@@ -62,8 +62,8 @@ void aesenc(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0xDC, 0x66, isXM
 void aesenclast(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0xDD, 0x66, isXMM_XMMorMEM, NONE, 0x38); UNIMPLEMENTED; }
 void aesimc(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0xDB, 0x66, isXMM_XMMorMEM, NONE, 0x38); UNIMPLEMENTED; }
 void aeskeygenassist(const Xmm& xmm, const Operand& op, uint8 imm) { opGen(xmm, op, 0xDF, 0x66, isXMM_XMMorMEM, imm, 0x3A); UNIMPLEMENTED; }
-void and_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x20, 4); UNIMPLEMENTED; }
-void and_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x20); UNIMPLEMENTED; }
+void and_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x20, 4); decodeAndTransToAArch64(); }
+void and_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x20); decodeAndTransToAArch64(); }
 void andn(const Reg32e& r1, const Reg32e& r2, const Operand& op) { opGpr(r1, r2, op, T_0F38, 0xf2, true); UNIMPLEMENTED; }
 void andnpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x55, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void andnps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x55, 0x100, isXMM_XMMorMEM); UNIMPLEMENTED; }
@@ -1846,8 +1846,8 @@ void and(const Operand& op1, const Operand& op2) { and_(op1, op2); UNIMPLEMENTED
 void and(const Operand& op, uint32 imm) { and_(op, imm); UNIMPLEMENTED; }
 void or(const Operand& op1, const Operand& op2) { or_(op1, op2); UNIMPLEMENTED; }
 void or(const Operand& op, uint32 imm) { or_(op, imm); UNIMPLEMENTED; }
-void xor(const Operand& op1, const Operand& op2) { xor_(op1, op2); UNIMPLEMENTED; }
-void xor(const Operand& op, uint32 imm) { xor_(op, imm); UNIMPLEMENTED; }
+void xor(const Operand& op1, const Operand& op2) { xor_(op1, op2); decodeAndTransToAArch64(); }
+void xor(const Operand& op, uint32 imm) { xor_(op, imm); decodeAndTransToAArch64(); }
 void not(const Operand& op) { not_(op); UNIMPLEMENTED; }
 #endif
 #ifndef XBYAK_DISABLE_AVX512
