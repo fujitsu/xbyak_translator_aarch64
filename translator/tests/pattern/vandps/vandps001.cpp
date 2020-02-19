@@ -35,13 +35,13 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
 
     mov(rax, addr);
-    vandps(Xmm(1), Xmm(0), ptr[rax]);
+//    vandps(Xmm(1), Xmm(0), ptr[rax]);
     vandps(Ymm(2), Ymm(0), ptr[rax]);
-    vandps(Zmm(3), Zmm(0), ptr[rax]);
+//    vandps(Zmm(3), Zmm(0), ptr[rax]);
 
-    vandps(Xmm(4), Xmm(0), ptr_b[rax]);
-    vandps(Ymm(5), Ymm(0), ptr_b[rax]);
-    vandps(Zmm(6), Zmm(0), ptr_b[rax]);
+//    vandps(Xmm(4), Xmm(0), ptr_b[rax]);
+//    vandps(Ymm(5), Ymm(0), ptr_b[rax]);
+//    vandps(Zmm(6), Zmm(0), ptr_b[rax]);
 
     mov(rax, 5);
   }

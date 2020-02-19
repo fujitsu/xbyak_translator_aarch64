@@ -39,9 +39,9 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vandps(Xmm(2), Xmm(0), Xmm(1));
+//    vandps(Xmm(2), Xmm(0), Xmm(1));
     vandps(Ymm(5), Ymm(3), Ymm(4));
-    vandps(Zmm(8), Zmm(6), Zmm(7));
+//    vandps(Zmm(8), Zmm(6), Zmm(7));
   }
 };
 
