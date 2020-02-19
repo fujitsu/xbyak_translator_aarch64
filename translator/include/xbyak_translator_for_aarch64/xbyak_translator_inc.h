@@ -5,6 +5,7 @@
 #include "instructions/vblendmps.h"
 #include "instructions/vbroadcastss.h"
 #include "instructions/vmovdqu.h"
+#include "instructions/vmovdqu8.h"
 #include "instructions/vmovhlps.h"
 #include "instructions/vmulps.h"
 #include "instructions/vpinsrb.h"

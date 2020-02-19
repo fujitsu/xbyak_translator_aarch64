@@ -1149,6 +1149,8 @@ case XED_ICLASS_VMOVDQU16:
 case XED_ICLASS_VMOVDQU32:
 case XED_ICLASS_VMOVDQU64:
 case XED_ICLASS_VMOVDQU8:
+  translateVMOVDQU8(&xedd);
+  break;
 case XED_ICLASS_VMOVHLPS:
   translateVMOVHLPS(&xedd);
   break;
