@@ -20,6 +20,8 @@ case XED_ICLASS_AAD:
 case XED_ICLASS_AAM:
 case XED_ICLASS_AAS:
 case XED_ICLASS_ADC:
+  translateADC(&xedd);
+  break;
 case XED_ICLASS_ADCX:
 case XED_ICLASS_ADC_LOCK:
 case XED_ICLASS_ADD:

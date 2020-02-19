@@ -1,3 +1,4 @@
+#include "instructions/adc.h"
 #include "instructions/add.h"
 #include "instructions/dec.h"
 #include "instructions/mov.h"

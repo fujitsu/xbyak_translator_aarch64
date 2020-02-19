@@ -44,8 +44,8 @@
 *******************************************************************************/
 
 const char *getVersionString() const { return "5.85"; }
-void adc(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x10, 2); UNIMPLEMENTED; }
-void adc(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x10); UNIMPLEMENTED; }
+void adc(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x10, 2); decodeAndTransToAArch64(); }
+void adc(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x10); decodeAndTransToAArch64(); }
 void adcx(const Reg32e& reg, const Operand& op) { opGen(reg, op, 0xF6, 0x66, isREG32_REG32orMEM, NONE, 0x38); UNIMPLEMENTED; }
 void add(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x00, 0); decodeAndTransToAArch64(); }
 void add(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x00); decodeAndTransToAArch64(); }
