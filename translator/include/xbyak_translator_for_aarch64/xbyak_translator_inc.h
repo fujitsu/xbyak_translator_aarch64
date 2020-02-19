@@ -6,6 +6,7 @@
 #include "instructions/vbroadcastss.h"
 #include "instructions/vmovdqu.h"
 #include "instructions/vmovhlps.h"
+#include "instructions/vmovhps.h"
 #include "instructions/vmulps.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
