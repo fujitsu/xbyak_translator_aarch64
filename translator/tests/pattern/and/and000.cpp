@@ -45,6 +45,11 @@ public:
     mov(r9, ~uint64_t(0));
     xor_(r10, r10); // 0 clear
     and_(r9d, r10d);
+
+    mov(r11, uint64_t(0xAAAAFFFFBBBB7777));
+    mov(r12, uint64_t(0xAAAAFFFFBBBB7777));
+    and_(r11, r11);
+    and_(r12d, r12d);
   }
 };
 
