@@ -50,6 +50,9 @@ public:
     size_t addr;
 
     /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[7]));
+    mov(rax, addr);
+
     vbroadcastss(Ymm(1) | k1, ptr[rax]);
     vbroadcastss(Ymm(2) | k2, ptr[rax]);
     vbroadcastss(Ymm(3) | k3, ptr[rax]);
@@ -57,6 +60,8 @@ public:
     vbroadcastss(Ymm(5) | k5, ptr[rax]);
     vbroadcastss(Ymm(6) | k6, ptr[rax]);
     vbroadcastss(Ymm(7) | k7, ptr[rax]);
+
+    mov(rax, 5);
   }
 };
 

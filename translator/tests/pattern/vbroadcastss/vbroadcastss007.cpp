@@ -50,6 +50,8 @@ public:
     vbroadcastss(Xmm(2), Xmm(31) | k2);
     vbroadcastss(Xmm(3), Xmm(31) | k3);
     vbroadcastss(Xmm(4), Xmm(31) | k4);
+
+    vbroadcastss(Xmm(31), Xmm(31) | k4);
   }
 };
 

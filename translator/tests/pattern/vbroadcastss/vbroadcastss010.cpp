@@ -48,6 +48,8 @@ public:
     vbroadcastss(Xmm(2) | k2 | T_z, ptr[rax]);
     vbroadcastss(Xmm(3) | k3 | T_z, ptr[rax]);
     vbroadcastss(Xmm(4) | k4 | T_z, ptr[rax]);
+
+    mov(rax, 5);
   }
 };
 
