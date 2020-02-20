@@ -12,6 +12,7 @@
 #include "instructions/vmulps.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
+#include "instructions/vxorps.h"
 #include "instructions/xor.h"
 #if 0
 #include "instructions/cmp.h"
