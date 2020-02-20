@@ -56,14 +56,14 @@ public:
     /* Address is aligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[31].sp_dt[0]));
     mov(rax, addr);
-
-    vmovdqu8(Zmm(1) | k1 | T_z, ptr_b[rax]);
-    vmovdqu8(Zmm(2) | k2 | T_z, ptr_b[rax]);
-    vmovdqu8(Zmm(3) | k3 | T_z, ptr_b[rax]);
-    vmovdqu8(Zmm(4) | k4 | T_z, ptr_b[rax]);
-    vmovdqu8(Zmm(5) | k5 | T_z, ptr_b[rax]);
-    vmovdqu8(Zmm(6) | k6 | T_z, ptr_b[rax]);
-    vmovdqu8(Zmm(7) | k7 | T_z, ptr_b[rax]);
+    
+    vmovdqu8(Zmm(1) | k1 | T_z, ptr[rax]);
+    vmovdqu8(Zmm(2) | k2 | T_z, ptr[rax]);
+    vmovdqu8(Zmm(3) | k3 | T_z, ptr[rax]);
+    vmovdqu8(Zmm(4) | k4 | T_z, ptr[rax]);
+    vmovdqu8(Zmm(5) | k5 | T_z, ptr[rax]);
+    vmovdqu8(Zmm(6) | k6 | T_z, ptr[rax]);
+    vmovdqu8(Zmm(7) | k7 | T_z, ptr[rax]);
 
     mov(rax, 5);
   }

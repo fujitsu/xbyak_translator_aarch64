@@ -56,15 +56,28 @@ public:
     /* Address is aligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[31].sp_dt[0]));
     mov(rax, addr);
-    
-    vmovdqu8(Zmm(1) | k1 , ptr[rax]);
-    vmovdqu8(Zmm(2) | k2 , ptr[rax]);
-    vmovdqu8(Zmm(3) | k3 , ptr[rax]);
-    vmovdqu8(Zmm(4) | k4 , ptr[rax]);
-    vmovdqu8(Zmm(5) | k5 , ptr[rax]);
-    vmovdqu8(Zmm(6) | k6 , ptr[rax]);
-    vmovdqu8(Zmm(7) | k7 , ptr[rax]);
 
+    vmovdqu8(ptr[rax] | k1 , Zmm(1));
+    vmovdqu8(Zmm(1) | k1 , ptr[rax]);
+    
+    vmovdqu8(ptr[rax] | k2 , Zmm(2));
+    vmovdqu8(Zmm(2) | k2 , ptr[rax]);
+    
+    vmovdqu8(ptr[rax] | k3 , Zmm(3));
+    vmovdqu8(Zmm(3) | k3 , ptr[rax]);
+    
+    vmovdqu8(ptr[rax] | k4 , Zmm(4));
+    vmovdqu8(Zmm(4) | k4 , ptr[rax]);
+    
+    vmovdqu8(ptr[rax] | k5 , Zmm(5));
+    vmovdqu8(Zmm(5) | k5 , ptr[rax]);
+
+    vmovdqu8(ptr[rax] | k6 , Zmm(6));
+    vmovdqu8(Zmm(6) | k6 , ptr[rax]);
+
+    vmovdqu8(ptr[rax] | k7 , Zmm(7));
+    vmovdqu8(Zmm(7) | k7 , ptr[rax]);
+    
     mov(rax, 5);
   }
 };
