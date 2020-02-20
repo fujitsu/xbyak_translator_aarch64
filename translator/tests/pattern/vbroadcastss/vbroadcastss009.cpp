@@ -64,6 +64,9 @@ public:
     vbroadcastss(Zmm(5), Xmm(31) | k5);
     vbroadcastss(Zmm(6), Xmm(31) | k6);
     vbroadcastss(Zmm(7), Xmm(31) | k7);
+
+    vbroadcastss(Zmm(30), Xmm(31) | k7);
+    vbroadcastss(Zmm(31) | k7, Xmm(31));
   }
 };
 

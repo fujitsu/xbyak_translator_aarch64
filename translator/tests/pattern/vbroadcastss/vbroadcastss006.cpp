@@ -23,8 +23,8 @@ public:
     inputZReg[31].sp_dt[0] = float(1111.1);
 
     inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) |             /* x86_64 */
-                      (1 << 0) | (1 << 4) | (1 << 16) | (1 << 64); /* aarch64 */
+    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) | /* x86_64 */
+                      (1 << 0) | (1 << 4) | (1 << 16); /* aarch64 */
     inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) |
                       (1 << 8) | /* x86_64 */
                       (1 << 0) | (1 << 4) | (1 << 8) | (1 << 16) |
@@ -64,6 +64,9 @@ public:
     vbroadcastss(Zmm(5), Xmm(31) | k5 | T_z);
     vbroadcastss(Zmm(6), Xmm(31) | k6 | T_z);
     vbroadcastss(Zmm(7), Xmm(31) | k7 | T_z);
+
+    vbroadcastss(Zmm(30) | k7 | T_z, Xmm(31));
+    vbroadcastss(Zmm(31), Xmm(31) | k7 | T_z);
   }
 };
 

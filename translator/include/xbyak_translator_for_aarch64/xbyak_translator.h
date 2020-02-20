@@ -95,6 +95,7 @@ struct xt_a64fx_operands_struct_t {
 
   /* Index of MASK register{k} */
   xt_reg_idx_t maskIdx = XT_REG_INVALID;
+  xt_reg_idx_t mask2Idx = XT_REG_INVALID;
 
   /* Index of SRC register(2nd operand) */
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
@@ -271,7 +272,7 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
 unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
   for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i &&
-        a64->maskIdx != i) {
+        a64->maskIdx != i && a64->mask2Idx != 0) {
       if (preg_tmp_used[i] == false) {
         preg_tmp_used[i] = true;
 

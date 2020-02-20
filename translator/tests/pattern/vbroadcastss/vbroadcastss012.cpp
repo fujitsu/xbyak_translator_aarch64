@@ -67,6 +67,8 @@ public:
     vbroadcastss(Zmm(5) | k5 | T_z, ptr[rax]);
     vbroadcastss(Zmm(6) | k6 | T_z, ptr[rax]);
     vbroadcastss(Zmm(7) | k7 | T_z, ptr[rax]);
+
+    mov(rax, 5);
   }
 };
 
