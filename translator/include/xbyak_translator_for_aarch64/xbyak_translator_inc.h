@@ -6,6 +6,7 @@
 #include "instructions/vandps.h"
 #include "instructions/vblendmps.h"
 #include "instructions/vbroadcastss.h"
+#include "instructions/vmovaps.h"
 #include "instructions/vmovdqu.h"
 #include "instructions/vmovhlps.h"
 #include "instructions/vmovhps.h"
