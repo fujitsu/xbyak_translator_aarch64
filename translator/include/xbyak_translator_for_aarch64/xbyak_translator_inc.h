@@ -6,10 +6,10 @@
 #include "instructions/vmovdqu.h"
 #include "instructions/vmovhlps.h"
 #include "instructions/vmulps.h"
+#include "instructions/vorps.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
 #include "instructions/xor.h"
-#include "instructions/vorps.h"
 #if 0
 #include "instructions/cmp.h"
 #include "instructions/kmovb.h"

@@ -21,8 +21,16 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-    inputZReg[31].ud_dt[0] = ~uint64_t(0);
-    inputZReg[31].ud_dt[2] = ~uint64_t(0);
+    for (int i = 0; i < 8; i++) {
+      inputZReg[0].ud_dt[i] = ~uint64_t(0);
+      inputZReg[3].ud_dt[i] = ~uint64_t(0);
+      inputZReg[6].ud_dt[i] = ~uint64_t(0);
+    }
+    for (int i = 0; i < 8; i++) {
+      inputZReg[1].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[4].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[7].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+    }
   }
 
   void setCheckRegFlagAll() {
@@ -31,27 +39,25 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    vorps(Xmm(2), Xmm(0), Xmm(1));
+    vorps(Ymm(5), Ymm(3), Ymm(4));
+    vorps(Zmm(8), Zmm(6), Zmm(7));
 
-    mov(rax, addr);
+    vorps(Xmm(10), Xmm(9), Xmm(9));
+    vorps(Xmm(11), Xmm(12), Xmm(11));
+    vorps(Xmm(13), Xmm(13), Xmm(14));
 
-    vorps(Xmm(1), Xmm(0), ptr[rax]);
-    vorps(Ymm(2), Ymm(0), ptr[rax]);
-    vorps(Zmm(3), Zmm(0), ptr[rax]);
+    vorps(Ymm(15), Ymm(16), Ymm(16));
+    vorps(Ymm(17), Ymm(18), Ymm(17));
+    vorps(Ymm(19), Ymm(19), Ymm(20));
 
-    addr = reinterpret_cast<size_t>(&(inputZReg[30].ud_dt[0]));
-    mov(rax, addr);
+    vorps(Zmm(21), Zmm(22), Zmm(22));
+    vorps(Zmm(23), Zmm(24), Zmm(23));
+    vorps(Zmm(25), Zmm(25), Zmm(26));
 
-    vorps(Xmm(4), Xmm(5), ptr[rax]);
-    vorps(Ymm(6), Ymm(7), ptr[rax]);
-    vorps(Zmm(8), Zmm(9), ptr[rax]);
-
-    vorps(Xmm(10), Xmm(10), ptr[rax]);
-    vorps(Ymm(11), Ymm(11), ptr[rax]);
-    vorps(Zmm(12), Zmm(12), ptr[rax]);
-
-    mov(rax, 5);
+    vorps(Xmm(29), Xmm(29), Xmm(29));
+    vorps(Ymm(30), Ymm(30), Ymm(30));
+    vorps(Zmm(31), Zmm(31), Zmm(31));
   }
 };
 
