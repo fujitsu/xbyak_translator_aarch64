@@ -19,7 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    //    setInputZregAllRandomHex();
+    setInputZregAllRandomHex();
 
     for (int i = 0; i < 8; i++) {
       inputZReg[0].ud_dt[i] = ~uint64_t(0);
@@ -41,7 +41,28 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vxorps(Xmm(2), Xmm(0), Xmm(1));
     vxorps(Ymm(5), Ymm(3), Ymm(4));
-//    vandps(Zmm(8), Zmm(6), Zmm(7));
+    //    vandps(Zmm(8), Zmm(6), Zmm(7));
+
+    vxorps(Xmm(6), Xmm(7), Xmm(7));
+    vxorps(Xmm(8), Xmm(9), Xmm(8));
+    vxorps(Xmm(10), Xmm(10), Xmm(11));
+    vxorps(Xmm(12), Xmm(12), Xmm(1));
+
+    vxorps(Ymm(13), Ymm(14), Ymm(14));
+    vxorps(Ymm(15), Ymm(16), Ymm(15));
+    vxorps(Ymm(17), Ymm(17), Ymm(18));
+    vxorps(Ymm(19), Ymm(19), Ymm(20));
+
+#if 0
+    vxorps(Zmm(21), Ymm(22), Zmm(22));
+    vxorps(Zmm(23), Zmm(24), Zmm(23));
+    vxorps(Zmm(25), Zmm(25), Zmm(26));
+    vxorps(Zmm(27), Zmm(27), Zmm(28));
+#endif
+
+    vxorps(Xmm(29), Xmm(29), Xmm(29));
+    vxorps(Ymm(30), Ymm(30), Ymm(30));
+    //    vxorps(Zmm(31), Zmm(31), Zmm(31));
   }
 };
 
