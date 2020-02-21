@@ -40,14 +40,13 @@ public:
 #endif
 
     /* Address is unaligned */
-    /*
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
     addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 5;
     mov(rbx, addr);
     movd(Xmm(2), ptr[rbx]);
 #endif
-    */
+
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
     mov(rbx,
