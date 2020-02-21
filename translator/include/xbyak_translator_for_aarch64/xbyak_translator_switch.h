@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
+
+std::cout << xed_iclass_enum_t2str(p) << std::endl;
+
 switch (p) {
 case XED_ICLASS_INVALID:
 case XED_ICLASS_AAA:
@@ -40,6 +43,8 @@ case XED_ICLASS_AESENCLAST:
 case XED_ICLASS_AESIMC:
 case XED_ICLASS_AESKEYGENASSIST:
 case XED_ICLASS_AND:
+  translateAND(&xedd);
+  break;
 case XED_ICLASS_ANDN:
 case XED_ICLASS_ANDNPD:
 case XED_ICLASS_ANDNPS:
@@ -501,6 +506,8 @@ case XED_ICLASS_NOP9:
 case XED_ICLASS_NOT:
 case XED_ICLASS_NOT_LOCK:
 case XED_ICLASS_OR:
+  translateOR(&xedd);
+  break;
 case XED_ICLASS_ORPD:
 case XED_ICLASS_ORPS:
 case XED_ICLASS_OR_LOCK:
@@ -876,10 +883,12 @@ case XED_ICLASS_VANDNPD:
 case XED_ICLASS_VANDNPS:
 case XED_ICLASS_VANDPD:
 case XED_ICLASS_VANDPS:
-  //  translateVANDPS(&xedd);
+  translateVANDPS(&xedd);
   break;
 case XED_ICLASS_VBLENDMPD:
 case XED_ICLASS_VBLENDMPS:
+  translateVBLENDMPS(&xedd);
+  break;
 case XED_ICLASS_VBLENDPD:
 case XED_ICLASS_VBLENDPS:
 case XED_ICLASS_VBLENDVPD:
@@ -1131,6 +1140,8 @@ case XED_ICLASS_VMLOAD:
 case XED_ICLASS_VMMCALL:
 case XED_ICLASS_VMOVAPD:
 case XED_ICLASS_VMOVAPS:
+  translateVMOVAPS(&xedd);
+  break;
 case XED_ICLASS_VMOVD:
 case XED_ICLASS_VMOVDDUP:
 case XED_ICLASS_VMOVDQA:
@@ -1143,14 +1154,20 @@ case XED_ICLASS_VMOVDQU16:
 case XED_ICLASS_VMOVDQU32:
 case XED_ICLASS_VMOVDQU64:
 case XED_ICLASS_VMOVDQU8:
+  translateVMOVDQU8(&xedd);
+  break;
 case XED_ICLASS_VMOVHLPS:
   translateVMOVHLPS(&xedd);
   break;
 case XED_ICLASS_VMOVHPD:
 case XED_ICLASS_VMOVHPS:
+  translateVMOVHPS(&xedd);
+  break;
 case XED_ICLASS_VMOVLHPS:
 case XED_ICLASS_VMOVLPD:
 case XED_ICLASS_VMOVLPS:
+  translateVMOVLPS(&xedd);
+  break;
 case XED_ICLASS_VMOVMSKPD:
 case XED_ICLASS_VMOVMSKPS:
 case XED_ICLASS_VMOVNTDQ:
@@ -1185,6 +1202,8 @@ case XED_ICLASS_VMXOFF:
 case XED_ICLASS_VMXON:
 case XED_ICLASS_VORPD:
 case XED_ICLASS_VORPS:
+  translateVORPS(&xedd);
+  break;
 case XED_ICLASS_VP2INTERSECTD:
 case XED_ICLASS_VP2INTERSECTQ:
 case XED_ICLASS_VP4DPWSSD:
@@ -1603,6 +1622,8 @@ case XED_ICLASS_VUNPCKLPD:
 case XED_ICLASS_VUNPCKLPS:
 case XED_ICLASS_VXORPD:
 case XED_ICLASS_VXORPS:
+  translateVXORPS(&xedd);
+  break;
 case XED_ICLASS_VZEROALL:
 case XED_ICLASS_VZEROUPPER:
 case XED_ICLASS_WBINVD:

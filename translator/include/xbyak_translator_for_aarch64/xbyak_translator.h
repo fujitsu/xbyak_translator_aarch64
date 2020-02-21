@@ -272,7 +272,7 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
 unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
   for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i &&
-        a64->maskIdx != i) {
+        a64->maskIdx != i && a64->mask2Idx != 0) {
       if (preg_tmp_used[i] == false) {
         preg_tmp_used[i] = true;
 
@@ -388,7 +388,7 @@ bool decodeOpcode() {
   xt_dump_x86_64_decoded_info(&xedd);
 
   xed_iclass_enum_t p = xed_decoded_inst_get_iclass(&xedd);
-
+  std::cout << "xbyak_translator_switch.h" << std::endl;
 #include "xbyak_translator_switch.h"
 
   return true;

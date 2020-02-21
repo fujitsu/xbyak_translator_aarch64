@@ -19,20 +19,36 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    for (int i=0; i<8 ;i++){
-	inputZReg[0].ud_dt[i] = 0x0;
+    //    for (int i=0; i<8 ;i++){
+    //	inputZReg[0].ud_dt[i] = 0x0;
+    //    }
+
+    for (int i = 0; i < 8; i++) {
+      inputZReg[0].ud_dt[i] = ~uint64_t(0);
+      inputZReg[3].ud_dt[i] = ~uint64_t(0);
+      inputZReg[6].ud_dt[i] = ~uint64_t(0);
     }
 
-    for (int i=0; i< 8; i++){
-	inputZReg[1].ud_dt[i] = 0xFFFFFFFFFFFFFFFF;
-    }
-	
-    for (int i=0; i< 8; i++){
-	inputZReg[2].ud_dt[i] = 0xDDDDDDDDDDDDDDDD;
+    for (int i = 0; i < 8; i++) {
+      inputZReg[1].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[4].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[7].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
     }
 
-    inputPredReg[15] = 0x00000000000000FF;
-		
+    //	inputZReg[31].ud_dt[0] = ~uint64_t(0);
+    //	inputZReg[31].ud_dt[2] = ~uint64_t(0);
+
+    //    for (int i=0; i< 8; i++){
+    //	inputZReg[1].ud_dt[i] = 0xFFFFFFFFFFFFFFFF;
+    //    }
+
+    //    for (int i=0; i< 8; i++){
+    //	inputZReg[2].ud_dt[i] = 0x12345;
+    //    }
+
+    //    for (int i=0; i< 15; i++){
+    //    	inputPredReg[i] = 0xFFFFFFFFFFFFFFFF;
+    //    }
   }
 
   void setCheckRegFlagAll() {
@@ -41,8 +57,23 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vandps(Ymm(0), Ymm(1), Ymm(2));
+    //    static const uint64_t maskFF = uint64_t(0xFF);
+    //    mov(rax, (size_t)&maskFF);
+    //	size_t addr;
+    //	addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+
+    //	mov(rax, addr);
+    //	vandps(Ymm(2), Ymm(0), ptr[rax]);
+
+    //	mov(rax, 5);
+
+    //    vandps(Ymm(0), Ymm(1), ptr[rax]);
+
+    vandps(Ymm(2), Ymm(0), Ymm(1));
   }
+
+  //  struct xt_a64fx_operands_struct_t a64;
+  //  xt_dump_a64fx_operands(&a64);
 };
 
 int main(int argc, char *argv[]) {
