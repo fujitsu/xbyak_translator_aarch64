@@ -47,6 +47,7 @@ case XED_ICLASS_AND:
   break;
 case XED_ICLASS_ANDN:
 case XED_ICLASS_ANDNPD:
+
 case XED_ICLASS_ANDNPS:
 case XED_ICLASS_ANDPD:
 case XED_ICLASS_ANDPS:
@@ -1147,6 +1148,8 @@ case XED_ICLASS_VMOVAPS:
   translateVMOVAPS(&xedd);
   break;
 case XED_ICLASS_VMOVD:
+  translateVMOVD(&xedd);
+  break;
 case XED_ICLASS_VMOVDDUP:
 case XED_ICLASS_VMOVDQA:
 case XED_ICLASS_VMOVDQA32:
