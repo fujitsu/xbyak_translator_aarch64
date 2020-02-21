@@ -145,6 +145,39 @@ const std::string xt_to_string(const xt_operand_type_t type) {
   return msg;
 }
 
+const std::string xt_to_string(const xed_reg_class_enum_t num) {
+  std::string msg;
+
+  switch (num) {
+  case XED_REG_CLASS_INVALID:
+    msg = "XED_REG_CLASS_INVALID";
+    break;
+  case XED_REG_CLASS_GPR32:
+    msg = "XED_REG_CLASS_GPR32";
+    break;
+  case XED_REG_CLASS_GPR64:
+    msg = "XED_REG_CLASS_GPR64";
+    break;
+  case XED_REG_CLASS_MMX:
+    msg = "XED_REG_CLASS_MMX";
+    break;
+  case XED_REG_CLASS_XMM:
+    msg = "XED_REG_CLASS_XMM";
+    break;
+  case XED_REG_CLASS_YMM:
+    msg = "XED_REG_CLASS_YMM";
+    break;
+  case XED_REG_CLASS_ZMM:
+    msg = "XED_REG_CLASS_ZMM";
+    break;
+  default:
+    msg = "Undefined xt_operand_type_t";
+    break;
+  }
+
+  return msg;
+}
+
 /* This implementation is copied from Intel's xed/src/common/xed-util.c
    arbitrary sign extension from a qty of "bits" length to 64b */
 xed_int64_t xed_sign_extend_arbitrary_to_64(xed_uint64_t x, unsigned int bits) {

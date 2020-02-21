@@ -429,6 +429,12 @@ void xt_dump_a64fx_operands(xt_a64fx_operands_struct_t *a64) {
   std::cout << std::left << std::setw(9) << "EVEXb=" << a64->EVEXb << std::endl;
   std::cout << std::left << std::setw(9) << "dstWidth=" << a64->dstWidth
             << std::endl;
+  std::cout << std::left << std::setw(9) << "srcWidth=" << a64->srcWidth
+            << std::endl;
+  std::cout << std::left << std::setw(9)
+            << "dstRegClass=" << xt_to_string(a64->dstRegClass) << std::endl;
+  std::cout << std::left << std::setw(9)
+            << "srcRegClass=" << xt_to_string(a64->srcRegClass) << std::endl;
   std::cout << std::left << std::setw(9) << "uimm=" << a64->uimm << std::endl;
   std::cout << std::left << std::setw(9) << "simm=" << a64->simm << std::endl;
   std::cout << std::left << std::setw(9) << "immWidth=" << a64->immWidth

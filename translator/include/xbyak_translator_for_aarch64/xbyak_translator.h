@@ -132,6 +132,10 @@ struct xt_a64fx_operands_struct_t {
      8(i.e. AL, etc),   16(i.e. AX, etc), 32(i.e. EAX, etc), 64(i.e. RAX, etc),
     128(i.e. Xmm0, etc), 256(i.e. Ymm0, etc), 512(i.e. Zmm0, etc) */
   xed_uint_t dstWidth = 0;
+  xed_uint_t srcWidth = 0;
+
+  xed_reg_class_enum_t dstRegClass = XED_REG_CLASS_INVALID;
+  xed_reg_class_enum_t srcRegClass = XED_REG_CLASS_INVALID;
 
   /* Immediate value opoerand */
   xed_uint_t ibits = 0;
@@ -446,6 +450,7 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
           a64->dstIdx = tmpIdx;
           a64->isDstMask = true;
           isDstSet = true;
+          a64->dstRegClass = xed_reg_class(xed_decoded_inst_get_reg(p, opName));
         } else {
           a64->maskIdx = tmpIdx;
           /* Decode predicate information */
@@ -473,10 +478,13 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
           a64->dstIdx = tmpIdx;
           isDstSet = true;
           a64->dstWidth = xed_decoded_inst_operand_length_bits(p, i);
+          a64->dstRegClass = xed_reg_class(xed_decoded_inst_get_reg(p, opName));
         } else if (isSrcSet == false) {
           a64->srcType = A64_OP_REG;
           a64->srcIdx = tmpIdx;
           isSrcSet = true;
+          a64->srcWidth = xed_decoded_inst_operand_length_bits(p, i);
+          a64->srcRegClass = xed_reg_class(xed_decoded_inst_get_reg(p, opName));
         } else if (isSrc2Set == false) {
           a64->src2Type = A64_OP_REG;
           a64->src2Idx = tmpIdx;
@@ -542,6 +550,7 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
       } else if (isSrcSet == false) {
         a64->srcType = A64_OP_MEM;
         isSrcSet = true;
+        a64->srcWidth = xed_decoded_inst_operand_length_bits(p, i);
       } else if (isSrc2Set == false) {
         a64->src2Type = A64_OP_MEM;
         isSrc2Set = true;
@@ -567,6 +576,7 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
       } else if (isSrcSet == false) {
         a64->srcType = A64_OP_IMM;
         isSrcSet = true;
+        a64->srcWidth = xed_decoded_inst_operand_length_bits(p, i);
       } else if (isSrc2Set == false) {
         a64->src2Type = A64_OP_IMM;
         isSrc2Set = true;
