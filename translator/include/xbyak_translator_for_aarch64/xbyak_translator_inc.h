@@ -3,6 +3,7 @@
 #include "instructions/cmp.h"
 #include "instructions/dec.h"
 #include "instructions/mov.h"
+#include "instructions/movd.h"
 #include "instructions/movq.h"
 #include "instructions/movss.h"
 #include "instructions/or.h"
