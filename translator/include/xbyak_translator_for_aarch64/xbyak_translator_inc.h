@@ -24,6 +24,7 @@
 #include "instructions/vpinsrq.h"
 #include "instructions/vpxord.h"
 #include "instructions/vxorps.h"
+#include "instructions/vzeroupper.h"
 #include "instructions/xor.h"
 #if 0
 #include "instructions/kmovb.h"
@@ -40,5 +41,4 @@
 //#include "instructions/vfmadd132ps.h"
 //#include "instructions/vfmadd213ps.h"
 //#include "instructions/vfmadd231ps.h"
-#include "instructions/vzeroupper.h"
 #endif

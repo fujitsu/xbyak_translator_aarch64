@@ -1515,7 +1515,7 @@ void vunpcklps(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x
 void vxorpd(const Xmm& xmm, const Operand& op1, const Operand& op2 = Operand()) { opAVX_X_X_XM(xmm, op1, op2, T_0F | T_66 | T_EW1 | T_YMM | T_EVEX | T_ER_Z | T_B64, 0x57); UNIMPLEMENTED; }
 void vxorps(const Xmm& xmm, const Operand& op1, const Operand& op2 = Operand()) { opAVX_X_X_XM(xmm, op1, op2, T_0F | T_EW0 | T_YMM | T_EVEX | T_ER_Z | T_B32, 0x57); decodeAndTransToAArch64(); }
 void vzeroall() { db(0xC5); db(0xFC); db(0x77); UNIMPLEMENTED; }
-void vzeroupper() { db(0xC5); db(0xF8); db(0x77); UNIMPLEMENTED; }
+void vzeroupper() { db(0xC5); db(0xF8); db(0x77); decodeAndTransToAArch64(); }
 void wait() { db(0x9B); UNIMPLEMENTED; }
 void wbinvd() { db(0x0F); db(0x09); UNIMPLEMENTED; }
 void wrmsr() { db(0x0F); db(0x30); UNIMPLEMENTED; }
