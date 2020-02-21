@@ -117,9 +117,8 @@ case XED_ICLASS_CMOVP:
 case XED_ICLASS_CMOVS:
 case XED_ICLASS_CMOVZ:
 case XED_ICLASS_CMP:
-  //    translateCMP(&xedd);
+  translateCMP(&xedd);
   break;
-
 case XED_ICLASS_CMPPD:
 case XED_ICLASS_CMPPS:
 case XED_ICLASS_CMPSB:
@@ -824,9 +823,8 @@ case XED_ICLASS_STOSQ:
 case XED_ICLASS_STOSW:
 case XED_ICLASS_STR:
 case XED_ICLASS_SUB:
-  //    translateSUB(&xedd);
+  translateSUB(&xedd);
   break;
-
 case XED_ICLASS_SUBPD:
 case XED_ICLASS_SUBPS:
 case XED_ICLASS_SUBSD:
@@ -901,11 +899,9 @@ case XED_ICLASS_VBROADCASTI64X4:
 case XED_ICLASS_VBROADCASTSD:
   xed_assert(0);
   break;
-
 case XED_ICLASS_VBROADCASTSS:
-  //    translateVBROADCASTSS(&xedd);
+  translateVBROADCASTSS(&xedd);
   break;
-
 case XED_ICLASS_VCMPPD:
 case XED_ICLASS_VCMPPS:
 case XED_ICLASS_VCMPSD:
