@@ -1,47 +1,76 @@
 void translateMOVSS(xed_decoded_inst_t *p) {
-  // unsigned int i, noperands, dstIdx, srcIdx;
-  const xed_inst_t *xi = xed_decoded_inst_inst(p);
+  namespace xa = Xbyak_aarch64;
+  struct xt_a64fx_operands_struct_t a64;
+  xt_construct_a64fx_operands(p, &a64);
 
-  const xed_operand_t *op1 =
-      xed_inst_operand(xi, 0); // dstのオペランドのポインタを取得
-  const xed_operand_t *op2 =
-      xed_inst_operand(xi, 1); // dstのオペランドのポインタを取得
-  xed_operand_enum_t isDst =
-      xed_operand_name(op1); // dstのオペランドの名前を取得
-  xed_operand_enum_t isSrc =
-      xed_operand_name(op2); // srcのオペランドの名前を取得
+/* 2020/02/21 22:24 */
+#define CG64 CodeGeneratorAArch64
 
-  xed_uint_t isDstSize = xed_decoded_inst_operand_length_bits(p, 0);
-  xed_uint_t isSrcSize = xed_decoded_inst_operand_length_bits(p, 1);
-
-  const xed_reg_class_enum_t DstRegClass =
-      xed_reg_class(xed_decoded_inst_get_reg(p, isDst));
-  const xed_reg_class_enum_t SrcRegClass =
-      xed_reg_class(xed_decoded_inst_get_reg(p, isSrc));
-
-  unsigned int a64_dstIdx;
-  unsigned int a64_srcIdx;
-
+  /* Col=T103*/
   if (false ||
-      (isDstSize == 32 && isSrcSize == 32 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_REG1) ||
-      (isDstSize == 128 && isSrcSize == 32 && isDst == XED_OPERAND_REG0 &&
-       isSrc == XED_OPERAND_REG1)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    not_(pTmp.b, p15 / Xbyak_aarch64::T_z, p14.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
+      (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
+      (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
+      (a64.dstType == A64_OP_MEM && a64.srcType == A64_OP_REG && true)) {
+    a64.pTmpIdx = xt_push_preg(&a64);
+  }
+
+  /* Col=W103*/
+  if (false ||
+      (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
+      (a64.dstType == A64_OP_MEM && a64.srcType == A64_OP_REG && true)) {
+    CG64::ptrue(xa::PRegS(a64.pTmpIdx), xa::VL1);
+  }
+  /* Col=X103*/
+  if (false ||
+      (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
+    CG64::ptrue(xa::PRegS(a64.pTmpIdx), xa::VL4);
+  }
+
+  /* Col=AI103*/
+  if (false ||
+      (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
+    CG64::ldr(W_TMP_0, xa::ptr(X_TMP_ADDR));
+  }
+
+  /* Col=AK103*/
+  if (false ||
+      (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
+    CG64::mov(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx) / xa::T_m, 0);
+  }
+
+  /* Col=AM103*/
+  if (false ||
+      (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
+    CG64::ptrue(xa::PRegS(a64.pTmpIdx), xa::VL1);
+  }
+
+  /* Col=AQ103*/
+  if (false ||
+      (a64.dstType == A64_OP_MEM && a64.srcType == A64_OP_REG && true)) {
+    CG64::st1w(xa::ZRegS(a64.srcIdx), xa::PReg(a64.pTmpIdx),
+               xa::ptr(X_TMP_ADDR));
+  }
+
+  /* Col=AS103*/
+  if (false ||
+      (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true)) {
+    CG64::mov(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx) / xa::T_m,
+              xa::ZRegS(a64.srcIdx));
+  }
+
+  /* Col=AU103*/
+  if (false ||
+      (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
+    CG64::mov(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx) / xa::T_m, W_TMP_0);
+  }
+
+  /* Col=AW103*/
+  if (false ||
+      (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
+      (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
+      (a64.dstType == A64_OP_MEM && a64.srcType == A64_OP_REG && true)) {
     xt_pop_preg();
   }
-  if (false || (isDstSize == 128 && isSrcSize == 32 &&
-                isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    fmov__(Xbyak_aarch64::VReg(a64_dstIdx).s4, 0);
-    ld1__(Xbyak_aarch64::VReg(a64_dstIdx).s4[0],
-          Xbyak_aarch64::ptr(X_TMP_ADDR));
-  }
-  if (false || (isDstSize == 32 && isSrcSize == 32 &&
-                isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    st1__(Xbyak_aarch64::VReg(a64_srcIdx).s4[0],
-          Xbyak_aarch64::ptr(X_TMP_ADDR));
-  }
+
+#undef CG64
 }
