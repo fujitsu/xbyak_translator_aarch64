@@ -31,6 +31,10 @@ public:
     vmovaps(Xmm(0), Xmm(1));
     vmovaps(Ymm(2), Ymm(3));
     vmovaps(Zmm(4), Zmm(5));
+
+    vmovaps(Xmm(6), Xmm(6));
+    vmovaps(Ymm(7), Ymm(7));
+    vmovaps(Zmm(8), Zmm(8));
   }
 };
 
