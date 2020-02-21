@@ -916,7 +916,7 @@ void rsqrtps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x52, 0x100, is
 void rsqrtss(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x52, 0xF3, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void sahf() { db(0x9E); UNIMPLEMENTED; }
 void sal(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 4); UNIMPLEMENTED; }
-void sal(const Operand& op, int imm) { opShift(op, imm, 4); UNIMPLEMENTED; }
+void sal(const Operand& op, int imm) { opShift(op, imm, 4); decodeAndTransToAArch64(); }
 void sar(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 7); UNIMPLEMENTED; }
 void sar(const Operand& op, int imm) { opShift(op, imm, 7); UNIMPLEMENTED; }
 void sarx(const Reg32e& r1, const Operand& op, const Reg32e& r2) { opGpr(r1, op, r2, T_F3 | T_0F38, 0xf7, false); UNIMPLEMENTED; }
