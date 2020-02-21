@@ -2802,8 +2802,8 @@ public:
 
 #ifdef XBYAK_TRANSLATE_AARCH64
   void L(const std::string &label) {}
-  void L(Label &label) {}
-  //	Label L() { label label; L(label); return label; }
+  void L(Label &label) { L_aarch64(label); }
+  Label L() { Label label; L(label); return label; }
 #else
   void L(const std::string &label) { labelMgr_.defineSlabel(label); }
   void L(Label &label) { labelMgr_.defineClabel(label); }

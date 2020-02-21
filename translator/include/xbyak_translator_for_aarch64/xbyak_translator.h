@@ -131,7 +131,7 @@ struct xt_a64fx_operands_struct_t {
   /* Bit width of destination operand.
      8(i.e. AL, etc),   16(i.e. AX, etc), 32(i.e. EAX, etc), 64(i.e. RAX, etc),
     128(i.e. Xmm0, etc), 256(i.e. Ymm0, etc), 512(i.e. Zmm0, etc) */
-  xed_uint_t dstWidth;
+  xed_uint_t dstWidth = 0;
 
   /* Immediate value opoerand */
   xed_uint_t ibits = 0;
