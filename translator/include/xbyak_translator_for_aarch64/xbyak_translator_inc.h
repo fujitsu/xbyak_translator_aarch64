@@ -22,6 +22,7 @@
 #include "instructions/vorps.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
+#include "instructions/vpxord.h"
 #include "instructions/vxorps.h"
 #include "instructions/xor.h"
 #if 0
