@@ -19,28 +19,30 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setDumpZRegMode(SP_DT); // set float mode
+    //    setDumpZRegMode(SP_DT); // set float mode
     setInputZregAllRandomHex();
 
-    for (int i = 0; i < 16; i++) {
-      inputZReg[30].sp_dt[i] = float(0.3 + i);
-      inputZReg[31].sp_dt[i] = float(0.5 + i);
-    }
+    /* elemet is 8 bits.
+       Xmm:16 elements
+       Ymm:32 elements
+       Zmm:64 elements */
 
-    inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4);              /* if element size is 8bit, x86_64 and a64 are same*/
+    // Xmm range
+    inputPredReg[1] = (1 << 0) | (1 << 7); /* Both x86_64 and aarch64 */
+    inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) |
+                      (1 << 15); /* Both x86_64 and aarch64 */
 
-    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) |
-      (1 << 8); 
+    // Ymm range
+    inputPredReg[3] =
+        (1 << 0) | (1 << 7) | (1 << 12); /* Both x86_64 and aarch64 */
+    inputPredReg[4] = (1 << 0) | (1 << 7) | (1 << 12) |
+                      (1 << 31); /* Both x86_64 and aarch64 */
 
-    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 8) | (1 << 12);
-
-    inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 6) | (1 << 8) | (1 << 12);
-
-    inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 6) | (1 << 7) | (1 << 8) | (1 << 12);
+    // Zmm range
+    inputPredReg[5] = (1 << 0) | (1 << 7) | (1 << 12) |
+                      (1 << 31); /* Both x86_64 and aarch64 */
+    inputPredReg[6] = (1 << 0) | (1 << 7) | (1 << 12) | (1 << 31) | (1 << 32) |
+                      (1 << 63); /* Both x86_64 and aarch64 */
 
     inputPredReg[7] = ~uint64_t(0);
   }
@@ -56,14 +58,30 @@ public:
     /* Address is aligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[31].sp_dt[0]));
     mov(rax, addr);
-    
-    vmovdqu8(Zmm(1) | k1 , ptr[rax]);
-    vmovdqu8(Zmm(2) | k2 , ptr[rax]);
-    vmovdqu8(Zmm(3) | k3 , ptr[rax]);
-    vmovdqu8(Zmm(4) | k4 , ptr[rax]);
-    vmovdqu8(Zmm(5) | k5 , ptr[rax]);
-    vmovdqu8(Zmm(6) | k6 , ptr[rax]);
-    vmovdqu8(Zmm(7) | k7 , ptr[rax]);
+
+    vmovdqu8(Xmm(1) | k1, ptr[rax]);
+    vmovdqu8(Xmm(2) | k2, ptr[rax]);
+    vmovdqu8(Xmm(3) | k3, ptr[rax]);
+    vmovdqu8(Xmm(4) | k4, ptr[rax]);
+    vmovdqu8(Xmm(5) | k5, ptr[rax]);
+    vmovdqu8(Xmm(6) | k6, ptr[rax]);
+    vmovdqu8(Xmm(7) | k7, ptr[rax]);
+
+    vmovdqu8(Ymm(11) | k1, ptr[rax]);
+    vmovdqu8(Ymm(12) | k2, ptr[rax]);
+    vmovdqu8(Ymm(13) | k3, ptr[rax]);
+    vmovdqu8(Ymm(14) | k4, ptr[rax]);
+    vmovdqu8(Ymm(15) | k5, ptr[rax]);
+    vmovdqu8(Ymm(16) | k6, ptr[rax]);
+    vmovdqu8(Ymm(17) | k7, ptr[rax]);
+
+    vmovdqu8(Zmm(21) | k1, ptr[rax]);
+    vmovdqu8(Zmm(22) | k2, ptr[rax]);
+    vmovdqu8(Zmm(23) | k3, ptr[rax]);
+    vmovdqu8(Zmm(24) | k4, ptr[rax]);
+    vmovdqu8(Zmm(25) | k5, ptr[rax]);
+    vmovdqu8(Zmm(26) | k6, ptr[rax]);
+    vmovdqu8(Zmm(27) | k7, ptr[rax]);
 
     mov(rax, 5);
   }

@@ -19,9 +19,8 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    //    setDumpZRegMode(SP_DT); // set float mode
-    setInputZregAllRandomHex();
 
+    setInputZregAllRandomHex();
     /* elemet is 8 bits.
        Xmm:16 elements
        Ymm:32 elements
@@ -53,37 +52,21 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
+    vmovdqu8(Xmm(0) | k1, Xmm(1));
+    vmovdqu8(Xmm(2) | k2, Xmm(3));
+    vmovdqu8(Xmm(4) | k3, Xmm(5));
+    vmovdqu8(Xmm(6) | k4, Xmm(7));
+    vmovdqu8(Xmm(8) | k5, Xmm(9));
+    vmovdqu8(Xmm(10) | k6, Xmm(11));
+    vmovdqu8(Xmm(12) | k7, Xmm(13));
 
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].sp_dt[0]));
-    mov(rax, addr);
-
-    vmovdqu8(Xmm(1) | k1 | T_z, ptr[rax]);
-    vmovdqu8(Xmm(2) | k2 | T_z, ptr[rax]);
-    vmovdqu8(Xmm(3) | k3 | T_z, ptr[rax]);
-    vmovdqu8(Xmm(4) | k4 | T_z, ptr[rax]);
-    vmovdqu8(Xmm(5) | k5 | T_z, ptr[rax]);
-    vmovdqu8(Xmm(6) | k6 | T_z, ptr[rax]);
-    vmovdqu8(Xmm(7) | k7 | T_z, ptr[rax]);
-
-    vmovdqu8(Ymm(11) | k1 | T_z, ptr[rax]);
-    vmovdqu8(Ymm(12) | k2 | T_z, ptr[rax]);
-    vmovdqu8(Ymm(13) | k3 | T_z, ptr[rax]);
-    vmovdqu8(Ymm(14) | k4 | T_z, ptr[rax]);
-    vmovdqu8(Ymm(15) | k5 | T_z, ptr[rax]);
-    vmovdqu8(Ymm(16) | k6 | T_z, ptr[rax]);
-    vmovdqu8(Ymm(17) | k7 | T_z, ptr[rax]);
-
-    vmovdqu8(Zmm(21) | k1 | T_z, ptr[rax]);
-    vmovdqu8(Zmm(22) | k2 | T_z, ptr[rax]);
-    vmovdqu8(Zmm(23) | k3 | T_z, ptr[rax]);
-    vmovdqu8(Zmm(24) | k4 | T_z, ptr[rax]);
-    vmovdqu8(Zmm(25) | k5 | T_z, ptr[rax]);
-    vmovdqu8(Zmm(26) | k6 | T_z, ptr[rax]);
-    vmovdqu8(Zmm(27) | k7 | T_z, ptr[rax]);
-
-    mov(rax, 5);
+    vmovdqu8(Xmm(14) | k1, Xmm(14));
+    vmovdqu8(Xmm(15) | k2, Xmm(15));
+    vmovdqu8(Xmm(16) | k3, Xmm(16));
+    vmovdqu8(Xmm(17) | k4, Xmm(17));
+    vmovdqu8(Xmm(18) | k5, Xmm(18));
+    vmovdqu8(Xmm(19) | k6, Xmm(19));
+    vmovdqu8(Xmm(20) | k7, Xmm(20));
   }
 };
 
