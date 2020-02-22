@@ -898,11 +898,11 @@ void repe() { db(0xF3); UNIMPLEMENTED; }
 void repne() { db(0xF2); UNIMPLEMENTED; }
 void repnz() { db(0xF2); UNIMPLEMENTED; }
 void repz() { db(0xF3); UNIMPLEMENTED; }
+void ret(int imm = 0) { if (imm) { db(0xC2); CodeArray::dw(imm); } else { db(0xC3); }
 #ifdef XBYAK_TRANSLATE_AARCH64
-void ret(int imm = 0) { if (imm) { db(0xC2); CodeArray::dw(imm); UNIMPLEMENTED; } else { CodeGeneratorAArch64::ret(); } }
-#else
-void ret(int imm = 0) { if (imm) { db(0xC2); CodeArray::dw(imm); UNIMPLEMENTED; } else { db(0xC3); } }
+  std::cerr << "RET instruction is generated." << std::endl;
 #endif
+  decodeAndTransToAArch64(); }
 void rol(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 0); UNIMPLEMENTED; }
 void rol(const Operand& op, int imm) { opShift(op, imm, 0); UNIMPLEMENTED; }
 void ror(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 1); UNIMPLEMENTED; }

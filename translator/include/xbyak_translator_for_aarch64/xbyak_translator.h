@@ -170,6 +170,10 @@ xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
   } else if (r == XED_REG_RFLAGS) {
     /* In case of 2nd operand of DEC instruction, this "else if" is passed */
     return XT_REG_INVALID;
+  } else if (r == XED_REG_STACKPOP) {
+    return XT_REG_INVALID;
+  } else if (r == XED_REG_RIP) {
+    return XT_REG_INVALID;
   } else {
     xt_msg_err(__FILE__, __LINE__, ":Under construction!");
     assert(NULL);
@@ -400,20 +404,15 @@ bool decodeOpcode() {
 
 void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
                                  xt_a64fx_operands_struct_t *a64) {
-  unsigned int i, num_operands;
+  unsigned int num_operands;
 
   unsigned int baseIdx = XT_REG_INVALID;
   unsigned int indexIdx = XT_REG_INVALID;
-  unsigned int segIdx = XT_REG_INVALID;
 
   xed_uint_t scale = 0;
   xed_int64_t disp = 0;
-  xed_bool_t isRegOperand;
   const xed_inst_t *xi = xed_decoded_inst_inst(p);
   //  xed_reg_enum_t dstReg = xed_decoded_inst_get_reg(p, opDst);
-  xed_reg_enum_t seg, base, indx;
-  xed_memop_t mem_op;
-  xed_uint_t ibits;
   xed_bool_t isDstSet = false;
   xed_bool_t isMaskSet = false;
   xed_bool_t isSrcSet = false;
@@ -519,12 +518,10 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
       }
 
       xed_reg_enum_t tmpReg;
-      xed_int64_t tmpDisp;
       xed_uint32_t tmpScale;
 
       tmpReg = xed_decoded_inst_get_seg_reg(p, 0);
       if (tmpReg != XED_REG_INVALID) {
-        segIdx = xt_get_register_index(tmpReg);
       }
 
       tmpReg = xed_decoded_inst_get_base_reg(p, 0);
@@ -585,13 +582,10 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
            IMM, so that if program comes here, it's not a bug. */
       }
       if (opName == XED_OPERAND_IMM0) {
-        const unsigned int no_leading_zeros = 0;
         xed_uint_t ibits;
-        const xed_bool_t lowercase = 1;
 
         ibits = xed_decoded_inst_get_immediate_width_bits(p);
         if (xed_decoded_inst_get_immediate_is_signed(p)) {
-          xed_uint_t rbits = ibits ? ibits : 8;
           xed_int32_t x = xed_decoded_inst_get_signed_immediate(p);
           a64->uimm = XED_STATIC_CAST(
               xed_uint64_t,
@@ -613,7 +607,9 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
       a64->uimm2 = xed_decoded_inst_get_second_immediate(p);
       continue;
     }
-
+    /*    if (opName == XED_OPERAND_BASE0) { // RET instruction
+      continue;
+      }*/
     xt_msg_err(__FILE__, __LINE__, "Unsupported opName");
   } // for (int i = 0; i < num_operands; i++) {
 

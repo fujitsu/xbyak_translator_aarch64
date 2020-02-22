@@ -499,8 +499,6 @@ private:
   }
 
   void _dumpZRegFloat(std::string msg, std::string reg, int num, ZReg_t *ptr) {
-    const int width = 8;
-
     for (int i = 0; i < num; i++) {
       for (int line = 0; line < 4; line++) {
         std::ios::fmtflags flagsSaved = std::cout.flags();
@@ -531,8 +529,6 @@ private:
   }
 
   void _dumpZRegDouble(std::string msg, std::string reg, int num, ZReg_t *ptr) {
-    const int width = 8;
-
     for (int i = 0; i < num; i++) {
       std::ios::fmtflags flagsSaved = std::cout.flags();
 
@@ -954,7 +950,6 @@ public:
         uint64_t initData;
         void *addrOut = &(output[r]);
         void *addrIn = &(input[r]);
-        void *addrExp = &(expPtr[r]);
         std::memcpy(&dut, addrOut + sizeof(uint64_t) * sub_r, sizeof(uint64_t));
         std::memcpy(&initData, addrIn + sizeof(uint64_t) * sub_r,
                     sizeof(uint64_t));

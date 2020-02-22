@@ -7,6 +7,7 @@
 #include "instructions/movq.h"
 #include "instructions/movss.h"
 #include "instructions/or.h"
+#include "instructions/ret.h"
 #include "instructions/sub.h"
 #include "instructions/vandps.h"
 #include "instructions/vblendmps.h"

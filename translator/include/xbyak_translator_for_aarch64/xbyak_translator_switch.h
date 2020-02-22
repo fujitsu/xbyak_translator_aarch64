@@ -761,7 +761,12 @@ case XED_ICLASS_REP_XSHA1:
 case XED_ICLASS_REP_XSHA256:
 case XED_ICLASS_REP_XSTORE:
 case XED_ICLASS_RET_FAR:
+  translateRET(&xedd);
+  break;
+
 case XED_ICLASS_RET_NEAR:
+  translateRET(&xedd);
+  break;
 case XED_ICLASS_ROL:
 case XED_ICLASS_ROR:
 case XED_ICLASS_RORX:
