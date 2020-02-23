@@ -2905,14 +2905,26 @@ public:
 #endif //#ifndef XBYAK_TRANSLATE_AARCH64
   }
   void push(const Operand &op) {
-#ifndef XBYAK_TRANSLATE_AARCH64
+
     opPushPop(op, 0xFF, 6, 0x50);
-#endif
+
+#ifdef XBYAK_TRANSLATE_AARCH64
+    decode_size_ = 0;
+
+    CodeGeneratorAArch64::str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -8));
+    db_clear();
+#endif//#ifndef XBYAK_TRANSLATE_AARCH64
   }
   void pop(const Operand &op) {
-#ifndef XBYAK_TRANSLATE_AARCH64
     opPushPop(op, 0x8F, 0, 0x58);
-#endif
+
+#ifdef XBYAK_TRANSLATE_AARCH64
+    decode_size_ = 0;
+
+    CodeGeneratorAArch64::ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 8));
+    db_clear();
+#endif//#ifndef XBYAK_TRANSLATE_AARCH64
+
   }
   void push(const AddressFrame &af, uint32 imm) {
 #ifndef XBYAK_TRANSLATE_AARCH64

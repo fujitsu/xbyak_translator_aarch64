@@ -205,7 +205,12 @@ private:
       pop(Reg64(callee_saved_gregs[i]));
     }
 #endif
+
+#ifdef XBYAK_TRANSLATE_AARCH64
+    CodeGeneratorAArch64::ret();
+#else
     ret();
+#endif
   }
 
   /* Load data from memory to all general purpose registers,
