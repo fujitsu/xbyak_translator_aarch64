@@ -1200,7 +1200,7 @@ case XED_ICLASS_VMOVSLDUP:
 case XED_ICLASS_VMOVSS:
 case XED_ICLASS_VMOVUPD:
 case XED_ICLASS_VMOVUPS:
-  //    translateVMOVUPS(&xedd);
+      translateVMOVUPS(&xedd);
   break;
 
 case XED_ICLASS_VMPSADBW:

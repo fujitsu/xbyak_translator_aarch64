@@ -1,398 +1,130 @@
 void translateVMOVUPS(xed_decoded_inst_t *p) {
-  // unsigned int i, noperands, dstIdx, srcIdx;
-  const xed_inst_t *xi = xed_decoded_inst_inst(p);
+  namespace xa = Xbyak_aarch64;
+  struct xt_a64fx_operands_struct_t a64;
+  xt_construct_a64fx_operands(p, &a64);
 
-  const xed_operand_t *op1 =
-      xed_inst_operand(xi, 0); // dstのオペランドのポインタを取得
-  const xed_operand_t *op2 =
-      xed_inst_operand(xi, 1); // dstのオペランドのポインタを取得
-  xed_operand_enum_t isDst =
-      xed_operand_name(op1); // dstのオペランドの名前を取得
-  xed_operand_enum_t isSrc =
-      xed_operand_name(op2); // srcのオペランドの名前を取得
+/* 2020/02/24 21:00 */
+#define CG64 CodeGeneratorAArch64
 
-  xed_uint_t dstWidth = xed_decoded_inst_operand_length_bits(p, 0);
-  // xed_uint_t isSrcSize = xed_decoded_inst_operand_length_bits(p, 1);
+/* Col=T103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+  a64.pTmpIdx = xt_push_preg(&a64);
+}
+/* Col=U103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  a64.zTmpIdx = xt_push_zreg(&a64);
+}
+/* Col=V103*/
+if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, xa::PRegB(a64.maskIdx));
+}
+/* Col=W103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_384.b);
+}
+/* Col=X103*/
+if(false ||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_256.b);
+}
+/* Col=Y103*/
+if(false ||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::bic(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, xa::PRegB(a64.maskIdx), P_MSB_256.b);
+}
+/* Col=Z103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::bic(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, xa::PRegB(a64.maskIdx), P_MSB_384.b);
+}
+/* Col=AA103*/
+if(false ||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_256.b, xa::PRegB(a64.maskIdx));
+}
+/* Col=AB103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_384.b, xa::PRegB(a64.maskIdx));
+}
+/* Col=AC103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  CG64::ldr(xa::QReg(a64.dstIdx), xa::ptr(X_TMP_ADDR));
+}
+/* Col=AD103*/
+if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  CG64::ldr(xa::ZReg(a64.dstIdx), xa::ptr(X_TMP_ADDR));
+}
+/* Col=AE103*/
+if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  CG64::ld1w(xa::ZRegS(a64.dstIdx), xa::PReg(a64.maskIdx)/xa::T_z, xa::ptr(X_TMP_ADDR));
+}
+/* Col=AF103*/
+if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  CG64::ld1w(xa::ZRegS(a64.zTmpIdx), xa::PReg(a64.maskIdx)/xa::T_z, xa::ptr(X_TMP_ADDR));
+}
+/* Col=AG103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  CG64::ld1w(xa::ZRegS(a64.zTmpIdx), xa::PReg(a64.pTmpIdx)/xa::T_z, xa::ptr(X_TMP_ADDR));
+}
+/* Col=AH103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  CG64::ld1w(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx)/xa::T_z, xa::ptr(X_TMP_ADDR));
+}
+/* Col=AI103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::str(xa::ZReg(a64.srcIdx), xa::ptr(X_TMP_ADDR));
+}
+/* Col=AJ103*/
+if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::st1w(xa::ZRegS(a64.srcIdx), xa::PReg(a64.maskIdx), xa::ptr(X_TMP_ADDR));
+}
+/* Col=AK103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::st1w(xa::ZRegS(a64.srcIdx), xa::PReg(a64.pTmpIdx), xa::ptr(X_TMP_ADDR));
+}
 
-  const xed_reg_class_enum_t DstRegClass =
-      xed_reg_class(xed_decoded_inst_get_reg(p, isDst));
-  const xed_reg_class_enum_t SrcRegClass =
-      xed_reg_class(xed_decoded_inst_get_reg(p, isSrc));
+/* Col=AM103*/
+if(false ||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::mov(xa::ZRegD(a64.dstIdx), xa::ZRegD(a64.srcIdx));
+}
+/* Col=AN103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::mov(xa::ZRegS(a64.dstIdx), xa::PReg(a64.maskIdx)/xa::T_m, xa::ZRegS(a64.srcIdx));
+}
+/* Col=AO103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::mov(xa::VReg16B(a64.dstIdx), xa::VReg16B(a64.srcIdx));
+}
+/* Col=AP103*/
+if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  CG64::mov(xa::ZRegS(a64.dstIdx), xa::PReg(a64.maskIdx)/xa::T_m, xa::ZRegS(a64.zTmpIdx));
+}
+/* Col=AQ103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  CG64::mov(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx)/xa::T_m, xa::ZRegS(a64.zTmpIdx));
+}
+/* Col=AR103*/
+if(false ||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  CG64::mov(xa::ZRegS(a64.dstIdx), P_MSB_256/xa::T_m, 0);
+}
+/* Col=AS103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  CG64::mov(xa::ZRegS(a64.dstIdx), P_MSB_384/xa::T_m, 0);
+}
+/* Col=AT103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)) {
+  CG64::mov(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx)/xa::T_m, 0);
+}
 
-  unsigned int a64_dstIdx;
-  unsigned int a64_srcIdx;
-  unsigned int a64_maskIdx;
 
-  bool isMasking;
-  bool isMerging;
-  bool isZeroing;
 
-  if (false ||
-      (dstWidth == 128 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 128 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 128 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 128 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    mov__(pTmp.b, p14.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 128 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0) ||
-      (dstWidth == 128 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    ld1b(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_z,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    mov__(pTmp.b, p14.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 128 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p14.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    mov__(pTmp.b, p15.b);
-    st1b(Xbyak_aarch64::ZReg(a64_srcIdx).s, pTmp / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 256 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 256 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 256 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 256 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    mov__(pTmp.b, p13.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 256 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0) ||
-      (dstWidth == 256 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    ld1b(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_z,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    mov__(pTmp.b, p13.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 256 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p13.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    mov__(pTmp.b, p15.b);
-    st1b(Xbyak_aarch64::ZReg(a64_srcIdx).s, pTmp / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 128 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 128 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1)) {
-    not_(p8.b, p15 / Xbyak_aarch64::T_z, Xbyak_aarch64::PReg(a64_maskIdx).b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-          Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, p8 / Xbyak_aarch64::T_m, 0);
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p14.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 128 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    not_(p8.b, p15 / Xbyak_aarch64::T_z, Xbyak_aarch64::PReg(a64_maskIdx).b);
-    ld1b(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-         Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, p8 / Xbyak_aarch64::T_m, 0);
-    mov__(pTmp.b, p14.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 128 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 128 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1)) {
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-          Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p14.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 128 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    Xbyak_aarch64::ZReg zTmp = xt_push_zreg();
-    ld1b(zTmp.s, Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-          Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m, zTmp.s);
-    xt_pop_zreg();
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p14.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 256 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 256 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1)) {
-    not_(p8.b, p15 / Xbyak_aarch64::T_z, Xbyak_aarch64::PReg(a64_maskIdx).b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-          Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, p8 / Xbyak_aarch64::T_m, 0);
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p13.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 256 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    not_(p8.b, p15 / Xbyak_aarch64::T_z, Xbyak_aarch64::PReg(a64_maskIdx).b);
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    ld1b(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-         Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, p8 / Xbyak_aarch64::T_m, 0);
-    mov__(pTmp.b, p13.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 256 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 256 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1)) {
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-          Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p13.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 256 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    Xbyak_aarch64::ZReg zTmp = xt_push_zreg();
-    ld1b(zTmp.s, Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-          Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m, zTmp.s);
-    mov__(pTmp.b, p13.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-    xt_pop_zreg();
-  }
-  if (false ||
-      (dstWidth == 512 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 512 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 512 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    ld1b(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_z,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 512 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 512 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1)) {
-    not_(p8.b, p15 / Xbyak_aarch64::T_z, Xbyak_aarch64::PReg(a64_maskIdx).b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-          Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, p8 / Xbyak_aarch64::T_m, 0);
-  }
-  if (false ||
-      (dstWidth == 512 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    not_(p8.b, p15 / Xbyak_aarch64::T_z, Xbyak_aarch64::PReg(a64_maskIdx).b);
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    ld1b(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-         Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, p8 / Xbyak_aarch64::T_m, 0);
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 512 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1) ||
-      (dstWidth == 512 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_REG1)) {
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-          Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-  }
-  if (false ||
-      (dstWidth == 512 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_REG0 && isSrc == XED_OPERAND_MEM0)) {
-    Xbyak_aarch64::ZReg zTmp = xt_push_zreg();
-    ld1b(zTmp.s, Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s,
-          Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m, zTmp.s);
-    xt_pop_zreg();
-  }
-  if (false ||
-      (dstWidth == 128 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p14.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    mov__(pTmp.b, p15.b);
-    st1b(Xbyak_aarch64::ZReg(a64_srcIdx).s, pTmp / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 128 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    not_(p8.b, p15 / Xbyak_aarch64::T_z, Xbyak_aarch64::PReg(a64_maskIdx).b);
-    Xbyak_aarch64::ZReg zTmp = xt_push_zreg();
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(zTmp.s, Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    mov__(zTmp.s, p8 / Xbyak_aarch64::T_z, 0);
-    mov__(pTmp.b, p14.b);
-    mov__(zTmp.s, pTmp / Xbyak_aarch64::T_m, 0);
-    mov__(pTmp.b, p15.b);
-    st1b(zTmp.s, pTmp / Xbyak_aarch64::T_m, Xbyak_aarch64::ptr(X_TMP_ADDR));
-    xt_pop_zreg();
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 128 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    Xbyak_aarch64::ZReg zTmp = xt_push_zreg();
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    mov__(zTmp.s, pTmp / Xbyak_aarch64::T_m, Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    mov__(pTmp.b, p14.b);
-    mov__(zTmp.s, pTmp / Xbyak_aarch64::T_m, 0);
-    st1b(zTmp.s, Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    xt_pop_zreg();
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 256 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p13.b);
-    mov__(Xbyak_aarch64::ZReg(a64_dstIdx).s, pTmp / Xbyak_aarch64::T_m, 0);
-    mov__(pTmp.b, p15.b);
-    st1b(Xbyak_aarch64::ZReg(a64_srcIdx).s, pTmp / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 256 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    not_(p8.b, p15 / Xbyak_aarch64::T_z, Xbyak_aarch64::PReg(a64_maskIdx).b);
-    Xbyak_aarch64::ZReg zTmp = xt_push_zreg();
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(zTmp.s, Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    mov__(zTmp.s, p8 / Xbyak_aarch64::T_z, 0);
-    mov__(pTmp.b, p13.b);
-    mov__(zTmp.s, pTmp / Xbyak_aarch64::T_m, 0);
-    mov__(pTmp.b, p15.b);
-    st1b(zTmp.s, pTmp / Xbyak_aarch64::T_m, Xbyak_aarch64::ptr(X_TMP_ADDR));
-    xt_pop_zreg();
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 256 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    Xbyak_aarch64::ZReg zTmp = xt_push_zreg();
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    mov__(zTmp.s, pTmp / Xbyak_aarch64::T_m, Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    mov__(pTmp.b, p13.b);
-    mov__(zTmp.s, pTmp / Xbyak_aarch64::T_m, 0);
-    st1b(zTmp.s, Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    xt_pop_zreg();
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 512 && isMasking == 0 && isMerging == 0 && isZeroing == 0 &&
-       isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    st1b(Xbyak_aarch64::ZReg(a64_srcIdx).s, pTmp / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 512 && isMasking == 1 && isMerging == 0 && isZeroing == 1 &&
-       isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    not_(p8.b, p15 / Xbyak_aarch64::T_z, Xbyak_aarch64::PReg(a64_maskIdx).b);
-    Xbyak_aarch64::ZReg zTmp = xt_push_zreg();
-    Xbyak_aarch64::PReg pTmp = xt_push_preg();
-    mov__(pTmp.b, p15.b);
-    mov__(zTmp.s, Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-          Xbyak_aarch64::ZReg(a64_srcIdx).s);
-    mov__(zTmp.s, p8 / Xbyak_aarch64::T_z, 0);
-    st1b(zTmp.s, pTmp / Xbyak_aarch64::T_m, Xbyak_aarch64::ptr(X_TMP_ADDR));
-    xt_pop_zreg();
-    xt_pop_preg();
-  }
-  if (false ||
-      (dstWidth == 512 && isMasking == 1 && isMerging == 1 && isZeroing == 0 &&
-       isDst == XED_OPERAND_MEM0 && isSrc == XED_OPERAND_REG0)) {
-    st1b(Xbyak_aarch64::ZReg(a64_srcIdx).s,
-         Xbyak_aarch64::PReg(a64_maskIdx) / Xbyak_aarch64::T_m,
-         Xbyak_aarch64::ptr(X_TMP_ADDR));
-  }
+
+/* Col=AY103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  xt_pop_zreg();
+}
+/* Col=AZ103*/
+if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.dstType==A64_OP_MEM&&a64.srcType==A64_OP_REG&&true)) {
+  xt_pop_preg();
+}
+
+
+
+#undef CG64
 }
