@@ -89,7 +89,39 @@ enum xt_cmp_type_t {
 };
 
 enum xt_cmp_x86_64_t {
+  X86_64_A,
+  X86_64_AE,
   X86_64_B,
+  X86_64_BE,
+  X86_64_C,
+  X86_64_CXZ,
+  X86_64_ECXZ,
+  X86_64_RCXZ,
+  X86_64_E,
+  X86_64_G,
+  X86_64_GE,
+  X86_64_L,
+  X86_64_LE,
+  X86_64_NA,
+  X86_64_NAE,
+  X86_64_NB,
+  X86_64_NBE,
+  X86_64_NC,
+  X86_64_NE,
+  X86_64_NG,
+  X86_64_NGE,
+  X86_64_NL,
+  X86_64_NLE,
+  X86_64_NO,
+  X86_64_NP,
+  X86_64_NS,
+  X86_64_NZ,
+  X86_64_O,
+  X86_64_P,
+  X86_64_PE,
+  X86_64_PO,
+  X86_64_S,
+  X86_64_Z,
 };
 
 struct xt_a64fx_operands_struct_t {
@@ -628,6 +660,10 @@ void decodeAndTransToAArch64() {
 
 void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode,  const Label& label) {
   switch(cmp_mode) {
+    case   X86_64_A:
+  X86_64_AE:
+    xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
+    break;
   case X86_64_B:
     {
       Xbyak_aarch64::LabelAArch64 L0, L1;
@@ -652,7 +688,86 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode,  const Label& label) {
       CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0, X_TMP_2); // Recover NZCV register
     }
     break;
+  case X86_64_BE:
+    {
+      Xbyak_aarch64::LabelAArch64 L0, L1, L2;
+      CodeGeneratorAArch64::mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2, 0x0); // Read NZCV register
+      CodeGeneratorAArch64::lsr(X_TMP_0, X_TMP_2, 28);
+      
+      /* (x86_64's CF)
+	 aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
+      CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0,
+				 0x3);         // extract C and V flags
+      CodeGeneratorAArch64::cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
+      CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L0);
+      CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0, X_TMP_2); // Recover NZCV register
+      CodeGeneratorAArch64::b(label);
+      L_aarch64(L0);
+      CodeGeneratorAArch64::cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
+      CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L1);
+      CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0, X_TMP_2); // Recover NZCV register
+      CodeGeneratorAArch64::b(label);
+      L_aarch64(L1);
+
+      CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0, 0x4);
+      CodeGeneratorAArch64::cmp(X_TMP_1, 0x4);
+      CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L2);
+      CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0, X_TMP_2); // Recover NZCV register
+      CodeGeneratorAArch64::b(label);
+      L_aarch64(L2);
+      CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0, X_TMP_2); // Recover NZCV register
+    }
+    break;
+  X86_64_C:
+  X86_64_CXZ:
+  X86_64_ECXZ:
+  X86_64_RCXZ:
+    xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
+    break;
+  X86_64_E:
+    CodeGeneratorAArch64::b(Xbyak_aarch64::EQ, label);
+    break;
+  X86_64_G:
+    CodeGeneratorAArch64::b(Xbyak_aarch64::GT, label);
+    break;
+  X86_64_GE:
+    CodeGeneratorAArch64::b(Xbyak_aarch64::GE, label);
+    break;
+  X86_64_L:
+    CodeGeneratorAArch64::b(Xbyak_aarch64::LT, label);
+    break;
+  X86_64_LE:
+    CodeGeneratorAArch64::b(Xbyak_aarch64::LE, label);
+    break;
+  X86_64_NA:
+  X86_64_NAE:
+  X86_64_NB:
+  X86_64_NBE:
+  X86_64_NC:
+    xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
+    break;
+  X86_64_NE:
+    CodeGeneratorAArch64::b(Xbyak_aarch64::NE, label);
+    break;
+  X86_64_NG:
+  X86_64_NGE:
+  X86_64_NL:
+  X86_64_NLE:
+  X86_64_NO:
+  X86_64_NP:
+  X86_64_NS:
+  X86_64_NZ:
+  X86_64_O:
+  X86_64_P:
+  X86_64_PE:
+  X86_64_PO:
+  X86_64_S:
+  X86_64_Z:
+    xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
+      break;
+    
   default:
+    xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
     break;
   }
 }

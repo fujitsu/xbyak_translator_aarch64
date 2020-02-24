@@ -389,7 +389,7 @@ void jb(const Label& label, LabelType type = T_AUTO) { decodeAndTransToAArch64(X
 void jb(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jb(const void *addr) { UNIMPLEMENTED; }
 void jb(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
-void jbe(const Label& label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
+void jbe(const Label& label, LabelType type = T_AUTO) { decodeAndTransToAArch64(X86_64_BE, label); }
 void jbe(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jbe(const void *addr) { UNIMPLEMENTED; }
 void jbe(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
@@ -397,15 +397,15 @@ void jc(const Label& label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jc(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jc(const void *addr) { UNIMPLEMENTED; }
 void jc(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
-void je(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::EQ, label); UNIMPLEMENTED; } 
+void je(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::EQ, label); } 
 void je(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void je(const void *addr) { UNIMPLEMENTED; }
 void je(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
-void jg(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::GT, label); UNIMPLEMENTED; } 
+void jg(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::GT, label); }
 void jg(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jg(const void *addr) { UNIMPLEMENTED; }
 void jg(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
-void jge(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::GE, label); UNIMPLEMENTED; } 
+void jge(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::GE, label); }
 void jge(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; } 
 void jge(const void *addr) { UNIMPLEMENTED; }
 void jge(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
@@ -413,7 +413,7 @@ void jl(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::LT, labe
 void jl(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jl(const void *addr) { UNIMPLEMENTED; }
 void jl(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
-void jle(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::LE, label); UNIMPLEMENTED; }
+void jle(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::LE, label); }
 void jle(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jle(const void *addr) { UNIMPLEMENTED; }
 void jle(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
@@ -437,7 +437,7 @@ void jnc(const Label& label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jnc(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jnc(const void *addr) { UNIMPLEMENTED; }
 void jnc(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
-void jne(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::NE, label); UNIMPLEMENTED; }
+void jne(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::NE, label); }
 void jne(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jne(const void *addr) { UNIMPLEMENTED; }
 void jne(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
