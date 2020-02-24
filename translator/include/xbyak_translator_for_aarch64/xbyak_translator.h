@@ -88,6 +88,10 @@ enum xt_cmp_type_t {
   A64_CMP_TRUE,
 };
 
+enum xt_cmp_x86_64_t {
+  X86_64_B,
+};
+
 struct xt_a64fx_operands_struct_t {
   /* Index of DST register(1st operand) */
   //  unsigned int dstIdx = XT_REG_INVALID;
@@ -338,7 +342,7 @@ void xt_pop_preg() {
 
 #include "xbyak_translator_inc.h"
 
-bool decodeOpcode() {
+bool decodeOpcode(const Label* label = nullptr) {
   xed_state_t dstate;
   xed_decoded_inst_t xedd;
   xed_error_enum_t xed_error;
@@ -355,16 +359,6 @@ bool decodeOpcode() {
 
   xed3_operand_set_mpxmode(&xedd, 0);
   xed3_operand_set_cet(&xedd, 0);
-
-#if 0
-  CodeArray::top_[0] = 0x62;
-  CodeArray::top_[1] = 0xf2;
-  CodeArray::top_[2] = 0x7d;
-  CodeArray::top_[3] = 0x09;
-  CodeArray::top_[4] = 0x18;
-  CodeArray::top_[5] = 0xc2;
-  CodeArray::size_ = 6;
-#endif
 
   printf("Attempting to decode: ");
   for (unsigned int i = 0; i < CodeArray::size_; i++)
@@ -630,6 +624,37 @@ void decodeAndTransToAArch64() {
   decode_size_ = 0;
   decodeOpcode();
   db_clear();
+}
+
+void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode,  const Label& label) {
+  switch(cmp_mode) {
+  case X86_64_B:
+    {
+      Xbyak_aarch64::LabelAArch64 L0, L1;
+      CodeGeneratorAArch64::mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2, 0x0); // Read NZCV register
+      CodeGeneratorAArch64::lsr(X_TMP_0, X_TMP_2, 28);
+      
+      /* (x86_64's CF)
+	 aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
+      CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0,
+				 0x3);         // extract C and V flags
+      CodeGeneratorAArch64::cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
+      CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L0);
+      CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0, X_TMP_2); // Recover NZCV register
+      CodeGeneratorAArch64::b(label);
+      L_aarch64(L0);
+      CodeGeneratorAArch64::cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
+      CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L1);
+      CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0, X_TMP_2); // Recover NZCV register
+      CodeGeneratorAArch64::b(label);
+      L_aarch64(L1);
+
+      CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0, X_TMP_2); // Recover NZCV register
+    }
+    break;
+  default:
+    break;
+  }
 }
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
 void decodeAndTransToAArch64() {}

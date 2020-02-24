@@ -385,7 +385,7 @@ void jae(const Label& label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jae(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jae(const void *addr) { UNIMPLEMENTED; }
 void jae(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
-void jb(const Label& label, LabelType type = T_AUTO) { CodeGeneratorAArch64::b(Xbyak_aarch64::CS, label); }
+void jb(const Label& label, LabelType type = T_AUTO) { decodeAndTransToAArch64(X86_64_B, label); }
 void jb(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jb(const void *addr) { UNIMPLEMENTED; }
 void jb(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
