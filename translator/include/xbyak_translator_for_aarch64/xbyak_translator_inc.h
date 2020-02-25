@@ -27,6 +27,7 @@
 #include "instructions/vpxord.h"
 #include "instructions/vxorps.h"
 #include "instructions/vzeroupper.h"
+#include "instructions/vunpckhpd.h"
 #include "instructions/xor.h"
 #if 0
 #include "instructions/kmovb.h"
