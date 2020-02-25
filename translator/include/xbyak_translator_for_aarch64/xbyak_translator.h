@@ -40,6 +40,8 @@
 #pragma GCC diagnostic warning "-Wunused-but-set-variable"
 #pragma GCC diagnostic warning "-Wunused-variable"
 // namespace xbyak_translator {
+private:
+const xt_reg_idx_t xtDefaultAddrIdx = 28;
 public:
 Xbyak_aarch64::WReg W_TMP_0 = w24;
 Xbyak_aarch64::WReg W_TMP_1 = w25;
@@ -49,7 +51,7 @@ Xbyak_aarch64::XReg X_TMP_0 = x24;
 Xbyak_aarch64::XReg X_TMP_1 = x25;
 Xbyak_aarch64::XReg X_TMP_2 = x26;
 Xbyak_aarch64::XReg X_TMP_3 = x27;
-Xbyak_aarch64::XReg X_TMP_ADDR = x28;
+Xbyak_aarch64::XReg X_TMP_ADDR{28};
 Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
@@ -284,7 +286,17 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
     exit(1);
   }
 
-  Xbyak_aarch64::XReg retReg(tmp0);
+#if 0  
+  std::cout << "base=" << base << std::endl;
+  std::cout << "disp=" << disp << std::endl;
+  std::cout << "index=" << index << std::endl;
+  std::cout << "scale=" << scale << std::endl;
+  std::cout << "tmp0=" << tmp0.getIdx() << std::endl;
+  std::cout << "tmp1=" << tmp1.getIdx() << std::endl;
+  std::cout << "tmp2=" << tmp2.getIdx() << std::endl;
+#endif
+  
+  Xbyak_aarch64::XReg retReg{xtDefaultAddrIdx};
 
   if (base != XT_REG_INVALID /* Base only */
       && disp == 0 && index == XT_REG_INVALID) {
