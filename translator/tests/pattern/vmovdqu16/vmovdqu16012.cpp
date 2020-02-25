@@ -19,7 +19,38 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+
     setInputZregAllRandomHex();
+    /* elemet is 8 bits.
+       Xmm:16 elements
+       Ymm:32 elements
+       Zmm:64 elements */
+
+    // Xmm range
+    inputPredReg[1] = (1 << 0) | (1 << 17) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34); /* aarch64 */
+
+    inputPredReg[2] = (1 << 0) | (1 << 17) | (1 << 19) |
+      (1 << 25) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 38) | (uint64_t(1) << 50); /* aarch64 */
+
+    // Ymm range
+    inputPredReg[3] =
+      (1 << 0) | (1 << 17) | (1 << 23) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46); /* aarch64 */
+    inputPredReg[4] = (1 << 0) | (1 << 17) | (1 << 23) |
+      (uint64_t(1) << 31) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 62); /* aarch64 */
+
+    // Zmm range
+    inputPredReg[5] = (1 << 0) | (1 << 17) | (1 << 23) |
+      (uint64_t(1) << 31) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 62); /* aarch64 */
+    inputPredReg[6] = (1 << 0) | (1 << 17) | (1 << 23) | (uint64_t(1) << 29) | (uint64_t(1) << 31) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 58) | (uint64_t(1) << 62); /* aarch64 */
+
+    inputPredReg[7] = ~uint64_t(0);
+	
   }
 
   void setCheckRegFlagAll() {
@@ -28,75 +59,21 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    size_t addr1;
+    vmovdqu16(Zmm(0) | k1 | T_z, Zmm(1));
+    vmovdqu16(Zmm(2) | k2 | T_z, Zmm(3));
+    vmovdqu16(Zmm(4) | k3 | T_z, Zmm(5));
+    vmovdqu16(Zmm(6) | k4 | T_z, Zmm(7));
+    vmovdqu16(Zmm(8) | k5 | T_z, Zmm(9));
+    vmovdqu16(Zmm(10) | k6 | T_z, Zmm(11));
+    vmovdqu16(Zmm(12) | k7 | T_z, Zmm(13));
 
-    /* Address is aligned */
-#if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[6].ud_dt[0]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[7].ud_dt[0]));
-    mov(rax, addr);
-    mov(rbx, addr);
-    vmovdqu16(Xmm(0), ptr[rax]);
-    vmovdqu16(ptr[rbx], Xmm(0));
-    vmovdqu16(Xmm(1), ptr[rbx]);
-#endif
-
-#if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[8].ud_dt[0]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[9].ud_dt[0]));
-    mov(rax, addr);
-    mov(rbx, addr);
-    vmovdqu16(Ymm(2), ptr[rax]);
-    vmovdqu16(ptr[rbx], Ymm(2));
-    vmovdqu16(Ymm(3), ptr[rbx]);
-#endif
-
-#if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[10].ud_dt[0]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0]));
-    mov(rax, addr);
-    mov(rbx, addr);
-    vmovdqu16(Zmm(4), ptr[rax]);
-    vmovdqu16(ptr[rbx], Zmm(4));
-    vmovdqu16(Zmm(5), ptr[rbx]);
-#endif
-
-    /* Address is unaligned */
-#if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[18].ud_dt[0])) + 3;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[19].ud_dt[0])) + 5;
-    mov(rax, addr);
-    mov(rbx, addr);
-    vmovdqu16(Xmm(12), ptr[rax]);
-    vmovdqu16(ptr[rbx], Xmm(12));
-    vmovdqu16(Xmm(13), ptr[rbx]);
-#endif
-
-#if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[20].ud_dt[0])) + 1;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[0])) + 7;
-    mov(rax, addr);
-    mov(rbx, addr);
-    vmovdqu16(Ymm(14), ptr[rax]);
-    vmovdqu16(ptr[rbx], Ymm(14));
-    vmovdqu16(Ymm(15), ptr[rbx]);
-#endif
-
-#if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[22].ud_dt[0])) + 1;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[23].ud_dt[0])) + 7;
-    mov(rax, addr);
-    mov(rbx, addr);
-    vmovdqu16(Zmm(16), ptr[rax]);
-    vmovdqu16(ptr[rbx], Zmm(16));
-    vmovdqu16(Zmm(17), ptr[rbx]);
-#endif
-
-    mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-    mov(rbx,
-        size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
+    vmovdqu16(Zmm(14) | k1 | T_z, Zmm(14));
+    vmovdqu16(Zmm(15) | k2 | T_z, Zmm(15));
+    vmovdqu16(Zmm(16) | k3 | T_z, Zmm(16));
+    vmovdqu16(Zmm(17) | k4 | T_z, Zmm(17));
+    vmovdqu16(Zmm(18) | k5 | T_z, Zmm(18));
+    vmovdqu16(Zmm(19) | k6 | T_z, Zmm(19));
+    vmovdqu16(Zmm(20) | k7 | T_z, Zmm(20));
   }
 };
 

@@ -19,30 +19,39 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setDumpZRegMode(SP_DT); // set float mode
+    //    setDumpZRegMode(SP_DT); // set float mode
     setInputZregAllRandomHex();
 
-    for (int i = 0; i < 16; i++) {
-      inputZReg[30].sp_dt[i] = float(0.3 + i);
-      inputZReg[31].sp_dt[i] = float(0.5 + i);
-    }
+    /* elemet is 8 bits.
+       Xmm:16 elements
+       Ymm:32 elements
+       Zmm:64 elements */
 
-    inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4);              /* if element size is 8bit, x86_64 and a64 are same*/
+    // Xmm range
+    inputPredReg[1] = (1 << 0) | (1 << 17) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34); /* aarch64 */
 
-    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) |
-      (1 << 8); 
+    inputPredReg[2] = (1 << 0) | (1 << 17) | (1 << 19) |
+      (1 << 25) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 38) | (uint64_t(1) << 50); /* aarch64 */
 
-    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 8) | (1 << 12);
+    // Ymm range
+    inputPredReg[3] =
+      (1 << 0) | (1 << 17) | (1 << 23) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46); /* aarch64 */
+    inputPredReg[4] = (1 << 0) | (1 << 17) | (1 << 23) |
+      (uint64_t(1) << 31) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 62); /* aarch64 */
 
-    inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 6) | (1 << 8) | (1 << 12);
-
-    inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 6) | (1 << 7) | (1 << 8) | (1 << 12);
-
+    // Zmm range
+    inputPredReg[5] = (1 << 0) | (1 << 17) | (1 << 23) |
+      (uint64_t(1) << 31) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 62); /* aarch64 */
+    inputPredReg[6] = (1 << 0) | (1 << 17) | (1 << 23) | (uint64_t(1) << 29) | (uint64_t(1) << 31) /* x86_64 */
+      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 58) | (uint64_t(1) << 62); /* aarch64 */
+    
     inputPredReg[7] = ~uint64_t(0);
+	
   }
 
   void setCheckRegFlagAll() {
@@ -57,27 +66,52 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[31].sp_dt[0]));
     mov(rax, addr);
 
-    vmovdqu8(ptr[rax] | k1 , Zmm(1));
-    vmovdqu8(Zmm(1) | k1 , ptr[rax]);
-    
-    vmovdqu8(ptr[rax] | k2 , Zmm(2));
-    vmovdqu8(Zmm(2) | k2 , ptr[rax]);
-    
-    vmovdqu8(ptr[rax] | k3 , Zmm(3));
-    vmovdqu8(Zmm(3) | k3 , ptr[rax]);
-    
-    vmovdqu8(ptr[rax] | k4 , Zmm(4));
-    vmovdqu8(Zmm(4) | k4 , ptr[rax]);
-    
-    vmovdqu8(ptr[rax] | k5 , Zmm(5));
-    vmovdqu8(Zmm(5) | k5 , ptr[rax]);
+    vmovdqu16(ptr[rax] | k1, Xmm(0));
+    vmovdqu16(Xmm(1) | k1, ptr[rax]);
 
-    vmovdqu8(ptr[rax] | k6 , Zmm(6));
-    vmovdqu8(Zmm(6) | k6 , ptr[rax]);
+    vmovdqu16(ptr[rax] | k2, Xmm(2));
+    vmovdqu16(Xmm(3) | k2, ptr[rax]);
 
-    vmovdqu8(ptr[rax] | k7 , Zmm(7));
-    vmovdqu8(Zmm(7) | k7 , ptr[rax]);
-    
+    vmovdqu16(ptr[rax] | k3, Xmm(4));
+    vmovdqu16(Xmm(5) | k3, ptr[rax]);
+
+    vmovdqu16(ptr[rax] | k4, Xmm(6));
+    vmovdqu16(Xmm(7) | k4, ptr[rax]);
+
+    vmovdqu16(ptr[rax] | k5, Xmm(8));
+    vmovdqu16(Xmm(9) | k5, ptr[rax]);
+
+    vmovdqu16(ptr[rax] | k6, Xmm(10));
+    vmovdqu16(Xmm(11) | k6, ptr[rax]);
+
+    vmovdqu16(ptr[rax] | k7, Xmm(12));
+    vmovdqu16(Xmm(13) | k7, ptr[rax]);
+
+    /* Address is unaligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[30].sp_dt[0]) + 3);
+    mov(rax, addr);
+
+    vmovdqu16(ptr[rax] | k1, Xmm(14));
+    vmovdqu16(Xmm(15) | k1, ptr[rax]);
+
+    vmovdqu16(ptr[rax] | k2, Xmm(16));
+    vmovdqu16(Xmm(17) | k2, ptr[rax]);
+
+    vmovdqu16(ptr[rax] | k3, Xmm(18));
+    vmovdqu16(Xmm(19) | k3, ptr[rax]);
+
+    vmovdqu16(ptr[rax] | k4, Xmm(20));
+    vmovdqu16(Xmm(21) | k4, ptr[rax]);
+
+    vmovdqu16(ptr[rax] | k5, Xmm(22));
+    vmovdqu16(Xmm(23) | k5, ptr[rax]);
+
+    vmovdqu16(ptr[rax] | k6, Xmm(24));
+    vmovdqu16(Xmm(25) | k6, ptr[rax]);
+
+    vmovdqu16(ptr[rax] | k7, Xmm(26));
+    vmovdqu16(Xmm(27) | k7, ptr[rax]);
+
     mov(rax, 5);
   }
 };
