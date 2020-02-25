@@ -270,6 +270,8 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
   unsigned int shift = 0;
   if (scale == 0) {
     /* Nothing to do */
+  } else if (scale == 1) { 
+    /* Nothing to do */
   } else if (scale == 2) {
     shift = 1;
   } else if (scale == 4) {
@@ -277,8 +279,8 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
   } else if (scale == 8) {
     shift = 3;
   } else {
-    std::cerr << __FILE__ << ":" << __LINE__ << ":scale=" << scale
-              << " is assumed to 2, 4, or 8!" << std::endl;
+    std::cerr << __FILE__ << ":" << __LINE__ << ":scale(=" << scale
+              << ") is assumed to 1, 2, 4, or 8!" << std::endl;
     exit(1);
   }
 
@@ -287,38 +289,47 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
   if (base != XT_REG_INVALID /* Base only */
       && disp == 0 && index == XT_REG_INVALID) {
     return Xbyak_aarch64::XReg(base);
-
   } else if (base != XT_REG_INVALID && disp != 0 /* Base + disp */
              && index == XT_REG_INVALID) {
-    //    add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
+    CodeGeneratorAArch64::add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1, tmp2);
     return retReg;
+  } else if (base != XT_REG_INVALID && disp == 0 /* Base + index (*scale) */
+             && index != XT_REG_INVALID) {
+    if (shift == 0) {
+      CodeGeneratorAArch64::add(retReg, Xbyak_aarch64::XReg(base), Xbyak_aarch64::XReg(index));
+      return retReg; /* Base + disp + index */
+    } else {
+      CodeGeneratorAArch64::lsl(retReg, Xbyak_aarch64::XReg(index), shift);
+      CodeGeneratorAArch64::add(retReg, Xbyak_aarch64::XReg(base), retReg);
+      return retReg; /* Base + disp + index*scale */
+    }
   } else if (base != XT_REG_INVALID && disp != 0 &&
              index != XT_REG_INVALID) { /* Base + disp + index (*scale) */
-    //    add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
+    CodeGeneratorAArch64::add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1, tmp2);
 
     if (shift == 0) {
       CodeGeneratorAArch64::add(retReg, retReg, Xbyak_aarch64::XReg(index));
       return retReg; /* Base + disp + index */
     } else {
-      lsl(tmp1, Xbyak_aarch64::XReg(index), shift);
-      CodeGeneratorAArch64::add(retReg, Xbyak_aarch64::XReg(base), tmp1);
+      CodeGeneratorAArch64::lsl(tmp1, Xbyak_aarch64::XReg(index), shift);
+      CodeGeneratorAArch64::add(retReg, retReg, tmp1);
       return retReg; /* Base + disp + index*scale */
     }
   } else if (base == XT_REG_INVALID /* disp + index (*scale) */
              && index != XT_REG_INVALID && disp != 0) {
     if (shift == 0) {
-      //      add_imm(retReg, Xbyak_aarch64::XReg(index), disp, tmp1);
+      CodeGeneratorAArch64::add_imm(retReg, Xbyak_aarch64::XReg(index), disp, tmp1, tmp2);
       return retReg; /* disp + index */
     } else {
-      lsl(tmp1, Xbyak_aarch64::XReg(index), shift);
-      CodeGeneratorAArch64::add(retReg, Xbyak_aarch64::XReg(index), tmp1);
+      CodeGeneratorAArch64::lsl(retReg, Xbyak_aarch64::XReg(index), shift);
+      CodeGeneratorAArch64::add_imm(retReg, retReg, disp, tmp1, tmp2);
       return retReg; /* disp + index*scale */
     }
-  } else {
-    xt_msg_err(__FILE__, __LINE__,
-               ":Something wrong. Please contact to system administrator!");
   }
 
+  /* If xbyak_translator comes here, something wrong. */
+  xt_msg_err(__FILE__, __LINE__,
+               ":Something wrong. Please contact to system administrator!");
   return retReg;
 }
 
@@ -671,6 +682,7 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
     /*    if (opName == XED_OPERAND_BASE0) { // RET instruction
       continue;
       }*/
+    std::cerr << "HOGE_NUM=" << opName << std::endl;
     xt_msg_err(__FILE__, __LINE__, "Unsupported opName");
   } // for (int i = 0; i < num_operands; i++) {
 

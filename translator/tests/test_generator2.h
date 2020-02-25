@@ -685,7 +685,7 @@ public:
 
     /* x16 - x27: temporary use
        x28:translator frame use */
-    for (int j = 16; j <= 27; j++) {
+    for (int j = 16; j <= 28; j++) {
       for (size_t i = 0; i < NUM_BYTES_GEN_REG; i++) {
         checkGenRegMode[j][i] = NO_CHECK;
       }
