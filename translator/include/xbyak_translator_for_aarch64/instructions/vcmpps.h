@@ -3,7 +3,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/02/25 11:35 */
+/* 2020/02/25 13:28 */
 #define CG64 CodeGeneratorAArch64
 xt_reg_idx_t cmpDstIdx = XT_REG_INVALID;
 xt_reg_idx_t cmpMaskIdx = XT_REG_INVALID;
@@ -15,63 +15,86 @@ if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2
   XT_UNIMPLEMENTED;
 }
 /* Col=T103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
   a64.pTmpIdx = xt_push_preg(&a64);
 }
 /* Col=U103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
   a64.zTmpIdx = xt_push_zreg(&a64);
 }
 
 /* Col=W103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)) {
+  CG64::bic(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, xa::PRegB(a64.maskIdx), P_MSB_384.b);
+}
+/* Col=X103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)) {
+  CG64::bic(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, xa::PRegB(a64.maskIdx), P_MSB_256.b);
+}
+/* Col=Y103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)) {
+  CG64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_384.b);
+}
+/* Col=Z103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)) {
+  CG64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_256.b);
+}
+
+/* Col=AB103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
   CG64::mov(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_ALL_ONE.b);
 }
-
-/* Col=Y103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)) {
-  CG64::ldr(xa::QReg(a64.vTmpIdx), xa::ptr(X_TMP_ADDR));
-}
-
-/* Col=AA103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
-  cmpDstIdx = a64.dstIdx;
-}
-/* Col=AB103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
-  cmpMaskIdx = P_ALL_ONE.getIdx();
-}
 /* Col=AC103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)) {
-  cmpMaskIdx = a64.pTmpIdx;
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)) {
+  CG64::mov(xa::PRegB(a64.pTmpIdx), xa::PRegB(a64.maskIdx));
 }
 
 /* Col=AE103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
-  cmpSrcIdx = a64.srcIdx;
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+  cmpDstIdx = a64.pTmpIdx;
 }
 /* Col=AF103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+  cmpDstIdx = a64.dstIdx;
+}
+
+/* Col=AH103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)) {
+  cmpMaskIdx = a64.pTmpIdx;
+}
+/* Col=AI103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+  cmpMaskIdx = a64.maskIdx;
+}
+/* Col=AJ103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+  cmpSrcIdx = a64.srcIdx;
+}
+/* Col=AK103*/
 if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)) {
   cmpSrc2Idx = a64.src2Idx;
 }
-/* Col=AG103*/
+/* Col=AL103*/
 if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
   cmpSrc2Idx = a64.zTmpIdx;
 }
-
-/* Col=AI103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+/* Col=AM103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)) {
+  CG64::ld1w(xa::ZRegS(a64.zTmpIdx), xa::PReg(a64.pTmpIdx)/xa::T_z, xa::ptr(X_TMP_ADDR));
+}
+/* Col=AN103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
   CG64::ldr(xa::ZReg(a64.zTmpIdx), xa::ptr(X_TMP_ADDR));
 }
-/* Col=AJ103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+/* Col=AO103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
   CG64::ld1rw(xa::ZRegS(a64.zTmpIdx), xa::PReg(a64.pTmpIdx)/xa::T_z, xa::ptr(X_TMP_ADDR));
 }
-/* Col=AK103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+/* Col=AP103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
   CG64::ld1rw(xa::ZRegS(a64.zTmpIdx), xa::PReg(a64.maskIdx)/xa::T_z, xa::ptr(X_TMP_ADDR));
 }
-/* Col=AL103*/
+/* Col=AQ103*/
 if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
   switch(a64.uimm) {
 case EQ_OQ: CG64::fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
@@ -116,10 +139,14 @@ break;
 
 
 
-/* Col=AR103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+/* Col=AW103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)) {
   CG64::mov(xa::PRegB(a64.dstIdx), xa::PReg(a64.maskIdx)/xa::T_m, xa::PRegB(a64.pTmpIdx));
 }
+/* Col=AX103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+  CG64::mov(xa::PRegB(a64.dstIdx), xa::PReg(a64.maskIdx)/xa::T_z, xa::PRegB(a64.pTmpIdx));
+}
 
 
 
@@ -128,14 +155,21 @@ if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2
 
 
 
-/* Col=BA103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+
+
+
+
+
+
+
+
+/* Col=BO103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
   xt_pop_zreg();
 }
-/* Col=BB103*/
-if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
+/* Col=BP103*/
+if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
   xt_pop_preg();
 }
-
 #undef CG64
 }
