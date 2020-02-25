@@ -51,9 +51,14 @@ public:
     add(r9d, r10d);
 
     mov(r11, ~uint64_t(0));
-    add(r11, 0);
+    add(r11, 1);
     mov(r12d, ~uint32_t(0));
-    add(r12d, 0);
+    add(r12d, 1);
+
+    mov(r13, uint64_t(0xFFFFFFFF));
+    add(r13d, 1);
+    mov(r14d, uint32_t(0xFFFFFFF0));
+    add(r14, 1);
   }
 };
 
