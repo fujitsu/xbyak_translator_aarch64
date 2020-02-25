@@ -33,10 +33,6 @@ Copyright (c) 2019 Intel Corporation
 END_LEGAL */
 #include "xed-examples-util_aarch64.h"
 #include "xed/xed-interface.h"
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 struct xt_a64fx_operands_struct_t;
 

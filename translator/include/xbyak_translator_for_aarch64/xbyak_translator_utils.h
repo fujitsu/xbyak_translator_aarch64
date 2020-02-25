@@ -42,29 +42,29 @@ typedef xed_uint_t xt_scale_t;
 #define XT_DISP_INVALID std::numeric_limits<xt_disp_t>::max()
 #define XT_SCALE_INVALID std::numeric_limits<xt_scale_t>::max()
 
-void xt_msg_warn(const char *fileName, const int lineNum,
+inline void xt_msg_warn(const char *fileName, const int lineNum,
                  const std::string &msg) {
   xt_msg_warn(fileName, lineNum, msg.c_str());
 }
 
-void xt_msg_warn(const char *fileName, const int lineNum, const char *msg) {
+inline void xt_msg_warn(const char *fileName, const int lineNum, const char *msg) {
   std::cerr << "[WARN]:" << fileName << ":" << lineNum << ":" << msg
             << std::endl;
 }
 
-void xt_msg_err(const char *fileName, const int lineNum,
+inline void xt_msg_err(const char *fileName, const int lineNum,
                 const std::string &msg) {
   xt_msg_err(fileName, lineNum, msg.c_str());
 }
 
-void xt_msg_err(const char *fileName, const int lineNum, const char *msg) {
+inline void xt_msg_err(const char *fileName, const int lineNum, const char *msg) {
   std::cerr << "[ERR ]:" << fileName << ":" << lineNum << ":" << msg
             << std::endl;
   assert(NULL);
   exit(1);
 }
 
-const std::string xt_to_string(const xt_reg_idx_t idx) {
+inline const std::string xt_to_string(const xt_reg_idx_t idx) {
   // const char *xt_to_string(const xt_reg_idx_t idx) {
   std::string msg;
 
@@ -89,7 +89,7 @@ enum xt_predicate_type_t {
   A64_PRED_ZERO,
 };
 
-const std::string xt_to_string(const xt_predicate_type_t type) {
+inline const std::string xt_to_string(const xt_predicate_type_t type) {
   std::string msg;
 
   switch (type) {
@@ -121,7 +121,7 @@ enum xt_operand_type_t {
   A64_OP_MBCST, /* This type will be emitted in the near future. */
 };
 
-const std::string xt_to_string(const xt_operand_type_t type) {
+inline const std::string xt_to_string(const xt_operand_type_t type) {
   std::string msg;
 
   switch (type) {
@@ -145,7 +145,7 @@ const std::string xt_to_string(const xt_operand_type_t type) {
   return msg;
 }
 
-const std::string xt_to_string(const xed_reg_class_enum_t num) {
+inline const std::string xt_to_string(const xed_reg_class_enum_t num) {
   std::string msg;
 
   switch (num) {
@@ -180,7 +180,7 @@ const std::string xt_to_string(const xed_reg_class_enum_t num) {
 
 /* This implementation is copied from Intel's xed/src/common/xed-util.c
    arbitrary sign extension from a qty of "bits" length to 64b */
-xed_int64_t xed_sign_extend_arbitrary_to_64(xed_uint64_t x, unsigned int bits) {
+inline xed_int64_t xed_sign_extend_arbitrary_to_64(xed_uint64_t x, unsigned int bits) {
   xed_uint64_t one = 1;
   xed_int64_t mask = one << (bits - 1);
   xed_int64_t vmask, o = 0;
