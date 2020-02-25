@@ -3,7 +3,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/02/25 10:24 */
+/* 2020/02/25 11:35 */
 #define CG64 CodeGeneratorAArch64
 xt_reg_idx_t cmpDstIdx = XT_REG_INVALID;
 xt_reg_idx_t cmpMaskIdx = XT_REG_INVALID;
@@ -74,30 +74,30 @@ if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2
 /* Col=AL103*/
 if(false ||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)||(a64.dstWidth==0&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==512&&true)) {
   switch(a64.uimm) {
-case EQ_OQ: CG64::cmpeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case LT_OS:CG64::cmplt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case LE_OS:CG64::cmple(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NEQ_UQ:CG64::cmpne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NLT_US:CG64::cmplt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NLE_US:CG64::cmple(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case EQ_UQ:CG64::cmpeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NGE_US:CG64::cmplt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NGT_US:CG64::cmple(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NEQ_OQ:CG64::cmpne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case GE_OS:CG64::cmpge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case GT_OS:CG64::cmpgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case EQ_OS:CG64::cmpeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case LT_OQ:CG64::cmplt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case LE_OQ:CG64::cmple(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NEQ_US:CG64::cmpne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NLT_UQ:CG64::cmpge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NLE_UQ:CG64::cmpgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case EQ_US:CG64::cmpeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NGE_UQ:CG64::cmplt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NGT_UQ:CG64::cmple(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case NEQ_OS:CG64::cmpne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case GE_OQ:CG64::cmpge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
-case GT_OQ:CG64::cmpgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case EQ_OQ: CG64::fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case LT_OS:CG64::fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case LE_OS:CG64::fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NEQ_UQ:CG64::fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NLT_US:CG64::fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NLE_US:CG64::fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case EQ_UQ:CG64::fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NGE_US:CG64::fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NGT_US:CG64::fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NEQ_OQ:CG64::fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case GE_OS:CG64::fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case GT_OS:CG64::fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case EQ_OS:CG64::fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case LT_OQ:CG64::fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case LE_OQ:CG64::fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NEQ_US:CG64::fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NLT_UQ:CG64::fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NLE_UQ:CG64::fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case EQ_US:CG64::fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NGE_UQ:CG64::fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NGT_UQ:CG64::fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case NEQ_OS:CG64::fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case GE_OQ:CG64::fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
+case GT_OQ:CG64::fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx)/xa::T_z, xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx)); break;
 
 case UNORD_Q:
 case ORD_Q:

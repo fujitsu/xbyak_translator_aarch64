@@ -39,10 +39,10 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vcmpps(k1, Zmm(0), Zmm(1), 0); // EQ_OQ
-    vcmpps(k2, Zmm(2), Zmm(3), 0); // EQ_OQ
-    vcmpps(k3, Zmm(4), Zmm(5), 0); // EQ_OQ
-    vcmpps(k7, Zmm(31), Zmm(31), 0); // EQ_OQ
+    vcmpps(k1, Zmm(0), Zmm(1), 22); // NLE_UQ
+        vcmpps(k2, Zmm(2), Zmm(3), 22);
+        vcmpps(k3, Zmm(4), Zmm(5), 22);
+        vcmpps(k7, Zmm(31), Zmm(31), 22);
   }
 };
 

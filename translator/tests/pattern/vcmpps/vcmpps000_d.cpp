@@ -39,10 +39,10 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vcmpps(k1, Zmm(0), Zmm(1), 13); // GE_OS
-        vcmpps(k2, Zmm(2), Zmm(3), 13);
-        vcmpps(k3, Zmm(4), Zmm(5), 13);
-        vcmpps(k7, Zmm(31), Zmm(31), 13);
+    vcmpps(k1, Zmm(0), Zmm(1), 0xd); // GE_OS
+    //    vcmpps(k2, Zmm(2), Zmm(3), 0xd);
+    //    vcmpps(k3, Zmm(4), Zmm(5), 0xd);
+    //    vcmpps(k7, Zmm(31), Zmm(31), 0xd);
   }
 };
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
     /* Bit order of mask registers are different from x86_64 and aarch64.
        In order to compare output values of mask registers by test script,
        Bit order of x86_64 mask register values is modified here. */
-    gen.modifyPredReg(SP_DT);
+    //    gen.modifyPredReg(SP_DT);
 #endif
 
     gen.dumpOutputReg(); /* Dump all register values */
