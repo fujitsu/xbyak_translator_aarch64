@@ -930,6 +930,8 @@ case XED_ICLASS_VBROADCASTSS:
   break;
 case XED_ICLASS_VCMPPD:
 case XED_ICLASS_VCMPPS:
+  translateVCMPPS(&xedd);
+  break;
 case XED_ICLASS_VCMPSD:
 case XED_ICLASS_VCMPSS:
 case XED_ICLASS_VCOMISD:

@@ -1058,6 +1058,52 @@ public:
     return lfsr_;
   }
 
+  void modifyPredReg(DataType dataType) {
+    int elem_num = 0;
+    int offset = 0;
+
+    switch (dataType) {
+    case UB_DT: /* uint8_t */
+    case SB_DT: /* int8_t */
+      elem_num = 64;
+      offset = 1;
+      break;
+    case UH_DT: /* uint16_t */
+    case SH_DT: /* int16_t */
+      elem_num = 32;
+      offset = 2;
+      break;
+    case US_DT: /* uint32_t */
+    case SS_DT: /* int32_t */
+    case SP_DT: /* float */
+      elem_num = 16;
+      offset = 4;
+      break;
+    case UD_DT: /* uint64_t */
+    case SD_DT: /* int64_t */
+    case DP_DT: /* double */
+      elem_num = 8;
+      offset = 8;
+      break;
+    default:
+      msg_err(__FILE__, __LINE__, ":Unknown data type!");
+      break;
+    }
+
+    for (int j = 1; j <= 7; j++) {
+      uint64_t tmpPredData = 0;
+      for (int i = 0; i < elem_num; i++) {
+        uint64_t checkMask = uint64_t(1) << i;
+        uint64_t addMask = uint64_t(1) << (offset * i);
+
+        if (outputPredReg[j] & checkMask) {
+          tmpPredData |= addMask;
+        }
+      }
+      outputPredReg[j] = tmpPredData;
+    }
+  }
+
   virtual void genJitTestCode() = 0;     // Pure virtual function.
   virtual void setInitialRegValue() = 0; // Pure virtual function.
   virtual void setCheckRegFlagAll() = 0; // Pure virtual function.
