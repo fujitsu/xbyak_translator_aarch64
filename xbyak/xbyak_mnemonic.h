@@ -629,7 +629,7 @@ void leave() { db(0xC9); UNIMPLEMENTED; }
 void lfence() { db(0x0F); db(0xAE); db(0xE8); UNIMPLEMENTED; }
 void lfs(const Reg& reg, const Address& addr) { opLoadSeg(addr, reg, 0x0F, 0xB4); UNIMPLEMENTED; }
 void lgs(const Reg& reg, const Address& addr) { opLoadSeg(addr, reg, 0x0F, 0xB5); UNIMPLEMENTED; }
-void lock() { db(0xF0); UNIMPLEMENTED; }
+void lock() { db(0xF0); /* lock instruction is translated with the next instruction. */ }
 void lodsb() { db(0xAC); UNIMPLEMENTED; }
 void lodsd() { db(0xAD); UNIMPLEMENTED; }
 void lodsw() { db(0x66); db(0xAD); UNIMPLEMENTED; }
@@ -1519,7 +1519,7 @@ void vzeroupper() { db(0xC5); db(0xF8); db(0x77); decodeAndTransToAArch64(); }
 void wait() { db(0x9B); UNIMPLEMENTED; }
 void wbinvd() { db(0x0F); db(0x09); UNIMPLEMENTED; }
 void wrmsr() { db(0x0F); db(0x30); UNIMPLEMENTED; }
-void xadd(const Operand& op, const Reg& reg) { opModRM(reg, op, (op.isREG() && reg.isREG() && op.getBit() == reg.getBit()), op.isMEM(), 0x0F, 0xC0 | (reg.isBit(8) ? 0 : 1)); UNIMPLEMENTED; }
+void xadd(const Operand& op, const Reg& reg) { opModRM(reg, op, (op.isREG() && reg.isREG() && op.getBit() == reg.getBit()), op.isMEM(), 0x0F, 0xC0 | (reg.isBit(8) ? 0 : 1)); decodeAndTransToAArch64(); }
 void xgetbv() { db(0x0F); db(0x01); db(0xD0); UNIMPLEMENTED; }
 void xlatb() { db(0xD7); UNIMPLEMENTED; }
 void xor_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x30, 6); decodeAndTransToAArch64(); }
