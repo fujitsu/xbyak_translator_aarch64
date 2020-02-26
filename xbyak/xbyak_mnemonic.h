@@ -964,7 +964,7 @@ void sha256msg1(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0xCC, NONE, 
 void sha256msg2(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0xCD, NONE, isXMM_XMMorMEM, NONE, 0x38); UNIMPLEMENTED; }
 void sha256rnds2(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0xCB, NONE, isXMM_XMMorMEM, NONE, 0x38); UNIMPLEMENTED; }
 void shl(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 4); UNIMPLEMENTED; }
-void shl(const Operand& op, int imm) { opShift(op, imm, 4); UNIMPLEMENTED; }
+void shl(const Operand& op, int imm) { opShift(op, imm, 4); decodeAndTransToAArch64(); }
 void shld(const Operand& op, const Reg& reg, const Reg8& _cl) { opShxd(op, reg, 0, 0xA4, &_cl); UNIMPLEMENTED; }
 void shld(const Operand& op, const Reg& reg, uint8 imm) { opShxd(op, reg, imm, 0xA4); UNIMPLEMENTED; }
 void shlx(const Reg32e& r1, const Operand& op, const Reg32e& r2) { opGpr(r1, op, r2, T_66 | T_0F38, 0xf7, false); UNIMPLEMENTED; }
