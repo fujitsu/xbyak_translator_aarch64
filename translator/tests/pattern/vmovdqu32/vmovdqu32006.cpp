@@ -67,50 +67,50 @@ public:
     mov(rax, addr);
 
     vmovdqu32(ptr[rax] | k1, Zmm(0));
-    vmovdqu32(Zmm(1) | k1, ptr[rax]);
+    vmovdqu32(Zmm(1), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k2, Zmm(2));
-    vmovdqu32(Zmm(3) | k2, ptr[rax]);
+    vmovdqu32(Zmm(3), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k3, Zmm(4));
-    vmovdqu32(Zmm(5) | k3, ptr[rax]);
+    vmovdqu32(Zmm(5), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k4, Zmm(6));
-    vmovdqu32(Zmm(7) | k4, ptr[rax]);
+    vmovdqu32(Zmm(7), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k5, Zmm(8));
-    vmovdqu32(Zmm(9) | k5, ptr[rax]);
+    vmovdqu32(Zmm(9), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k6, Zmm(10));
-    vmovdqu32(Zmm(11) | k6, ptr[rax]);
+    vmovdqu32(Zmm(11), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k7, Zmm(12));
-    vmovdqu32(Zmm(13) | k7, ptr[rax]);
+    vmovdqu32(Zmm(13), ptr[rax]);
 
     /* Address is unaligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[30].sp_dt[0]) + 3);
     mov(rax, addr);
 
     vmovdqu32(ptr[rax] | k1, Zmm(14));
-    vmovdqu32(Zmm(15) | k1, ptr[rax]);
+    vmovdqu32(Zmm(15), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k2, Zmm(16));
-    vmovdqu32(Zmm(17) | k2, ptr[rax]);
+    vmovdqu32(Zmm(17), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k3, Zmm(18));
-    vmovdqu32(Zmm(19) | k3, ptr[rax]);
+    vmovdqu32(Zmm(19), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k4, Zmm(20));
-    vmovdqu32(Zmm(21) | k4, ptr[rax]);
+    vmovdqu32(Zmm(21), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k5, Zmm(22));
-    vmovdqu32(Zmm(23) | k5, ptr[rax]);
+    vmovdqu32(Zmm(23), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k6, Zmm(24));
-    vmovdqu32(Zmm(25) | k6, ptr[rax]);
+    vmovdqu32(Zmm(25), ptr[rax]);
 
     vmovdqu32(ptr[rax] | k7, Zmm(26));
-    vmovdqu32(Zmm(27) | k7, ptr[rax]);
+    vmovdqu32(Zmm(27), ptr[rax]);
 
     mov(rax, 5);
   }
