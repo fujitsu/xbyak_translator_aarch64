@@ -3,7 +3,7 @@ void translateMOVDQU(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-  /* 2020/02/26 09:07 */
+  /* 2020/02/26 10:00 */
   #define CG64 CodeGeneratorAArch64
 
   /* Col=T103*/
@@ -57,11 +57,11 @@ void translateMOVDQU(xed_decoded_inst_t *p) {
 
 
   /* Col=AW103*/
-  if(false ||(a64.dstWidth==128&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  if(false ||(a64.dstWidth==128&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
     xt_pop_zreg();
   }
   /* Col=AX103*/
-  if(false ||(a64.dstWidth==128&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
+  if(false ||(a64.dstWidth==128&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_MEM&&true)) {
     xt_pop_preg();
   }
 
@@ -70,4 +70,5 @@ void translateMOVDQU(xed_decoded_inst_t *p) {
 
 
   #undef CG64
+  
 }
