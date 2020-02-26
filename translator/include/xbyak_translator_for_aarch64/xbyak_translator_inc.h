@@ -16,6 +16,7 @@
 #include "instructions/vandps.h"
 #include "instructions/vblendmps.h"
 #include "instructions/vbroadcastss.h"
+#include "instructions/vdivps.h"
 #include "instructions/vcmpps.h"
 #include "instructions/vmovaps.h"
 #include "instructions/vmovd.h"
