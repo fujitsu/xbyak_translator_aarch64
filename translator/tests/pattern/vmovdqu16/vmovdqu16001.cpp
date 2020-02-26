@@ -39,7 +39,7 @@ public:
     mov(rbx, addr);
     vmovdqu16(Xmm(0), ptr[rax]);
     vmovdqu16(ptr[rbx], Xmm(0));
-    vmovdqu16(Xmm(1), ptr[rbx]);
+    vmovdqu16(Zmm(1), ptr[rbx]);
 #endif
 
 #if 1
@@ -49,7 +49,7 @@ public:
     mov(rbx, addr);
     vmovdqu16(Ymm(2), ptr[rax]);
     vmovdqu16(ptr[rbx], Ymm(2));
-    vmovdqu16(Ymm(3), ptr[rbx]);
+    vmovdqu16(Zmm(3), ptr[rbx]);
 #endif
 
 #if 1
@@ -70,7 +70,7 @@ public:
     mov(rbx, addr);
     vmovdqu16(Xmm(12), ptr[rax]);
     vmovdqu16(ptr[rbx], Xmm(12));
-    vmovdqu16(Xmm(13), ptr[rbx]);
+    vmovdqu16(Zmm(13), ptr[rbx]);
 #endif
 
 #if 1
@@ -80,7 +80,7 @@ public:
     mov(rbx, addr);
     vmovdqu16(Ymm(14), ptr[rax]);
     vmovdqu16(ptr[rbx], Ymm(14));
-    vmovdqu16(Ymm(15), ptr[rbx]);
+    vmovdqu16(Zmm(15), ptr[rbx]);
 #endif
 
 #if 1
