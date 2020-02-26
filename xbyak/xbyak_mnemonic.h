@@ -727,7 +727,7 @@ void mulx(const Reg32e& r1, const Reg32e& r2, const Operand& op) { opGpr(r1, r2,
 void mwait() { db(0x0F); db(0x01); db(0xC9); UNIMPLEMENTED; }
 void mwaitx() { db(0x0F); db(0x01); db(0xFB); UNIMPLEMENTED; }
 void neg(const Operand& op) { opR_ModM(op, 0, 3, 0xF6); UNIMPLEMENTED; }
-void not_(const Operand& op) { opR_ModM(op, 0, 2, 0xF6); UNIMPLEMENTED; }
+void not_(const Operand& op) { opR_ModM(op, 0, 2, 0xF6); decodeAndTransToAArch64(); }
 void or_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x08, 1); decodeAndTransToAArch64(); }
 void or_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x08); decodeAndTransToAArch64(); }
 void orpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x56, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
@@ -1848,7 +1848,7 @@ void or(const Operand& op1, const Operand& op2) { or_(op1, op2); UNIMPLEMENTED; 
 void or(const Operand& op, uint32 imm) { or_(op, imm); UNIMPLEMENTED; }
 void xor(const Operand& op1, const Operand& op2) { xor_(op1, op2); decodeAndTransToAArch64(); }
 void xor(const Operand& op, uint32 imm) { xor_(op, imm); decodeAndTransToAArch64(); }
-void not(const Operand& op) { not_(op); UNIMPLEMENTED; }
+void not(const Operand& op) { not_(op); decodeAndTransToAArch64(); }
 #endif
 #ifndef XBYAK_DISABLE_AVX512
 void kaddb(const Opmask& r1, const Opmask& r2, const Opmask& r3) { opVex(r1, &r2, r3, T_L1 | T_0F | T_66 | T_W0, 0x4A); UNIMPLEMENTED; }

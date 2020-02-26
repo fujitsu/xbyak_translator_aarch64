@@ -7,6 +7,7 @@
 #include "instructions/movd.h"
 #include "instructions/movq.h"
 #include "instructions/movss.h"
+#include "instructions/not.h"
 #include "instructions/or.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
