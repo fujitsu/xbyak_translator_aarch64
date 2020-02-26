@@ -5,6 +5,7 @@
 #include "instructions/mov.h"
 #include "instructions/movd.h"
 #include "instructions/movq.h"
+#include "instructions/movsd.h"
 #include "instructions/movss.h"
 #include "instructions/or.h"
 #include "instructions/ret.h"

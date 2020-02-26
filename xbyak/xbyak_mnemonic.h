@@ -703,9 +703,9 @@ void movq(const Address& addr, const Mmx& mmx) { if (mmx.isXMM()) db(0x66); opMo
 void movq(const Mmx& mmx, const Operand& op) { if (mmx.isXMM()) db(0xF3); opModRM(mmx, op, (mmx.getKind() == op.getKind()), op.isMEM(), 0x0F, mmx.isXMM() ? 0x7E : 0x6F); decodeAndTransToAArch64(); }
 void movq2dq(const Xmm& xmm, const Mmx& mmx) { db(0xF3); opModR(xmm, mmx, 0x0F, 0xD6); UNIMPLEMENTED; }
 void movsb() { db(0xA4); UNIMPLEMENTED; }
-void movsd() { db(0xA5); UNIMPLEMENTED; }
-void movsd(const Address& addr, const Xmm& xmm) { db(0xF2); opModM(addr, xmm, 0x0F, 0x11); UNIMPLEMENTED; }
-void movsd(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x10, 0xF2); UNIMPLEMENTED; }
+void movsd() { db(0xA5); decodeAndTransToAArch64(); }
+void movsd(const Address& addr, const Xmm& xmm) { db(0xF2); opModM(addr, xmm, 0x0F, 0x11); decodeAndTransToAArch64(); }
+void movsd(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x10, 0xF2); decodeAndTransToAArch64(); }
 void movshdup(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x16, 0xF3, isXMM_XMMorMEM, NONE, NONE); UNIMPLEMENTED; }
 void movsldup(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x12, 0xF3, isXMM_XMMorMEM, NONE, NONE); UNIMPLEMENTED; }
 void movss(const Address& addr, const Xmm& xmm) { db(0xF3); opModM(addr, xmm, 0x0F, 0x11); decodeAndTransToAArch64(); }
