@@ -33,27 +33,13 @@ public:
 
     /* Address is aligned */
 #if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
+    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[7]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[7]));
     mov(rax, addr);
-    mov(rbx, addr);
-    movdqa(Xmm(0), Xmm(1));
-    //movdqa(Xmm(0), ptr[rax]);
-    //movdqa(ptr[rbx], Xmm(0));
-    //movdqa(Xmm(1), ptr[rbx]);
-#endif
-
-    /* Address is unaligned */
-#if 1
-    /*
-    addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 5;
-    mov(rax, addr);
-    mov(rbx, addr);
-    movdqa(Xmm(4), ptr[rax]);
-    movdqa(ptr[rbx], Xmm(4));
-    movdqa(Xmm(5), ptr[rbx]);
-    */
+    mov(rbx, addr1);
+    movdqa(Xmm(0), ptr[rax]);
+    movdqa(ptr[rbx], Xmm(0));
+    movdqa(Xmm(1), ptr[rbx]);
 #endif
 
     mov(rax,
