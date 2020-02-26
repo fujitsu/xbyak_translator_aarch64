@@ -469,7 +469,7 @@ void jns(const Label& label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jns(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jns(const void *addr) { UNIMPLEMENTED; }
 void jns(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
-void jnz(const Label& label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
+void jnz(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::NE, label); }
 void jnz(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jnz(const void *addr) { UNIMPLEMENTED; }
 void jnz(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
