@@ -495,7 +495,7 @@ void js(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void js(const void *addr) { UNIMPLEMENTED; }
 void js(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 /* AArch64 CPU has no zero flag jmp instruction. */
-void jz(const Label& label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
+void jz(const Label& label, LabelType type = T_AUTO) { b(Xbyak_aarch64::EQ, label); }
 void jz(const char *label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
 void jz(const void *addr) { UNIMPLEMENTED; }
 void jz(std::string label, LabelType type = T_AUTO) { UNIMPLEMENTED; }
