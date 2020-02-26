@@ -2,6 +2,7 @@
 #include "instructions/and.h"
 #include "instructions/cmp.h"
 #include "instructions/dec.h"
+#include "instructions/kmovw.h"
 #include "instructions/mov.h"
 #include "instructions/movd.h"
 #include "instructions/movq.h"

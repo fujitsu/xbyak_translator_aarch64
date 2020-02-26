@@ -161,6 +161,18 @@ NGE_US = 9,
  TRUE_US = 31,
 };
 
+struct xt_a64fx_operands_structV2_core_t {
+  xed_operand_enum_t opName = XED_OPERAND_INVALID;
+  xt_reg_idx_t regIdx = XT_REG_INVALID;
+  xed_uint_t opWidth = 0;
+  xed_reg_class_enum_t regClass = XED_REG_CLASS_INVALID;
+};
+
+
+struct xt_a64fx_operands_structV2_t {
+  xt_a64fx_operands_structV2_core_t operands[4];
+};
+  
 struct xt_a64fx_operands_struct_t {
   /* Index of DST register(1st operand) */
   //  unsigned int dstIdx = XT_REG_INVALID;
@@ -709,6 +721,112 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
   }
 
   xt_dump_a64fx_operands(a64);
+}
+
+void xt_construct_a64fx_operandsV2(xed_decoded_inst_t *p,
+                                 xt_a64fx_operands_structV2_t *a64) {
+  unsigned int num_operands;
+  
+  unsigned int baseIdx = XT_REG_INVALID;
+  unsigned int indexIdx = XT_REG_INVALID;
+
+  xed_uint_t scale = 0;
+  xed_int64_t disp = 0;
+  unsigned int memOpIdx = 0;
+  const xed_inst_t *xi = xed_decoded_inst_inst(p);
+  
+  /* Get EVEX.b bits */
+  //a64->EVEXb = xed_decoded_inst_is_broadcast(p);
+
+  /* Get # of operands */
+  num_operands = xed_inst_noperands(xi);
+
+  for (int i = 0; i < num_operands; i++) {
+    const xed_operand_t *op = xed_inst_operand(xi, i);
+    xed_operand_enum_t opName = xed_operand_name(op);
+
+    /* Begin: parsing register operand */
+    xed_uint_t isReg = xed_operand_is_register(opName);
+    if (isReg == 1) { /* Operand is register */
+      xed_reg_enum_t r = xed_decoded_inst_get_reg(p, opName);
+      unsigned int tmpIdx = xt_get_register_index(r);
+      bool isSet = false;
+
+      for(int i=0; i<4 && isSet == false; i++) {
+	if(a64->operands[i].opName == XED_OPERAND_INVALID) {
+	  a64->operands[i].opName = opName;
+	  a64->operands[i].regIdx = tmpIdx;
+	  a64->operands[i].regClass = xed_reg_class(xed_decoded_inst_get_reg(p, opName));
+	  isSet = true;
+	}
+      }
+
+      if(isSet == false) {
+	xt_msg_err(__FILE__, __LINE__,
+		   "Unknwon # of register operands. Please contact to "
+		   "system administrator!");
+      }
+      continue; /* End of register operand process */
+    }
+    /* End: parsing register operand */
+
+    /* Begin: parsing memory operand */
+    if (opName == XED_OPERAND_MEM0) {
+      unsigned int width = xed_decoded_inst_get_memop_address_width(p, memOpIdx);
+
+      bool isSet = false;
+
+      for(int i=0; i<4 && isSet == false; i++) {
+	if(a64->operands[i].opName == XED_OPERAND_INVALID) {
+	  a64->operands[i].opName = opName;
+	  a64->operands[i].opWidth = width;
+	  isSet = true;
+	}
+      }
+
+      if(isSet == false) {
+	xt_msg_err(__FILE__, __LINE__,
+		   "Unknwon # of memory operands. Please contact to "
+		   "system administrator!");
+      }
+
+      xed_reg_enum_t tmpReg;
+      xed_uint32_t tmpScale;
+
+      tmpReg = xed_decoded_inst_get_seg_reg(p, memOpIdx);
+      if (tmpReg != XED_REG_INVALID) {
+	/* use of segmentation register is legacy case. */
+      }
+
+      tmpReg = xed_decoded_inst_get_base_reg(p, memOpIdx);
+      if (tmpReg != XED_REG_INVALID) {
+        baseIdx = xt_get_register_index(tmpReg);
+      }
+
+      tmpReg = xed_decoded_inst_get_index_reg(p, memOpIdx);
+      if (tmpReg != XED_REG_INVALID) {
+        indexIdx = xt_get_register_index(tmpReg);
+        tmpScale = xed_decoded_inst_get_scale(p, memOpIdx);
+        if (tmpScale) {
+          scale = tmpScale;
+        }
+      }
+
+      disp = xed_decoded_inst_get_memory_displacement(p, memOpIdx);
+
+      X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
+                                   X_TMP_1, X_TMP_2);
+
+      memOpIdx++;
+      continue;
+    }
+    /* End: parsing memory operand */
+
+    xt_msg_err(__FILE__, __LINE__, "Unsupported opName");
+  } // for (int i = 0; i < num_operands; i++) {
+
+
+  xt_dump_a64fx_operandsV2(a64);
 }
 
 void decodeAndTransToAArch64() {
