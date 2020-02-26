@@ -22,6 +22,14 @@ public:
     //    setDumpZRegMode(SP_DT); // set float mode
     setInputZregAllRandomHex();
 
+#if 0
+    for(int j=0; j<32; j+=2) {
+      for(int i=0; i<32; i++) {
+	inputZReg[j].uh_dt[i] = 0xffff;
+      }
+    }
+#endif
+    
     /* elemet is 8 bits.
        Xmm:16 elements
        Ymm:32 elements
@@ -49,7 +57,7 @@ public:
       | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 62); /* aarch64 */
     inputPredReg[6] = (1 << 0) | (1 << 17) | (1 << 23) | (uint64_t(1) << 29) | (uint64_t(1) << 31) /* x86_64 */
       | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 58) | (uint64_t(1) << 62); /* aarch64 */
-
+    
     inputPredReg[7] = ~uint64_t(0);
 	
   }
@@ -67,50 +75,50 @@ public:
     mov(rax, addr);
 
     vmovdqu16(ptr[rax] | k1 | T_z, Zmm(0));
-    vmovdqu16(Zmm(1) | k1, ptr[rax]);
+    vmovdqu16(Zmm(1), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k2 | T_z, Zmm(2));
-    vmovdqu16(Zmm(3) | k2, ptr[rax]);
+    vmovdqu16(Zmm(3), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k3 | T_z, Zmm(4));
-    vmovdqu16(Zmm(5) | k3, ptr[rax]);
+    vmovdqu16(Zmm(5), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k4 | T_z, Zmm(6));
-    vmovdqu16(Zmm(7) | k4, ptr[rax]);
+    vmovdqu16(Zmm(7), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k5 | T_z, Zmm(8));
-    vmovdqu16(Zmm(9) | k5, ptr[rax]);
+    vmovdqu16(Zmm(9), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k6 | T_z, Zmm(10));
-    vmovdqu16(Zmm(11) | k6, ptr[rax]);
+    vmovdqu16(Zmm(11), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k7 | T_z, Zmm(12));
-    vmovdqu16(Zmm(13) | k7, ptr[rax]);
+    vmovdqu16(Zmm(13), ptr[rax]);
 
     /* Address is unaligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[30].sp_dt[0]) + 3);
     mov(rax, addr);
 
     vmovdqu16(ptr[rax] | k1 | T_z, Zmm(14));
-    vmovdqu16(Zmm(15) | k1, ptr[rax]);
+    vmovdqu16(Zmm(15), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k2 | T_z, Zmm(16));
-    vmovdqu16(Zmm(17) | k2, ptr[rax]);
+    vmovdqu16(Zmm(17), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k3 | T_z, Zmm(18));
-    vmovdqu16(Zmm(19) | k3, ptr[rax]);
+    vmovdqu16(Zmm(19), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k4 | T_z, Zmm(20));
-    vmovdqu16(Zmm(21) | k4, ptr[rax]);
+    vmovdqu16(Zmm(21), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k5 | T_z, Zmm(22));
-    vmovdqu16(Zmm(23) | k5, ptr[rax]);
+    vmovdqu16(Zmm(23), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k6 | T_z, Zmm(24));
-    vmovdqu16(Zmm(25) | k6, ptr[rax]);
+    vmovdqu16(Zmm(25), ptr[rax]);
 
     vmovdqu16(ptr[rax] | k7 | T_z, Zmm(26));
-    vmovdqu16(Zmm(27) | k7, ptr[rax]);
+    vmovdqu16(Zmm(27), ptr[rax]);
 
     mov(rax, 5);
   }

@@ -21,7 +21,7 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     //    setDumpZRegMode(SP_DT); // set float mode
     setInputZregAllRandomHex();
-
+    
     /* elemet is 8 bits.
        Xmm:16 elements
        Ymm:32 elements
@@ -37,16 +37,16 @@ public:
 
     // Ymm range
     inputPredReg[3] =
-      (1 << 0) | (1 << 17) | (1 << 23) /* x86_64 */
-      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46); /* aarch64 */
+      (1 << 0) | (1<<15) |(1 << 17) | (1 << 23) |(1<<30)/* x86_64 */
+      | (1 << 0) | (1<<30) |(uint64_t(1) << 34) | (uint64_t(1) << 46) |(uint64_t(1)<<60); /* aarch64 */
     inputPredReg[4] = (1 << 0) | (1 << 17) | (1 << 23) |
       (uint64_t(1) << 31) /* x86_64 */
       | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 62); /* aarch64 */
 
     // Zmm range
-    inputPredReg[5] = (1 << 0) | (1 << 17) | (1 << 23) |
-      (uint64_t(1) << 31) /* x86_64 */
-      | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 62); /* aarch64 */
+    inputPredReg[5] = (1 << 0) | (1<<15) | (1 << 17) | (1 << 23) | (1<<30) |
+                      (uint64_t(1) << 31) /* x86_64 */
+      | (1 << 0) | (1<<30) |(uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 60) | (uint64_t(1) << 62); /* aarch64 */
     inputPredReg[6] = (1 << 0) | (1 << 17) | (1 << 23) | (uint64_t(1) << 29) | (uint64_t(1) << 31) /* x86_64 */
       | (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 46) | (uint64_t(1) << 58) | (uint64_t(1) << 62); /* aarch64 */
     
