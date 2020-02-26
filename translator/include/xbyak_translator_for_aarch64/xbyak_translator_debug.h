@@ -34,7 +34,7 @@ END_LEGAL */
 #include "xed-examples-util_aarch64.h"
 #include "xed/xed-interface.h"
 
-struct xt_a64fx_operands_structV2_t;
+struct xt_a64fx_operands_structV3_t;
 struct xt_a64fx_operands_struct_t;
 
 void print_misc(xed_decoded_inst_t *xedd) {
@@ -396,11 +396,11 @@ void print_operands(xed_decoded_inst_t *xedd) {
   }
 }
 
-void xt_dump_a64fx_operandsV2(xt_a64fx_operands_structV2_t *a64) {
+void xt_dump_a64fx_operandsV3(xt_a64fx_operands_structV3_t *a64) {
   std::cout << "==============================" << std::endl;
-  std::cout << "A64 operand V2 information" << std::endl;
+  std::cout << "A64 operand V3 information" << std::endl;
   std::cout << "==============================" << std::endl;
-  for(int i=0; i<sizeof(xt_a64fx_operands_structV2_t)/sizeof(xt_a64fx_operands_structV2_core_t); i++) {
+  for(int i=0; i<sizeof(xt_a64fx_operands_structV3_t)/sizeof(xt_a64fx_operands_structV3_core_t); i++) {
     std::cout << std::left 
 	      << "operands[" << i << std::setw(11)<< "].opName=" << xt_to_string(a64->operands[i].opName) << std::endl;
     std::cout << std::left 
@@ -409,6 +409,8 @@ void xt_dump_a64fx_operandsV2(xt_a64fx_operands_structV2_t *a64) {
 	      << "operands[" << i << std::setw(11)<< "].opWidth=" << a64->operands[i].opWidth << std::endl;
     std::cout << std::left 
 	      << "operands[" << i << std::setw(11)<< "].regClass=" << xt_to_string(a64->operands[i].regClass) << std::endl;
+    std::cout << std::left 
+	      << "operands[" << i << std::setw(11)<< "].uimm=" << xt_to_string(a64->operands[i].uimm) << std::endl;
   }    
 }
 

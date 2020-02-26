@@ -1,7 +1,7 @@
 void translateKMOVW(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
-  struct xt_a64fx_operands_structV2_t a64;
-  xt_construct_a64fx_operandsV2(p, &a64);
+  struct xt_a64fx_operands_structV3_t a64;
+  xt_construct_a64fx_operandsV3(p, &a64);
 
 #define CG64 CodeGeneratorAArch64
 

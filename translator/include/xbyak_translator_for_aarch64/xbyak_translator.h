@@ -161,16 +161,17 @@ NGE_US = 9,
  TRUE_US = 31,
 };
 
-struct xt_a64fx_operands_structV2_core_t {
+struct xt_a64fx_operands_structV3_core_t {
   xed_operand_enum_t opName = XED_OPERAND_INVALID;
   xt_reg_idx_t regIdx = XT_REG_INVALID;
   xed_uint_t opWidth = 0;
   xed_reg_class_enum_t regClass = XED_REG_CLASS_INVALID;
+  xed_uint64_t uimm = 0;
 };
 
 
-struct xt_a64fx_operands_structV2_t {
-  xt_a64fx_operands_structV2_core_t operands[4];
+struct xt_a64fx_operands_structV3_t {
+  xt_a64fx_operands_structV3_core_t operands[4];
 };
   
 struct xt_a64fx_operands_struct_t {
@@ -723,8 +724,8 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
   xt_dump_a64fx_operands(a64);
 }
 
-void xt_construct_a64fx_operandsV2(xed_decoded_inst_t *p,
-                                 xt_a64fx_operands_structV2_t *a64) {
+void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
+                                 xt_a64fx_operands_structV3_t *a64) {
   unsigned int num_operands;
   
   unsigned int baseIdx = XT_REG_INVALID;
@@ -752,11 +753,12 @@ void xt_construct_a64fx_operandsV2(xed_decoded_inst_t *p,
       unsigned int tmpIdx = xt_get_register_index(r);
       bool isSet = false;
 
-      for(int i=0; i<4 && isSet == false; i++) {
-	if(a64->operands[i].opName == XED_OPERAND_INVALID) {
-	  a64->operands[i].opName = opName;
-	  a64->operands[i].regIdx = tmpIdx;
-	  a64->operands[i].regClass = xed_reg_class(xed_decoded_inst_get_reg(p, opName));
+      for(int l=0; l<4 && isSet == false; l++) {
+	if(a64->operands[l].opName == XED_OPERAND_INVALID) {
+	  a64->operands[l].opName = opName;
+	  a64->operands[l].regIdx = tmpIdx;
+	  a64->operands[l].regClass = xed_reg_class(xed_decoded_inst_get_reg(p, opName));
+          a64->operands[l].opWidth = xed_decoded_inst_operand_length_bits(p, i);
 	  isSet = true;
 	}
       }
@@ -776,10 +778,11 @@ void xt_construct_a64fx_operandsV2(xed_decoded_inst_t *p,
 
       bool isSet = false;
 
-      for(int i=0; i<4 && isSet == false; i++) {
-	if(a64->operands[i].opName == XED_OPERAND_INVALID) {
-	  a64->operands[i].opName = opName;
-	  a64->operands[i].opWidth = width;
+      for(int l=0; l<4 && isSet == false; l++) {
+	if(a64->operands[l].opName == XED_OPERAND_INVALID) {
+	  a64->operands[l].opName = opName;
+	  a64->operands[l].opWidth = width;
+          a64->operands[l].opWidth = xed_decoded_inst_operand_length_bits(p, i);
 	  isSet = true;
 	}
       }
@@ -822,11 +825,44 @@ void xt_construct_a64fx_operandsV2(xed_decoded_inst_t *p,
     }
     /* End: parsing memory operand */
 
+    /* Begin: parsing immediate operand */
+    if (opName == XED_OPERAND_IMM0) {
+      bool isSet = false;
+
+      for(int l=0; l<4 && isSet == false; l++) {
+	if(a64->operands[l].opName == XED_OPERAND_INVALID) {
+	  a64->operands[l].opName = opName;
+
+	  xed_uint_t ibits;
+	  ibits = xed_decoded_inst_get_immediate_width_bits(p);
+	  if (xed_decoded_inst_get_immediate_is_signed(p)) {
+	    xed_int32_t x = xed_decoded_inst_get_signed_immediate(p);
+	    a64->operands[l].uimm = XED_STATIC_CAST(
+					xed_uint64_t,
+					xed_sign_extend_arbitrary_to_64((xed_uint64_t)x, ibits));
+	  } else {
+	    a64->operands[l].uimm = xed_decoded_inst_get_unsigned_immediate(p);
+	  }
+	  
+	  a64->operands[l].opWidth = xed_decoded_inst_get_immediate_width(p);
+	  isSet = true;
+	}
+      }
+
+      if(isSet == false) {
+	xt_msg_err(__FILE__, __LINE__,
+		   "Unknwon # of register operands. Please contact to "
+		   "system administrator!");
+      }
+      continue;
+    }
+    /* End: parsing immediate operand */
+    
     xt_msg_err(__FILE__, __LINE__, "Unsupported opName");
   } // for (int i = 0; i < num_operands; i++) {
 
 
-  xt_dump_a64fx_operandsV2(a64);
+  xt_dump_a64fx_operandsV3(a64);
 }
 
 void decodeAndTransToAArch64() {

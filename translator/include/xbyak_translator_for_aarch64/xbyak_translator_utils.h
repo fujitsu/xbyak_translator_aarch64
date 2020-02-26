@@ -232,7 +232,10 @@ inline const std::string xt_to_string(const xed_operand_enum_t num) {
   case XED_OPERAND_REG8:
     msg = "XED_OPERAND_REG8";
     break;
-  default : msg = "Undefined xt_operand_enum_t";
+  case XED_OPERAND_IMM0:
+    msg = "XED_OPERAND_IMM0";
+    break;
+  default : msg = "Undefined xt_operand_enum_t=" + std::to_string(static_cast<uint32_t>(num));
     break;
   }
 
