@@ -33,49 +33,62 @@ public:
 
     /* Address is aligned */
 #if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
+    addr = reinterpret_cast<size_t>(&(inputZReg[16].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[17].ud_dt[0]));
     mov(rax, addr);
-    mov(rbx, addr);
-    vmovdqu(Xmm(0), ptr[rax]);
-    vmovdqu(ptr[rbx], Xmm(0));
-    vmovdqu8(Zmm(1), ptr[rbx]);
+    mov(rcx, addr);
+
+    vmovdqu(ptr[rax], Xmm(0));
+    vmovdqu8(Zmm(1), ptr[rax]);
+
+    vmovdqu(ptr[rcx], Xmm(2));
+    vmovdqu8(Zmm(3), ptr[rcx]);
 #endif
 
 #if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[12].ud_dt[0]));
+    addr = reinterpret_cast<size_t>(&(inputZReg[18].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[19].ud_dt[0]));
     mov(rax, addr);
-    mov(rbx, addr);
-    vmovdqu(Ymm(2), ptr[rax]);
-    vmovdqu(ptr[rbx], Ymm(2));
-    vmovdqu8(Zmm(3), ptr[rbx]);
+    mov(rcx, addr);
+
+    vmovdqu(ptr[rax], Ymm(4));
+    vmovdqu8(Zmm(5), ptr[rax]);
+
+    vmovdqu(ptr[rcx], Ymm(6));
+    vmovdqu8(Zmm(7), ptr[rcx]);
 #endif
 
     /* Address is unaligned */
 #if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 5;
+    addr = reinterpret_cast<size_t>(&(inputZReg[20].ud_dt[3])+1);
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[5])+5);
     mov(rax, addr);
-    mov(rbx, addr);
-    vmovdqu(Xmm(4), ptr[rax]);
-    vmovdqu(ptr[rbx], Xmm(4));
-    vmovdqu8(Zmm(5), ptr[rbx]);
+    mov(rcx, addr);
+
+    vmovdqu(ptr[rax], Xmm(8));
+    vmovdqu8(Zmm(9), ptr[rax]);
+
+    vmovdqu(ptr[rcx], Xmm(10));
+    vmovdqu8(Zmm(11), ptr[rcx]);
 #endif
 
 #if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[7].ud_dt[0])) + 1;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 7;
+    addr = reinterpret_cast<size_t>(&(inputZReg[22].ud_dt[6])+3);
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[23].ud_dt[7])+7);
     mov(rax, addr);
-    mov(rbx, addr);
-    vmovdqu(Ymm(6), ptr[rax]);
-    vmovdqu(ptr[rbx], Ymm(6));
-    vmovdqu8(Zmm(7), ptr[rbx]);
+    mov(rcx, addr);
+
+    vmovdqu(ptr[rax], Ymm(12));
+    vmovdqu8(Zmm(13), ptr[rax]);
+
+    vmovdqu(ptr[rcx], Ymm(14));
+    vmovdqu8(Zmm(15), ptr[rcx]);
 #endif
+
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-    mov(rbx,
+    mov(rcx,
         size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
