@@ -11,6 +11,7 @@
 #include "instructions/ret.h"
 #include "instructions/shl.h"
 #include "instructions/sub.h"
+#include "instructions/vaddps.h"
 #include "instructions/vandps.h"
 #include "instructions/vblendmps.h"
 #include "instructions/vbroadcastss.h"
