@@ -755,7 +755,7 @@ void paddw(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xFD); UNIMPLEMEN
 void palignr(const Mmx& mmx, const Operand& op, int imm) { opMMX(mmx, op, 0x0f, 0x66, static_cast<uint8>(imm), 0x3a); UNIMPLEMENTED; }
 void pand(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xDB); UNIMPLEMENTED; }
 void pandn(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xDF); UNIMPLEMENTED; }
-void pause() { db(0xF3); db(0x90); UNIMPLEMENTED; }
+void pause() { db(0xF3); db(0x90); }
 void pavgb(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xE0); UNIMPLEMENTED; }
 void pavgw(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xE3); UNIMPLEMENTED; }
 void pblendvb(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x10, 0x66, isXMM_XMMorMEM, NONE, 0x38); UNIMPLEMENTED; }
