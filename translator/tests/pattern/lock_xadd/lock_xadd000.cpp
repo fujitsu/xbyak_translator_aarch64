@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-#include <limits>
 #include "test_generator2.h"
+#include <limits>
 
 class TestPtnGenerator : public TestGenerator {
 public:
@@ -40,8 +40,7 @@ public:
 
     mov(r10, 0xFF);
     mov(r11, 0x55);
-    
-    
+
     lock();
     xadd(ptr[r8], r10);
 
@@ -50,7 +49,7 @@ public:
 
     mov(r12, ptr[r8]);
     mov(r13, ptr[r9]);
-    
+
     mov(r8, 5);
     mov(r9, 5);
   }

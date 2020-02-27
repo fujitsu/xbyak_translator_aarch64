@@ -29,7 +29,7 @@ public:
       }
     }
 #endif
-    
+
     /* elemet is 8 bits.
        Xmm:16 elements
        Ymm:32 elements

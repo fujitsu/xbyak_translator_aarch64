@@ -30,7 +30,7 @@ public:
 
     inputZReg[4].us_dt[0] = inputZReg[5].us_dt[0] = float(3.3);
     inputZReg[4].us_dt[7] = inputZReg[5].us_dt[7] = float(4.4);
-    inputZReg[4].us_dt[15] =  inputZReg[5].us_dt[15] = float(5.5);
+    inputZReg[4].us_dt[15] = inputZReg[5].us_dt[15] = float(5.5);
   }
 
   void setCheckRegFlagAll() {
@@ -45,19 +45,19 @@ public:
     addr2 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0]));
     addr3 = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
 
-        mov(rax, addr0);
-        mov(rcx, addr1);
-        mov(rdx, addr2);
+    mov(rax, addr0);
+    mov(rcx, addr1);
+    mov(rdx, addr2);
     mov(rbx, addr3);
-    
-        vcmpps(k1, Xmm(0), ptr[rax], 0); // EQ_OQ
-        vcmpps(k2, Xmm(2), ptr[rcx], 0); // EQ_OQ
-        vcmpps(k3, Xmm(4), ptr[rdx], 0); // EQ_OQ
+
+    vcmpps(k1, Xmm(0), ptr[rax], 0);  // EQ_OQ
+    vcmpps(k2, Xmm(2), ptr[rcx], 0);  // EQ_OQ
+    vcmpps(k3, Xmm(4), ptr[rdx], 0);  // EQ_OQ
     vcmpps(k7, Xmm(31), ptr[rbx], 0); // EQ_OQ
 
-        mov(rax, 5);
-        mov(rcx, 5);
-        mov(rdx, 5);
+    mov(rax, 5);
+    mov(rcx, 5);
+    mov(rdx, 5);
     mov(rbx, 5);
   }
 };
@@ -85,8 +85,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f();                 /* Execute JIT code */
-
+    f(); /* Execute JIT code */
 
 #ifndef XBYAK_TRANSLATE_AARCH64
     /* Bit order of mask registers are different from x86_64 and aarch64.

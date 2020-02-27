@@ -27,7 +27,8 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14, r15 */
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
+     * r15 */
     mov(rax, 1);
     shl(rax, 1);
 
@@ -39,7 +40,7 @@ public:
 
     mov(rbx, 1);
     shl(rbx, 63);
-    
+
     mov(r8, 1);
     shl(r8d, 1);
 

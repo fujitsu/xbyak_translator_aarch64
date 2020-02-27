@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-#include <limits>
 #include "test_generator2.h"
+#include <limits>
 
 class TestPtnGenerator : public TestGenerator {
 public:
@@ -37,7 +37,7 @@ public:
 
     mov(rax, addr);
     mov(rcx, addr1);
-    
+
     /* Address is aligned */
     mov(r8, uint64_t(0xAAAA5555AAAA5555));
     mov(r9, uint64_t(0x5555AAAA5555AAAA));
@@ -46,10 +46,10 @@ public:
     not_(r9);
     not_(r10d);
     not_(r11d);
-	
+
     not_(qword[rax]);
     not_(dword[rcx]);
-    
+
     mov(r12, ptr[rax]);
     mov(r13, ptr[rcx]);
 

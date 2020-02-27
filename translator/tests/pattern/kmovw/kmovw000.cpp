@@ -27,7 +27,8 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14, r15 */
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
+     * r15 */
     size_t addr;
 
     /* Address is aligned */
@@ -39,13 +40,12 @@ public:
     //    kmovw(ptr[rax], k1);
 
     mov(r8d, 1);
-    mov(r9d, 1<<2);
-    mov(r10d, 1<<4);
-    mov(r11d, 1<<8);
-    mov(r12d, 1<<12);
-    mov(r13d, 1<<15);
+    mov(r9d, 1 << 2);
+    mov(r10d, 1 << 4);
+    mov(r11d, 1 << 8);
+    mov(r12d, 1 << 12);
+    mov(r13d, 1 << 15);
     mov(r14d, 0xFFFF);
-
 
     kmovw(k1, r8d);
     kmovw(k2, r9d);

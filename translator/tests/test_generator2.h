@@ -1093,7 +1093,7 @@ public:
     for (int j = 1; j <= 7; j++) {
       uint64_t tmpPredData = 0;
       for (int i = 0; i < elem_num; i++) {
-        uint64_t checkMask = uint64_t(1) << (offset *i);
+        uint64_t checkMask = uint64_t(1) << (offset * i);
         uint64_t addMask = uint64_t(1) << (offset * i);
 
         if (outputPredReg[j] & checkMask) {
