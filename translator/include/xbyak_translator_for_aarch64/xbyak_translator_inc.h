@@ -19,6 +19,7 @@
 #include "instructions/vbroadcastss.h"
 #include "instructions/vdivps.h"
 #include "instructions/vcmpps.h"
+#include "instructions/vmaskmovps.h"
 #include "instructions/vmovaps.h"
 #include "instructions/vmovd.h"
 #include "instructions/vmovdqu.h"
