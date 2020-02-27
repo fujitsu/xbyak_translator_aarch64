@@ -37,6 +37,12 @@ public:
     vunpckhpd(Xmm(0), Xmm(1), ptr[rax]);
     vunpckhpd(Xmm(2), Xmm(2), ptr[rax]);
 
+    vunpckhpd(Ymm(3), Ymm(4), ptr[rax]);
+    vunpckhpd(Ymm(5), Ymm(5), ptr[rax]);
+
+    vunpckhpd(Zmm(6), Zmm(7), ptr[rax]);
+    vunpckhpd(Zmm(8), Zmm(8), ptr[rax]);
+
     mov(rax, 5);
   }
 };
