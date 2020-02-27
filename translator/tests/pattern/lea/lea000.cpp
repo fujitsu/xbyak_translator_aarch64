@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-#include <limits>
 #include "test_generator2.h"
+#include <limits>
 
 class TestPtnGenerator : public TestGenerator {
 public:
@@ -33,12 +33,11 @@ public:
     mov(rax, uint64_t(0xabcdef00555555));
     mov(rcx, uint64_t(3));
 
-    
     lea(r8, ptr[rax]);
-    lea(r9, ptr[rax+rcx]);
-    lea(r10, ptr[rax+rcx*4]);
-    lea(r11, ptr[rax+rcx*4+0x3]);
-    
+    lea(r9, ptr[rax + rcx]);
+    lea(r10, ptr[rax + rcx * 4]);
+    lea(r11, ptr[rax + rcx * 4 + 0x3]);
+
     lea(r12d, ptr[rax]);
     lea(r13w, ptr[rax]);
   }

@@ -19,18 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomFloat();
-    setDumpZRegMode(SP_DT);
-
-    inputZReg[0].us_dt[0] = 0;
-    inputZReg[1].us_dt[0] = 0;
-
-    inputZReg[2].us_dt[0] = inputZReg[3].us_dt[0] = float(1.1);
-    inputZReg[2].us_dt[7] = inputZReg[3].us_dt[7] = float(2.2);
-
-    inputZReg[4].us_dt[0] = inputZReg[5].us_dt[0] = float(3.3);
-    inputZReg[4].us_dt[7] = inputZReg[5].us_dt[7] = float(4.4);
-    inputZReg[4].us_dt[15] = inputZReg[5].us_dt[15] = float(5.5);
+    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -39,10 +28,16 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vcmpps(k1, Zmm(0), Zmm(1), 29); // GE_OQ
-    vcmpps(k2, Zmm(2), Zmm(3), 29);
-    vcmpps(k3, Zmm(4), Zmm(5), 29);
-    vcmpps(k7, Zmm(31), Zmm(31), 29);
+    size_t addr;
+
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    mov(rax, addr);
+
+    vunpckhpd(Xmm(0), Xmm(1), ptr[rax]);
+    vunpckhpd(Xmm(2), Xmm(2), ptr[rax]);
+
+    mov(rax, 5);
   }
 };
 
@@ -69,15 +64,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f(); /* Execute JIT code */
-
-#ifndef XBYAK_TRANSLATE_AARCH64
-    /* Bit order of mask registers are different from x86_64 and aarch64.
-       In order to compare output values of mask registers by test script,
-       Bit order of x86_64 mask register values is modified here. */
-    gen.modifyPredReg(SP_DT);
-#endif
-
+    f();                 /* Execute JIT code */
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */
   }

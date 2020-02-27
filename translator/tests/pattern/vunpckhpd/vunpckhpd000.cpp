@@ -19,18 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomFloat();
-    setDumpZRegMode(SP_DT);
-
-    inputZReg[0].us_dt[0] = 0;
-    inputZReg[1].us_dt[0] = 0;
-
-    inputZReg[2].us_dt[0] = inputZReg[3].us_dt[0] = float(1.1);
-    inputZReg[2].us_dt[7] = inputZReg[3].us_dt[7] = float(2.2);
-
-    inputZReg[4].us_dt[0] = inputZReg[5].us_dt[0] = float(3.3);
-    inputZReg[4].us_dt[7] = inputZReg[5].us_dt[7] = float(4.4);
-    inputZReg[4].us_dt[15] = inputZReg[5].us_dt[15] = float(5.5);
+    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -39,10 +28,23 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vcmpps(k1, Zmm(0), Zmm(1), 29); // GE_OQ
-    vcmpps(k2, Zmm(2), Zmm(3), 29);
-    vcmpps(k3, Zmm(4), Zmm(5), 29);
-    vcmpps(k7, Zmm(31), Zmm(31), 29);
+    vunpckhpd(Xmm(0), Xmm(1), Xmm(2));
+    vunpckhpd(Xmm(3), Xmm(3), Xmm(4));
+    vunpckhpd(Xmm(5), Xmm(6), Xmm(5));
+    vunpckhpd(Xmm(7), Xmm(8), Xmm(8));
+    vunpckhpd(Xmm(9), Xmm(9), Xmm(9));
+
+    vunpckhpd(Ymm(10), Ymm(11), Ymm(12));
+    vunpckhpd(Ymm(13), Ymm(13), Ymm(14));
+    vunpckhpd(Ymm(15), Ymm(16), Ymm(15));
+    vunpckhpd(Ymm(17), Ymm(18), Ymm(18));
+    vunpckhpd(Ymm(19), Ymm(19), Ymm(19));
+
+    vunpckhpd(Zmm(20), Zmm(21), Zmm(22));
+    vunpckhpd(Zmm(23), Zmm(23), Zmm(24));
+    vunpckhpd(Zmm(25), Zmm(26), Zmm(25));
+    vunpckhpd(Zmm(27), Zmm(28), Zmm(28));
+    vunpckhpd(Zmm(29), Zmm(29), Zmm(29));
   }
 };
 
@@ -69,15 +71,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f(); /* Execute JIT code */
-
-#ifndef XBYAK_TRANSLATE_AARCH64
-    /* Bit order of mask registers are different from x86_64 and aarch64.
-       In order to compare output values of mask registers by test script,
-       Bit order of x86_64 mask register values is modified here. */
-    gen.modifyPredReg(SP_DT);
-#endif
-
+    f();                 /* Execute JIT code */
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */
   }

@@ -11,12 +11,12 @@ void translateKMOVW(xed_decoded_inst_t *p) {
 #ifdef XT_KMOVS_DEBUG
   char fillSaved = std::cout.fill('0');
 #endif
-  if(isInit == false) {
-    for(int j=0; j<65536; j++) {
-      for(int i=0; i<16; i++) {
-	if(j & (1<<i)) {
-	  maskTbl[j] |= (uint64_t(1) << (i*4));
-	}
+  if (isInit == false) {
+    for (int j = 0; j < 65536; j++) {
+      for (int i = 0; i < 16; i++) {
+        if (j & (1 << i)) {
+          maskTbl[j] |= (uint64_t(1) << (i * 4));
+        }
       }
 #ifdef XT_KMOVS_DEBUG
       std::cout << std::setw(16) << std::hex << maskTbl[j] << std::endl;
@@ -34,8 +34,7 @@ void translateKMOVW(xed_decoded_inst_t *p) {
 
   /* Adjust offset */
   CG64::add(x_addr, x_addr, xa::XReg(a64.operands[1].regIdx), xa::LSL, 3);
-  
-  
+
   CG64::ldr(xa::PReg(a64.operands[0].regIdx), xa::ptr(X_TMP_ADDR));
 
 #undef CG64

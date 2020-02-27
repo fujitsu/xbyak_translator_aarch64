@@ -23,7 +23,7 @@ public:
     setDumpZRegMode(SP_DT);
 
     inputZReg[0].us_dt[0] = 0;
-    for(int i=0; i<16; i++) {
+    for (int i = 0; i < 16; i++) {
       inputZReg[1].us_dt[i] = 0.0;
     }
 
@@ -32,7 +32,7 @@ public:
 
     inputZReg[4].us_dt[0] = inputZReg[5].us_dt[0] = float(3.3);
     inputZReg[4].us_dt[7] = inputZReg[5].us_dt[7] = float(4.4);
-    inputZReg[4].us_dt[15] =  inputZReg[5].us_dt[15] = float(5.5);
+    inputZReg[4].us_dt[15] = inputZReg[5].us_dt[15] = float(5.5);
   }
 
   void setCheckRegFlagAll() {
@@ -51,12 +51,12 @@ public:
     mov(rcx, addr1);
     mov(rdx, addr2);
     mov(rbx, addr3);
-    
-    vcmpps(k1, Ymm(1), ptr_b[rax], 0); // EQ_OQ
-    vcmpps(k2, Ymm(2), ptr_b[rcx], 0); // EQ_OQ
-    vcmpps(k3, Ymm(4), ptr_b[rdx], 0); // EQ_OQ
+
+    vcmpps(k1, Ymm(1), ptr_b[rax], 0);  // EQ_OQ
+    vcmpps(k2, Ymm(2), ptr_b[rcx], 0);  // EQ_OQ
+    vcmpps(k3, Ymm(4), ptr_b[rdx], 0);  // EQ_OQ
     vcmpps(k7, Ymm(31), ptr_b[rbx], 0); // EQ_OQ
-    
+
     mov(rax, 5);
     mov(rcx, 5);
     mov(rdx, 5);
@@ -87,8 +87,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f();                 /* Execute JIT code */
-
+    f(); /* Execute JIT code */
 
 #ifndef XBYAK_TRANSLATE_AARCH64
     /* Bit order of mask registers are different from x86_64 and aarch64.

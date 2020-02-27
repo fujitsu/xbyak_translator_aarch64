@@ -404,18 +404,22 @@ void xt_dump_a64fx_operandsV3(xt_a64fx_operands_structV3_t *a64) {
   std::cout << "==============================" << std::endl;
   std::cout << std::left << std::setw(21)
             << "predType=" << xt_to_string(a64->predType) << std::endl;
-  for(int i=0; i<sizeof(xt_a64fx_operands_structV3_t)/sizeof(xt_a64fx_operands_structV3_core_t); i++) {
-    std::cout << std::left 
-	      << "operands[" << i << std::setw(11)<< "].opName=" << xt_to_string(a64->operands[i].opName) << std::endl;
-    std::cout << std::left 
-	      << "operands[" << i << std::setw(11)<< "].regIdx=" << a64->operands[i].regIdx << std::endl;
-    std::cout << std::left 
-	      << "operands[" << i << std::setw(11)<< "].opWidth=" << a64->operands[i].opWidth << std::endl;
-    std::cout << std::left 
-	      << "operands[" << i << std::setw(11)<< "].regClass=" << xt_to_string(a64->operands[i].regClass) << std::endl;
-    std::cout << std::left 
-	      << "operands[" << i << std::setw(11)<< "].uimm=" << xt_to_string(a64->operands[i].uimm) << std::endl;
-  }    
+  std::cout << std::left << std::setw(21) << "EVEXb=" << a64->EVEXb
+            << std::endl;
+  for (int i = 0; i < xtNumOperands; i++) {
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].opName=" << xt_to_string(a64->operands[i].opName)
+              << std::endl;
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].regIdx=" << a64->operands[i].regIdx << std::endl;
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].opWidth=" << a64->operands[i].opWidth << std::endl;
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].regClass=" << xt_to_string(a64->operands[i].regClass)
+              << std::endl;
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].uimm=" << xt_to_string(a64->operands[i].uimm) << std::endl;
+  }
 }
 
 void xt_dump_a64fx_operands(xt_a64fx_operands_struct_t *a64) {
