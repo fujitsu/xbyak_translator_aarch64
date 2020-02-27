@@ -35,6 +35,7 @@
 #include "instructions/vpinsrq.h"
 #include "instructions/vpxord.h"
 #include "instructions/vsubps.h"
+#include "instructions/vsqrtps.h"
 #include "instructions/vunpckhpd.h"
 #include "instructions/vxorps.h"
 #include "instructions/vzeroupper.h"
