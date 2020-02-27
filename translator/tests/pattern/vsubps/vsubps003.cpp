@@ -35,14 +35,14 @@ public:
     mov(rax, addr);
     mov(rcx, addr1);
 
-        vaddps(Xmm(0), Xmm(1), ptr[rax]);
-	    vaddps(Xmm(2), Xmm(3), ptr[rcx]);
+        vsubps(Xmm(0), Xmm(1), ptr[rax]);
+	    vsubps(Xmm(2), Xmm(3), ptr[rcx]);
 
-	    vaddps(Ymm(4), Ymm(5), ptr[rax]);
-	        vaddps(Ymm(6), Ymm(7), ptr[rcx]);
+    vsubps(Ymm(4), Ymm(5), ptr[rax]);
+    vsubps(Ymm(6), Ymm(7), ptr[rcx]);
 
-    vaddps(Zmm(8), Zmm(9), ptr[rax]);
-    vaddps(Zmm(10), Zmm(11), ptr[rcx]);
+    vsubps(Zmm(8), Zmm(9), ptr[rax]);
+        vsubps(Zmm(10), Zmm(11), ptr[rcx]);
 
     mov(rax, 5);
     mov(rcx, 5);

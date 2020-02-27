@@ -29,23 +29,13 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14, r15 */
-    size_t addr, addr1;
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[7]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[1].sp_dt[5])+3);
-    mov(rax, addr);
-    mov(rcx, addr1);
+    vsubps(Zmm(0), Zmm(1), Zmm(2));
+    vsubps(Zmm(3), Zmm(4), Zmm(5));
 
-        vaddps(Xmm(0), Xmm(1), ptr[rax]);
-	    vaddps(Xmm(2), Xmm(3), ptr[rcx]);
-
-	    vaddps(Ymm(4), Ymm(5), ptr[rax]);
-	        vaddps(Ymm(6), Ymm(7), ptr[rcx]);
-
-    vaddps(Zmm(8), Zmm(9), ptr[rax]);
-    vaddps(Zmm(10), Zmm(11), ptr[rcx]);
-
-    mov(rax, 5);
-    mov(rcx, 5);
+    vsubps(Zmm(6), Zmm(6), Zmm(7));
+    vsubps(Zmm(8), Zmm(9), Zmm(8));
+    vsubps(Zmm(10), Zmm(11), Zmm(11));
+    vsubps(Zmm(12), Zmm(12), Zmm(12));
   }
 };
 
