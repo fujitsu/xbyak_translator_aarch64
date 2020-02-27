@@ -380,8 +380,9 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
         zreg_tmp_used[i] = true;
         CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
                                   CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
+	CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
         CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
-                                  Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                  Xbyak_aarch64::ptr(X_TMP_0));
         return i;
       }
     }
@@ -411,8 +412,10 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
       zreg_tmp_used[i] = true;
       CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
 				CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
+
       CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
-				Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+				Xbyak_aarch64::ptr(X_TMP_0));
       return i;
     }
   }
@@ -435,8 +438,10 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
 
         CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
                                   CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+	CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
+
         CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
-                                  Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                  Xbyak_aarch64::ptr(X_TMP_0));
         return i;
       }
     }
@@ -464,11 +469,12 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
 
     if (conflict == false) {
       preg_tmp_used[i] = true;
-      
+
       CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
 				CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
       CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
-				Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+				Xbyak_aarch64::ptr(X_TMP_0));
       return i;
     }
   }
@@ -485,8 +491,9 @@ void xt_pop_vreg() { xt_pop_zreg(); }
 void xt_pop_zreg() {
   for (size_t i = 0; i < AARCH64_NUM_ZREG; i++) {
     if (zreg_tmp_used[i] == true) {
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i),
-                                Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                Xbyak_aarch64::ptr(X_TMP_0));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
       zreg_tmp_used[i] = false;
@@ -502,8 +509,9 @@ void xt_pop_zreg() {
 void xt_pop_preg() {
   for (size_t i = TMP_PREG_END; i <= TMP_PREG_START; i++) {
     if (preg_tmp_used[i] == true) {
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i),
-                                Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                Xbyak_aarch64::ptr(X_TMP_0));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
       preg_tmp_used[i] = false;
