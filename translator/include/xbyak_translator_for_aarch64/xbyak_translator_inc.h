@@ -19,6 +19,7 @@
 #include "instructions/vbroadcastss.h"
 #include "instructions/vdivps.h"
 #include "instructions/vcmpps.h"
+#include "instructions/vfmadd231ps.h"
 #include "instructions/vmovaps.h"
 #include "instructions/vmovd.h"
 #include "instructions/vmovdqu.h"
@@ -49,5 +50,4 @@
 #include "instructions/vblendmps.h"
 //#include "instructions/vfmadd132ps.h"
 //#include "instructions/vfmadd213ps.h"
-//#include "instructions/vfmadd231ps.h"
 #endif
