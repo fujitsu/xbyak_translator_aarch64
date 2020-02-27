@@ -2841,7 +2841,7 @@ public:
     jmp(std::string(label), type);
   }
 #ifdef XBYAK_TRANSLATE_AARCH64
-  void jmp(const Label &label, LabelType type = T_AUTO) { b(label); }
+  void jmp(const Label &label, LabelType type = T_AUTO) { CodeGeneratorAArch64::b(label); }
 #else
   void jmp(const Label &label, LabelType type = T_AUTO) {
     opJmp(label, type, 0xEB, 0xE9, 0);
