@@ -43,7 +43,7 @@ typedef uint8_t xbyak_code_ptr_t;
 
 using namespace Xbyak;
 
-union ZReg_t {
+union __attribute__ ((aligned(64))) ZReg_t {
   uint8_t ub_dt[64];
   uint16_t uh_dt[32];
   uint32_t us_dt[16];
@@ -645,11 +645,11 @@ public:
   }
 
   unsigned char inputData[NUM_INPUT_DATA];
-
   uint64_t inputGenReg[NUM_GEN_REG];
   uint64_t inputPredReg[NUM_PRED_REG];
   ZReg_t inputZReg[NUM_Z_REG];
 
+    
   CheckMode checkGenRegMode[NUM_GEN_REG][NUM_BYTES_GEN_REG];
   CheckMode checkPredRegMode[NUM_PRED_REG][NUM_BYTES_PRED_REG];
   CheckMode checkZRegMode[NUM_Z_REG][NUM_BYTES_Z_REG];

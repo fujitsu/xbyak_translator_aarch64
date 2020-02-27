@@ -28,6 +28,7 @@
 #include "instructions/vmovhlps.h"
 #include "instructions/vmovhps.h"
 #include "instructions/vmovlps.h"
+#include "instructions/vmovntps.h"
 #include "instructions/vmovups.h"
 #include "instructions/vmulps.h"
 #include "instructions/vorps.h"
@@ -53,3 +54,5 @@
 //#include "instructions/vfmadd132ps.h"
 //#include "instructions/vfmadd213ps.h"
 #endif
+
+
