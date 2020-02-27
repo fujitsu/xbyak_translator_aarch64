@@ -624,7 +624,7 @@ void jz(std::string label, LabelType type = T_AUTO) { opJmp(label, type, 0x74, 0
 void lahf() { db(0x9F); std::cerr << "No support for LAHF instruction" << std::endl; }
 void lddqu(const Xmm& xmm, const Address& addr) { db(0xF2); opModM(addr, xmm, 0x0F, 0xF0); UNIMPLEMENTED; }
 void ldmxcsr(const Address& addr) { opModM(addr, Reg32(2), 0x0F, 0xAE); UNIMPLEMENTED; }
-void lea(const Reg& reg, const Address& addr) { if (!reg.isBit(16 | i32e)) throw Error(ERR_BAD_SIZE_OF_REGISTER); opModM(addr, reg, 0x8D); UNIMPLEMENTED; }
+void lea(const Reg& reg, const Address& addr) { if (!reg.isBit(16 | i32e)) throw Error(ERR_BAD_SIZE_OF_REGISTER); opModM(addr, reg, 0x8D); decodeAndTransToAArch64(); }
 void leave() { db(0xC9); UNIMPLEMENTED; }
 void lfence() { db(0x0F); db(0xAE); db(0xE8); UNIMPLEMENTED; }
 void lfs(const Reg& reg, const Address& addr) { opLoadSeg(addr, reg, 0x0F, 0xB4); UNIMPLEMENTED; }

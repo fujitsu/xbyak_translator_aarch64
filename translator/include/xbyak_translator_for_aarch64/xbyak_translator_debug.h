@@ -397,6 +397,8 @@ void print_operands(xed_decoded_inst_t *xedd) {
 }
 
 void xt_dump_a64fx_operandsV3(xt_a64fx_operands_structV3_t *a64) {
+  std::cout << std::dec;
+
   std::cout << "==============================" << std::endl;
   std::cout << "A64 operand V3 information" << std::endl;
   std::cout << "==============================" << std::endl;

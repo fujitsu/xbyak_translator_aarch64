@@ -403,7 +403,9 @@ case XED_ICLASS_LDDQU:
 case XED_ICLASS_LDMXCSR:
 case XED_ICLASS_LDS:
 case XED_ICLASS_LEA:
-case XED_ICLASS_LEAVE:
+  translateLEA(&xedd);
+  break;
+ case XED_ICLASS_LEAVE:
 case XED_ICLASS_LES:
 case XED_ICLASS_LFENCE:
 case XED_ICLASS_LFS:

@@ -193,6 +193,9 @@ inline const std::string xt_to_string(const xed_operand_enum_t num) {
   case XED_OPERAND_INVALID:
     msg = "XED_OPERAND_INVALID";
     break;
+  case XED_OPERAND_AGEN:
+    msg = "XED_OPERAND_AGEN";
+    break;
   case XED_OPERAND_MASK:
     msg = "XED_OPERAND_MASK";
     break;

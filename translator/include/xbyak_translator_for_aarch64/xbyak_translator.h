@@ -253,6 +253,8 @@ xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
     return r - XED_REG_ZMM0;
   } else if (XED_REG_EAX <= r && r <= XED_REG_R15D) {
     return r - XED_REG_EAX;
+  } else if (XED_REG_AX <= r && r <= XED_REG_R15W) {
+    return r - XED_REG_AX;
   } else if (r == XED_REG_RFLAGS) {
     /* In case of 2nd operand of DEC instruction, this "else if" is passed */
     return XT_REG_INVALID;
@@ -704,11 +706,7 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
       a64->uimm2 = xed_decoded_inst_get_second_immediate(p);
       continue;
     }
-    /*    if (opName == XED_OPERAND_BASE0) { // RET instruction
-      continue;
-      }*/
-    std::cerr << "HOGE_NUM=" << opName << std::endl;
-    xt_msg_err(__FILE__, __LINE__, "Unsupported opName");
+    xt_msg_err(__FILE__, __LINE__, "Unsupported opName=" + std::to_string(static_cast<int64_t>(opName)));
   } // for (int i = 0; i < num_operands; i++) {
 
   /* Support for legacy xbyak_translate frame work */
@@ -773,7 +771,7 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
     /* End: parsing register operand */
 
     /* Begin: parsing memory operand */
-    if (opName == XED_OPERAND_MEM0) {
+    if (opName == XED_OPERAND_MEM0 || opName ==XED_OPERAND_AGEN) {
       unsigned int width = xed_decoded_inst_get_memop_address_width(p, memOpIdx);
 
       bool isSet = false;
@@ -857,6 +855,20 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
       continue;
     }
     /* End: parsing immediate operand */
+
+    /* Begin: parsing address generation operand */
+    if(opName == XED_OPERAND_AGEN) {
+      bool isSet = false;
+
+      for(int l=0; l<4 && isSet == false; l++) {
+	if(a64->operands[l].opName == XED_OPERAND_INVALID) {
+	  a64->operands[l].opName = opName;
+	  isSet = true;
+	}
+      }
+      continue;
+    }
+    /* End: parsing address generation operand */
     
     xt_msg_err(__FILE__, __LINE__, "Unsupported opName");
   } // for (int i = 0; i < num_operands; i++) {
