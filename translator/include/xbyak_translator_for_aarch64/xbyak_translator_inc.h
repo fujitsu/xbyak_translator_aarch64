@@ -23,6 +23,7 @@
 #include "instructions/vfmadd231ps.h"
 #include "instructions/vfnmadd231ps.h"
 #include "instructions/vdivps.h"
+#include "instructions/vmaskmovps.h"
 #include "instructions/vmovaps.h"
 #include "instructions/vmovd.h"
 #include "instructions/vmovdqu.h"
