@@ -13,17 +13,16 @@
 #include "instructions/ret.h"
 #include "instructions/shl.h"
 #include "instructions/sub.h"
+#include "instructions/test.h"
 #include "instructions/vaddps.h"
 #include "instructions/vandps.h"
 #include "instructions/vblendmps.h"
 #include "instructions/vblendvps.h"
 #include "instructions/vbroadcastss.h"
 #include "instructions/vcmpps.h"
-<<<<<<< HEAD
 #include "instructions/vmaskmovps.h"
-=======
+#include "instructions/vfmadd231ps.h"
 #include "instructions/vdivps.h"
->>>>>>> 3_implement_translation
 #include "instructions/vmovaps.h"
 #include "instructions/vmovd.h"
 #include "instructions/vmovdqu.h"
@@ -32,6 +31,7 @@
 #include "instructions/vmovhlps.h"
 #include "instructions/vmovhps.h"
 #include "instructions/vmovlps.h"
+#include "instructions/vmovntps.h"
 #include "instructions/vmovups.h"
 #include "instructions/vmulps.h"
 #include "instructions/vorps.h"
@@ -39,6 +39,7 @@
 #include "instructions/vpinsrq.h"
 #include "instructions/vpxord.h"
 #include "instructions/vsubps.h"
+#include "instructions/vsqrtps.h"
 #include "instructions/vunpckhpd.h"
 #include "instructions/vxorps.h"
 #include "instructions/vzeroupper.h"
@@ -55,5 +56,6 @@
 #include "instructions/vblendmps.h"
 //#include "instructions/vfmadd132ps.h"
 //#include "instructions/vfmadd213ps.h"
-//#include "instructions/vfmadd231ps.h"
 #endif
+
+

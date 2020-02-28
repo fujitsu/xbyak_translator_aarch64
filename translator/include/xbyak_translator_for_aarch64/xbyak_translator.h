@@ -42,6 +42,7 @@
 // namespace xbyak_translator {
 private:
 const xt_reg_idx_t xtDefaultAddrIdx = 28;
+constexpr static unsigned int xtNumOperands = 4;
 
 public:
 Xbyak_aarch64::WReg W_TMP_0 = w24;
@@ -171,7 +172,11 @@ struct xt_a64fx_operands_structV3_core_t {
 };
 
 struct xt_a64fx_operands_structV3_t {
-  xt_a64fx_operands_structV3_core_t operands[4];
+  /* Is EVEX.b set? */
+  xed_uint_t EVEXb = 0;
+  xt_predicate_type_t predType = A64_PRED_NO;
+
+  xt_a64fx_operands_structV3_core_t operands[xtNumOperands];
 };
 
 struct xt_a64fx_operands_struct_t {
@@ -373,11 +378,11 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i) {
       if (zreg_tmp_used[i] == false) {
         zreg_tmp_used[i] = true;
-
         CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
                                   CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
+	CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
         CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
-                                  Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                  Xbyak_aarch64::ptr(X_TMP_0));
         return i;
       }
     }
@@ -390,6 +395,40 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
   return 31;
 }
 
+unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
+  for (size_t i = AARCH64_NUM_ZREG - 1; i >= 0; i--) {
+    bool conflict = false;
+    if(zreg_tmp_used[i] == true) {
+      continue;
+    }
+
+    for(int idx=0; i<xtNumOperands; idx) {
+      if(a64->operands[idx].regIdx == i) {
+	conflict = true;
+      }
+    }
+
+    if (conflict == false) {
+      zreg_tmp_used[i] = true;
+      CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
+				CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
+
+      CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
+				Xbyak_aarch64::ptr(X_TMP_0));
+      return i;
+    }
+  }
+
+  std::cerr << __FILE__ << ":" << __LINE__ << ":Temporal PReg allocation failed"
+            << ". Please contact to system administrator!" << std::endl;
+  assert(NULL);
+
+  return 31;
+}
+
+
+
 unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
   for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i &&
@@ -399,10 +438,44 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
 
         CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
                                   CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+	CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
+
         CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
-                                  Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                  Xbyak_aarch64::ptr(X_TMP_0));
         return i;
       }
+    }
+  }
+
+  std::cerr << __FILE__ << ":" << __LINE__ << ":Temporal PReg allocation failed"
+            << ". Please contact to system administrator!" << std::endl;
+  assert(NULL);
+
+  return 31;
+}
+
+unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
+  for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
+    bool conflict = false;
+    if(preg_tmp_used[i] == true) {
+      continue;
+    }
+
+    for(int idx=0; i<xtNumOperands; idx) {
+      if(a64->operands[idx].regIdx == i) {
+	conflict = true;
+      }
+    }
+
+    if (conflict == false) {
+      preg_tmp_used[i] = true;
+
+      CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
+				CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
+      CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
+				Xbyak_aarch64::ptr(X_TMP_0));
+      return i;
     }
   }
 
@@ -418,8 +491,9 @@ void xt_pop_vreg() { xt_pop_zreg(); }
 void xt_pop_zreg() {
   for (size_t i = 0; i < AARCH64_NUM_ZREG; i++) {
     if (zreg_tmp_used[i] == true) {
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i),
-                                Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                Xbyak_aarch64::ptr(X_TMP_0));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
       zreg_tmp_used[i] = false;
@@ -435,8 +509,9 @@ void xt_pop_zreg() {
 void xt_pop_preg() {
   for (size_t i = TMP_PREG_END; i <= TMP_PREG_START; i++) {
     if (preg_tmp_used[i] == true) {
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i),
-                                Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                Xbyak_aarch64::ptr(X_TMP_0));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
       preg_tmp_used[i] = false;
@@ -741,7 +816,7 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
   const xed_inst_t *xi = xed_decoded_inst_inst(p);
 
   /* Get EVEX.b bits */
-  // a64->EVEXb = xed_decoded_inst_is_broadcast(p);
+  a64->EVEXb = xed_decoded_inst_is_broadcast(p);
 
   /* Get # of operands */
   num_operands = xed_inst_noperands(xi);
@@ -764,8 +839,26 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
           a64->operands[l].regClass =
               xed_reg_class(xed_decoded_inst_get_reg(p, opName));
           a64->operands[l].opWidth = xed_decoded_inst_operand_length_bits(p, i);
-          isSet = true;
-        }
+
+	  if(a64->operands[l].regClass == XED_REG_CLASS_MASK) {
+	    xed_bool_t isMasking = xed_decoded_inst_masking(p);
+	    xed_bool_t isMerging = xed_decoded_inst_merging(p);
+	    xed_bool_t isZeroing = xed_decoded_inst_zeroing(p);
+	    if (!isMasking) {
+	      a64->predType = A64_PRED_NO;
+	    } else if (isMerging) {
+	      a64->predType = A64_PRED_MERG;
+	    } else if (isZeroing) {
+	      a64->predType = A64_PRED_ZERO;
+	    } else {
+	      a64->predType = A64_PRED_MERG;
+	      /*            xt_msg_err(__FILE__, __LINE__,
+			    "Unknwon predicate type. Please contact to "
+			    "system administrator!");*/
+	    }
+	  }
+	  isSet = true;
+	}
       }
 
       if (isSet == false) {

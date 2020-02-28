@@ -20,6 +20,9 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
+    inputZReg[0].ud_dt[0] = 0xAAAABBBBCCCCDDDD;
+    inputZReg[0].ud_dt[1] = 0;
   }
 
   void setCheckRegFlagAll() {
@@ -28,22 +31,43 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
+    size_t addr, addr1;
 
     /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    addr = reinterpret_cast<size_t>(&(inputZReg[27].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[28].ud_dt[8]));
     mov(rax, addr);
+    mov(rcx, addr1);
+    
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    std::cout << "Address is " << std::hex << addr1 << std::endl;
+    /* VEX encoding */
+    vmovntps(ptr[rax], Xmm(0));
+    vmovdqu8(Xmm(1), ptr[rax]);
+    
+    /* EVEX encoding */
+    vmovntps(ptr[rcx], Xmm(16));
+    vmovdqu8(Xmm(17), ptr[rcx]);
 
-    vunpckhpd(Xmm(0), Xmm(1), ptr[rax]);
-    vunpckhpd(Xmm(2), Xmm(2), ptr[rax]);
+    /* VEX encoding */
+    vmovntps(ptr[rax], Ymm(2));
+    vmovdqu8(Ymm(3), ptr[rax]);
+    
+    /* EVEX encoding */
+    vmovntps(ptr[rcx], Ymm(18));
+    vmovdqu8(Ymm(19), ptr[rcx]);
+    
+    /* VEX encoding */
+    vmovntps(ptr[rax], Zmm(4));
+    vmovdqu8(Zmm(5), ptr[rax]);
+    
+    /* EVEX encoding */
+    vmovntps(ptr[rcx], Zmm(20));
+    vmovdqu8(Zmm(21), ptr[rcx]);
 
-    vunpckhpd(Ymm(3), Ymm(4), ptr[rax]);
-    vunpckhpd(Ymm(5), Ymm(5), ptr[rax]);
-
-    vunpckhpd(Zmm(6), Zmm(7), ptr[rax]);
-    vunpckhpd(Zmm(8), Zmm(8), ptr[rax]);
-
+    
     mov(rax, 5);
+    mov(rcx, 5);
   }
 };
 

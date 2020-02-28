@@ -19,7 +19,8 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
+    setInputZregAllRandomFloat();
+    setDumpZRegMode(SP_DT); // set float mode
   }
 
   void setCheckRegFlagAll() {
@@ -28,22 +29,21 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14, r15 */
 
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
-    mov(rax, addr);
-
-    vunpckhpd(Xmm(0), Xmm(1), ptr[rax]);
-    vunpckhpd(Xmm(2), Xmm(2), ptr[rax]);
-
-    vunpckhpd(Ymm(3), Ymm(4), ptr[rax]);
-    vunpckhpd(Ymm(5), Ymm(5), ptr[rax]);
-
-    vunpckhpd(Zmm(6), Zmm(7), ptr[rax]);
-    vunpckhpd(Zmm(8), Zmm(8), ptr[rax]);
-
-    mov(rax, 5);
+    /* VEX encode */
+    vfmadd231ps(Xmm(0), Xmm(1), Xmm(2));
+    vfmadd231ps(Xmm(3), Xmm(3), Xmm(4));
+    vfmadd231ps(Xmm(5), Xmm(6), Xmm(5));
+    vfmadd231ps(Xmm(7), Xmm(8), Xmm(8));
+    vfmadd231ps(Xmm(9), Xmm(9), Xmm(9));
+    
+    /* EVEX encode */
+    vfmadd231ps(Xmm(10), Xmm(11), Xmm(12));
+    vfmadd231ps(Xmm(13), Xmm(13), Xmm(14));
+    vfmadd231ps(Xmm(15), Xmm(16), Xmm(15));
+    vfmadd231ps(Xmm(17), Xmm(18), Xmm(18));
+    vfmadd231ps(Xmm(19), Xmm(19), Xmm(19));
   }
 };
 
