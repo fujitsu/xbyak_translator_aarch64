@@ -378,11 +378,18 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i) {
       if (zreg_tmp_used[i] == false) {
         zreg_tmp_used[i] = true;
+
+#ifdef XT_AARCH64_STACK_REG
         CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
                                   CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
 	CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
         CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
                                   Xbyak_aarch64::ptr(X_TMP_0));
+#else //#ifdef XT_AARCH64_STACK_REG
+        CodeGeneratorAArch64::sub(x4, x4, NUM_BYTES_Z_REG);
+        CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
+                                  Xbyak_aarch64::ptr(x4));
+#endif //#ifdef XT_AARCH64_STACK_REG	
         return i;
       }
     }
@@ -410,12 +417,18 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
 
     if (conflict == false) {
       zreg_tmp_used[i] = true;
+#ifdef XT_AARCH64_STACK_REG
       CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
 				CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
       CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
 
       CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
 				Xbyak_aarch64::ptr(X_TMP_0));
+#else //#ifdef XT_AARCH64_STACK_REG
+      CodeGeneratorAArch64::sub(x4, x4, NUM_BYTES_Z_REG);
+      CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
+				Xbyak_aarch64::ptr(x4));
+#endif //#ifdef XT_AARCH64_STACK_REG
       return i;
     }
   }
@@ -436,12 +449,17 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
       if (preg_tmp_used[i] == false) {
         preg_tmp_used[i] = true;
 
+#ifdef XT_AARCH64_STACK_REG	
         CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
                                   CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
 	CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
-
         CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
                                   Xbyak_aarch64::ptr(X_TMP_0));
+#else //#ifdef XT_AARCH64_STACK_REG
+        CodeGeneratorAArch64::sub(x4, x4, NUM_BYTES_PRED_REG);
+        CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
+                                  Xbyak_aarch64::ptr(x4));
+#endif //#ifdef XT_AARCH64_STACK_REG
         return i;
       }
     }
@@ -470,11 +488,17 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
     if (conflict == false) {
       preg_tmp_used[i] = true;
 
+#ifdef XT_AARCH64_STACK_REG
       CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
 				CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
       CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
       CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
 				Xbyak_aarch64::ptr(X_TMP_0));
+#else //#ifdef XT_AARCH64_STACK_REG
+      CodeGeneratorAArch64::sub(x4, x4, NUM_BYTES_PRED_REG);
+      CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
+				Xbyak_aarch64::ptr(x4));
+#endif //#ifdef XT_AARCH64_STACK_REG
       return i;
     }
   }
@@ -491,11 +515,17 @@ void xt_pop_vreg() { xt_pop_zreg(); }
 void xt_pop_zreg() {
   for (size_t i = 0; i < AARCH64_NUM_ZREG; i++) {
     if (zreg_tmp_used[i] == true) {
+#ifdef XT_AARCH64_STACK_REG
       CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i),
                                 Xbyak_aarch64::ptr(X_TMP_0));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
+#else //#ifdef XT_AARCH64_STACK_REG
+      CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i),
+                                Xbyak_aarch64::ptr(x4));
+      CodeGeneratorAArch64::add(x4, x4, NUM_BYTES_Z_REG);
+#endif #ifdef XT_AARCH64_STACK_REG
       zreg_tmp_used[i] = false;
       return;
     }
@@ -509,11 +539,17 @@ void xt_pop_zreg() {
 void xt_pop_preg() {
   for (size_t i = TMP_PREG_END; i <= TMP_PREG_START; i++) {
     if (preg_tmp_used[i] == true) {
+#ifdef XT_AARCH64_STACK_REG
       CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i),
                                 Xbyak_aarch64::ptr(X_TMP_0));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+#else //#ifdef XT_AARCH64_STACK_REG
+      CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i),
+                                Xbyak_aarch64::ptr(x4));
+      CodeGeneratorAArch64::add(x4,  x4, NUM_BYTES_PRED_REG);
+#endif //#ifdef XT_AARCH64_STACK_REG
       preg_tmp_used[i] = false;
       return;
     }
@@ -571,8 +607,10 @@ bool decodeOpcode(const Label *label = nullptr) {
   }
 
   /* Dump debugging info */
+#ifdef XT_DEBUG
   xt_dump_x86_64_decoded_info(&xedd);
-
+#endif
+  
   xed_iclass_enum_t p = xed_decoded_inst_get_iclass(&xedd);
   std::cout << "xbyak_translator_switch.h" << std::endl;
 #include "xbyak_translator_switch.h"
@@ -800,7 +838,9 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
     a64->src2Type = A64_OP_MBCST;
   }
 
+#ifdef XT_DEBUG
   xt_dump_a64fx_operands(a64);
+#endif
 }
 
 void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
@@ -974,7 +1014,9 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
     xt_msg_err(__FILE__, __LINE__, "Unsupported opName");
   } // for (int i = 0; i < num_operands; i++) {
 
-  xt_dump_a64fx_operandsV3(a64);
+  #ifdef XT_DEBUG
+    xt_dump_a64fx_operandsV3(a64);
+#endif
 }
 
 void decodeAndTransToAArch64() {
