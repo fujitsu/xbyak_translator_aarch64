@@ -47,13 +47,13 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vunpckhpd(Xmm(1)|k1|T_z, Xmm(1), Xmm(2));
-    vunpckhpd(Xmm(2)|k2|T_z, Xmm(1), Xmm(2));
-    vunpckhpd(Xmm(3)|k3|T_z, Xmm(1), Xmm(2));
-    vunpckhpd(Xmm(4)|k4|T_z, Xmm(1), Xmm(2));
-    vunpckhpd(Xmm(5)|k5|T_z, Xmm(1), Xmm(2));
-    vunpckhpd(Xmm(6)|k6|T_z, Xmm(1), Xmm(2));
-    vunpckhpd(Xmm(7)|k7|T_z, Xmm(1), Xmm(2));
+    vunpckhpd(Zmm(1)|k1|T_z, Zmm(1), Zmm(2));
+    vunpckhpd(Zmm(2)|k2|T_z, Zmm(1), Zmm(2));
+    vunpckhpd(Zmm(3)|k3|T_z, Zmm(1), Zmm(2));
+    vunpckhpd(Zmm(4)|k4|T_z, Zmm(1), Zmm(2));
+    vunpckhpd(Zmm(5)|k5|T_z, Zmm(1), Zmm(2));
+    vunpckhpd(Zmm(6)|k6|T_z, Zmm(1), Zmm(2));
+    vunpckhpd(Zmm(7)|k7|T_z, Zmm(1), Zmm(2));
   }
 };
 
