@@ -1588,6 +1588,8 @@ case XED_ICLASS_VPUNPCKLDQ:
 case XED_ICLASS_VPUNPCKLQDQ:
 case XED_ICLASS_VPUNPCKLWD:
 case XED_ICLASS_VPXOR:
+  translateVPXOR(&xedd);
+  break;
 case XED_ICLASS_VPXORD:
   translateVPXORD(&xedd);
   break;
