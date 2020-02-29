@@ -2912,7 +2912,11 @@ public:
 #ifdef XBYAK_TRANSLATE_AARCH64
     decode_size_ = 0;
 
+#ifdef XT_AARCH64_STACK_REG
     CodeGeneratorAArch64::str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -8));
+#else //#ifdef XT_AARCH64_STACK_REG
+    CodeGeneratorAArch64::str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::pre_ptr(x4, -8));
+#endif //#ifdef XT_AARCH64_STACK_REG
     db_clear();
 #endif//#ifndef XBYAK_TRANSLATE_AARCH64
   }
@@ -2922,7 +2926,11 @@ public:
 #ifdef XBYAK_TRANSLATE_AARCH64
     decode_size_ = 0;
 
+#ifdef XT_AARCH64_STACK_REG
     CodeGeneratorAArch64::ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 8));
+#else //#ifdef XT_AARCH64_STACK_REG
+    CodeGeneratorAArch64::ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::post_ptr(x4, 8));
+#endif //#ifdef XT_AARCH64_STACK_REG
     db_clear();
 #endif//#ifndef XBYAK_TRANSLATE_AARCH64
 

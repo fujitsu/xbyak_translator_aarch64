@@ -47,6 +47,7 @@
 #include "instructions/vzeroupper.h"
 #include "instructions/xadd_lock.h"
 #include "instructions/xor.h"
+#include "instructions/pause.h"
 #if 0
 #include "instructions/kmovb.h"
 #include "instructions/kmovd.h"
