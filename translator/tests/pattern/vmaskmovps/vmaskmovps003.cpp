@@ -21,13 +21,25 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-    for(int i=0; i<8; i++) {
-      inputZReg[7].us_dt[i*2]   =      inputZReg[10].us_dt[i*2]   = inputZReg[13].us_dt[i*2] = uint32_t(1) << 31;
-      inputZReg[7].us_dt[i*2+1] =      inputZReg[10].us_dt[i*2+1] = inputZReg[13].us_dt[i*2+1] = 0;
-      inputZReg[8].us_dt[i*2]   =      inputZReg[11].us_dt[i*2]   =      inputZReg[14].us_dt[i*2] = uint32_t(0x7FFFFFFF);
-      inputZReg[8].us_dt[i*2+1] =      inputZReg[11].us_dt[i*2+1] =       inputZReg[14].us_dt[i*2+1] = ~uint32_t(0);
-      inputZReg[9].us_dt[i*2]   =      inputZReg[12].us_dt[i*2]   =     inputZReg[15].us_dt[i*2] = uint32_t(0);
-      inputZReg[9].us_dt[i*2+1] =      inputZReg[12].us_dt[i*2+1] =       inputZReg[15].us_dt[i*2+1] = ~uint32_t(0);
+    for (int j = 16; j < 32; j++) {
+      for (int i = 0; i < 8; i++) {
+        inputZReg[j].ud_dt[i] = 0;
+      }
+    }
+
+    for (int i = 0; i < 8; i++) {
+      inputZReg[7].us_dt[i * 2] = inputZReg[10].us_dt[i * 2] =
+          inputZReg[13].us_dt[i * 2] = uint32_t(1) << 31;
+      inputZReg[7].us_dt[i * 2 + 1] = inputZReg[10].us_dt[i * 2 + 1] =
+          inputZReg[13].us_dt[i * 2 + 1] = 0;
+      inputZReg[8].us_dt[i * 2] = inputZReg[11].us_dt[i * 2] =
+          inputZReg[14].us_dt[i * 2] = uint32_t(0x7FFFFFFF);
+      inputZReg[8].us_dt[i * 2 + 1] = inputZReg[11].us_dt[i * 2 + 1] =
+          inputZReg[14].us_dt[i * 2 + 1] = ~uint32_t(0);
+      inputZReg[9].us_dt[i * 2] = inputZReg[12].us_dt[i * 2] =
+          inputZReg[15].us_dt[i * 2] = uint32_t(0);
+      inputZReg[9].us_dt[i * 2 + 1] = inputZReg[12].us_dt[i * 2 + 1] =
+          inputZReg[15].us_dt[i * 2 + 1] = ~uint32_t(0);
     }
   }
 
@@ -43,27 +55,27 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[16].ud_dt[0]));
     mov(rax, addr);
 
-    vmaskmovps(ptr[rax], Xmm(13),  Xmm(0));
+    vmaskmovps(ptr[rax], Xmm(13), Xmm(0));
     add(rax, 64);
-    vmaskmovps(ptr[rax], Xmm(14),  Xmm(1));
+    vmaskmovps(ptr[rax], Xmm(14), Xmm(1));
     add(rax, 64);
-    vmaskmovps(ptr[rax], Xmm(15),  Xmm(2));
+    vmaskmovps(ptr[rax], Xmm(15), Xmm(2));
     add(rax, 64);
-	       	 		         
-    vmaskmovps(ptr[rax], Ymm(13),  Ymm(3));
+
+    vmaskmovps(ptr[rax], Ymm(13), Ymm(3));
     add(rax, 64);
-    vmaskmovps(ptr[rax], Ymm(14),  Ymm(4));
+    vmaskmovps(ptr[rax], Ymm(14), Ymm(4));
     add(rax, 64);
-    vmaskmovps(ptr[rax], Ymm(15),  Ymm(5));
+    vmaskmovps(ptr[rax], Ymm(15), Ymm(5));
     add(rax, 64);
-	       	 		         
-    vmaskmovps(ptr[rax], Ymm(7),   Ymm(7));
+
+    vmaskmovps(ptr[rax], Ymm(7), Ymm(7));
     add(rax, 64);
-    vmaskmovps(ptr[rax], Ymm(8),   Ymm(8));
+    vmaskmovps(ptr[rax], Ymm(8), Ymm(8));
     add(rax, 64);
-    vmaskmovps(ptr[rax], Ymm(9),   Ymm(9));
+    vmaskmovps(ptr[rax], Ymm(9), Ymm(9));
     add(rax, 64);
-	       	 		         
+
     vmaskmovps(ptr[rax], Ymm(10), Ymm(10));
     add(rax, 64);
     vmaskmovps(ptr[rax], Ymm(11), Ymm(11));
@@ -97,7 +109,7 @@ public:
     add(rax, 64);
     vmovdqu8(Zmm(27), ptr[rax]);
     add(rax, 64);
-    
+
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
