@@ -10,6 +10,7 @@
 #include "instructions/movss.h"
 #include "instructions/not.h"
 #include "instructions/or.h"
+#include "instructions/pause.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
 #include "instructions/sub.h"
@@ -19,10 +20,10 @@
 #include "instructions/vblendmps.h"
 #include "instructions/vbroadcastss.h"
 #include "instructions/vcmpps.h"
+#include "instructions/vdivps.h"
 #include "instructions/vfmadd213ps.h"
 #include "instructions/vfmadd231ps.h"
 #include "instructions/vfnmadd231ps.h"
-#include "instructions/vdivps.h"
 #include "instructions/vmaskmovps.h"
 #include "instructions/vmovaps.h"
 #include "instructions/vmovd.h"
@@ -40,8 +41,8 @@
 #include "instructions/vpinsrq.h"
 #include "instructions/vpxor.h"
 #include "instructions/vpxord.h"
-#include "instructions/vsubps.h"
 #include "instructions/vsqrtps.h"
+#include "instructions/vsubps.h"
 #include "instructions/vunpckhpd.h"
 #include "instructions/vxorps.h"
 #include "instructions/vzeroupper.h"
@@ -59,5 +60,3 @@
 //#include "instructions/vfmadd132ps.h"
 //#include "instructions/vfmadd213ps.h"
 #endif
-
-
