@@ -303,6 +303,8 @@ case XED_ICLASS_IDIV:
 case XED_ICLASS_IMUL:
 case XED_ICLASS_IN:
 case XED_ICLASS_INC:
+  translateINC(&xedd);
+  break;
 case XED_ICLASS_INCSSPD:
 case XED_ICLASS_INCSSPQ:
 case XED_ICLASS_INC_LOCK:

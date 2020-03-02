@@ -372,7 +372,7 @@ void idiv(const Operand& op) { opR_ModM(op, 0, 7, 0xF6); UNIMPLEMENTED; }
 void imul(const Operand& op) { opR_ModM(op, 0, 5, 0xF6); UNIMPLEMENTED; }
 void in_(const Reg& a, const Reg& d) { opInOut(a, d, 0xEC); UNIMPLEMENTED; }
 void in_(const Reg& a, uint8 v) { opInOut(a, 0xE4, v); UNIMPLEMENTED; }
-void inc(const Operand& op) { opIncDec(op, 0x40, 0); UNIMPLEMENTED; }
+void inc(const Operand& op) { opIncDec(op, 0x40, 0); decodeAndTransToAArch64(); }
 void insertps(const Xmm& xmm, const Operand& op, uint8 imm) { opGen(xmm, op, 0x21, 0x66, isXMM_XMMorMEM, imm, 0x3A); UNIMPLEMENTED; }
 void int3() { db(0xCC); UNIMPLEMENTED; }
 void int_(uint8 x) { db(0xCD); db(x); UNIMPLEMENTED; }
