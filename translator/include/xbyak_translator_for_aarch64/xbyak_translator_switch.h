@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-
+#ifdef XT_DEBUG
 std::cout << xed_iclass_enum_t2str(p) << std::endl;
+#endif
 
 switch (p) {
 case XED_ICLASS_INVALID:

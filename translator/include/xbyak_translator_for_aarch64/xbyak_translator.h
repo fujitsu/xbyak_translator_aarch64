@@ -575,10 +575,12 @@ bool decodeOpcode(const Label *label = nullptr) {
   xed3_operand_set_mpxmode(&xedd, 0);
   xed3_operand_set_cet(&xedd, 0);
 
+#ifdef XT_DEBUG
   printf("Attempting to decode: ");
   for (unsigned int i = 0; i < CodeArray::size_; i++)
     printf("%02x ", XED_STATIC_CAST(xed_uint_t, CodeArray::top_[i]));
   printf("\n");
+#endif
 
   xed_error = xed_decode(
       &xedd, XED_REINTERPRET_CAST(const xed_uint8_t *, CodeArray::top_),
@@ -607,7 +609,6 @@ bool decodeOpcode(const Label *label = nullptr) {
 #endif
 
   xed_iclass_enum_t p = xed_decoded_inst_get_iclass(&xedd);
-  std::cout << "xbyak_translator_switch.h" << std::endl;
 #include "xbyak_translator_switch.h"
 
   return true;
