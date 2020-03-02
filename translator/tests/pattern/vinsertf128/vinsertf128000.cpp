@@ -46,10 +46,10 @@ public:
     mov(rcx, addr);
     add(rcx, 64);
 
-    vinsertf128(Ymm(0), Ymm(1), ptr[rax], 0);
-    vinsertf128(Ymm(2), Ymm(3), ptr[rax], 1);
+//    vinsertf128(Ymm(0), Ymm(1), ptr[rax], 0);
+//    vinsertf128(Ymm(2), Ymm(3), ptr[rax], 1);
 
-    vinsertf128(Ymm(4), Ymm(4), ptr[rax], 0);
+//    vinsertf128(Ymm(4), Ymm(4), ptr[rax], 0);
     vinsertf128(Ymm(5), Ymm(5), ptr[rax], 1);
 
     mov(rax,
