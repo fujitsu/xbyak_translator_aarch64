@@ -43,8 +43,8 @@ public:
 
     mov(r8, uint64_t(0xabcd));
 
-    add(ptr[rax], r8);
-    add(ptr[rcx], r8d);
+    sub(ptr[rax], r8);
+    sub(ptr[rcx], r8d);
 
     mov(r9, ptr[rax]);
     mov(r10, ptr[rcx]);

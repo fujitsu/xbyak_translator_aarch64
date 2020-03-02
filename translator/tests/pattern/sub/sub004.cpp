@@ -43,8 +43,8 @@ public:
 
     mov(r8, uint64_t(0xabcd));
 
-    add(qword[rax], 0xabcd);
-    add(dword[rcx], 0xabcd);
+    sub(qword[rax], 0xabcd);
+    sub(dword[rcx], 0xabcd);
 
     mov(r9, ptr[rax]);
     mov(r10, ptr[rcx]);
