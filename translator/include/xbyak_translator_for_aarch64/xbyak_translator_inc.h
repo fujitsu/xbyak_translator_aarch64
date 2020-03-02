@@ -38,6 +38,7 @@
 #include "instructions/vorps.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
+#include "instructions/vpmaxsd.h"
 #include "instructions/vpxord.h"
 #include "instructions/vsubps.h"
 #include "instructions/vsqrtps.h"

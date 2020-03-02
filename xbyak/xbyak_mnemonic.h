@@ -1404,7 +1404,7 @@ void vpmaskmovd(const Xmm& x1, const Xmm& x2, const Address& addr) { opAVX_X_X_X
 void vpmaskmovq(const Address& addr, const Xmm& x1, const Xmm& x2) { opAVX_X_X_XM(x2, x1, addr, T_0F38 | T_66 | T_W1 | T_YMM, 0x8E); UNIMPLEMENTED; }
 void vpmaskmovq(const Xmm& x1, const Xmm& x2, const Address& addr) { opAVX_X_X_XM(x1, x2, addr, T_0F38 | T_66 | T_W1 | T_YMM, 0x8C); UNIMPLEMENTED; }
 void vpmaxsb(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F38 | T_YMM | T_EVEX, 0x3C); UNIMPLEMENTED; }
-void vpmaxsd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F38 | T_EW0 | T_YMM | T_EVEX | T_B32, 0x3D); UNIMPLEMENTED; }
+void vpmaxsd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F38 | T_EW0 | T_YMM | T_EVEX | T_B32, 0x3D); decodeAndTransToAArch64(); }
 void vpmaxsw(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0xEE); UNIMPLEMENTED; }
 void vpmaxub(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0xDE); UNIMPLEMENTED; }
 void vpmaxud(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F38 | T_EW0 | T_YMM | T_EVEX | T_B32, 0x3F); UNIMPLEMENTED; }
@@ -1713,7 +1713,7 @@ void vpinsrw(const Xmm& x, const Operand& op, uint8 imm) { vpinsrw(x, x, op, imm
 void vpmaddubsw(const Xmm& x, const Operand& op) { vpmaddubsw(x, x, op); UNIMPLEMENTED; }
 void vpmaddwd(const Xmm& x, const Operand& op) { vpmaddwd(x, x, op); UNIMPLEMENTED; }
 void vpmaxsb(const Xmm& x, const Operand& op) { vpmaxsb(x, x, op); UNIMPLEMENTED; }
-void vpmaxsd(const Xmm& x, const Operand& op) { vpmaxsd(x, x, op); UNIMPLEMENTED; }
+void vpmaxsd(const Xmm& x, const Operand& op) { vpmaxsd(x, x, op);  }
 void vpmaxsw(const Xmm& x, const Operand& op) { vpmaxsw(x, x, op); UNIMPLEMENTED; }
 void vpmaxub(const Xmm& x, const Operand& op) { vpmaxub(x, x, op); UNIMPLEMENTED; }
 void vpmaxud(const Xmm& x, const Operand& op) { vpmaxud(x, x, op); UNIMPLEMENTED; }
