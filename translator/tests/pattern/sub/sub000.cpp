@@ -32,28 +32,32 @@ public:
        r13, r14, r15 */
     mov(rax, ~uint64_t(0));
     mov(rcx, 1);
-    add(rax, rcx);
+    sub(rax, rcx);
+    sub(rcx, rcx);
 
     mov(edx, ~uint32_t(0));
     mov(ebx, 1);
-    add(edx, ebx);
+    sub(edx, ebx);
+    sub(ebx, ebx);
 
     mov(rbp, ~uint64_t(0));
     mov(rsi, ~uint64_t(0));
-    add(rbp, rsi);
+    sub(rbp, rsi);
+    sub(rsi, rsi);
 
     mov(edi, ~uint32_t(0));
     mov(r8d, ~uint32_t(0));
-    add(edi, r8d);
+    sub(edi, r8d);
+    sub(r8d, r8d);
 
     mov(r9, ~uint64_t(0));
     mov(r10, ~uint64_t(0));
-    add(r9d, r10d);
+    sub(r9d, r10d);
 
-    mov(r11, ~uint64_t(0));
-    add(r11, 0);
-    mov(r12d, ~uint32_t(0));
-    add(r12d, 0);
+    mov(r11, 1);
+    sub(r11, 2);
+    mov(r12, 1);
+    sub(r12d, 2);
   }
 };
 
