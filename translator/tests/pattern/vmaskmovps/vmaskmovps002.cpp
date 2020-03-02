@@ -20,6 +20,15 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
+    for(int i=0; i<8; i++) {
+      inputZReg[7].us_dt[i*2]   =      inputZReg[10].us_dt[i*2]   = inputZReg[13].us_dt[i*2] = uint32_t(1) << 31;
+      inputZReg[7].us_dt[i*2+1] =      inputZReg[10].us_dt[i*2+1] = inputZReg[13].us_dt[i*2+1] = 0;
+      inputZReg[8].us_dt[i*2]   =      inputZReg[11].us_dt[i*2]   =      inputZReg[14].us_dt[i*2] = uint32_t(0x7FFFFFFF);
+      inputZReg[8].us_dt[i*2+1] =      inputZReg[11].us_dt[i*2+1] =       inputZReg[14].us_dt[i*2+1] = ~uint32_t(0);
+      inputZReg[9].us_dt[i*2]   =      inputZReg[12].us_dt[i*2]   =     inputZReg[15].us_dt[i*2] = uint32_t(0);
+      inputZReg[9].us_dt[i*2+1] =      inputZReg[12].us_dt[i*2+1] =       inputZReg[15].us_dt[i*2+1] = ~uint32_t(0);
+    }
   }
 
   void setCheckRegFlagAll() {
@@ -28,31 +37,30 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr0;
+    size_t addr;
 
-    /* Address is unaligned */
-    addr0 = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
-    mov(rax, addr0);
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    mov(rax, addr);
+    vmaskmovps(Xmm(0), Xmm(13), ptr[rax]);
+    vmaskmovps(Xmm(1), Xmm(14), ptr[rax]);
+    vmaskmovps(Xmm(2), Xmm(15), ptr[rax]);
 
-    vmovups(ptr[rax], Xmm(0));
-    vmovdqu8(Zmm(1), ptr[rax]);
+    vmaskmovps(Ymm(3), Ymm(13), ptr[rax]);
+    vmaskmovps(Ymm(4), Ymm(14), ptr[rax]);
+    vmaskmovps(Ymm(5), Ymm(15), ptr[rax]);
 
-    vmovups(ptr[rax], Xmm(2));
-    vmovdqu8(Zmm(3), ptr[rax]);
+    vmaskmovps(Ymm(7), Ymm(7), ptr[rax]);
+    vmaskmovps(Ymm(8), Ymm(8), ptr[rax]);
+    vmaskmovps(Ymm(9), Ymm(9), ptr[rax]);
 
-    vmovups(ptr[rax], Xmm(4));
-    vmovdqu8(Zmm(5), ptr[rax]);
+    vmaskmovps(Ymm(10), Ymm(10), ptr[rax]);
+    vmaskmovps(Ymm(11), Ymm(11), ptr[rax]);
+    vmaskmovps(Ymm(12), Ymm(12), ptr[rax]);
 
-    vmovups(ptr[rax], Ymm(6));
-    vmovdqu8(Zmm(7), ptr[rax]);
-
-    vmovups(ptr[rax], Ymm(8));
-    vmovdqu8(Zmm(9), ptr[rax]);
-
-    vmovups(ptr[rax], Ymm(10));
-    vmovdqu8(Zmm(11), ptr[rax]);
-
-    mov(rax, 5);
+    
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 

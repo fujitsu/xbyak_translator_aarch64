@@ -20,6 +20,18 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+#if 0
+    for (int i = 0; i < 8; i++) {
+      inputZReg[0].ud_dt[i] = ~uint64_t(0);
+      inputZReg[3].ud_dt[i] = ~uint64_t(0);
+      inputZReg[6].ud_dt[i] = ~uint64_t(0);
+    }
+    for (int i = 0; i < 8; i++) {
+      inputZReg[1].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[4].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[7].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+    }
+#endif
   }
 
   void setCheckRegFlagAll() {
@@ -28,31 +40,11 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr0;
-
-    /* Address is unaligned */
-    addr0 = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
-    mov(rax, addr0);
-
-    vmovups(ptr[rax], Xmm(0));
-    vmovdqu8(Zmm(1), ptr[rax]);
-
-    vmovups(ptr[rax], Xmm(2));
-    vmovdqu8(Zmm(3), ptr[rax]);
-
-    vmovups(ptr[rax], Xmm(4));
-    vmovdqu8(Zmm(5), ptr[rax]);
-
-    vmovups(ptr[rax], Ymm(6));
-    vmovdqu8(Zmm(7), ptr[rax]);
-
-    vmovups(ptr[rax], Ymm(8));
-    vmovdqu8(Zmm(9), ptr[rax]);
-
-    vmovups(ptr[rax], Ymm(10));
-    vmovdqu8(Zmm(11), ptr[rax]);
-
-    mov(rax, 5);
+    vpxor(Ymm(0), Ymm(1), Ymm(2));
+    vpxor(Ymm(3), Ymm(3), Ymm(4));
+    vpxor(Ymm(5), Ymm(6), Ymm(5));
+    vpxor(Ymm(7), Ymm(8), Ymm(8));
+    vpxor(Ymm(9), Ymm(9), Ymm(9));
   }
 };
 

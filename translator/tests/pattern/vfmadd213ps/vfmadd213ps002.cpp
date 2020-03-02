@@ -19,7 +19,14 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
+    setInputZregAllRandomFloat();
+    setDumpZRegMode(SP_DT); // set float mode
+
+    for(int j=0; j<NUM_Z_REG; j++) {
+      for(int i=0; i<NUM_BYTES_Z_REG/sizeof(float); i++) {
+	inputZReg[j].sp_dt[i] = float((0.5+i)*j);
+      }
+    }
   }
 
   void setCheckRegFlagAll() {
@@ -28,31 +35,21 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr0;
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14, r15 */
 
-    /* Address is unaligned */
-    addr0 = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
-    mov(rax, addr0);
+    /* VEX encode */
+    vfmadd213ps(Zmm(0), Zmm(1), Zmm(2));
+    vfmadd213ps(Zmm(3), Zmm(3), Zmm(4));
+    vfmadd213ps(Zmm(5), Zmm(6), Zmm(5));
+    vfmadd213ps(Zmm(7), Zmm(8), Zmm(8));
+    vfmadd213ps(Zmm(9), Zmm(9), Zmm(9));
 
-    vmovups(ptr[rax], Xmm(0));
-    vmovdqu8(Zmm(1), ptr[rax]);
-
-    vmovups(ptr[rax], Xmm(2));
-    vmovdqu8(Zmm(3), ptr[rax]);
-
-    vmovups(ptr[rax], Xmm(4));
-    vmovdqu8(Zmm(5), ptr[rax]);
-
-    vmovups(ptr[rax], Ymm(6));
-    vmovdqu8(Zmm(7), ptr[rax]);
-
-    vmovups(ptr[rax], Ymm(8));
-    vmovdqu8(Zmm(9), ptr[rax]);
-
-    vmovups(ptr[rax], Ymm(10));
-    vmovdqu8(Zmm(11), ptr[rax]);
-
-    mov(rax, 5);
+    /* EVEX encode */
+    vfmadd213ps(Zmm(20), Zmm(21), Zmm(22));
+    vfmadd213ps(Zmm(23), Zmm(23), Zmm(24));
+    vfmadd213ps(Zmm(25), Zmm(26), Zmm(25));
+    vfmadd213ps(Zmm(27), Zmm(28), Zmm(28));
+    vfmadd213ps(Zmm(29), Zmm(29), Zmm(29));
   }
 };
 
