@@ -901,6 +901,8 @@ case XED_ICLASS_VADDPS:
   break;
 case XED_ICLASS_VADDSD:
 case XED_ICLASS_VADDSS:
+  translateVADDSS(&xedd);
+  break;
 case XED_ICLASS_VADDSUBPD:
 case XED_ICLASS_VADDSUBPS:
 case XED_ICLASS_VAESDEC:

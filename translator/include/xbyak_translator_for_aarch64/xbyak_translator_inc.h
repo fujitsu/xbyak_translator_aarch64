@@ -16,6 +16,7 @@
 #include "instructions/sub.h"
 #include "instructions/test.h"
 #include "instructions/vaddps.h"
+#include "instructions/vaddss.h"
 #include "instructions/vandps.h"
 #include "instructions/vblendmps.h"
 #include "instructions/vbroadcastss.h"
