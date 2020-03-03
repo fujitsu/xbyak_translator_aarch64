@@ -49,7 +49,7 @@
 #include "instructions/vzeroupper.h"
 #include "instructions/xadd_lock.h"
 #include "instructions/xor.h"
-#include "instructions/vinsertf64x4.h"
+#include "instructions/vinsertf64X4.h"
 #if 0
 #include "instructions/kmovb.h"
 #include "instructions/kmovd.h"
