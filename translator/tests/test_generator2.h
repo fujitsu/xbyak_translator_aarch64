@@ -43,7 +43,7 @@ typedef uint8_t xbyak_code_ptr_t;
 
 using namespace Xbyak;
 
-union ZReg_t {
+union __attribute__((aligned(64))) ZReg_t {
   uint8_t ub_dt[64];
   uint16_t uh_dt[32];
   uint32_t us_dt[16];
@@ -205,7 +205,12 @@ private:
       pop(Reg64(callee_saved_gregs[i]));
     }
 #endif
+
+#ifdef XBYAK_TRANSLATE_AARCH64
+    CodeGeneratorAArch64::ret();
+#else
     ret();
+#endif
   }
 
   /* Load data from memory to all general purpose registers,
@@ -499,8 +504,6 @@ private:
   }
 
   void _dumpZRegFloat(std::string msg, std::string reg, int num, ZReg_t *ptr) {
-    const int width = 8;
-
     for (int i = 0; i < num; i++) {
       for (int line = 0; line < 4; line++) {
         std::ios::fmtflags flagsSaved = std::cout.flags();
@@ -531,8 +534,6 @@ private:
   }
 
   void _dumpZRegDouble(std::string msg, std::string reg, int num, ZReg_t *ptr) {
-    const int width = 8;
-
     for (int i = 0; i < num; i++) {
       std::ios::fmtflags flagsSaved = std::cout.flags();
 
@@ -644,7 +645,6 @@ public:
   }
 
   unsigned char inputData[NUM_INPUT_DATA];
-
   uint64_t inputGenReg[NUM_GEN_REG];
   uint64_t inputPredReg[NUM_PRED_REG];
   ZReg_t inputZReg[NUM_Z_REG];
@@ -684,7 +684,7 @@ public:
 
     /* x16 - x27: temporary use
        x28:translator frame use */
-    for (int j = 16; j <= 27; j++) {
+    for (int j = 16; j <= 28; j++) {
       for (size_t i = 0; i < NUM_BYTES_GEN_REG; i++) {
         checkGenRegMode[j][i] = NO_CHECK;
       }
@@ -954,7 +954,6 @@ public:
         uint64_t initData;
         void *addrOut = &(output[r]);
         void *addrIn = &(input[r]);
-        void *addrExp = &(expPtr[r]);
         std::memcpy(&dut, addrOut + sizeof(uint64_t) * sub_r, sizeof(uint64_t));
         std::memcpy(&initData, addrIn + sizeof(uint64_t) * sub_r,
                     sizeof(uint64_t));
@@ -1056,6 +1055,98 @@ public:
     lfsr_ = (lfsr_ >> 1) ^ (-(int16_t)(lfsr_ & 1u) & 0xB400u);
 
     return lfsr_;
+  }
+
+  void modifyPredRegAArch64(DataType dataType) {
+    int elem_num = 0;
+    int offset = 0;
+
+    switch (dataType) {
+    case UB_DT: /* uint8_t */
+    case SB_DT: /* int8_t */
+      elem_num = 64;
+      offset = 1;
+      break;
+    case UH_DT: /* uint16_t */
+    case SH_DT: /* int16_t */
+      elem_num = 32;
+      offset = 2;
+      break;
+    case US_DT: /* uint32_t */
+    case SS_DT: /* int32_t */
+    case SP_DT: /* float */
+      elem_num = 16;
+      offset = 4;
+      break;
+    case UD_DT: /* uint64_t */
+    case SD_DT: /* int64_t */
+    case DP_DT: /* double */
+      elem_num = 8;
+      offset = 8;
+      break;
+    default:
+      msg_err(__FILE__, __LINE__, ":Unknown data type!");
+      break;
+    }
+
+    for (int j = 1; j <= 7; j++) {
+      uint64_t tmpPredData = 0;
+      for (int i = 0; i < elem_num; i++) {
+        uint64_t checkMask = uint64_t(1) << (offset * i);
+        uint64_t addMask = uint64_t(1) << (offset * i);
+
+        if (outputPredReg[j] & checkMask) {
+          tmpPredData |= addMask;
+        }
+      }
+      outputPredReg[j] = tmpPredData;
+    }
+  }
+
+  void modifyPredReg(DataType dataType) {
+    int elem_num = 0;
+    int offset = 0;
+
+    switch (dataType) {
+    case UB_DT: /* uint8_t */
+    case SB_DT: /* int8_t */
+      elem_num = 64;
+      offset = 1;
+      break;
+    case UH_DT: /* uint16_t */
+    case SH_DT: /* int16_t */
+      elem_num = 32;
+      offset = 2;
+      break;
+    case US_DT: /* uint32_t */
+    case SS_DT: /* int32_t */
+    case SP_DT: /* float */
+      elem_num = 16;
+      offset = 4;
+      break;
+    case UD_DT: /* uint64_t */
+    case SD_DT: /* int64_t */
+    case DP_DT: /* double */
+      elem_num = 8;
+      offset = 8;
+      break;
+    default:
+      msg_err(__FILE__, __LINE__, ":Unknown data type!");
+      break;
+    }
+
+    for (int j = 1; j <= 7; j++) {
+      uint64_t tmpPredData = 0;
+      for (int i = 0; i < elem_num; i++) {
+        uint64_t checkMask = uint64_t(1) << i;
+        uint64_t addMask = uint64_t(1) << (offset * i);
+
+        if (outputPredReg[j] & checkMask) {
+          tmpPredData |= addMask;
+        }
+      }
+      outputPredReg[j] = tmpPredData;
+    }
   }
 
   virtual void genJitTestCode() = 0;     // Pure virtual function.
