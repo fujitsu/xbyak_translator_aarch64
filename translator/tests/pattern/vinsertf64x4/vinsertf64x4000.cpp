@@ -52,6 +52,8 @@ public:
     vinsertf64x4(Zmm(4), Zmm(4), ptr[rax], 0);
     vinsertf64x4(Zmm(5), Zmm(5), ptr[rax], 1);
 
+    vinsertf64x4(Zmm(6), Zmm(7), ptr[rax], 0xfe);
+
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
     mov(rcx,

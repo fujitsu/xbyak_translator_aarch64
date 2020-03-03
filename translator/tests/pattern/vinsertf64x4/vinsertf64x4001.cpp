@@ -43,6 +43,8 @@ public:
 
     vinsertf64x4(Zmm(4), Zmm(4), Ymm(10), 0);
     vinsertf64x4(Zmm(5), Zmm(5), Ymm(11), 1);
+
+    vinsertf64x4(Zmm(6), Zmm(7), Ymm(12), 0xfe);
   }
 };
 
