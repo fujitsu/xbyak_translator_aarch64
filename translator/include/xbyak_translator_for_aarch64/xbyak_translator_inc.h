@@ -50,6 +50,7 @@
 #include "instructions/xadd_lock.h"
 #include "instructions/xor.h"
 #include "instructions/vinsertf64X4.h"
+#include "instructions/vinserti32X4.h"
 #if 0
 #include "instructions/kmovb.h"
 #include "instructions/kmovd.h"
