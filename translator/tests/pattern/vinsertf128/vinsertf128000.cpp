@@ -52,6 +52,8 @@ public:
     vinsertf128(Ymm(4), Ymm(4), ptr[rax], 0);
     vinsertf128(Ymm(5), Ymm(5), ptr[rax], 1);
 
+    vinsertf128(Ymm(6), Ymm(7), ptr[rax], 0xfe);
+
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
     mov(rcx,
