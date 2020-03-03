@@ -38,11 +38,11 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-//    vinserti32x4(Ymm(0), Ymm(1), Xmm(8), 0);
-//    vinserti32x4(Ymm(2), Ymm(3), Xmm(9), 1);
+    vinserti64x4(Zmm(0), Zmm(1), Ymm(8), 0);
+    vinserti64x4(Zmm(2), Zmm(3), Ymm(9), 1);
 
-//    vinserti32x4(Ymm(4), Ymm(4), Xmm(10), 0);
-    vinserti32x4(Ymm(5), Ymm(5), Xmm(11), 1);
+    vinserti64x4(Zmm(4), Zmm(4), Ymm(10), 0);
+    vinserti64x4(Zmm(5), Zmm(5), Ymm(11), 1);
   }
 };
 

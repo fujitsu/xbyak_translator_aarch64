@@ -46,11 +46,11 @@ public:
     mov(rcx, addr);
     add(rcx, 64);
 
-//    vinserti32x4(Ymm(0), Ymm(1), ptr[rax], 0);
-//    vinserti32x4(Ymm(2), Ymm(3), ptr[rax], 1);
+    vinserti64x4(Zmm(0), Zmm(1), ptr[rax], 0);
+    vinserti64x4(Zmm(2), Zmm(3), ptr[rax], 1);
 
-//    vinserti32x4(Ymm(4), Ymm(4), ptr[rax], 0);
-    vinserti32x4(Ymm(5), Ymm(5), ptr[rax], 1);
+    vinserti64x4(Zmm(4), Zmm(4), ptr[rax], 0);
+    vinserti64x4(Zmm(5), Zmm(5), ptr[rax], 1);
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
