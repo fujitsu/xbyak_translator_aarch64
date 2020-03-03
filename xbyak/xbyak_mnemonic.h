@@ -1334,7 +1334,7 @@ void vpacksswb(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x
 void vpackusdw(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F38 | T_EW0 | T_YMM | T_EVEX | T_B32, 0x2B); UNIMPLEMENTED; }
 void vpackuswb(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0x67); UNIMPLEMENTED; }
 void vpaddb(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0xFC); UNIMPLEMENTED; }
-void vpaddd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW0 | T_YMM | T_EVEX | T_B32, 0xFE); UNIMPLEMENTED; }
+void vpaddd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW0 | T_YMM | T_EVEX | T_B32, 0xFE); decodeAndTransToAArch64(); }
 void vpaddq(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW1 | T_YMM | T_EVEX | T_B64, 0xD4); UNIMPLEMENTED; }
 void vpaddsb(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0xEC); UNIMPLEMENTED; }
 void vpaddsw(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0xED); UNIMPLEMENTED; }
@@ -1676,7 +1676,7 @@ void vpacksswb(const Xmm& x, const Operand& op) { vpacksswb(x, x, op); UNIMPLEME
 void vpackusdw(const Xmm& x, const Operand& op) { vpackusdw(x, x, op); UNIMPLEMENTED; }
 void vpackuswb(const Xmm& x, const Operand& op) { vpackuswb(x, x, op); UNIMPLEMENTED; }
 void vpaddb(const Xmm& x, const Operand& op) { vpaddb(x, x, op); UNIMPLEMENTED; }
-void vpaddd(const Xmm& x, const Operand& op) { vpaddd(x, x, op); UNIMPLEMENTED; }
+void vpaddd(const Xmm& x, const Operand& op) { vpaddd(x, x, op);  }
 void vpaddq(const Xmm& x, const Operand& op) { vpaddq(x, x, op); UNIMPLEMENTED; }
 void vpaddsb(const Xmm& x, const Operand& op) { vpaddsb(x, x, op); UNIMPLEMENTED; }
 void vpaddsw(const Xmm& x, const Operand& op) { vpaddsw(x, x, op); UNIMPLEMENTED; }

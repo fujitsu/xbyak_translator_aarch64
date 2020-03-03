@@ -39,6 +39,7 @@
 #include "instructions/vmovups.h"
 #include "instructions/vmulps.h"
 #include "instructions/vorps.h"
+#include "instructions/vpaddd.h"
 #include "instructions/vpbroadcastb.h"
 #include "instructions/vpbroadcastd.h"
 #include "instructions/vpinsrb.h"
