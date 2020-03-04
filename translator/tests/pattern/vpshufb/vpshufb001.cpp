@@ -22,32 +22,6 @@ public:
     setInputZregAllRandomHex();
 
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-
-    for (int i = 0; i < 64; i++) {
-      inputZReg[15].ub_dt[i] = i;
-    }
-
-    for (int i = 0; i < 64; i++) {
-      inputZReg[8].sb_dt[i] = i;
-    }
-    for (int i = 0; i < 64; i++) {
-      inputZReg[9].sb_dt[i] = 3;
-    }
-    for (int i = 0; i < 64; i++) {
-      inputZReg[10].sb_dt[i] = 0x80;
-    }
-    for (int i = 0; i < 64; i++) {
-      inputZReg[11].sb_dt[i] = 0xff;
-    }
-    for (int i = 0; i < 64; i++) {
-      inputZReg[12].sb_dt[i] = 0x7f;
-    }
-    for (int i = 0; i < 64; i++) {
-      inputZReg[13].sb_dt[i] = 0x74;
-    }
-    for (int i = 0; i < 64; i++) {
-      inputZReg[14].sb_dt[i] = 0x40 | (i % 8);
-    }
   }
 
   void setCheckRegFlagAll() {
@@ -57,15 +31,22 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    vpshufb(Ymm(0), Ymm(1), Ymm(2));
+    vpshufb(Ymm(3), Ymm(3), Ymm(4));
+    vpshufb(Ymm(5), Ymm(6), Ymm(5));
+    vpshufb(Ymm(7), Ymm(8), Ymm(8));
+    vpshufb(Ymm(9), Ymm(9), Ymm(9));
 
-    /* VEX */
-    vpshufb(Ymm(0), Ymm(15), Ymm(8));
-    vpshufb(Ymm(1), Ymm(15), Ymm(9));
-    vpshufb(Ymm(2), Ymm(15), Ymm(10));
-    vpshufb(Ymm(3), Ymm(15), Ymm(11));
-    vpshufb(Ymm(4), Ymm(15), Ymm(12));
-    vpshufb(Ymm(5), Ymm(15), Ymm(13));
-    vpshufb(Ymm(6), Ymm(15), Ymm(14));
+    vpshufb(Ymm(10), Ymm(11), Ymm(12));
+    vpshufb(Ymm(13), Ymm(13), Ymm(14));
+    vpshufb(Ymm(15), Ymm(16), Ymm(15));
+    vpshufb(Ymm(17), Ymm(18), Ymm(18));
+    vpshufb(Ymm(19), Ymm(19), Ymm(19));
+
+    vpshufb(Ymm(20), Ymm(21), Ymm(22));
+    vpshufb(Ymm(23), Ymm(23), Ymm(24));
+    vpshufb(Ymm(25), Ymm(26), Ymm(25));
+    vpshufb(Ymm(27), Ymm(28), Ymm(28));
   }
 };
 
