@@ -38,24 +38,13 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
+    vinserti32x4(Ymm(0), Ymm(1), Xmm(8), 0);
+    vinserti32x4(Ymm(2), Ymm(3), Xmm(9), 1);
 
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
-    mov(rax, addr);
-    mov(rcx, addr);
-    add(rcx, 64);
+    vinserti32x4(Ymm(4), Ymm(4), Xmm(10), 0);
+    vinserti32x4(Ymm(5), Ymm(5), Xmm(11), 1);
 
-    //    vinsertf64x4(Zmm(0), Zmm(1), ptr[rax], 0);
-    //    vinsertf64x4(Zmm(2), Zmm(3), ptr[rax], 1);
-
-    //    vinsertf64x4(Zmm(4), Zmm(4), ptr[rax], 0);
-    vinsertf64x4(Zmm(5), Zmm(5), ptr[rax], 1);
-
-    mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-    mov(rcx,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    vinserti32x4(Ymm(6), Ymm(7), Xmm(12), 0xfe);
   }
 };
 
