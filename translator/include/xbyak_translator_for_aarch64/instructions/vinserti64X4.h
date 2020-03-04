@@ -3,7 +3,7 @@ void translateVINSERTI64X4(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/03/04 10:21 */
+/* 2020/03/04 01:47 */
 /* Col=S103*/
 if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.src2Type==A64_OP_MEM&&true)) {
   XT_UNIMPLEMENTED;
@@ -77,7 +77,6 @@ if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_R
 if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&true)) {
   xt_pop_zreg();
 }
-
 
 
 }
