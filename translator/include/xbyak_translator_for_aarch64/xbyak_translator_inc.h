@@ -46,6 +46,7 @@
 #include "instructions/vpinsrq.h"
 #include "instructions/vpmaxsd.h"
 #include "instructions/vpmovusdb.h"
+#include "instructions/vpshufb.h"
 #include "instructions/vpxor.h"
 #include "instructions/vpxord.h"
 #include "instructions/vsqrtps.h"
