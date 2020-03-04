@@ -25,6 +25,7 @@
 #include "instructions/vfmadd231ps.h"
 #include "instructions/vfnmadd231ps.h"
 #include "instructions/vinsertf128.h"
+#include "instructions/vinsertf64X4.h"
 #include "instructions/vmaskmovps.h"
 #include "instructions/vmovaps.h"
 #include "instructions/vmovd.h"
