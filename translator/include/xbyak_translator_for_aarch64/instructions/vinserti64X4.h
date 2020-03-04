@@ -3,7 +3,7 @@ void translateVINSERTI64X4(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/03/04 01:47 */
+/* 2020/03/04 10:54 */
 /* Col=S103*/
 if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.src2Type==A64_OP_MEM&&true)) {
   XT_UNIMPLEMENTED;
@@ -50,7 +50,7 @@ if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_R
 
 /* Col=AM103*/
 if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&true)) {
-  if(a64.uimm == 1) {CodeGeneratorAArch64::splice(xa::ZRegD(a64.dstIdx), xa::PRegD(a64.pTmpIdx), xa::ZRegD(a64.src2Idx) );}
+  if((a64.uimm & 0x1) == 1) {CodeGeneratorAArch64::splice(xa::ZRegD(a64.dstIdx), xa::PRegD(a64.pTmpIdx), xa::ZRegD(a64.src2Idx) );}
 }
 
 /* Col=AO103*/
