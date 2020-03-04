@@ -19,6 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -29,27 +30,17 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
+    size_t addr, addr1;
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[3]) + 5);
+    mov(rax, addr);
+    mov(rcx, addr1);
 
-    mov(r8d, 1);
-    kmovw(k1, r8d);
+    kmovw(k1, ptr[rax]);
+    kmovw(k2, ptr[rcx]);
 
-    mov(r9d, 1 << 2);
-    kmovw(k2, r9d);
-
-    mov(r10d, 1 << 4);
-    kmovw(k3, r10d);
-
-    mov(r11d, 1 << 8);
-    kmovw(k4, r11d);
-
-    mov(r12d, 1 << 12);
-    kmovw(k5, r12d);
-
-    mov(r13d, 1 << 15);
-    kmovw(k6, r13d);
-
-    mov(r14d, 0xFFFF);
-    kmovw(k7, r14d);
+    mov(rax, 5);
+    mov(rcx, 5);
   }
 };
 

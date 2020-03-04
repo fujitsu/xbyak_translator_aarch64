@@ -19,6 +19,10 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    inputPredReg[1] = ~uint64_t(0);
+    inputPredReg[2] = uint64_t(0xFFFFAAAA55552222);
+    inputPredReg[3] = uint64_t(0xAA55552222FFFFAA);
+    inputPredReg[4] = uint64_t(0x7777888844442222);
   }
 
   void setCheckRegFlagAll() {
@@ -30,26 +34,19 @@ public:
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
 
-    mov(r8d, 1);
-    kmovw(k1, r8d);
-
-    mov(r9d, 1 << 2);
-    kmovw(k2, r9d);
-
-    mov(r10d, 1 << 4);
-    kmovw(k3, r10d);
-
-    mov(r11d, 1 << 8);
-    kmovw(k4, r11d);
-
-    mov(r12d, 1 << 12);
-    kmovw(k5, r12d);
-
-    mov(r13d, 1 << 15);
-    kmovw(k6, r13d);
-
-    mov(r14d, 0xFFFF);
-    kmovw(k7, r14d);
+#ifdef XBYAK_TRANSLATE_AARCH64
+    kmovw(k5, k1);
+    kmovw(k6, k2);
+    kmovw(k7, k3);
+    kmovw(k4, k4);
+#else
+    /* Intention of KMOVW instruction is to move mask register data for 32-bit
+       data. For AArch64, it measn all 64-bit data copy. */
+    kmovq(k5, k1);
+    kmovq(k6, k2);
+    kmovq(k7, k3);
+    kmovq(k4, k4);
+#endif
   }
 };
 
@@ -77,13 +74,6 @@ int main(int argc, char *argv[]) {
      * inputZReg. */
     gen.dumpInputReg();
     f(); /* Execute JIT code */
-
-#ifndef XBYAK_TRANSLATE_AARCH64
-    /* Bit order of mask registers are different from x86_64 and aarch64.
-       In order to compare output values of mask registers by test script,
-       Bit order of x86_64 mask register values is modified here. */
-    gen.modifyPredReg(SP_DT);
-#endif
 
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */
