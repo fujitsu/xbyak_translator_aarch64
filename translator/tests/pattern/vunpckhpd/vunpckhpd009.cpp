@@ -56,13 +56,12 @@ public:
 
     vunpckhpd(Xmm(0)|k1, Xmm(1), ptr[rax]);
     vunpckhpd(Xmm(2)|k2, Xmm(2), ptr[rax]);
-    /*
+
     vunpckhpd(Ymm(3)|k3, Ymm(4), ptr[rax]);
     vunpckhpd(Ymm(5)|k4, Ymm(5), ptr[rax]);
 
     vunpckhpd(Zmm(6)|k5, Zmm(7), ptr[rax]);
     vunpckhpd(Zmm(8)|k6, Zmm(8), ptr[rax]);
-    */
 
     mov(rax, 5);
   }
