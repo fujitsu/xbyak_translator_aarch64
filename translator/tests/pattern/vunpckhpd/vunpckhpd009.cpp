@@ -55,9 +55,8 @@ public:
     mov(rax, addr);
 
     vunpckhpd(Xmm(0)|k1, Xmm(1), ptr[rax]);
-    /*
     vunpckhpd(Xmm(2)|k2, Xmm(2), ptr[rax]);
-
+    /*
     vunpckhpd(Ymm(3)|k3, Ymm(4), ptr[rax]);
     vunpckhpd(Ymm(5)|k4, Ymm(5), ptr[rax]);
 
