@@ -27,6 +27,7 @@
 #include "instructions/vinsertf128.h"
 #include "instructions/vinsertf64x4.h"
 #include "instructions/vinserti32x4.h"
+#include "instructions/vinserti64x4.h"
 #include "instructions/vmaskmovps.h"
 #include "instructions/vmovaps.h"
 #include "instructions/vmovd.h"
@@ -51,6 +52,7 @@
 #include "instructions/vzeroupper.h"
 #include "instructions/xadd_lock.h"
 #include "instructions/xor.h"
+
 #if 0
 #include "instructions/kmovb.h"
 #include "instructions/kmovd.h"
