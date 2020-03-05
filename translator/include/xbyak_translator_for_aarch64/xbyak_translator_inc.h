@@ -42,6 +42,7 @@
 #include "instructions/vpaddd.h"
 #include "instructions/vpbroadcastb.h"
 #include "instructions/vpbroadcastd.h"
+#include "instructions/vperm2i128.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
 #include "instructions/vpmaxsd.h"
