@@ -3,7 +3,7 @@ void translateVPANDD(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/03/04 15:41 */
+/* 2020/03/05 11:28 */
 /* Col=S103*/
 if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)) {
   XT_UNIMPLEMENTED;
@@ -29,11 +29,11 @@ if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2
 }
 
 
-/* Col=AC103*/
-if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)) {
-  CodeGeneratorAArch64::ld1rd(xa::ZRegD(a64.zTmpIdx), xa::PReg(a64.pTmpIdx), xa::ptr(X_TMP_ADDR));
-}
 
+/* Col=AD103*/
+if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)) {
+  CodeGeneratorAArch64::ld1rsw(xa::ZRegD(a64.zTmpIdx), xa::PReg(a64.pTmpIdx), xa::ptr(X_TMP_ADDR));
+}
 
 
 
@@ -43,16 +43,19 @@ if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2
   CodeGeneratorAArch64::and_(xa::ZReg(a64.dstIdx).d,xa::ZReg(a64.srcIdx).d, xa::ZReg(a64.src2Idx).d);
 }
 
-/* Col=AK103*/
-if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)) {
-  CodeGeneratorAArch64::and_(xa::ZReg(a64.dstIdx).d,xa::ZReg(a64.srcIdx).d, xa::ZReg(a64.zTmpIdx).d);
+
+
+
+/* Col=AN103*/
+if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)) {
+  CodeGeneratorAArch64::uzp1(xa::ZReg(a64.zTmpIdx).s, xa::ZReg(a64.zTmpIdx).s, xa::ZReg(a64.zTmpIdx).s );
 }
 
 
-
-
-
-
+/* Col=AQ103*/
+if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.src2Type==A64_OP_MEM&&true)) {
+  CodeGeneratorAArch64::and_(xa::ZReg(a64.dstIdx).d,xa::ZReg(a64.srcIdx).d, xa::ZReg(a64.zTmpIdx).d);
+}
 
 
 
