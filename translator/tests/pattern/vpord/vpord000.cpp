@@ -21,6 +21,7 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
+#if 0
     for (int i = 0; i < 8; i++) {
       inputZReg[0].ud_dt[i] = ~uint64_t(0);
       inputZReg[3].ud_dt[i] = ~uint64_t(0);
@@ -31,6 +32,7 @@ public:
       inputZReg[4].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
       inputZReg[7].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
     }
+#endif
   }
 
   void setCheckRegFlagAll() {
@@ -39,21 +41,23 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vpord(Zmm(2), Zmm(0), Zmm(1));
-    //    vandps(Ymm(5), Ymm(3), Ymm(4));
-    //    vandps(Zmm(8), Zmm(6), Zmm(7));
+    vpord(Xmm(0), Xmm(1), Xmm(2));
+    vpord(Xmm(3), Xmm(3), Xmm(4));
+    vpord(Xmm(5), Xmm(6), Xmm(5));
+    vpord(Xmm(7), Xmm(8), Xmm(8));
+    vpord(Xmm(9), Xmm(9), Xmm(9));
 
-    vpord(Zmm(9), Zmm(9), Zmm(9));
-    //    vandps(Ymm(10), Ymm(10), Ymm(10));
-    //    vandps(Zmm(11), Zmm(11), Zmm(11));
+    vpord(Xmm(10), Xmm(11), Xmm(12));
+    vpord(Xmm(13), Xmm(13), Xmm(14));
+    vpord(Xmm(15), Xmm(16), Xmm(15));
+    vpord(Xmm(17), Xmm(18), Xmm(18));
+    vpord(Xmm(19), Xmm(19), Xmm(19));
 
-    vpord(Zmm(12), Zmm(12), Zmm(13));
-    //    vandps(Ymm(14), Ymm(14), Ymm(15));
-    //    vandps(Zmm(16), Zmm(16), Zmm(17));
-
-    vpord(Zmm(19), Zmm(18), Zmm(18));
-    //    vandps(Ymm(21), Ymm(20), Ymm(20));
-    //    vandps(Zmm(23), Zmm(22), Zmm(22));
+    vpord(Zmm(20), Zmm(21), Zmm(22));
+    vpord(Zmm(23), Zmm(23), Zmm(24));
+    vpord(Zmm(25), Zmm(26), Zmm(25));
+    vpord(Zmm(27), Zmm(28), Zmm(28));
+    vpord(Zmm(29), Zmm(29), Zmm(29));
   }
 };
 
