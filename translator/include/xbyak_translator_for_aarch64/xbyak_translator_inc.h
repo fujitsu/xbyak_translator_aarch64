@@ -45,6 +45,7 @@
 #include "instructions/vpandd.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
+#include "instructions/vpord.h"
 #include "instructions/vpxor.h"
 #include "instructions/vpxord.h"
 #include "instructions/vsqrtps.h"
