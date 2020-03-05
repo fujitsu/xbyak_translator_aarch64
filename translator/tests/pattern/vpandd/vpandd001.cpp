@@ -38,7 +38,7 @@ public:
 
     //    vandps(Xmm(4), Xmm(0), ptr_b[rax]);
     //    vandps(Ymm(5), Ymm(0), ptr_b[rax]);
-    vpandd(Zmm(6), Zmm(0), ptr_b[rax]);
+    //    vpandd(Zmm(6), Zmm(0), ptr_b[rax]);
 
     //    vandps(Xmm(7), Xmm(7), ptr[rax]);
     //    vandps(Ymm(8), Ymm(8), ptr[rax]);
@@ -46,7 +46,7 @@ public:
 
     //    vandps(Xmm(10), Xmm(10), ptr_b[rax]);
     //    vandps(Ymm(11), Ymm(11), ptr_b[rax]);
-    vpandd(Zmm(12), Zmm(12), ptr_b[rax]);
+    //    vpandd(Zmm(12), Zmm(12), ptr_b[rax]);
 
     mov(rax, 5);
   }
