@@ -30,6 +30,7 @@
 #include "instructions/vinserti32x4.h"
 #include "instructions/vinserti64x4.h"
 #include "instructions/vmaskmovps.h"
+#include "instructions/vmaxps.h"
 #include "instructions/vmovaps.h"
 #include "instructions/vmovd.h"
 #include "instructions/vmovdqu.h"

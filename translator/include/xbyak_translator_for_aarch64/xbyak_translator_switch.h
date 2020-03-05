@@ -1180,6 +1180,8 @@ case XED_ICLASS_VMASKMOVPS:
   break;
 case XED_ICLASS_VMAXPD:
 case XED_ICLASS_VMAXPS:
+  translateVMAXPS(&xedd);
+  break;
 case XED_ICLASS_VMAXSD:
 case XED_ICLASS_VMAXSS:
 case XED_ICLASS_VMCALL:
