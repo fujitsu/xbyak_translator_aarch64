@@ -20,10 +20,6 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
-    inputZReg[31].ud_dt[0] = ~uint64_t(0);
-    inputZReg[31].ud_dt[2] = ~uint64_t(0);
-    inputZReg[31].ud_dt[3] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -36,21 +32,21 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
 
     mov(rax, addr);
-    //    vandps(Xmm(1), Xmm(0), ptr[rax]);
-    //    vandps(Ymm(2), Ymm(0), ptr[rax]);
-          vpord(Zmm(3), Zmm(0), ptr[rax]);
+    //    vpord(Xmm(1), Xmm(0), ptr[rax]);
+    //    vpord(Ymm(2), Ymm(0), ptr[rax]);
+    vpord(Zmm(3), Zmm(0), ptr[rax]);
 
-    //    vandps(Xmm(4), Xmm(0), ptr_b[rax]);
-    //    vandps(Ymm(5), Ymm(0), ptr_b[rax]);
-          vpord(Zmm(6), Zmm(0), ptr_b[rax]);
+    //    vpord(Xmm(4), Xmm(0), ptr_b[rax]);
+    //    vpord(Ymm(5), Ymm(0), ptr_b[rax]);
+    vpord(Zmm(6), Zmm(0), ptr_b[rax]);
 
-    //    vandps(Xmm(7), Xmm(7), ptr[rax]);
-    //    vandps(Ymm(8), Ymm(8), ptr[rax]);
-          vpord(Zmm(9), Zmm(9), ptr[rax]);
+    //    vpord(Xmm(7), Xmm(7), ptr[rax]);
+    //    vpord(Ymm(8), Ymm(8), ptr[rax]);
+    vpord(Zmm(9), Zmm(9), ptr[rax]);
 
-    //    vandps(Xmm(10), Xmm(10), ptr_b[rax]);
-    //    vandps(Ymm(11), Ymm(11), ptr_b[rax]);
-          vpord(Zmm(12), Zmm(12), ptr_b[rax]);
+    //    vpord(Xmm(10), Xmm(10), ptr_b[rax]);
+    //    vpord(Ymm(11), Ymm(11), ptr_b[rax]);
+    vpord(Zmm(12), Zmm(12), ptr_b[rax]);
 
     mov(rax, 5);
   }

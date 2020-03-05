@@ -40,20 +40,20 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vpord(Zmm(2), Zmm(0), Zmm(1));
-    //    vandps(Ymm(5), Ymm(3), Ymm(4));
-    //    vandps(Zmm(8), Zmm(6), Zmm(7));
+    //    vpord(Ymm(5), Ymm(3), Ymm(4));
+    //    vpord(Zmm(8), Zmm(6), Zmm(7));
 
     vpord(Zmm(9), Zmm(9), Zmm(9));
-    //    vandps(Ymm(10), Ymm(10), Ymm(10));
-    //    vandps(Zmm(11), Zmm(11), Zmm(11));
+    //    vpord(Ymm(10), Ymm(10), Ymm(10));
+    //    vpord(Zmm(11), Zmm(11), Zmm(11));
 
     vpord(Zmm(12), Zmm(12), Zmm(13));
-    //    vandps(Ymm(14), Ymm(14), Ymm(15));
-    //    vandps(Zmm(16), Zmm(16), Zmm(17));
+    //    vpord(Ymm(14), Ymm(14), Ymm(15));
+    //    vpord(Zmm(16), Zmm(16), Zmm(17));
 
     vpord(Zmm(19), Zmm(18), Zmm(18));
-    //    vandps(Ymm(21), Ymm(20), Ymm(20));
-    //    vandps(Zmm(23), Zmm(22), Zmm(22));
+    //    vpord(Ymm(21), Ymm(20), Ymm(20));
+    //    vpord(Zmm(23), Zmm(22), Zmm(22));
   }
 };
 
