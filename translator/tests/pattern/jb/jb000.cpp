@@ -44,27 +44,26 @@ public:
     mov(r11, std::numeric_limits<uint64_t>::min());
 
     std::vector<Reg64> regs = {r15, r14, r13, r12, r11};
-    Label L0, L1, L2, L3, L4, L5, L6, L7, L8, L9, 
-      L10, L11, L12, L13, L14, L15, L16, L17, L18, L19,
-      L20, L21, L22, L23, L24;
+    Label L0, L1, L2, L3, L4, L5, L6, L7, L8, L9, L10, L11, L12, L13, L14, L15,
+        L16, L17, L18, L19, L20, L21, L22, L23, L24;
 
-    std::vector<Label> label_vec = {L0, L1, L2, L3, L4, L5, L6, L7, L8, L9, 
-      L10, L11, L12, L13, L14, L15, L16, L17, L18, L19,
-				    L20, L21, L22, L23, L24};
-    
+    std::vector<Label> label_vec = {L0,  L1,  L2,  L3,  L4,  L5,  L6,  L7,  L8,
+                                    L9,  L10, L11, L12, L13, L14, L15, L16, L17,
+                                    L18, L19, L20, L21, L22, L23, L24};
+
     int n = 0;
     for (const auto &j : regs) {
       for (const auto &i : regs) {
-	cmp(j, i);
-	jb(label_vec[n]);
-	add(rax, 1);
-	L(label_vec[n]);
+        cmp(j, i);
+        jb(label_vec[n]);
+        add(rax, 1);
+        L(label_vec[n]);
 #ifdef XBYAK_TRANSLATE_AARCH64
-	CodeGeneratorAArch64::lsl(x0, x0, 1);
-#else //#ifdef XBYAK_TRANSLATE_AARCH64
-	shl(rax, 1);
+        CodeGeneratorAArch64::lsl(x0, x0, 1);
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
+        shl(rax, 1);
 #endif //#ifdef XBYAK_TRANSLATE_AARCH64
-	n++;
+        n++;
       }
     }
   }

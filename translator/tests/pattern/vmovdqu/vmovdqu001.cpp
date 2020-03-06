@@ -39,7 +39,7 @@ public:
     mov(rbx, addr);
     vmovdqu(Xmm(0), ptr[rax]);
     vmovdqu(ptr[rbx], Xmm(0));
-    vmovdqu(Xmm(1), ptr[rbx]);
+    vmovdqu8(Zmm(1), ptr[rbx]);
 #endif
 
 #if 1
@@ -49,7 +49,7 @@ public:
     mov(rbx, addr);
     vmovdqu(Ymm(2), ptr[rax]);
     vmovdqu(ptr[rbx], Ymm(2));
-    vmovdqu(Ymm(3), ptr[rbx]);
+    vmovdqu8(Zmm(3), ptr[rbx]);
 #endif
 
     /* Address is unaligned */
@@ -60,7 +60,7 @@ public:
     mov(rbx, addr);
     vmovdqu(Xmm(4), ptr[rax]);
     vmovdqu(ptr[rbx], Xmm(4));
-    vmovdqu(Xmm(5), ptr[rbx]);
+    vmovdqu8(Zmm(5), ptr[rbx]);
 #endif
 
 #if 1
@@ -70,7 +70,7 @@ public:
     mov(rbx, addr);
     vmovdqu(Ymm(6), ptr[rax]);
     vmovdqu(ptr[rbx], Ymm(6));
-    vmovdqu(Ymm(7), ptr[rbx]);
+    vmovdqu8(Zmm(7), ptr[rbx]);
 #endif
 
     mov(rax,

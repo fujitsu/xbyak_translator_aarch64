@@ -30,7 +30,7 @@ public:
 
     inputZReg[4].us_dt[0] = inputZReg[5].us_dt[0] = float(3.3);
     inputZReg[4].us_dt[7] = inputZReg[5].us_dt[7] = float(4.4);
-    inputZReg[4].us_dt[15] =  inputZReg[5].us_dt[15] = float(5.5);
+    inputZReg[4].us_dt[15] = inputZReg[5].us_dt[15] = float(5.5);
   }
 
   void setCheckRegFlagAll() {
@@ -39,9 +39,9 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vcmpps(Xmm(8), Xmm(0), Xmm(1), 0); // EQ_OQ
-    vcmpps(Xmm(9), Xmm(2), Xmm(3), 0); // EQ_OQ
-    vcmpps(Xmm(10), Xmm(4), Xmm(5), 0); // EQ_OQ
+    vcmpps(Xmm(8), Xmm(0), Xmm(1), 0);    // EQ_OQ
+    vcmpps(Xmm(9), Xmm(2), Xmm(3), 0);    // EQ_OQ
+    vcmpps(Xmm(10), Xmm(4), Xmm(5), 0);   // EQ_OQ
     vcmpps(Xmm(11), Xmm(15), Xmm(15), 0); // EQ_OQ
   }
 };
@@ -69,8 +69,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f();                 /* Execute JIT code */
-
+    f(); /* Execute JIT code */
 
 #ifndef XBYAK_TRANSLATE_AARCH64
     /* Bit order of mask registers are different from x86_64 and aarch64.
