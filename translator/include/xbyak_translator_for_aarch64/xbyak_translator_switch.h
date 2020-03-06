@@ -1289,8 +1289,8 @@ case XED_ICLASS_VPADDW:
 case XED_ICLASS_VPALIGNR:
 case XED_ICLASS_VPAND:
 case XED_ICLASS_VPANDD:
-    translateVPANDD(&xedd);
-    break;
+  translateVPANDD(&xedd);
+  break;
 case XED_ICLASS_VPANDN:
 case XED_ICLASS_VPANDND:
 case XED_ICLASS_VPANDNQ:
@@ -1512,8 +1512,8 @@ case XED_ICLASS_VPOPCNTQ:
 case XED_ICLASS_VPOPCNTW:
 case XED_ICLASS_VPOR:
 case XED_ICLASS_VPORD:
-    translateVPORD(&xedd);
-    break;
+  translateVPORD(&xedd);
+  break;
 case XED_ICLASS_VPORQ:
 case XED_ICLASS_VPPERM:
 case XED_ICLASS_VPROLD:
