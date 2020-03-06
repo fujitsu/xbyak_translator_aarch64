@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -29,13 +28,14 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    vmovdqu32(Xmm(0), Xmm(1));
+    vmovdqu32(Xmm(8), Xmm(8));
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    vmovdqu32(Ymm(2), Ymm(3));
+    vmovdqu32(Ymm(9), Ymm(9));
+
+    vmovdqu32(Zmm(4), Zmm(5));
+    vmovdqu32(Zmm(10), Zmm(10));
   }
 };
 

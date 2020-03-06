@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -20,7 +19,42 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+
     setInputZregAllRandomHex();
+    /* elemet is 8 bits.
+       Xmm:16 elements
+       Ymm:32 elements
+       Zmm:64 elements */
+
+    // Xmm range
+    inputPredReg[1] = (1 << 0) | (1 << 3) | (1 << 12) /* x86_64 */
+                      | (1 << 0) | (1 << 12) |
+                      (uint64_t(1) << 48); /* aarch64 */
+
+    inputPredReg[2] = (1 << 0) | (1 << 5) | (1 << 11) | (1 << 15) /* x86_64 */
+                      | (1 << 0) | (uint64_t(1) << 20) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 60); /* aarch64 */
+
+    // Ymm range
+    inputPredReg[3] = (1 << 0) | (1 << 5) | (1 << 11) /* x86_64 */
+                      | (1 << 0) | (uint64_t(1) << 20) |
+                      (uint64_t(1) << 44); /* aarch64 */
+    inputPredReg[4] = (1 << 0) | (1 << 5) | (1 << 11) |
+                      (uint64_t(1) << 13) /* x86_64 */
+                      | (1 << 0) | (uint64_t(1) << 20) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 52); /* aarch64 */
+
+    // Zmm range
+    inputPredReg[5] = (1 << 0) | (1 << 5) | (1 << 13) |
+                      (uint64_t(1) << 15) /* x86_64 */
+                      | (1 << 0) | (uint64_t(1) << 20) | (uint64_t(1) << 52) |
+                      (uint64_t(1) << 60); /* aarch64 */
+    inputPredReg[6] = (1 << 0) | (1 << 5) | (1 << 11) | (uint64_t(1) << 13) |
+                      (uint64_t(1) << 15) /* x86_64 */
+                      | (1 << 0) | (uint64_t(1) << 20) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 52) | (uint64_t(1) << 60); /* aarch64 */
+
+    inputPredReg[7] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -29,13 +63,21 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    vmovdqu32(Zmm(0) | k1, Zmm(1));
+    vmovdqu32(Zmm(2) | k2, Zmm(3));
+    vmovdqu32(Zmm(4) | k3, Zmm(5));
+    vmovdqu32(Zmm(6) | k4, Zmm(7));
+    vmovdqu32(Zmm(8) | k5, Zmm(9));
+    vmovdqu32(Zmm(10) | k6, Zmm(11));
+    vmovdqu32(Zmm(12) | k7, Zmm(13));
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    vmovdqu32(Zmm(14) | k1, Zmm(14));
+    vmovdqu32(Zmm(15) | k2, Zmm(15));
+    vmovdqu32(Zmm(16) | k3, Zmm(16));
+    vmovdqu32(Zmm(17) | k4, Zmm(17));
+    vmovdqu32(Zmm(18) | k5, Zmm(18));
+    vmovdqu32(Zmm(19) | k6, Zmm(19));
+    vmovdqu32(Zmm(20) | k7, Zmm(20));
   }
 };
 

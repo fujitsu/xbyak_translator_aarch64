@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -21,6 +20,34 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+
+    for (int i = 0; i < 64; i++) {
+      inputZReg[15].ub_dt[i] = i;
+    }
+
+    for (int i = 0; i < 64; i++) {
+      inputZReg[8].sb_dt[i] = i;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[9].sb_dt[i] = 3;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[10].sb_dt[i] = 0x80;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[11].sb_dt[i] = 0xff;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[12].sb_dt[i] = 0x7f;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[13].sb_dt[i] = 0x74;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[14].sb_dt[i] = 0x40 | (i % 8);
+    }
   }
 
   void setCheckRegFlagAll() {
@@ -29,13 +56,16 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    /* VEX */
+    vpshufb(Ymm(0), Ymm(15), Ymm(8));
+    vpshufb(Ymm(1), Ymm(15), Ymm(9));
+    vpshufb(Ymm(2), Ymm(15), Ymm(10));
+    vpshufb(Ymm(3), Ymm(15), Ymm(11));
+    vpshufb(Ymm(4), Ymm(15), Ymm(12));
+    vpshufb(Ymm(5), Ymm(15), Ymm(13));
+    vpshufb(Ymm(6), Ymm(15), Ymm(14));
   }
 };
 

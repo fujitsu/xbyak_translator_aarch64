@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -21,6 +20,48 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+
+    for (int i = 0; i < 64; i++) {
+      inputZReg[15].ub_dt[i] = i;
+      inputZReg[28].ub_dt[i] = i;
+    }
+
+    for (int i = 0; i < 64; i++) {
+      inputZReg[16].sb_dt[i] = i;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[17].sb_dt[i] = 3;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[18].sb_dt[i] = 0x80;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[19].sb_dt[i] = 0xff;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[20].sb_dt[i] = 0x7f;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[21].sb_dt[i] = 0x74;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[22].sb_dt[i] = 0x14;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[23].sb_dt[i] = 0x24;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[24].sb_dt[i] = 0x44;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[25].sb_dt[i] = 0x84;
+    }
+
+    for (int i = 0; i < 64; i++) {
+      inputZReg[26].sb_dt[i] = 0x40 | (i % 8);
+    }
   }
 
   void setCheckRegFlagAll() {
@@ -29,13 +70,20 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    /* EVEX */
+    vpshufb(Ymm(0), Ymm(28), Ymm(16));
+    vpshufb(Ymm(1), Ymm(28), Ymm(17));
+    vpshufb(Ymm(2), Ymm(28), Ymm(18));
+    vpshufb(Ymm(3), Ymm(28), Ymm(19));
+    vpshufb(Ymm(4), Ymm(28), Ymm(20));
+    vpshufb(Ymm(5), Ymm(28), Ymm(21));
+    vpshufb(Ymm(6), Ymm(28), Ymm(22));
+    vpshufb(Ymm(7), Ymm(28), Ymm(23));
+    vpshufb(Ymm(8), Ymm(28), Ymm(24));
+    vpshufb(Ymm(9), Ymm(28), Ymm(25));
+    vpshufb(Ymm(10), Ymm(28), Ymm(26));
   }
 };
 

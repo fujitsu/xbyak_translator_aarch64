@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -29,13 +28,14 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    /* VEX */
+    int param;
+    for (int i = 0; i < 10; i++) {
+      param = (int)(rand() * 129 / (1.0 + RAND_MAX));
+      vperm2i128(Ymm(i + 2), Ymm(0), Ymm(1), param);
+    }
   }
 };
 

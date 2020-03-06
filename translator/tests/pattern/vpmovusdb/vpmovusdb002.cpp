@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -21,6 +20,14 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+    // inputZReg[0].us_dt[0] = uint32_t(7);
+    // inputZReg[4].us_dt[0] = uint32_t(7);
+
+    inputPredReg[1] = (1 << 0) | (1 << 7); /* Both x86_64 and aarch64 */
+    inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) |
+                      (1 << 15); /* Both x86_64 and aarch64 */
+
+    inputPredReg[7] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -30,12 +37,41 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    size_t addr1;
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    /* Address is aligned */
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
+    mov(rax, addr);
+    mov(rbx, addr);
+    vpmovusdb(ptr[rbx], Zmm(0) | k1);
+    vmovdqu8(Zmm(1), ptr[rbx]);
+    vpmovusdb(ptr[rbx], Zmm(2) | k2);
+    vmovdqu8(Zmm(3), ptr[rbx]);
+    vpmovusdb(ptr[rbx], Zmm(4) | k7);
+    vmovdqu8(Zmm(5), ptr[rbx]);
+
+#endif
+
+    /* Address is unaligned */
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 5;
+    mov(rax, addr);
+    mov(rbx, addr);
+    vpmovusdb(ptr[rbx], Zmm(6) | k1);
+    vmovdqu8(Zmm(7), ptr[rbx]);
+    vpmovusdb(ptr[rbx], Zmm(8) | k2);
+    vmovdqu8(Zmm(9), ptr[rbx]);
+    vpmovusdb(ptr[rbx], Zmm(10) | k7);
+    vmovdqu8(Zmm(11), ptr[rbx]);
+#endif
+
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(rbx,
+        size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 

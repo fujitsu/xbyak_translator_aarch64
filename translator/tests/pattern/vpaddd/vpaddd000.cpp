@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -21,6 +20,20 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+#if 0
+    /*
+    for (int i = 0; i < 16; i++) {
+      inputZReg[0].us_dt[i] = ~uint64_t(0);
+      inputZReg[3].us_dt[i] = ~uint64_t(0);
+      inputZReg[6].us_dt[i] = ~uint64_t(0);
+    }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[1].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[4].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[7].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+    }
+    */
+#endif
   }
 
   void setCheckRegFlagAll() {
@@ -29,13 +42,10 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
-
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    vpaddd(Ymm(0), Ymm(1), Ymm(2));
+    vpaddd(Ymm(3), Ymm(3), Ymm(4));
+    vpaddd(Zmm(5), Zmm(6), Zmm(5));
+    vpaddd(Zmm(7), Zmm(8), Zmm(8));
   }
 };
 

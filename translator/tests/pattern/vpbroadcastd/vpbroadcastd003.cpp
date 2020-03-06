@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -20,7 +19,8 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
+    setDumpZRegMode(SP_DT); // set float mode
+    inputZReg[0].sp_dt[7] = float(500.3);
   }
 
   void setCheckRegFlagAll() {
@@ -30,12 +30,18 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[7]));
+    mov(rax, addr);
+
+    for (int i = 0; i < 4; i++) {
+      // vbroadcastss(Xmm(i), ptr[rax]);
+      // vbroadcastss(Ymm(i + 4), ptr[rax]);
+      vpbroadcastd(Zmm(i + 8), ptr[rax]);
+    }
+
+    mov(rax, 8);
   }
 };
 

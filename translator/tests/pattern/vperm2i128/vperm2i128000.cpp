@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -21,6 +20,45 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+
+    inputZReg[0].ud_dt[0] = 10; // a
+    inputZReg[0].ud_dt[1] = 10; // a
+    inputZReg[0].ud_dt[2] = 11; // b
+    inputZReg[0].ud_dt[3] = 11; // b
+
+    inputZReg[1].ud_dt[0] = 12; // c
+    inputZReg[1].ud_dt[1] = 12; // c
+    inputZReg[1].ud_dt[2] = 13; // d
+    inputZReg[1].ud_dt[3] = 13; // d
+    /*
+    for (int i = 0; i < 64; i++) {
+      inputZReg[1].ud_dt[i] = i;
+    }
+
+    for (int i = 0; i < 64; i++) {
+      inputZReg[8].sb_dt[i] = i;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[9].sb_dt[i] = 3;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[10].sb_dt[i] = 0x80;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[11].sb_dt[i] = 0xff;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[12].sb_dt[i] = 0x7f;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[13].sb_dt[i] = 0x74;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[14].sb_dt[i] = 0x40 | (i % 8);
+    }
+    */
   }
 
   void setCheckRegFlagAll() {
@@ -29,13 +67,19 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    /* VEX */
+    for (int i = 0; i < 4; i++) {
+      vperm2i128(Ymm(i + 2), Ymm(0), Ymm(1), i);
+    }
+
+    vperm2i128(Ymm(6), Ymm(0), Ymm(1), 16);
+    vperm2i128(Ymm(7), Ymm(0), Ymm(1), 32);
+    vperm2i128(Ymm(8), Ymm(0), Ymm(1), 48);
+
+    vperm2i128(Ymm(9), Ymm(0), Ymm(1), 8);
+    vperm2i128(Ymm(10), Ymm(0), Ymm(1), 128);
   }
 };
 

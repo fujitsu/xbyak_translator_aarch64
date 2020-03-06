@@ -33,9 +33,11 @@ public:
     /* Address is aligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    mov(rax, addr);
+    movq(xmm0, ptr[rax]);
+    movq(xmm15, ptr[rax]);
+
+    mov(rax, 5);
   }
 };
 

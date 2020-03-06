@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -21,6 +20,8 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
   }
 
   void setCheckRegFlagAll() {
@@ -29,13 +30,23 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    vpshufb(Ymm(0), Ymm(1), Ymm(2));
+    vpshufb(Ymm(3), Ymm(3), Ymm(4));
+    vpshufb(Ymm(5), Ymm(6), Ymm(5));
+    vpshufb(Ymm(7), Ymm(8), Ymm(8));
+    vpshufb(Ymm(9), Ymm(9), Ymm(9));
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    vpshufb(Ymm(10), Ymm(11), Ymm(12));
+    vpshufb(Ymm(13), Ymm(13), Ymm(14));
+    vpshufb(Ymm(15), Ymm(16), Ymm(15));
+    vpshufb(Ymm(17), Ymm(18), Ymm(18));
+    vpshufb(Ymm(19), Ymm(19), Ymm(19));
+
+    vpshufb(Ymm(20), Ymm(21), Ymm(22));
+    vpshufb(Ymm(23), Ymm(23), Ymm(24));
+    vpshufb(Ymm(25), Ymm(26), Ymm(25));
+    vpshufb(Ymm(27), Ymm(28), Ymm(28));
   }
 };
 

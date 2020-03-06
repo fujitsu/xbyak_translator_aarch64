@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -21,6 +20,20 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+#if 0
+    /*
+    for (int i = 0; i < 8; i++) {
+      inputZReg[0].ud_dt[i] = ~uint64_t(0);
+      inputZReg[3].ud_dt[i] = ~uint64_t(0);
+      inputZReg[6].ud_dt[i] = ~uint64_t(0);
+    }
+    for (int i = 0; i < 8; i++) {
+      inputZReg[1].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[4].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[7].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+    }
+    */
+#endif
   }
 
   void setCheckRegFlagAll() {
@@ -30,12 +43,19 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rax, addr);
+
+    vpaddd(Ymm(0), Ymm(1), ptr[rax]);
+    vpaddd(Ymm(2), Ymm(2), ptr[rax]);
+
+    vpaddd(Zmm(3), Zmm(4), ptr[rax]);
+    vpaddd(Zmm(5), Zmm(5), ptr[rax]);
+
+    mov(rax, 5);
   }
 };
 
