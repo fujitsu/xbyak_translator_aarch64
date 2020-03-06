@@ -2,7 +2,7 @@ void translateVUNPCKHPD(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
-  /* 2020/03/06 10:02 */
+  /* 2020/03/06 11:17 */
 #define CG64 CodeGeneratorAArch64
   /* Col=S103*/
   if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)) {
@@ -22,19 +22,20 @@ void translateVUNPCKHPD(xed_decoded_inst_t *p) {
   }
   /* Col=AA103*/
   if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)) {
-    CodeGeneratorAArch64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_384.b, xa::PRegB(a64.maskIdx));
+    CG64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_384.b, xa::PRegB(a64.maskIdx));
   }
   /* Col=AB103*/
   if(false ||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)) {
-    CodeGeneratorAArch64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_256.b, xa::PRegB(a64.maskIdx));
+    CG64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_256.b, xa::PRegB(a64.maskIdx));
   }
+
   /* Col=AD103*/
   if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)) {
-    CodeGeneratorAArch64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_384.b);
+    CG64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_384.b);
   }
   /* Col=AF103*/
   if(false ||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)) {
-    CodeGeneratorAArch64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_256.b);
+    CG64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_256.b);
   }
   /* Col=AG103*/
   if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)) {
@@ -46,11 +47,11 @@ void translateVUNPCKHPD(xed_decoded_inst_t *p) {
   }
   /* Col=AJ103*/
   if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)) {
-    CodeGeneratorAArch64::ld1d(xa::ZRegD(a64.zTmpIdx), xa::PReg(a64.pTmpIdx)/xa::T_z, xa::ptr(X_TMP_ADDR));
+    CG64::ld1d(xa::ZRegD(a64.zTmpIdx), xa::PReg(a64.pTmpIdx)/xa::T_z, xa::ptr(X_TMP_ADDR));
   }
   /* Col=AL103*/
   if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)) {
-    CodeGeneratorAArch64::ldr(xa::ZReg(a64.zTmpIdx), xa::ptr(X_TMP_ADDR));
+    CG64::ldr(xa::ZReg(a64.zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AN103*/
   if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)) {
@@ -58,11 +59,11 @@ void translateVUNPCKHPD(xed_decoded_inst_t *p) {
   }
   /* Col=AO103*/
   if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)) {
-    CodeGeneratorAArch64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_384.b, xa::PRegB(a64.maskIdx));
+    CG64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_384.b, xa::PRegB(a64.maskIdx));
   }
   /* Col=AP103*/
   if(false ||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_MEM&&true)) {
-    CodeGeneratorAArch64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_256.b, xa::PRegB(a64.maskIdx));
+    CG64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE/xa::T_z, P_MSB_256.b, xa::PRegB(a64.maskIdx));
   }
   /* Col=AQ103*/
   if(false ||(a64.dstWidth==128&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==128&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==0&&a64.dstType==A64_OP_REG&&a64.srcType==A64_OP_REG&&a64.src2Type==A64_OP_REG&&true)) {
