@@ -73,7 +73,6 @@ public:
     vmaskmovps(Ymm(5), Ymm(3), ptr[rbx]);
 #endif
 
-    
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
     mov(rbx,

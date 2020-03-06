@@ -22,9 +22,9 @@ public:
     setInputZregAllRandomFloat();
     setDumpZRegMode(SP_DT); // set float mode
 
-    for(int j=0; j<NUM_Z_REG; j++) {
-      for(int i=0; i<NUM_BYTES_Z_REG/sizeof(float); i++) {
-	inputZReg[j].sp_dt[i] = float((0.5+i)*j);
+    for (int j = 0; j < NUM_Z_REG; j++) {
+      for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
+        inputZReg[j].sp_dt[i] = float((0.5 + i) * j);
       }
     }
   }
@@ -37,20 +37,19 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
     /* VEX encode */
-        vsqrtps(Xmm(0), Xmm(1));
-        vsqrtps(Xmm(2), Xmm(2));
+    vsqrtps(Xmm(0), Xmm(1));
+    vsqrtps(Xmm(2), Xmm(2));
     /* EVEX encode */
-        vsqrtps(Xmm(20), Xmm(21));
-        vsqrtps(Xmm(22), Xmm(22));
+    vsqrtps(Xmm(20), Xmm(21));
+    vsqrtps(Xmm(22), Xmm(22));
 
     /* VEX encode */
-        vsqrtps(Ymm(3), Ymm(4));
-        vsqrtps(Ymm(5), Ymm(5));
+    vsqrtps(Ymm(3), Ymm(4));
+    vsqrtps(Ymm(5), Ymm(5));
 
     /* EVEX encode */
-        vsqrtps(Ymm(23), Ymm(24));
-        vsqrtps(Ymm(25), Ymm(25));
-
+    vsqrtps(Ymm(23), Ymm(24));
+    vsqrtps(Ymm(25), Ymm(25));
 
     /* VEX encode */
     vsqrtps(Zmm(6), Zmm(7));

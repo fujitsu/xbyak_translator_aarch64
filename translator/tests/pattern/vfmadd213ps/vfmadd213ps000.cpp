@@ -22,9 +22,9 @@ public:
     setInputZregAllRandomFloat();
     setDumpZRegMode(SP_DT); // set float mode
 
-    for(int j=0; j<NUM_Z_REG; j++) {
-      for(int i=0; i<NUM_BYTES_Z_REG/sizeof(float); i++) {
-	inputZReg[j].sp_dt[i] = float((0.5+i)*j);
+    for (int j = 0; j < NUM_Z_REG; j++) {
+      for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
+        inputZReg[j].sp_dt[i] = float((0.5 + i) * j);
       }
     }
   }
@@ -35,7 +35,8 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14, r15 */
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
+     * r15 */
 
     /* VEX encode */
     vfmadd213ps(Xmm(0), Xmm(1), Xmm(2));

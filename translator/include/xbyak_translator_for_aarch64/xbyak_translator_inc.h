@@ -17,6 +17,7 @@
 #include "instructions/sub.h"
 #include "instructions/test.h"
 #include "instructions/vaddps.h"
+#include "instructions/vaddss.h"
 #include "instructions/vandps.h"
 #include "instructions/vblendmps.h"
 #include "instructions/vblendvps.h"
@@ -26,6 +27,10 @@
 #include "instructions/vfmadd213ps.h"
 #include "instructions/vfmadd231ps.h"
 #include "instructions/vfnmadd231ps.h"
+#include "instructions/vinsertf128.h"
+#include "instructions/vinsertf64x4.h"
+#include "instructions/vinserti32x4.h"
+#include "instructions/vinserti64x4.h"
 #include "instructions/vmaskmovps.h"
 #include "instructions/vmovaps.h"
 #include "instructions/vmovd.h"
@@ -58,6 +63,7 @@
 #include "instructions/vzeroupper.h"
 #include "instructions/xadd_lock.h"
 #include "instructions/xor.h"
+
 #if 0
 #include "instructions/kmovb.h"
 #include "instructions/kmovd.h"

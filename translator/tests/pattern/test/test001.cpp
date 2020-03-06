@@ -44,8 +44,9 @@ public:
     mov(r11, std::numeric_limits<uint64_t>::min());
 
     std::vector<Reg64> regs = {r15, r14, r13, r12, r11};
-    std::vector<uint64_t> imms = {uint64_t(0x7FFFFFFFFFFFFFFF), uint64_t(0x8000000000000000),
-				  uint64_t(0), uint64_t(0xFFFFFFFFFFFFFFFF), uint64_t(0)};
+    std::vector<uint64_t> imms = {uint64_t(0x7FFFFFFFFFFFFFFF),
+                                  uint64_t(0x8000000000000000), uint64_t(0),
+                                  uint64_t(0xFFFFFFFFFFFFFFFF), uint64_t(0)};
     //    std::vector<Reg64> regs = {r15};
 #ifdef XBYAK_TRANSLATE_AARCH64
     Xbyak_aarch64::XReg x_of{x7};

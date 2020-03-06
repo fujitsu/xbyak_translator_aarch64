@@ -22,22 +22,27 @@ public:
     setInputZregAllRandomHex();
 
     inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) |            /* x86_64 */
-                      (1 << 0) | (1 << 4) | (1 << 16);            /* aarch64 */
-    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) | (1<<8) |/* x86_64 */
-      (1 << 0) | (1 << 4) | (1 << 8) | (1 << 16) | (uint64_t(1)<<32); /* aarch64 */
-    inputPredReg[4] =
-      (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1<<8) |(1<<12)| /* x86_64 */
-      (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |(uint64_t(1)<<32)|(uint64_t(1)<<48); /* aarch64 */
+    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) | /* x86_64 */
+                      (1 << 0) | (1 << 4) | (1 << 16); /* aarch64 */
+    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) |
+                      (1 << 8) | /* x86_64 */
+                      (1 << 0) | (1 << 4) | (1 << 8) | (1 << 16) |
+                      (uint64_t(1) << 32); /* aarch64 */
+    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
+                      (1 << 8) | (1 << 12) | /* x86_64 */
+                      (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |
+                      (uint64_t(1) << 32) | (uint64_t(1) << 48); /* aarch64 */
 
     inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 6) | (1<<8) |(1<<12) |/* x86_64 */
+                      (1 << 6) | (1 << 8) | (1 << 12) | /* x86_64 */
                       (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |
-      (1 << 24)|(uint64_t(1)<<32) |(uint64_t(1)<<48); /* aarch64 */
+                      (1 << 24) | (uint64_t(1) << 32) |
+                      (uint64_t(1) << 48); /* aarch64 */
     inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 6) | (1 << 7) | (1<<8) | (1<<12) |/* x86_64 */
+                      (1 << 6) | (1 << 7) | (1 << 8) | (1 << 12) | /* x86_64 */
                       (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |
-      (1 << 24) | (1 << 28) |(uint64_t(1)<<32)|(uint64_t(1)<<48); /* aarch64 */
+                      (1 << 24) | (1 << 28) | (uint64_t(1) << 32) |
+                      (uint64_t(1) << 48); /* aarch64 */
     inputPredReg[7] = ~uint64_t(0);
   }
 
@@ -52,26 +57,26 @@ public:
     /* Address is unaligned */
     addr0 = reinterpret_cast<size_t>(&(inputZReg[30].ud_dt[7]));
     mov(rax, addr0);
-    
-    vmovups(ptr[rax]|k1, Ymm(0));
+
+    vmovups(ptr[rax] | k1, Ymm(0));
     vmovups(Zmm(1), ptr[rax]);
 
-    vmovups(ptr[rax]|k2, Ymm(0));
+    vmovups(ptr[rax] | k2, Ymm(0));
     vmovups(Zmm(2), ptr[rax]);
 
-    vmovups(ptr[rax]|k3, Ymm(0));
+    vmovups(ptr[rax] | k3, Ymm(0));
     vmovups(Zmm(3), ptr[rax]);
 
-    vmovups(ptr[rax]|k4, Ymm(0));
+    vmovups(ptr[rax] | k4, Ymm(0));
     vmovups(Zmm(4), ptr[rax]);
 
-    vmovups(ptr[rax]|k5, Ymm(0));
+    vmovups(ptr[rax] | k5, Ymm(0));
     vmovups(Zmm(5), ptr[rax]);
 
-    vmovups(ptr[rax]|k6, Ymm(0));
+    vmovups(ptr[rax] | k6, Ymm(0));
     vmovups(Zmm(6), ptr[rax]);
 
-    vmovups(ptr[rax]|k7, Ymm(0));
+    vmovups(ptr[rax] | k7, Ymm(0));
     vmovups(Zmm(7), ptr[rax]);
 
     mov(rax, 5);

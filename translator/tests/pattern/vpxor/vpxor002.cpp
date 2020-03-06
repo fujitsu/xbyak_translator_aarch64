@@ -47,7 +47,6 @@ public:
     std::cout << "Address is " << std::hex << addr << std::endl;
     mov(rax, addr);
 
-
     vpxor(Xmm(0), Xmm(1), ptr[rax]);
     vpxor(Xmm(2), Xmm(2), ptr[rax]);
 
