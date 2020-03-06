@@ -52,15 +52,14 @@ public:
     /* Address is unaligned */
     addr0 = reinterpret_cast<size_t>(&(inputZReg[30].ud_dt[7]));
     mov(rax, addr0);
-    
-    vmovups(Xmm(1) |k1 | T_z, ptr[rax]);
-    vmovups(Xmm(2) |k2 | T_z, ptr[rax]);
-    vmovups(Xmm(3) |k3 | T_z, ptr[rax]);
-    vmovups(Xmm(4) |k4 | T_z, ptr[rax]);
-    vmovups(Xmm(5) |k5 | T_z, ptr[rax]);
-    vmovups(Xmm(6) |k6 | T_z, ptr[rax]);
-    vmovups(Xmm(7) |k7 | T_z, ptr[rax]);
 
+    vmovups(Xmm(1) | k1 | T_z, ptr[rax]);
+    vmovups(Xmm(2) | k2 | T_z, ptr[rax]);
+    vmovups(Xmm(3) | k3 | T_z, ptr[rax]);
+    vmovups(Xmm(4) | k4 | T_z, ptr[rax]);
+    vmovups(Xmm(5) | k5 | T_z, ptr[rax]);
+    vmovups(Xmm(6) | k6 | T_z, ptr[rax]);
+    vmovups(Xmm(7) | k7 | T_z, ptr[rax]);
 
     mov(rax, 5);
   }

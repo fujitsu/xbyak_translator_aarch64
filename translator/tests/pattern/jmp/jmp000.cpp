@@ -31,7 +31,7 @@ public:
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
        r13, r14, r15 */
     Label L0;
-    
+
     mov(rax, 0x55);
     jmp(L0);
     xor_(rax, rax);

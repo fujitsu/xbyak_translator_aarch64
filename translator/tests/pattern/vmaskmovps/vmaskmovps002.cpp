@@ -21,13 +21,19 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-    for(int i=0; i<8; i++) {
-      inputZReg[7].us_dt[i*2]   =      inputZReg[10].us_dt[i*2]   = inputZReg[13].us_dt[i*2] = uint32_t(1) << 31;
-      inputZReg[7].us_dt[i*2+1] =      inputZReg[10].us_dt[i*2+1] = inputZReg[13].us_dt[i*2+1] = 0;
-      inputZReg[8].us_dt[i*2]   =      inputZReg[11].us_dt[i*2]   =      inputZReg[14].us_dt[i*2] = uint32_t(0x7FFFFFFF);
-      inputZReg[8].us_dt[i*2+1] =      inputZReg[11].us_dt[i*2+1] =       inputZReg[14].us_dt[i*2+1] = ~uint32_t(0);
-      inputZReg[9].us_dt[i*2]   =      inputZReg[12].us_dt[i*2]   =     inputZReg[15].us_dt[i*2] = uint32_t(0);
-      inputZReg[9].us_dt[i*2+1] =      inputZReg[12].us_dt[i*2+1] =       inputZReg[15].us_dt[i*2+1] = ~uint32_t(0);
+    for (int i = 0; i < 8; i++) {
+      inputZReg[7].us_dt[i * 2] = inputZReg[10].us_dt[i * 2] =
+          inputZReg[13].us_dt[i * 2] = uint32_t(1) << 31;
+      inputZReg[7].us_dt[i * 2 + 1] = inputZReg[10].us_dt[i * 2 + 1] =
+          inputZReg[13].us_dt[i * 2 + 1] = 0;
+      inputZReg[8].us_dt[i * 2] = inputZReg[11].us_dt[i * 2] =
+          inputZReg[14].us_dt[i * 2] = uint32_t(0x7FFFFFFF);
+      inputZReg[8].us_dt[i * 2 + 1] = inputZReg[11].us_dt[i * 2 + 1] =
+          inputZReg[14].us_dt[i * 2 + 1] = ~uint32_t(0);
+      inputZReg[9].us_dt[i * 2] = inputZReg[12].us_dt[i * 2] =
+          inputZReg[15].us_dt[i * 2] = uint32_t(0);
+      inputZReg[9].us_dt[i * 2 + 1] = inputZReg[12].us_dt[i * 2 + 1] =
+          inputZReg[15].us_dt[i * 2 + 1] = ~uint32_t(0);
     }
   }
 
@@ -58,7 +64,6 @@ public:
     vmaskmovps(Ymm(11), Ymm(11), ptr[rax]);
     vmaskmovps(Ymm(12), Ymm(12), ptr[rax]);
 
-    
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }

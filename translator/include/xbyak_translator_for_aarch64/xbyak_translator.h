@@ -518,10 +518,10 @@ void xt_pop_zreg() {
                                 Xbyak_aarch64::ptr(X_TMP_0));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
-#else //#ifdef XT_AARCH64_STACK_REG
+#else  //#ifdef XT_AARCH64_STACK_REG
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(x4));
       CodeGeneratorAArch64::add(x4, x4, NUM_BYTES_Z_REG);
-#endif #ifdef XT_AARCH64_STACK_REG
+#endif //#ifdef XT_AARCH64_STACK_REG
       zreg_tmp_used[i] = false;
       return;
     }
