@@ -1297,6 +1297,8 @@ case XED_ICLASS_VPAVGB:
 case XED_ICLASS_VPAVGW:
 case XED_ICLASS_VPBLENDD:
 case XED_ICLASS_VPBLENDMB:
+  translateVPBLENDMB(&xedd);
+  break;
 case XED_ICLASS_VPBLENDMD:
   translateVPBLENDMD(&xedd);
   break;
