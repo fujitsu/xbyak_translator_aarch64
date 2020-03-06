@@ -362,6 +362,8 @@ case XED_ICLASS_KANDW:
 case XED_ICLASS_KMOVB:
 case XED_ICLASS_KMOVD:
 case XED_ICLASS_KMOVQ:
+  translateKMOVQ(&xedd);
+  break;
 case XED_ICLASS_KMOVW:
   translateKMOVW(&xedd);
   break;
