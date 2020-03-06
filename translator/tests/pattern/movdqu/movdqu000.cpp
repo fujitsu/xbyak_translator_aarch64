@@ -29,6 +29,7 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     movdqu(Xmm(0), Xmm(1));
+    movdqu(Xmm(15), Xmm(14));
   }
 };
 

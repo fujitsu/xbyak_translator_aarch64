@@ -22,22 +22,27 @@ public:
     setInputZregAllRandomHex();
 
     inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) |            /* x86_64 */
-                      (1 << 0) | (1 << 4) | (1 << 16);            /* aarch64 */
-    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) | (1<<8) |/* x86_64 */
-      (1 << 0) | (1 << 4) | (1 << 8) | (1 << 16) |(uint64_t(1)<<32); /* aarch64 */
-    inputPredReg[4] =
-      (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1<<8) |(1<<12)|/* x86_64 */
-      (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |(uint64_t(1)<<32)|(uint64_t(1)<<48); /* aarch64 */
+    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) | /* x86_64 */
+                      (1 << 0) | (1 << 4) | (1 << 16); /* aarch64 */
+    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) |
+                      (1 << 8) | /* x86_64 */
+                      (1 << 0) | (1 << 4) | (1 << 8) | (1 << 16) |
+                      (uint64_t(1) << 32); /* aarch64 */
+    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
+                      (1 << 8) | (1 << 12) | /* x86_64 */
+                      (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |
+                      (uint64_t(1) << 32) | (uint64_t(1) << 48); /* aarch64 */
 
     inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 6) | (1<<8) |(1<<12) |/* x86_64 */
+                      (1 << 6) | (1 << 8) | (1 << 12) | /* x86_64 */
                       (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |
-      (1 << 24)|(uint64_t(1)<<32) |(uint64_t(1)<<48); /* aarch64 */
+                      (1 << 24) | (uint64_t(1) << 32) |
+                      (uint64_t(1) << 48); /* aarch64 */
     inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 6) | (1 << 7) | (1<<8) | (1<<12) |/* x86_64 */
+                      (1 << 6) | (1 << 7) | (1 << 8) | (1 << 12) | /* x86_64 */
                       (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |
-      (1 << 24) | (1 << 28)|(uint64_t(1)<<32) | (uint64_t(1)<<48); /* aarch64 */
+                      (1 << 24) | (1 << 28) | (uint64_t(1) << 32) |
+                      (uint64_t(1) << 48); /* aarch64 */
     inputPredReg[7] = ~uint64_t(0);
   }
 
@@ -47,16 +52,16 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vmovups(Zmm(0), Zmm(27) | k1 );
-    vmovups(Zmm(1), Zmm(27) | k2 );
-    vmovups(Zmm(2), Zmm(27) | k3 );
-    vmovups(Zmm(3), Zmm(27) | k4 );
-    vmovups(Zmm(4), Zmm(27) | k5 );
-    vmovups(Zmm(5), Zmm(27) | k6 );
-    vmovups(Zmm(6), Zmm(27) | k7 );
+    vmovups(Zmm(0), Zmm(27) | k1);
+    vmovups(Zmm(1), Zmm(27) | k2);
+    vmovups(Zmm(2), Zmm(27) | k3);
+    vmovups(Zmm(3), Zmm(27) | k4);
+    vmovups(Zmm(4), Zmm(27) | k5);
+    vmovups(Zmm(5), Zmm(27) | k6);
+    vmovups(Zmm(6), Zmm(27) | k7);
 
-    vmovups(Zmm(30) | k7 , Zmm(27));
-    vmovups(Zmm(27), Zmm(27) | k7 );
+    vmovups(Zmm(30) | k7, Zmm(27));
+    vmovups(Zmm(27), Zmm(27) | k7);
   }
 };
 

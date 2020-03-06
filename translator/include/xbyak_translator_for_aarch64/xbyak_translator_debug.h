@@ -33,11 +33,8 @@ Copyright (c) 2019 Intel Corporation
 END_LEGAL */
 #include "xed-examples-util_aarch64.h"
 #include "xed/xed-interface.h"
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
+struct xt_a64fx_operands_structV3_t;
 struct xt_a64fx_operands_struct_t;
 
 void print_misc(xed_decoded_inst_t *xedd) {
@@ -396,6 +393,32 @@ void print_operands(xed_decoded_inst_t *xedd) {
                         xed_decoded_inst_operand_element_type(xedd, i)));
     printf(" %10s\n", xed_reg_class_enum_t2str(xed_reg_class(
                           xed_decoded_inst_get_reg(xedd, op_name))));
+  }
+}
+
+void xt_dump_a64fx_operandsV3(xt_a64fx_operands_structV3_t *a64) {
+  std::cout << std::dec;
+
+  std::cout << "==============================" << std::endl;
+  std::cout << "A64 operand V3 information" << std::endl;
+  std::cout << "==============================" << std::endl;
+  std::cout << std::left << std::setw(21)
+            << "predType=" << xt_to_string(a64->predType) << std::endl;
+  std::cout << std::left << std::setw(21) << "EVEXb=" << a64->EVEXb
+            << std::endl;
+  for (int i = 0; i < xtNumOperands; i++) {
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].opName=" << xt_to_string(a64->operands[i].opName)
+              << std::endl;
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].regIdx=" << a64->operands[i].regIdx << std::endl;
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].opWidth=" << a64->operands[i].opWidth << std::endl;
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].regClass=" << xt_to_string(a64->operands[i].regClass)
+              << std::endl;
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].uimm=" << xt_to_string(a64->operands[i].uimm) << std::endl;
   }
 }
 

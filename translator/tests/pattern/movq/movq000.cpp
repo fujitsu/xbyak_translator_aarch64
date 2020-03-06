@@ -21,8 +21,6 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    inputGenReg[0] = uint64_t(0xffffaaaa55553333);
-    inputGenReg[8] = uint64_t(0xccccffff55553333);
   }
 
   void setCheckRegFlagAll() {
@@ -31,11 +29,13 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    movq(xmm0, rax);
-    movq(xmm1, r8);
+    size_t addr;
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
 
-    movq(r9, xmm2);
-    movq(r10, xmm3);
+    movq(xmm1, xmm0);
+    movq(xmm7, xmm6);
+    movq(xmm15, xmm6);
   }
 };
 

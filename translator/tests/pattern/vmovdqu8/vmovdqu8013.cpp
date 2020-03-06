@@ -22,6 +22,14 @@ public:
     //    setDumpZRegMode(SP_DT); // set float mode
     setInputZregAllRandomHex();
 
+#if 0
+    for(int j=0; j<32; j+=2) {
+      for(int i=0; i<32; i++) {
+	inputZReg[j].uh_dt[i] = 0xffff;
+      }
+    }
+#endif
+
     /* elemet is 8 bits.
        Xmm:16 elements
        Ymm:32 elements
@@ -60,50 +68,50 @@ public:
     mov(rax, addr);
 
     vmovdqu8(ptr[rax] | k1 | T_z, Xmm(0));
-    vmovdqu8(Xmm(1) | k1, ptr[rax]);
+    vmovdqu8(Zmm(1), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k2 | T_z, Xmm(2));
-    vmovdqu8(Xmm(3) | k2, ptr[rax]);
+    vmovdqu8(Zmm(3), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k3 | T_z, Xmm(4));
-    vmovdqu8(Xmm(5) | k3, ptr[rax]);
+    vmovdqu8(Zmm(5), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k4 | T_z, Xmm(6));
-    vmovdqu8(Xmm(7) | k4, ptr[rax]);
+    vmovdqu8(Zmm(7), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k5 | T_z, Xmm(8));
-    vmovdqu8(Xmm(9) | k5, ptr[rax]);
+    vmovdqu8(Zmm(9), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k6 | T_z, Xmm(10));
-    vmovdqu8(Xmm(11) | k6, ptr[rax]);
+    vmovdqu8(Zmm(11), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k7 | T_z, Xmm(12));
-    vmovdqu8(Xmm(13) | k7, ptr[rax]);
+    vmovdqu8(Zmm(13), ptr[rax]);
 
     /* Address is unaligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[30].sp_dt[0]) + 3);
     mov(rax, addr);
 
     vmovdqu8(ptr[rax] | k1 | T_z, Xmm(14));
-    vmovdqu8(Xmm(15) | k1, ptr[rax]);
+    vmovdqu8(Zmm(15), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k2 | T_z, Xmm(16));
-    vmovdqu8(Xmm(17) | k2, ptr[rax]);
+    vmovdqu8(Zmm(17), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k3 | T_z, Xmm(18));
-    vmovdqu8(Xmm(19) | k3, ptr[rax]);
+    vmovdqu8(Zmm(19), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k4 | T_z, Xmm(20));
-    vmovdqu8(Xmm(21) | k4, ptr[rax]);
+    vmovdqu8(Zmm(21), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k5 | T_z, Xmm(22));
-    vmovdqu8(Xmm(23) | k5, ptr[rax]);
+    vmovdqu8(Zmm(23), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k6 | T_z, Xmm(24));
-    vmovdqu8(Xmm(25) | k6, ptr[rax]);
+    vmovdqu8(Zmm(25), ptr[rax]);
 
     vmovdqu8(ptr[rax] | k7 | T_z, Xmm(26));
-    vmovdqu8(Xmm(27) | k7, ptr[rax]);
+    vmovdqu8(Zmm(27), ptr[rax]);
 
     mov(rax, 5);
   }

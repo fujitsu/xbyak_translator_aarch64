@@ -39,14 +39,13 @@ public:
     mov(rax, addr0);
     mov(rbx, addr1);
     mov(rdi, addr2);
-    
+
     vmovups(Xmm(0), ptr[rax]);
     vmovups(Xmm(1), ptr[rax]);
 
     vmovups(Ymm(2), ptr[rbx]);
     vmovups(Ymm(3), ptr[rbx]);
 
-    
     vmovups(Zmm(4), ptr[rdi]);
     vmovups(Zmm(5), ptr[rdi]);
 
