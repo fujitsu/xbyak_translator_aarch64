@@ -29,13 +29,21 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
+    size_t addr, addr1;
     /* Address is aligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[30].ud_dt[0]));
 
-    movq(xmm1, xmm0);
-    movq(xmm7, xmm6);
-    movq(xmm15, xmm6);
+    mov(rax, addr);
+    mov(rcx, addr1);
+    movq(ptr[rax], xmm1);
+    movq(ptr[rcx], xmm15);
+
+    vmovdqu8(zmm2, ptr[rax]);
+    vmovdqu8(zmm16, ptr[rcx]);
+
+    mov(rax, 5);
+    mov(rcx, 5);
   }
 };
 
