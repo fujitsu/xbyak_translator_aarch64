@@ -37,6 +37,7 @@
 #include "instructions/vmovd.h"
 #include "instructions/vmovdqu.h"
 #include "instructions/vmovdqu16.h"
+#include "instructions/vmovdqu32.h"
 #include "instructions/vmovdqu8.h"
 #include "instructions/vmovhlps.h"
 #include "instructions/vmovhps.h"
