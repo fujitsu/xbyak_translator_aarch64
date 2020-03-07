@@ -179,7 +179,8 @@ inline const std::string xt_to_string(const xed_reg_class_enum_t num) {
     msg = "XED_REG_CLASS_MASK";
     break;
   default:
-    msg = "Undefined xt_operand_type_t=" + std::to_string(static_cast<uint64_t>(num));
+    msg = "Undefined xt_operand_type_t=" +
+          std::to_string(static_cast<uint64_t>(num));
     break;
   }
 
@@ -192,6 +193,9 @@ inline const std::string xt_to_string(const xed_operand_enum_t num) {
   switch (num) {
   case XED_OPERAND_INVALID:
     msg = "XED_OPERAND_INVALID";
+    break;
+  case XED_OPERAND_AGEN:
+    msg = "XED_OPERAND_AGEN";
     break;
   case XED_OPERAND_MASK:
     msg = "XED_OPERAND_MASK";
@@ -235,7 +239,9 @@ inline const std::string xt_to_string(const xed_operand_enum_t num) {
   case XED_OPERAND_IMM0:
     msg = "XED_OPERAND_IMM0";
     break;
-  default : msg = "Undefined xt_operand_enum_t=" + std::to_string(static_cast<uint32_t>(num));
+  default:
+    msg = "Undefined xt_operand_enum_t=" +
+          std::to_string(static_cast<uint32_t>(num));
     break;
   }
 

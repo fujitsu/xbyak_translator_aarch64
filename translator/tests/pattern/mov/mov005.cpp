@@ -28,7 +28,8 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14, r15 */
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
+     * r15 */
     size_t addr;
 
     /* Address is aligned */
@@ -42,17 +43,17 @@ public:
     mov(rdx, ptr[r15 + r14]);
     mov(rbx, ptr[r15 + r14 + 0x33]);
 
-    mov(rsi, ptr[r15 + r14*1]);
-    mov(rdi, ptr[r15 + r14*1 + 0x33]);
+    mov(rsi, ptr[r15 + r14 * 1]);
+    mov(rdi, ptr[r15 + r14 * 1 + 0x33]);
 
-    mov(r8, ptr[r15 + r14*2]);
-    mov(r9, ptr[r15 + r14*2 + 0x33]);
+    mov(r8, ptr[r15 + r14 * 2]);
+    mov(r9, ptr[r15 + r14 * 2 + 0x33]);
 
-    mov(r10, ptr[r15 + r14*4]);
-    mov(r11, ptr[r15 + r14*4 + 0x33]);
+    mov(r10, ptr[r15 + r14 * 4]);
+    mov(r11, ptr[r15 + r14 * 4 + 0x33]);
 
-    mov(r12, ptr[r15 + r14*8]);
-    mov(r13, ptr[r15 + r14*8 + 0x33]);
+    mov(r12, ptr[r15 + r14 * 8]);
+    mov(r13, ptr[r15 + r14 * 8 + 0x33]);
 
     mov(r15,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
