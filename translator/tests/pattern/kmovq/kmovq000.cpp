@@ -30,12 +30,13 @@ public:
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
 
-    mov(r8, 1);
-    kmovq(k1, r8);
+    //    mov(r8, 1);
+    //    kmovq(k1, r8);
 
     mov(r9, 1 << 2);
     kmovq(k2, r9);
 
+#if 0
     mov(r10, 1 << 3);
     kmovq(k3, r10);
 
@@ -44,6 +45,7 @@ public:
 
     mov(r12, 0xFFFF);
     kmovq(k5, r12);
+#endif
   }
 };
 
@@ -76,6 +78,7 @@ int main(int argc, char *argv[]) {
     /* Bit order of mask registers are different from x86_64 and aarch64.
        In order to compare output values of mask registers by test script,
        Bit order of x86_64 mask register values is modified here. */
+    //    gen.modifyPredReg(UB_DT);
     gen.modifyPredReg(SP_DT);
 #endif
 
