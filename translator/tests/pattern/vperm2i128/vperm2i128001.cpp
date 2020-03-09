@@ -20,7 +20,6 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
   }
 
   void setCheckRegFlagAll() {
@@ -33,9 +32,9 @@ public:
 
     /* VEX */
     int param;
-    for(int i = 0; i < 10; i++){
-      param = (int)(rand()*129/(1.0+RAND_MAX));
-      vperm2i128(Ymm(i+2), Ymm(0), Ymm(1), param);
+    for (int i = 0; i < 10; i++) {
+      param = (int)(rand() * 129 / (1.0 + RAND_MAX));
+      vperm2i128(Ymm(i + 2), Ymm(0), Ymm(1), param);
     }
   }
 };

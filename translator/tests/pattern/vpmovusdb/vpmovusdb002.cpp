@@ -20,13 +20,12 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    //inputZReg[0].us_dt[0] = uint32_t(7);
-    //inputZReg[4].us_dt[0] = uint32_t(7);
+    // inputZReg[0].us_dt[0] = uint32_t(7);
+    // inputZReg[4].us_dt[0] = uint32_t(7);
 
-    
     inputPredReg[1] = (1 << 0) | (1 << 7); /* Both x86_64 and aarch64 */
     inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) |
-      (1 << 15); /* Both x86_64 and aarch64 */
+                      (1 << 15); /* Both x86_64 and aarch64 */
 
     inputPredReg[7] = ~uint64_t(0);
   }
@@ -46,13 +45,13 @@ public:
     addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
     mov(rax, addr);
     mov(rbx, addr);
-    vpmovusdb(ptr[rbx],  Zmm(0) | k1);
+    vpmovusdb(ptr[rbx], Zmm(0) | k1);
     vmovdqu8(Zmm(1), ptr[rbx]);
     vpmovusdb(ptr[rbx], Zmm(2) | k2);
     vmovdqu8(Zmm(3), ptr[rbx]);
     vpmovusdb(ptr[rbx], Zmm(4) | k7);
     vmovdqu8(Zmm(5), ptr[rbx]);
-    
+
 #endif
 
     /* Address is unaligned */

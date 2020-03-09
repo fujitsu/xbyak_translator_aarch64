@@ -31,7 +31,6 @@ public:
     vblendvps(Xmm(0), Xmm(1), Xmm(2), Xmm(3));
 
     vblendvps(Ymm(4), Ymm(5), Ymm(6), Ymm(7));
-
   }
 };
 
