@@ -3,7 +3,7 @@ void translateVBROADCASTI32X4(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/03/06 14:21 */
+/* 2020/03/09 14:07 */
 /* Col=S103*/
 if(false ||(a64.dstWidth==256&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==256&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_ZERO&&a64.EVEXb==1&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_MERG&&a64.EVEXb==1&&a64.srcType==A64_OP_MEM&&true)) {
   XT_UNIMPLEMENTED;
@@ -67,6 +67,7 @@ if(false ||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.srcT
 if(false ||(a64.dstWidth==256&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.srcType==A64_OP_MEM&&true)||(a64.dstWidth==512&&a64.PredType==A64_PRED_NO&&a64.EVEXb==1&&a64.srcType==A64_OP_MEM&&true)) {
   xt_pop_preg();
 }
+
 
 
 
