@@ -25,6 +25,7 @@
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
 #include "instructions/vpxord.h"
+#include "instructions/vunpcklpd.h"
 #include "instructions/vxorps.h"
 #include "instructions/vzeroupper.h"
 #include "instructions/xor.h"
