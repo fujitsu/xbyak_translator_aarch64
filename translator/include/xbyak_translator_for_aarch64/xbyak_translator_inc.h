@@ -12,6 +12,7 @@
 #include "instructions/movdqu.h"
 #include "instructions/movq.h"
 #include "instructions/movss.h"
+#include "instructions/movups.h"
 #include "instructions/not.h"
 #include "instructions/or.h"
 #include "instructions/pause.h"
