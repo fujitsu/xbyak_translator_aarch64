@@ -461,7 +461,11 @@ case XED_ICLASS_MOVDIR64B:
 case XED_ICLASS_MOVDIRI:
 case XED_ICLASS_MOVDQ2Q:
 case XED_ICLASS_MOVDQA:
+  translateMOVDQA(&xedd);
+  break;
 case XED_ICLASS_MOVDQU:
+  translateMOVDQU(&xedd);
+  break;
 case XED_ICLASS_MOVHLPS:
 case XED_ICLASS_MOVHPD:
 case XED_ICLASS_MOVHPS:

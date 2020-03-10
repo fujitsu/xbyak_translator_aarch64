@@ -8,6 +8,8 @@
 #include "instructions/lea.h"
 #include "instructions/mov.h"
 #include "instructions/movd.h"
+#include "instructions/movdqa.h"
+#include "instructions/movdqu.h"
 #include "instructions/movq.h"
 #include "instructions/movss.h"
 #include "instructions/not.h"

@@ -31,7 +31,6 @@ public:
     vpmaxsd(Xmm(0), Xmm(1), Xmm(2));
 
     vpmaxsd(Ymm(4), Ymm(5), Ymm(6));
-
   }
 };
 

@@ -49,7 +49,6 @@ public:
     std::cout << "Address is " << std::hex << addr << std::endl;
     mov(rax, addr);
 
-
     vpaddd(Ymm(0), Ymm(1), ptr[rax]);
     vpaddd(Ymm(2), Ymm(2), ptr[rax]);
 
