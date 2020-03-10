@@ -66,6 +66,13 @@ private:
 #define XT_VALID_CHECK
 #define XT_VALID_CHECK_IF
 
+#define XT_VALID_CHECK isValid = true;
+
+#define XT_VALID_CHECK_IF                                                      \
+  if (!isValid) {                                                              \
+    std::cerr << __FILE__ << ":" << __LINE__                                   \
+              << ":Unsupported operand variation" << std::endl;
+
 enum x64_inst_t {
   X64_NO_ASSIGN = 0,
   X64_VBROADCASTSS = 0x18,
@@ -605,7 +612,7 @@ bool decodeOpcode(const Label *label = nullptr) {
     exit(1);
   }
 
-  /* Dump debugging info */
+/* Dump debugging info */
 #ifdef XT_DEBUG
   xt_dump_x86_64_decoded_info(&xedd);
 #endif
@@ -1037,8 +1044,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
 
     /* (x86_64's CF)
        aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
-    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0,
-                               0x3);         // extract C and V flags
+    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
     CodeGeneratorAArch64::cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
     CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L0);
     CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
@@ -1063,8 +1069,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
 
     /* (x86_64's CF)
        aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
-    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0,
-                               0x3);         // extract C and V flags
+    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
     CodeGeneratorAArch64::cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
     CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L0);
     CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
