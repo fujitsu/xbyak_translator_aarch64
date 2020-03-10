@@ -19,7 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-//    setInputZregAllRandomHex();
+    //    setInputZregAllRandomHex();
     setDumpZRegMode(SP_DT);
     setInputZregAllRandomFloat();
 
@@ -36,12 +36,21 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
+    /* Register index is VEX range. */
     vmaxps(Zmm(0), Zmm(1), Zmm(2));
-    vmaxps(Zmm(3), Zmm(3), Zmm(4));  /* dstIdx = srcIdx */
-    vmaxps(Zmm(5), Zmm(6), Zmm(5));  /* dstIdx = srcIdx2 */
-    vmaxps(Zmm(7), Zmm(8), Zmm(8));  /* srcIdx = srcIdx2 */
-    vmaxps(Zmm(9), Zmm(9), Zmm(9));  /* dstIdx = srcIdx = srcIdx2*/
-    vmaxps(Zmm(10), Zmm(11), Zmm(12));  /* src = src2 */
+    vmaxps(Zmm(3), Zmm(3), Zmm(4));    /* dstIdx = srcIdx */
+    vmaxps(Zmm(5), Zmm(6), Zmm(5));    /* dstIdx = srcIdx2 */
+    vmaxps(Zmm(7), Zmm(8), Zmm(8));    /* srcIdx = srcIdx2 */
+    vmaxps(Zmm(9), Zmm(9), Zmm(9));    /* dstIdx = srcIdx = srcIdx2*/
+    vmaxps(Zmm(10), Zmm(11), Zmm(12)); /* src = src2 */
+
+    /* Register index is EVEX range. */
+    vmaxps(Zmm(10), Zmm(11), Zmm(12));
+    vmaxps(Zmm(13), Zmm(13), Zmm(14)); /* dstIdx = srcIdx */
+    vmaxps(Zmm(15), Zmm(16), Zmm(15)); /* dstIdx = srcIdx2 */
+    vmaxps(Zmm(17), Zmm(18), Zmm(18)); /* srcIdx = srcIdx2 */
+    vmaxps(Zmm(19), Zmm(19), Zmm(19)); /* dstIdx = srcIdx = srcIdx2*/
+    vmaxps(Zmm(20), Zmm(21), Zmm(22)); /* src = src2 */
   }
 };
 
