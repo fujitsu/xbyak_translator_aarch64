@@ -3,6 +3,7 @@
 #include "instructions/cmp.h"
 #include "instructions/dec.h"
 #include "instructions/inc.h"
+#include "instructions/kmovd.h"
 #include "instructions/kmovq.h"
 #include "instructions/kmovw.h"
 #include "instructions/lea.h"
