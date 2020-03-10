@@ -63,6 +63,8 @@ private:
 #define XT_UNIMPLEMENTED                                                       \
   std::cerr << __FILE__ << ":" << __LINE__ << ":Unimplemented" << std::endl;   \
   assert(NULL);
+#define XT_VALID_CHECK
+#define XT_VALID_CHECK_IF
 
 enum x64_inst_t {
   X64_NO_ASSIGN = 0,
