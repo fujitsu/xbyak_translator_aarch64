@@ -52,6 +52,7 @@
 #include "instructions/vpaddd.h"
 #include "instructions/vpandd.h"
 #include "instructions/vpcmpb.h"
+#include "instructions/vpcmpd.h"
 #include "instructions/vpcmpub.h"
 #include "instructions/vpbroadcastb.h"
 #include "instructions/vpbroadcastd.h"
