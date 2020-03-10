@@ -21,6 +21,7 @@
 #include "instructions/vblendmps.h"
 #include "instructions/vbroadcastf32x4.h"
 #include "instructions/vbroadcastf64x4.h"
+#include "instructions/vbroadcasti32x4.h"
 #include "instructions/vbroadcastss.h"
 #include "instructions/vcmpps.h"
 #include "instructions/vdivps.h"
