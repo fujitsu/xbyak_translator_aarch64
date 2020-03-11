@@ -361,6 +361,8 @@ case XED_ICLASS_KANDQ:
 case XED_ICLASS_KANDW:
 case XED_ICLASS_KMOVB:
 case XED_ICLASS_KMOVD:
+  translateKMOVD(&xedd);
+  break;
 case XED_ICLASS_KMOVQ:
   translateKMOVQ(&xedd);
   break;
@@ -1342,6 +1344,8 @@ case XED_ICLASS_VPCMPB:
   translateVPCMPB(&xedd);
   break;
 case XED_ICLASS_VPCMPD:
+  translateVPCMPD(&xedd);
+  break;
 case XED_ICLASS_VPCMPEQB:
 case XED_ICLASS_VPCMPEQD:
 case XED_ICLASS_VPCMPEQQ:
