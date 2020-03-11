@@ -514,7 +514,7 @@ public:
 		setCacheHierarchy();
 #else //#ifndef XBYAK_TRANSLATE_AARCH64
 		/* model name	: Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz */
-		//		type_ |= 0x2871ffdf8f7ff;
+		type_ |= 0x2871ffdf8f7ff;
 		type_ |= tA64FX;
 		type_ |= tSIMD;
 		type_ |= tSVE;

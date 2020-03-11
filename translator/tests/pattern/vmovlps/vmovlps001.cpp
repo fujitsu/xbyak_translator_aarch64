@@ -53,8 +53,6 @@ public:
     mov(r15, ptr[rax]);
     add(rax, 8);
 
-
-
     addr = reinterpret_cast<size_t>(&(inputZReg[8].ud_dt[5]));
     mov(rax, addr);
 

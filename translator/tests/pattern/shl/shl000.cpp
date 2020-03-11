@@ -32,8 +32,31 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    sal(rax, 1);
-    sal(rbx, 4);
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
+     * r15 */
+    mov(rax, 1);
+    shl(rax, 1);
+
+    mov(rcx, 1);
+    shl(rcx, 31);
+
+    mov(rdx, 1);
+    shl(rdx, 32);
+
+    mov(rbx, 1);
+    shl(rbx, 63);
+
+    mov(r8, 1);
+    shl(r8d, 1);
+
+    mov(r9, 1);
+    shl(r9d, 31);
+
+    mov(r10, 1);
+    shl(r10d, 32);
+
+    mov(r11, 1);
+    shl(r11d, 63);
   }
 };
 
