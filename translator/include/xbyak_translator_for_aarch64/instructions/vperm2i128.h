@@ -76,7 +76,7 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
       srcIdx = a64.operands[2].regIdx;
       src2Idx = a64.operands[2].regIdx;
       break;
-  }
+    }
     CG64::ptrue(xa::PRegD(pTmpIdx), xa::VL2);
     CG64::sel(xa::ZRegD(dstIdx), xa::PReg(pTmpIdx), xa::ZRegD(srcIdx),
               xa::ZRegD(src2Idx));
@@ -142,8 +142,8 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
       msbElem = 0;
       break;
     case 0x20:
-    srcIdx = a64.operands[1].regIdx;
-    src2Idx = a64.operands[2].regIdx;
+      srcIdx = a64.operands[1].regIdx;
+      src2Idx = a64.operands[2].regIdx;
       lsbElem = 0;
       msbElem = 0;
       break;

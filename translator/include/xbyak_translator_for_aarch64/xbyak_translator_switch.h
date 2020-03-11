@@ -590,6 +590,8 @@ case XED_ICLASS_PDEP:
 case XED_ICLASS_PEXT:
 case XED_ICLASS_PEXTRB:
 case XED_ICLASS_PEXTRD:
+  translatePEXTRD(&xedd);
+  break;
 case XED_ICLASS_PEXTRQ:
 case XED_ICLASS_PEXTRW:
 case XED_ICLASS_PEXTRW_SSE4:
@@ -622,7 +624,11 @@ case XED_ICLASS_PHSUBW:
 case XED_ICLASS_PI2FD:
 case XED_ICLASS_PI2FW:
 case XED_ICLASS_PINSRB:
+  translatePINSRB(&xedd);
+  break;
 case XED_ICLASS_PINSRD:
+  translatePINSRD(&xedd);
+  break;
 case XED_ICLASS_PINSRQ:
 case XED_ICLASS_PINSRW:
 case XED_ICLASS_PMADDUBSW:
