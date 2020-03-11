@@ -72,6 +72,7 @@ private:
   if (!isValid) {                                                              \
     std::cerr << __FILE__ << ":" << __LINE__                                   \
               << ":Unsupported operand variation" << std::endl;
+}
 
 enum x64_inst_t {
   X64_NO_ASSIGN = 0,
