@@ -35,7 +35,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[31].ub_dt[0]));
     std::cout << "Address is " << std::hex << addr << std::endl;
     mov(rax, addr);
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 20; i++) {
       pinsrb(Xmm(i), ptr[rax], i);
     }
 

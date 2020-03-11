@@ -3,11 +3,12 @@ void translatePINSRB(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
 
-/* 2020/03/11 13:29 */
+/* 2020/03/11 14:05 */
 #define CG64 CodeGeneratorAArch64
   xt_reg_idx_t dstIdx;
   xt_reg_idx_t srcIdx;
   xed_uint64_t uimm;
+  uint32_t sel;
 
   /* Col=W103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -30,10 +31,17 @@ void translatePINSRB(xed_decoded_inst_t *p) {
     uimm = a64.operands[2].uimm;
   }
 
-  /* Col=AE103*/
+  /* Col=AD103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     CG64::ldr(W_TMP_0, xa::ptr(X_TMP_ADDR));
+  }
+  /* Col=AE103*/
+  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
+                a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
+    sel = uimm & 15;
   }
   /* Col=AF103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -50,7 +58,7 @@ void translatePINSRB(xed_decoded_inst_t *p) {
                 a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::mov(xa::VReg(dstIdx).b[uimm], W_TMP_0);
+    CG64::mov(xa::VReg(dstIdx).b[sel], W_TMP_0);
   }
 
 #undef CG64

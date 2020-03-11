@@ -29,7 +29,7 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     mov(eax, 0xFF);
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 20; i++) {
       pinsrb(Xmm(i), eax, i);
     }
   }
