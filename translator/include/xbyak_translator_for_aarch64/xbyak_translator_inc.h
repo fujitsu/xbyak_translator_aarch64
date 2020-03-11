@@ -17,6 +17,7 @@
 #include "instructions/not.h"
 #include "instructions/or.h"
 #include "instructions/pause.h"
+#include "instructions/pextrd.h"
 #include "instructions/pinsrb.h"
 #include "instructions/pinsrd.h"
 #include "instructions/ret.h"
