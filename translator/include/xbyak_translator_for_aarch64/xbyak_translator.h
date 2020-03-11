@@ -67,10 +67,11 @@ private:
 #define XT_VALID_CHECK \
   isValid = true;
 
-#define XT_VALID_CHECK_IF                                                      \
+#define XT_VALID_CHECK_IF						\
   if (!isValid) {                                                              \
     std::cerr << __FILE__ << ":" << __LINE__                                   \
-              << ":Unsupported operand variation" << std::endl;
+              << ":Unsupported operand variation" << std::endl;		\
+  }
 
 enum x64_inst_t {
   X64_NO_ASSIGN = 0,
