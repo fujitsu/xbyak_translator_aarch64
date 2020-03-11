@@ -48,6 +48,7 @@
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
 #include "instructions/vpmovzxbd.h"
+#include "instructions/vpmovzxwd.h"
 #include "instructions/vpxor.h"
 #include "instructions/vpxord.h"
 #include "instructions/vsqrtps.h"
