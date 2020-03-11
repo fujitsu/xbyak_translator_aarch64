@@ -58,6 +58,8 @@ public:
     vblendvps(Ymm(5), Ymm(11), ptr[rax], Ymm(11));
     vblendvps(Ymm(6), Ymm(12), ptr[rax], Ymm(12));
     vblendvps(Ymm(7), Ymm(13), ptr[rax], Ymm(13));
+
+    mov(rax, 0x5);
   }
 };
 

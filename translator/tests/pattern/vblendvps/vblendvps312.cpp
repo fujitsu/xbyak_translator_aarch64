@@ -65,6 +65,8 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[2].ud_dt[0]));
     mov(rax, addr);
     vblendvps(Xmm(2), Xmm(8), ptr[rax], Xmm(10));
+
+    mov(rax, 0x5);
   }
 };
 

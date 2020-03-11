@@ -57,7 +57,9 @@ public:
 
       flag |= uint16_t(1 << tmp0);
     }
-  }
+
+    mov(rax, 0x5);
+ }
 };
 
 int main(int argc, char *argv[]) {
