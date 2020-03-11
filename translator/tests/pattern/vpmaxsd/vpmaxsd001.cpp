@@ -37,18 +37,18 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* VEX range */
-    vpmaxsd(Xmm(0), Xmm(14), Xmm(15));
-    vpmaxsd(Xmm(1), Xmm(14), Xmm(15));
-    vpmaxsd(Xmm(2), Xmm(2), Xmm(15));
-    vpmaxsd(Xmm(3), Xmm(14), Xmm(3));
-    vpmaxsd(Xmm(4), Xmm(4), Xmm(4));
+    vpmaxsd(Ymm(0), Ymm(14), Ymm(15));
+    vpmaxsd(Ymm(1), Ymm(14), Ymm(15));
+    vpmaxsd(Ymm(2), Ymm(2), Ymm(15));
+    vpmaxsd(Ymm(3), Ymm(14), Ymm(3));
+    vpmaxsd(Ymm(4), Ymm(4), Ymm(4));
 
     /* EVEX range */
-    vpmaxsd(Xmm(10), Xmm(30), Xmm(31));
-    vpmaxsd(Xmm(11), Xmm(30), Xmm(31));
-    vpmaxsd(Xmm(12), Xmm(12), Xmm(31));
-    vpmaxsd(Xmm(13), Xmm(30), Xmm(13));
-    vpmaxsd(Xmm(16), Xmm(16), Xmm(16));
+    vpmaxsd(Ymm(10), Ymm(30), Ymm(31));
+    vpmaxsd(Ymm(11), Ymm(30), Ymm(31));
+    vpmaxsd(Ymm(12), Ymm(12), Ymm(31));
+    vpmaxsd(Ymm(13), Ymm(30), Ymm(13));
+    vpmaxsd(Ymm(16), Ymm(16), Ymm(16));
   }
 };
 
