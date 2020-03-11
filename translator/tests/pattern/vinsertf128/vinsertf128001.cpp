@@ -38,12 +38,15 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vinsertf128(Ymm(0), Ymm(1), Xmm(8), 0);
-    vinsertf128(Ymm(2), Ymm(3), Xmm(9), 1);
+    vinsertf128(Ymm(0), Ymm(14), Xmm(15), 0);
+    vinsertf128(Ymm(1), Ymm(14), Xmm(15), 1);
 
-    vinsertf128(Ymm(4), Ymm(4), Xmm(10), 0);
-    vinsertf128(Ymm(5), Ymm(5), Xmm(11), 1);
+    vinsertf128(Ymm(2), Ymm(2), Xmm(15), 0);
+    vinsertf128(Ymm(3), Ymm(3), Xmm(15), 1);
 
+    vinsertf128(Ymm(4), Ymm(14), Xmm(4), 0);
+    vinsertf128(Ymm(5), Ymm(14), Xmm(5), 1);
+    
     vinsertf128(Ymm(6), Ymm(7), Xmm(12), 0xfe);
   }
 };
