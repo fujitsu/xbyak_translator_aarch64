@@ -17,6 +17,7 @@
 #include "instructions/or.h"
 #include "instructions/pause.h"
 #include "instructions/pinsrb.h"
+#include "instructions/pinsrd.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
 #include "instructions/sub.h"

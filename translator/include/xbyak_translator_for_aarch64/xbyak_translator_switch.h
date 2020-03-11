@@ -623,6 +623,8 @@ case XED_ICLASS_PINSRB:
   translatePINSRB(&xedd);
   break;
 case XED_ICLASS_PINSRD:
+  translatePINSRD(&xedd);
+  break;
 case XED_ICLASS_PINSRQ:
 case XED_ICLASS_PINSRW:
 case XED_ICLASS_PMADDUBSW:
