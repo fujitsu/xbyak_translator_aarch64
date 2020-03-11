@@ -63,15 +63,14 @@ private:
 #define XT_UNIMPLEMENTED                                                       \
   std::cerr << __FILE__ << ":" << __LINE__ << ":Unimplemented" << std::endl;   \
   assert(NULL);
-#define XT_VALID_CHECK
-#define XT_VALID_CHECK_IF
 
 #define XT_VALID_CHECK isValid = true;
 
-#define XT_VALID_CHECK_IF                                                      \
+#define XT_VALID_CHECK_IF						\
   if (!isValid) {                                                              \
     std::cerr << __FILE__ << ":" << __LINE__                                   \
-              << ":Unsupported operand variation" << std::endl;
+              << ":Unsupported operand variation" << std::endl;		\
+  }
 
 enum x64_inst_t {
   X64_NO_ASSIGN = 0,
