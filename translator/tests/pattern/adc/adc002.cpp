@@ -37,6 +37,8 @@ public:
     mov(rax, addr);
     mov(r8, uint64_t(0xabcd));
     mov(r9, uint64_t(0xabcd));
+    mov(r14, uint64_t(0x0123));
+    mov(r15, uint64_t(0x4567));
 
     mov(r11, ~uint64_t(0));
     mov(r12, 1);
@@ -46,7 +48,18 @@ public:
     mov(r11, ~uint64_t(0));
     mov(r12, 1);
     add(r11, r12); //initialize carry flag(set carry flag for x86)
+    adc(r14, ptr[rax]);
+
+
+    mov(r11, ~uint64_t(0));
+    mov(r12, 1);
+    add(r11, r12); //initialize carry flag(set carry flag for x86)
     adc(r9d, ptr[rax]);
+
+    mov(r11, ~uint64_t(0));
+    mov(r12, 1);
+    add(r11, r12); //initialize carry flag(set carry flag for x86)
+    adc(r15d, ptr[rax]);
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64

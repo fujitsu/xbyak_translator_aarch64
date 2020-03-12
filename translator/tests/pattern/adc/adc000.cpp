@@ -38,7 +38,6 @@ public:
     mov(rcx, 1);
     adc(rax, rcx);
     
-
     //mov(edx, ~uint32_t(0));
     /* initialize carry bit (set carry bit for x86)*/
     mov(edx, ~uint32_t(0));
@@ -78,7 +77,6 @@ public:
     add(r12d, r12d); //initialize carry bit(set carry bit for x86)
     mov(r12d, ~uint32_t(0));
     adc(r12d, 0);
-    
   }
 };
 
