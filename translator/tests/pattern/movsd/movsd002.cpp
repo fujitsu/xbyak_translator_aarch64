@@ -29,18 +29,32 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr;
+    size_t addr1;
 
     /* Address is aligned */
+#if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
     mov(rax, addr);
-    movsd(Xmm(0), ptr[rax]);
-    movsd(Xmm(1), ptr[rax]);
+
+    movsd(ptr[rax], Xmm(0));
+    vmovdqu8(Zmm(16), ptr[rax]);
+
+    movsd(ptr[rax], Xmm(1));
+    vmovdqu8(Zmm(17), ptr[rax]);
+#endif
+
 
     /* Address is unaligned */
+#if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
     mov(rax, addr);
-    movsd(Xmm(2), ptr[rax]);
-    movsd(Xmm(3), ptr[rax]);
+
+    movsd(ptr[rax], Xmm(2));
+    vmovdqu8(Zmm(18), ptr[rax]);
+
+    movsd(ptr[rax], Xmm(3));
+    vmovdqu8(Zmm(19), ptr[rax]);
+#endif
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
