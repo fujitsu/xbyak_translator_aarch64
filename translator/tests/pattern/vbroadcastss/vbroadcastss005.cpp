@@ -39,6 +39,7 @@ public:
                       (1 << 6) | (1 << 7) | /* x86_64 */
                       (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |
                       (1 << 24) | (1 << 28); /* aarch64 */
+    inputPredReg[7] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -57,6 +58,9 @@ public:
     vbroadcastss(Ymm(4), Xmm(31) | k5 | T_z);
     vbroadcastss(Ymm(5), Xmm(31) | k6 | T_z);
     vbroadcastss(Ymm(6), Xmm(31) | k7 | T_z);
+
+    vbroadcastss(Ymm(30) | k7 | T_z, Xmm(31));
+    vbroadcastss(Ymm(31), Xmm(31) | k7 | T_z);
   }
 };
 

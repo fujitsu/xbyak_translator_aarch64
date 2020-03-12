@@ -19,7 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    //    setInputZregAllRandomHex();
+    setInputZregAllRandomHex();
 
     for (int i = 0; i < 8; i++) {
       inputZReg[0].ud_dt[i] = ~uint64_t(0);
@@ -40,8 +40,20 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vandps(Xmm(2), Xmm(0), Xmm(1));
-    vandps(Ymm(5), Ymm(3), Ymm(4));
-    vandps(Zmm(8), Zmm(6), Zmm(7));
+    //    vandps(Ymm(5), Ymm(3), Ymm(4));
+    //    vandps(Zmm(8), Zmm(6), Zmm(7));
+
+    vandps(Xmm(9), Xmm(9), Xmm(9));
+    //    vandps(Ymm(10), Ymm(10), Ymm(10));
+    //    vandps(Zmm(11), Zmm(11), Zmm(11));
+
+    vandps(Xmm(12), Xmm(12), Xmm(13));
+    //    vandps(Ymm(14), Ymm(14), Ymm(15));
+    //    vandps(Zmm(16), Zmm(16), Zmm(17));
+
+    vandps(Xmm(19), Xmm(18), Xmm(18));
+    //    vandps(Ymm(21), Ymm(20), Ymm(20));
+    //    vandps(Zmm(23), Zmm(22), Zmm(22));
   }
 };
 

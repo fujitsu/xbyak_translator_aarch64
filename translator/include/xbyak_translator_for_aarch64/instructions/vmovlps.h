@@ -3,18 +3,12 @@ void translateVMOVLPS(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-  /* 2020/02/19 14:01 */
-
-  /* Col=U103*/
-  if (false || (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
-                a64.src2Type == A64_OP_MEM && true)) {
-    a64.vTmpIdx = xt_push_vreg(&a64);
-  }
+  /* 2020/02/20 11:10 */
 
   /* Col=W103*/
   if (false || (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
                 a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::ldr(xa::QReg(a64.vTmpIdx), xa::ptr(X_TMP_ADDR));
+    CodeGeneratorAArch64::ldr(X_TMP_0, xa::ptr(X_TMP_ADDR));
   }
 
   /* Col=Y103*/
@@ -27,8 +21,7 @@ void translateVMOVLPS(xed_decoded_inst_t *p) {
   /* Col=AH103*/
   if (false || (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
                 a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::mov(xa::VReg2D(a64.dstIdx)[0],
-                              xa::VReg2D(a64.vTmpIdx)[0]);
+    CodeGeneratorAArch64::mov(xa::VReg2D(a64.dstIdx)[0], X_TMP_0);
   }
 
   /* Col=AJ103*/
@@ -41,11 +34,5 @@ void translateVMOVLPS(xed_decoded_inst_t *p) {
   if (false ||
       (a64.dstType == A64_OP_MEM && a64.srcType == A64_OP_REG && true)) {
     CodeGeneratorAArch64::st1(xa::VReg2D(a64.srcIdx)[0], xa::ptr(X_TMP_ADDR));
-  }
-
-  /* Col=AU103*/
-  if (false || (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
-                a64.src2Type == A64_OP_MEM && true)) {
-    xt_pop_vreg();
   }
 }
