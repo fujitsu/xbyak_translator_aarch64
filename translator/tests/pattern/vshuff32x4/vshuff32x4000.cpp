@@ -38,26 +38,20 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
 
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[30].ud_dt[0]));
-    mov(rax, addr);
-    mov(rcx, addr);
-    add(rcx, 64);
+    vshuff32x4(Ymm(0), Ymm(1), Ymm(2), 0);
+    vshuff32x4(Ymm(3), Ymm(3), Ymm(3), 0);
 
-    vshuff32x4(Ymm(0), Ymm(1), ptr[rax], 0);
-    vshuff32x4(Ymm(2), Ymm(3), ptr[rax], 1);
+    vshuff32x4(Ymm(4), Ymm(5), Ymm(6), 1);
+    vshuff32x4(Ymm(7), Ymm(7), Ymm(7), 1);
 
-    vshuff32x4(Ymm(4), Ymm(4), ptr[rax], 0);
-    vshuff32x4(Ymm(5), Ymm(5), ptr[rax], 1);
+    vshuff32x4(Ymm(8), Ymm(9), Ymm(10), 2);
+    vshuff32x4(Ymm(11), Ymm(11), Ymm(11), 2);
 
-    vshuff32x4(Ymm(6), Ymm(7), ptr[rax], 0xfe);
+    vshuff32x4(Ymm(12), Ymm(13), Ymm(14), 3);
+    vshuff32x4(Ymm(15), Ymm(15), Ymm(15), 3);
 
-    mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-    mov(rcx,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    vshuff32x4(Ymm(16), Ymm(16), Ymm(16), 123);
   }
 };
 
