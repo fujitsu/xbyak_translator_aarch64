@@ -21,7 +21,7 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-#if 0    
+#if 0
     for (int j = 0; j < 32; j++) {
       for (int i = 0; i < 16; i++) {
         inputZReg[j].us_dt[i] = (j << 16) + i;
@@ -40,27 +40,19 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
+    vinsertf128(Ymm(0), Ymm(14), Xmm(15), 0);
+    vinsertf128(Ymm(1), Ymm(14), Xmm(15), 1);
 
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[30].ud_dt[0]));
-    mov(rax, addr);
-    mov(rcx, addr);
-    add(rcx, 64);
+    vinsertf128(Ymm(2), Ymm(2), Xmm(15), 0);
+    vinsertf128(Ymm(3), Ymm(3), Xmm(15), 1);
 
-    vinsertf128(Ymm(0), Ymm(15), ptr[rax], 0);
-    vinsertf128(Ymm(1), Ymm(15), ptr[rax], 1);
+    vinsertf128(Ymm(4), Ymm(14), Xmm(4), 0);
+    vinsertf128(Ymm(5), Ymm(14), Xmm(5), 1);
 
-    vinsertf128(Ymm(2), Ymm(2), ptr[rax], 0);
-    vinsertf128(Ymm(3), Ymm(3), ptr[rax], 1);
+    vinsertf128(Ymm(6), Ymm(6), Xmm(6), 0);
+    vinsertf128(Ymm(7), Ymm(7), Xmm(7), 1);
 
-    vinsertf128(Ymm(4), Ymm(15), ptr[rax], 0xfe);
-    vinsertf128(Ymm(5), Ymm(5), ptr[rax], 0xfe);
-
-    mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-    mov(rcx,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    vinsertf128(Ymm(8), Ymm(14), Xmm(15), 0xfe);
   }
 };
 
