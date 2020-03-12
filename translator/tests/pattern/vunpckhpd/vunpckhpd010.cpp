@@ -20,6 +20,25 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
+    inputPredReg[1] = (1 << 0);
+    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) |            /* x86_64 */
+      (1 << 0) | (1 << 8) | (uint64_t(1) << 32);            /* aarch64 */
+    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) | /* x86_64 */
+      (1 << 0) | (1 << 8) | (1 << 16) | (uint64_t(1) << 32); /* aarch64 */
+    inputPredReg[4] =
+        (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |  /* x86_64 */
+      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32); /* aarch64 */
+
+    inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
+                      (1 << 6) | /* x86_64 */
+      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32) |
+						     (uint64_t(1) << 48); /* aarch64 */
+    inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
+                      (1 << 6) | (1 << 7) | /* x86_64 */
+						     (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32) |
+						     (uint64_t(1) << 48) | (uint64_t(1) << 56); /* aarch64 */
+    inputPredReg[7] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -29,27 +48,19 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr;
+
+    /* Address is aligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
-
     mov(rax, addr);
-    //    vandps(Xmm(1), Xmm(0), ptr[rax]);
-    //    vandps(Ymm(2), Ymm(0), ptr[rax]);
-    vpandd(Zmm(3), Zmm(0), ptr[rax]);
 
-    //    vandps(Xmm(4), Xmm(0), ptr_b[rax]);
-    //    vandps(Ymm(5), Ymm(0), ptr_b[rax]);
-    //    vpandd(Zmm(6), Zmm(0), ptr_b[rax]);
+    vunpckhpd(Xmm(0), Xmm(1), ptr_b[rax]);
+    vunpckhpd(Xmm(2), Xmm(2), ptr_b[rax]);
 
-    //    vandps(Xmm(7), Xmm(7), ptr[rax]);
-    //    vandps(Ymm(8), Ymm(8), ptr[rax]);
-    vpandd(Zmm(9), Zmm(9), ptr[rax]);
+    vunpckhpd(Ymm(3), Ymm(4), ptr_b[rax]);
+    vunpckhpd(Ymm(5), Ymm(5), ptr_b[rax]);
 
-    //    vandps(Xmm(10), Xmm(10), ptr_b[rax]);
-    //    vandps(Ymm(11), Ymm(11), ptr_b[rax]);
-    //    vpandd(Zmm(12), Zmm(12), ptr_b[rax]);
-
-    vpandd(Zmm(21), Zmm(22), ptr[rax]);
-
+    vunpckhpd(Zmm(6), Zmm(7), ptr_b[rax]);
+    vunpckhpd(Zmm(8), Zmm(8), ptr_b[rax]);
 
     mov(rax, 5);
   }

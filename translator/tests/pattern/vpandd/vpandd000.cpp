@@ -56,6 +56,12 @@ public:
     //    vandps(Zmm(23), Zmm(22), Zmm(22));
 
     vpandd(Zmm(25), Zmm(24), Zmm(25));
+
+    vpandd(Zmm(20), Zmm(30), Zmm(31));
+    vpandd(Zmm(21), Zmm(30), Zmm(21));
+    vpandd(Zmm(22), Zmm(22), Zmm(31));
+    vpandd(Zmm(23), Zmm(31), Zmm(31));
+    vpandd(Zmm(24), Zmm(24), Zmm(24));
   }
 };
 

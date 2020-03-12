@@ -19,7 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
+    //    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -28,30 +28,55 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
+       r13, r14, r15 */
+    
+    mov(rax, ~uint64_t(0));
+    mov(rcx, 1);
+    add(rax, rcx); //initialize carry bit(set carry bit for x86)
+    mov(rax, ~uint64_t(0));
+    mov(rcx, 1);
+    adc(rax, rcx);
+    
+    //mov(edx, ~uint32_t(0));
+    /* initialize carry bit (set carry bit for x86)*/
+    mov(edx, ~uint32_t(0));
+    mov(ebx, 1);
+    add(edx, ebx);
+    mov(edx, 1);
+    mov(ebx, 1);
+    adc(edx, ebx);
+    
+    mov(rbp, ~uint64_t(0));
+    mov(rsi, ~uint64_t(0));
+    add(rbp, rsi); //initialize carry bit(set carry bit for x86)
+    mov(rbp, ~uint64_t(0));
+    mov(rsi, ~uint64_t(0));
+    adc(rbp, rsi);
 
-    mov(rax, addr);
-    //    vandps(Xmm(1), Xmm(0), ptr[rax]);
-    //    vandps(Ymm(2), Ymm(0), ptr[rax]);
-    vpandd(Zmm(3), Zmm(0), ptr[rax]);
+    mov(edi, ~uint32_t(0));
+    mov(r8d, ~uint32_t(0));
+    add(edi, r8d); //initialize carry bit(set carry bit for x86)
+    mov(edi, ~uint32_t(0));
+    mov(r8d, ~uint32_t(0));
+    adc(edi, r8d);
 
-    //    vandps(Xmm(4), Xmm(0), ptr_b[rax]);
-    //    vandps(Ymm(5), Ymm(0), ptr_b[rax]);
-    //    vpandd(Zmm(6), Zmm(0), ptr_b[rax]);
+    mov(r9, ~uint64_t(0));
+    mov(r10, ~uint64_t(0));
+    add(r9d, r10d); //initialize carry bit(set carry bit for x86)
+    mov(r9, ~uint64_t(0));
+    mov(r10, ~uint64_t(0));
+    adc(r9d, r10d);
 
-    //    vandps(Xmm(7), Xmm(7), ptr[rax]);
-    //    vandps(Ymm(8), Ymm(8), ptr[rax]);
-    vpandd(Zmm(9), Zmm(9), ptr[rax]);
-
-    //    vandps(Xmm(10), Xmm(10), ptr_b[rax]);
-    //    vandps(Ymm(11), Ymm(11), ptr_b[rax]);
-    //    vpandd(Zmm(12), Zmm(12), ptr_b[rax]);
-
-    vpandd(Zmm(21), Zmm(22), ptr[rax]);
-
-
-    mov(rax, 5);
+    mov(r11, ~uint64_t(0));
+    add(r11, r11); //initialize carry bit(set carry bit for x86)
+    mov(r11, ~uint64_t(0));
+    adc(r11, 0);
+    
+    mov(r12d, ~uint32_t(0));
+    add(r12d, r12d); //initialize carry bit(set carry bit for x86)
+    mov(r12d, ~uint32_t(0));
+    adc(r12d, 0);
   }
 };
 

@@ -28,30 +28,41 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
+       r13, r14, r15 */
+
     size_t addr;
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
-
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
     mov(rax, addr);
-    //    vandps(Xmm(1), Xmm(0), ptr[rax]);
-    //    vandps(Ymm(2), Ymm(0), ptr[rax]);
-    vpandd(Zmm(3), Zmm(0), ptr[rax]);
+    mov(r8, uint64_t(0xabcd));
+    mov(r9, uint64_t(0xabcd));
+    mov(r14, uint64_t(0x0123));
+    mov(r15, uint64_t(0x4567));
 
-    //    vandps(Xmm(4), Xmm(0), ptr_b[rax]);
-    //    vandps(Ymm(5), Ymm(0), ptr_b[rax]);
-    //    vpandd(Zmm(6), Zmm(0), ptr_b[rax]);
+    mov(r11, ~uint64_t(0));
+    mov(r12, 1);
+    add(r11, r12); //initialize carry flag(set carry flag for x86)
+    adc(r8, ptr[rax]);
 
-    //    vandps(Xmm(7), Xmm(7), ptr[rax]);
-    //    vandps(Ymm(8), Ymm(8), ptr[rax]);
-    vpandd(Zmm(9), Zmm(9), ptr[rax]);
-
-    //    vandps(Xmm(10), Xmm(10), ptr_b[rax]);
-    //    vandps(Ymm(11), Ymm(11), ptr_b[rax]);
-    //    vpandd(Zmm(12), Zmm(12), ptr_b[rax]);
-
-    vpandd(Zmm(21), Zmm(22), ptr[rax]);
+    mov(r11, ~uint64_t(0));
+    mov(r12, 1);
+    add(r11, r12); //initialize carry flag(set carry flag for x86)
+    adc(r14, ptr[rax]);
 
 
-    mov(rax, 5);
+    mov(r11, ~uint64_t(0));
+    mov(r12, 1);
+    add(r11, r12); //initialize carry flag(set carry flag for x86)
+    adc(r9d, ptr[rax]);
+
+    mov(r11, ~uint64_t(0));
+    mov(r12, 1);
+    add(r11, r12); //initialize carry flag(set carry flag for x86)
+    adc(r15d, ptr[rax]);
+
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 

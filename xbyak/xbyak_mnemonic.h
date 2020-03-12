@@ -44,8 +44,8 @@
 *******************************************************************************/
 
 const char *getVersionString() const { return "5.85"; }
-void adc(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x10, 2); UNIMPLEMENTED; }
-void adc(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x10); UNIMPLEMENTED; }
+void adc(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x10, 2); decodeAndTransToAArch64(); }
+void adc(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x10); decodeAndTransToAArch64(); }
 void adcx(const Reg32e& reg, const Operand& op) { opGen(reg, op, 0xF6, 0x66, isREG32_REG32orMEM, NONE, 0x38); UNIMPLEMENTED; }
 void add(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x00, 0); decodeAndTransToAArch64(); }
 void add(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x00); decodeAndTransToAArch64(); }
@@ -703,9 +703,9 @@ void movq(const Address& addr, const Mmx& mmx) { if (mmx.isXMM()) db(0x66); opMo
 void movq(const Mmx& mmx, const Operand& op) { if (mmx.isXMM()) db(0xF3); opModRM(mmx, op, (mmx.getKind() == op.getKind()), op.isMEM(), 0x0F, mmx.isXMM() ? 0x7E : 0x6F); decodeAndTransToAArch64(); }
 void movq2dq(const Xmm& xmm, const Mmx& mmx) { db(0xF3); opModR(xmm, mmx, 0x0F, 0xD6); UNIMPLEMENTED; }
 void movsb() { db(0xA4); UNIMPLEMENTED; }
-void movsd() { db(0xA5); UNIMPLEMENTED; }
-void movsd(const Address& addr, const Xmm& xmm) { db(0xF2); opModM(addr, xmm, 0x0F, 0x11); UNIMPLEMENTED; }
-void movsd(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x10, 0xF2); UNIMPLEMENTED; }
+void movsd() { db(0xA5); decodeAndTransToAArch64(); }
+void movsd(const Address& addr, const Xmm& xmm) { db(0xF2); opModM(addr, xmm, 0x0F, 0x11); decodeAndTransToAArch64(); }
+void movsd(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x10, 0xF2); decodeAndTransToAArch64(); }
 void movshdup(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x16, 0xF3, isXMM_XMMorMEM, NONE, NONE); UNIMPLEMENTED; }
 void movsldup(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x12, 0xF3, isXMM_XMMorMEM, NONE, NONE); UNIMPLEMENTED; }
 void movss(const Address& addr, const Xmm& xmm) { db(0xF3); opModM(addr, xmm, 0x0F, 0x11); decodeAndTransToAArch64(); }
@@ -1510,7 +1510,7 @@ void vucomisd(const Xmm& xm, const Operand& op) { opAVX_X_XM_IMM(xm, op, T_N8 | 
 void vucomiss(const Xmm& xm, const Operand& op) { opAVX_X_XM_IMM(xm, op, T_N4 | T_0F | T_EW0 | T_EVEX | T_SAE_X, 0x2E); UNIMPLEMENTED; }
 void vunpckhpd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW1 | T_YMM | T_EVEX | T_B64, 0x15); decodeAndTransToAArch64(); }
 void vunpckhps(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_0F | T_EW0 | T_YMM | T_EVEX | T_B32, 0x15); UNIMPLEMENTED; }
-void vunpcklpd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW1 | T_YMM | T_EVEX | T_B64, 0x14); UNIMPLEMENTED; }
+void vunpcklpd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW1 | T_YMM | T_EVEX | T_B64, 0x14); decodeAndTransToAArch64(); }
 void vunpcklps(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_0F | T_EW0 | T_YMM | T_EVEX | T_B32, 0x14); UNIMPLEMENTED; }
 void vxorpd(const Xmm& xmm, const Operand& op1, const Operand& op2 = Operand()) { opAVX_X_X_XM(xmm, op1, op2, T_0F | T_66 | T_EW1 | T_YMM | T_EVEX | T_ER_Z | T_B64, 0x57); UNIMPLEMENTED; }
 void vxorps(const Xmm& xmm, const Operand& op1, const Operand& op2 = Operand()) { opAVX_X_X_XM(xmm, op1, op2, T_0F | T_EW0 | T_YMM | T_EVEX | T_ER_Z | T_B32, 0x57); decodeAndTransToAArch64(); }

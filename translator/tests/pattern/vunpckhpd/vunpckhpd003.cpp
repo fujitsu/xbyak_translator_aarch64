@@ -23,24 +23,21 @@ public:
 
     inputPredReg[1] = (1 << 0);
     inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) |            /* x86_64 */
-                      (1 << 0) | (1 << 8) | (uint64_t(1) << 32);  /* aarch64 */
+      (1 << 0) | (1 << 8) | (uint64_t(1) << 32);            /* aarch64 */
     inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) | /* x86_64 */
-                      (1 << 0) | (1 << 8) | (1 << 16) |
-                      (uint64_t(1) << 32); /* aarch64 */
-    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) |
-                      (1 << 4) | /* x86_64 */
-                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
-                      (uint64_t(1) << 32); /* aarch64 */
+      (1 << 0) | (1 << 8) | (1 << 16) | (uint64_t(1) << 32); /* aarch64 */
+    inputPredReg[4] =
+        (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |  /* x86_64 */
+      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32); /* aarch64 */
 
     inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
                       (1 << 6) | /* x86_64 */
-                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
-                      (uint64_t(1) << 32) | (uint64_t(1) << 48); /* aarch64 */
+      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32) |
+						     (uint64_t(1) << 48); /* aarch64 */
     inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
                       (1 << 6) | (1 << 7) | /* x86_64 */
-                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
-                      (uint64_t(1) << 32) | (uint64_t(1) << 48) |
-                      (uint64_t(1) << 56); /* aarch64 */
+						     (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32) |
+						     (uint64_t(1) << 48) | (uint64_t(1) << 56); /* aarch64 */
     inputPredReg[7] = ~uint64_t(0);
   }
 
@@ -50,37 +47,37 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vunpckhpd(Xmm(1) | k1 | T_z, Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(2) | k2 | T_z, Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(3) | k3 | T_z, Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(4) | k4 | T_z, Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(5) | k5 | T_z, Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(6) | k6 | T_z, Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(7) | k7 | T_z, Xmm(30), Xmm(31));
+    vunpckhpd(Ymm(1) | k1 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(2) | k2 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(3) | k3 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(4) | k4 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(5) | k5 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(6) | k6 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(7) | k7 | T_z, Ymm(30), Ymm(31));
 
-    vunpckhpd(Xmm(8) | k1 | T_z, Xmm(8), Xmm(31));
-    vunpckhpd(Xmm(9) | k2 | T_z, Xmm(9), Xmm(31));
-    vunpckhpd(Xmm(10) | k3 | T_z, Xmm(10), Xmm(31));
-    vunpckhpd(Xmm(11) | k4 | T_z, Xmm(11), Xmm(31));
-    vunpckhpd(Xmm(12) | k5 | T_z, Xmm(12), Xmm(31));
-    vunpckhpd(Xmm(13) | k6 | T_z, Xmm(13), Xmm(31));
-    vunpckhpd(Xmm(14) | k7 | T_z, Xmm(14), Xmm(31));
+    vunpckhpd(Ymm(8) | k1 | T_z, Ymm(8), Ymm(31));
+    vunpckhpd(Ymm(9) | k2 | T_z, Ymm(9), Ymm(31));
+    vunpckhpd(Ymm(10) | k3 | T_z, Ymm(10), Ymm(31));
+    vunpckhpd(Ymm(11) | k4 | T_z, Ymm(11), Ymm(31));
+    vunpckhpd(Ymm(12) | k5 | T_z, Ymm(12), Ymm(31));
+    vunpckhpd(Ymm(13) | k6 | T_z, Ymm(13), Ymm(31));
+    vunpckhpd(Ymm(14) | k7 | T_z, Ymm(14), Ymm(31));
 
-    vunpckhpd(Xmm(15) | k1 | T_z, Xmm(30), Xmm(15));
-    vunpckhpd(Xmm(16) | k2 | T_z, Xmm(30), Xmm(16));
-    vunpckhpd(Xmm(17) | k3 | T_z, Xmm(30), Xmm(17));
-    vunpckhpd(Xmm(18) | k4 | T_z, Xmm(30), Xmm(18));
-    vunpckhpd(Xmm(19) | k5 | T_z, Xmm(30), Xmm(19));
-    vunpckhpd(Xmm(20) | k6 | T_z, Xmm(30), Xmm(20));
-    vunpckhpd(Xmm(21) | k7 | T_z, Xmm(30), Xmm(21));
+    vunpckhpd(Ymm(15) | k1 | T_z, Ymm(30), Ymm(15));
+    vunpckhpd(Ymm(16) | k2 | T_z, Ymm(30), Ymm(16));
+    vunpckhpd(Ymm(17) | k3 | T_z, Ymm(30), Ymm(17));
+    vunpckhpd(Ymm(18) | k4 | T_z, Ymm(30), Ymm(18));
+    vunpckhpd(Ymm(19) | k5 | T_z, Ymm(30), Ymm(19));
+    vunpckhpd(Ymm(20) | k6 | T_z, Ymm(30), Ymm(20));
+    vunpckhpd(Ymm(21) | k7 | T_z, Ymm(30), Ymm(21));
 
-    vunpckhpd(Xmm(22) | k1 | T_z, Xmm(22), Xmm(22));
-    vunpckhpd(Xmm(23) | k2 | T_z, Xmm(23), Xmm(23));
-    vunpckhpd(Xmm(24) | k3 | T_z, Xmm(24), Xmm(24));
-    vunpckhpd(Xmm(25) | k4 | T_z, Xmm(25), Xmm(25));
-    vunpckhpd(Xmm(26) | k5 | T_z, Xmm(26), Xmm(26));
-    vunpckhpd(Xmm(27) | k6 | T_z, Xmm(27), Xmm(27));
-    vunpckhpd(Xmm(28) | k7 | T_z, Xmm(28), Xmm(28));
+    vunpckhpd(Ymm(22) | k1 | T_z, Ymm(22), Ymm(22));
+    vunpckhpd(Ymm(23) | k2 | T_z, Ymm(23), Ymm(23));
+    vunpckhpd(Ymm(24) | k3 | T_z, Ymm(24), Ymm(24));
+    vunpckhpd(Ymm(25) | k4 | T_z, Ymm(25), Ymm(25));
+    vunpckhpd(Ymm(26) | k5 | T_z, Ymm(26), Ymm(26));
+    vunpckhpd(Ymm(27) | k6 | T_z, Ymm(27), Ymm(27));
+    vunpckhpd(Ymm(28) | k7 | T_z, Ymm(28), Ymm(28));
   }
 };
 
