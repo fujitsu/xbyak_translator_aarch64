@@ -47,16 +47,16 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vmovups(Xmm(0), Xmm(31) | k1 );
-    vmovups(Xmm(1), Xmm(31) | k2 );
-    vmovups(Xmm(2), Xmm(31) | k3 );
-    vmovups(Xmm(3), Xmm(31) | k4 );
-    vmovups(Xmm(4), Xmm(31) | k5 );
-    vmovups(Xmm(5), Xmm(31) | k6 );
-    vmovups(Xmm(6), Xmm(31) | k7 );
+    vmovups(Xmm(0), Xmm(31) | k1);
+    vmovups(Xmm(1), Xmm(31) | k2);
+    vmovups(Xmm(2), Xmm(31) | k3);
+    vmovups(Xmm(3), Xmm(31) | k4);
+    vmovups(Xmm(4), Xmm(31) | k5);
+    vmovups(Xmm(5), Xmm(31) | k6);
+    vmovups(Xmm(6), Xmm(31) | k7);
 
-    vmovups(Xmm(30) | k7 , Xmm(31));
-    vmovups(Xmm(31), Xmm(31) | k7 );
+    vmovups(Xmm(30) | k7, Xmm(31));
+    vmovups(Xmm(31), Xmm(31) | k7);
   }
 };
 

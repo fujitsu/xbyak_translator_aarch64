@@ -39,15 +39,15 @@ public:
     mov(r14, std::numeric_limits<int64_t>::max());
     mov(r15, std::numeric_limits<int64_t>::max());
 
-    add(r8, 1);
-    add(r9, -1);
-    add(r10, std::numeric_limits<uint64_t>::max());
-    add(r11, -std::numeric_limits<uint64_t>::max());
+    sub(r8, 1);
+    sub(r9, -1);
+    sub(r10, std::numeric_limits<uint64_t>::max());
+    sub(r11, -std::numeric_limits<uint64_t>::max());
 
-    add(r12d, 1);
-    add(r13d, -1);
-    add(r14d, std::numeric_limits<uint32_t>::max());
-    add(r15d, -std::numeric_limits<uint32_t>::max());
+    sub(r12d, 1);
+    sub(r13d, -1);
+    sub(r14d, std::numeric_limits<uint32_t>::max());
+    sub(r15d, -std::numeric_limits<uint32_t>::max());
   }
 };
 

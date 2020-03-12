@@ -31,26 +31,26 @@ public:
     size_t addr0;
 
     /* Address is unaligned */
-    addr0 = reinterpret_cast<size_t>(&(inputZReg[30].ud_dt[7]));
+    addr0 = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
     mov(rax, addr0);
-    
+
     vmovups(ptr[rax], Xmm(0));
-    vmovups(Xmm(1), ptr[rax]);
+    vmovdqu8(Zmm(1), ptr[rax]);
 
-    vmovups(ptr[rax], Ymm(2));
-    vmovups(Ymm(3), ptr[rax]);
+    vmovups(ptr[rax], Xmm(2));
+    vmovdqu8(Zmm(3), ptr[rax]);
 
-    vmovups(ptr[rax], Ymm(4));
-    vmovups(Ymm(5), ptr[rax]);
+    vmovups(ptr[rax], Xmm(4));
+    vmovdqu8(Zmm(5), ptr[rax]);
 
-    vmovups(ptr[rax], Xmm(6));
-    vmovups(Xmm(7), ptr[rax]);
+    vmovups(ptr[rax], Ymm(6));
+    vmovdqu8(Zmm(7), ptr[rax]);
 
     vmovups(ptr[rax], Ymm(8));
-    vmovups(Ymm(9), ptr[rax]);
+    vmovdqu8(Zmm(9), ptr[rax]);
 
     vmovups(ptr[rax], Ymm(10));
-    vmovups(Ymm(11), ptr[rax]);
+    vmovdqu8(Zmm(11), ptr[rax]);
 
     mov(rax, 5);
   }

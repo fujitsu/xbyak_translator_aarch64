@@ -38,8 +38,8 @@ public:
     mov(r8, uint64_t(0xabcd));
     mov(r9, uint64_t(0xabcd));
 
-    add(r8, ptr[rax]);
-    add(r9d, ptr[rax]);
+    sub(r8, ptr[rax]);
+    sub(r9d, ptr[rax]);
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64

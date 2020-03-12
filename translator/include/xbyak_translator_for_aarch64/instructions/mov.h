@@ -3,7 +3,7 @@ void translateMOV(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-  /* 2020/02/12 21:19 */
+  /* 2020/03/01 09:24 */
 
   /* Col=M103*/
   if (false ||
