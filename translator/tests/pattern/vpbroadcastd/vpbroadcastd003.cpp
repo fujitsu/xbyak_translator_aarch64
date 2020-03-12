@@ -36,8 +36,8 @@ public:
     mov(rax, addr);
 
     for (int i = 0; i < 4; i++) {
-      //vbroadcastss(Xmm(i), ptr[rax]);
-      //vbroadcastss(Ymm(i + 4), ptr[rax]);
+      // vbroadcastss(Xmm(i), ptr[rax]);
+      // vbroadcastss(Ymm(i + 4), ptr[rax]);
       vpbroadcastd(Zmm(i + 8), ptr[rax]);
     }
 

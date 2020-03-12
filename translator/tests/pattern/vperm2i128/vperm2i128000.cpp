@@ -23,15 +23,15 @@ public:
 
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
-    inputZReg[0].ud_dt[0] = 10; //a
-    inputZReg[0].ud_dt[1] = 10; //a
-    inputZReg[0].ud_dt[2] = 11; //b
-    inputZReg[0].ud_dt[3] = 11; //b
+    inputZReg[0].ud_dt[0] = 10; // a
+    inputZReg[0].ud_dt[1] = 10; // a
+    inputZReg[0].ud_dt[2] = 11; // b
+    inputZReg[0].ud_dt[3] = 11; // b
 
-    inputZReg[1].ud_dt[0] = 12; //c
-    inputZReg[1].ud_dt[1] = 12; //c
-    inputZReg[1].ud_dt[2] = 13; //d
-    inputZReg[1].ud_dt[3] = 13; //d
+    inputZReg[1].ud_dt[0] = 12; // c
+    inputZReg[1].ud_dt[1] = 12; // c
+    inputZReg[1].ud_dt[2] = 13; // d
+    inputZReg[1].ud_dt[3] = 13; // d
     /*
     for (int i = 0; i < 64; i++) {
       inputZReg[1].ud_dt[i] = i;
@@ -70,8 +70,8 @@ public:
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
     /* VEX */
-    for(int i = 0; i < 4; i++){
-      vperm2i128(Ymm(i+2), Ymm(0), Ymm(1), i);
+    for (int i = 0; i < 4; i++) {
+      vperm2i128(Ymm(i + 2), Ymm(0), Ymm(1), i);
     }
 
     vperm2i128(Ymm(6), Ymm(0), Ymm(1), 16);

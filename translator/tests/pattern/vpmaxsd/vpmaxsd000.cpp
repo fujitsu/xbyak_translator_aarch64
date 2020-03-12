@@ -20,6 +20,18 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
+    for (int i = 0; i < 8; i++) {
+      inputZReg[14].us_dt[2 * i + 0] = inputZReg[30].us_dt[2 * i + 0] =
+          0x8aaabbbb;
+      inputZReg[14].us_dt[2 * i + 1] = inputZReg[30].us_dt[2 * i + 1] =
+          0x7cccdddd;
+
+      inputZReg[15].us_dt[2 * i + 1] = inputZReg[31].us_dt[2 * i + 1] =
+          0x85554444;
+      inputZReg[15].us_dt[2 * i + 0] = inputZReg[31].us_dt[2 * i + 0] =
+          0x72221111;
+    }
   }
 
   void setCheckRegFlagAll() {
@@ -28,10 +40,19 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vpmaxsd(Xmm(0), Xmm(1), Xmm(2));
+    /* VEX range */
+    vpmaxsd(Xmm(0), Xmm(14), Xmm(15));
+    vpmaxsd(Xmm(1), Xmm(14), Xmm(15));
+    vpmaxsd(Xmm(2), Xmm(2), Xmm(15));
+    vpmaxsd(Xmm(3), Xmm(14), Xmm(3));
+    vpmaxsd(Xmm(4), Xmm(4), Xmm(4));
 
-    vpmaxsd(Ymm(4), Ymm(5), Ymm(6));
-
+    /* EVEX range */
+    vpmaxsd(Xmm(10), Xmm(30), Xmm(31));
+    vpmaxsd(Xmm(11), Xmm(30), Xmm(31));
+    vpmaxsd(Xmm(12), Xmm(12), Xmm(31));
+    vpmaxsd(Xmm(13), Xmm(30), Xmm(13));
+    vpmaxsd(Xmm(16), Xmm(16), Xmm(16));
   }
 };
 

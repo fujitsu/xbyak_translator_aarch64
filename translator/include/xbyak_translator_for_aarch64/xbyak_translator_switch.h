@@ -24,6 +24,8 @@ case XED_ICLASS_AAD:
 case XED_ICLASS_AAM:
 case XED_ICLASS_AAS:
 case XED_ICLASS_ADC:
+  translateADC(&xedd);
+  break;
 case XED_ICLASS_ADCX:
 case XED_ICLASS_ADC_LOCK:
 case XED_ICLASS_ADD:
@@ -361,6 +363,8 @@ case XED_ICLASS_KANDQ:
 case XED_ICLASS_KANDW:
 case XED_ICLASS_KMOVB:
 case XED_ICLASS_KMOVD:
+  translateKMOVD(&xedd);
+  break;
 case XED_ICLASS_KMOVQ:
   translateKMOVQ(&xedd);
   break;
@@ -461,7 +465,11 @@ case XED_ICLASS_MOVDIR64B:
 case XED_ICLASS_MOVDIRI:
 case XED_ICLASS_MOVDQ2Q:
 case XED_ICLASS_MOVDQA:
+  translateMOVDQA(&xedd);
+  break;
 case XED_ICLASS_MOVDQU:
+  translateMOVDQU(&xedd);
+  break;
 case XED_ICLASS_MOVHLPS:
 case XED_ICLASS_MOVHPD:
 case XED_ICLASS_MOVHPS:
@@ -486,6 +494,8 @@ case XED_ICLASS_MOVQ2DQ:
 case XED_ICLASS_MOVSB:
 case XED_ICLASS_MOVSD:
 case XED_ICLASS_MOVSD_XMM:
+  translateMOVSD(&xedd);
+  break;
 case XED_ICLASS_MOVSHDUP:
 case XED_ICLASS_MOVSLDUP:
 case XED_ICLASS_MOVSQ:
@@ -498,6 +508,8 @@ case XED_ICLASS_MOVSX:
 case XED_ICLASS_MOVSXD:
 case XED_ICLASS_MOVUPD:
 case XED_ICLASS_MOVUPS:
+  translateMOVUPS(&xedd);
+  break;
 case XED_ICLASS_MOVZX:
 case XED_ICLASS_MOV_CR:
 case XED_ICLASS_MOV_DR:
@@ -582,6 +594,8 @@ case XED_ICLASS_PDEP:
 case XED_ICLASS_PEXT:
 case XED_ICLASS_PEXTRB:
 case XED_ICLASS_PEXTRD:
+  translatePEXTRD(&xedd);
+  break;
 case XED_ICLASS_PEXTRQ:
 case XED_ICLASS_PEXTRW:
 case XED_ICLASS_PEXTRW_SSE4:
@@ -614,7 +628,11 @@ case XED_ICLASS_PHSUBW:
 case XED_ICLASS_PI2FD:
 case XED_ICLASS_PI2FW:
 case XED_ICLASS_PINSRB:
+  translatePINSRB(&xedd);
+  break;
 case XED_ICLASS_PINSRD:
+  translatePINSRD(&xedd);
+  break;
 case XED_ICLASS_PINSRQ:
 case XED_ICLASS_PINSRW:
 case XED_ICLASS_PMADDUBSW:
@@ -1186,6 +1204,8 @@ case XED_ICLASS_VMASKMOVPS:
   break;
 case XED_ICLASS_VMAXPD:
 case XED_ICLASS_VMAXPS:
+  translateVMAXPS(&xedd);
+  break;
 case XED_ICLASS_VMAXSD:
 case XED_ICLASS_VMAXSS:
 case XED_ICLASS_VMCALL:
@@ -1244,6 +1264,8 @@ case XED_ICLASS_VMOVNTPS:
   break;
 case XED_ICLASS_VMOVQ:
 case XED_ICLASS_VMOVSD:
+  translateVMOVSD(&xedd);
+  break;
 case XED_ICLASS_VMOVSHDUP:
 case XED_ICLASS_VMOVSLDUP:
 case XED_ICLASS_VMOVSS:
@@ -1307,7 +1329,11 @@ case XED_ICLASS_VPAVGB:
 case XED_ICLASS_VPAVGW:
 case XED_ICLASS_VPBLENDD:
 case XED_ICLASS_VPBLENDMB:
+  translateVPBLENDMB(&xedd);
+  break;
 case XED_ICLASS_VPBLENDMD:
+  translateVPBLENDMD(&xedd);
+  break;
 case XED_ICLASS_VPBLENDMQ:
 case XED_ICLASS_VPBLENDMW:
 case XED_ICLASS_VPBLENDVB:
@@ -1325,7 +1351,11 @@ case XED_ICLASS_VPBROADCASTW:
 case XED_ICLASS_VPCLMULQDQ:
 case XED_ICLASS_VPCMOV:
 case XED_ICLASS_VPCMPB:
+  translateVPCMPB(&xedd);
+  break;
 case XED_ICLASS_VPCMPD:
+  translateVPCMPD(&xedd);
+  break;
 case XED_ICLASS_VPCMPEQB:
 case XED_ICLASS_VPCMPEQD:
 case XED_ICLASS_VPCMPEQQ:
@@ -1343,6 +1373,8 @@ case XED_ICLASS_VPCMPISTRI64:
 case XED_ICLASS_VPCMPISTRM:
 case XED_ICLASS_VPCMPQ:
 case XED_ICLASS_VPCMPUB:
+  translateVPCMPUB(&xedd);
+  break;
 case XED_ICLASS_VPCMPUD:
 case XED_ICLASS_VPCMPUQ:
 case XED_ICLASS_VPCMPUW:
@@ -1715,6 +1747,8 @@ case XED_ICLASS_VUNPCKHPD:
   break;
 case XED_ICLASS_VUNPCKHPS:
 case XED_ICLASS_VUNPCKLPD:
+  translateVUNPCKLPD(&xedd);
+  break;
 case XED_ICLASS_VUNPCKLPS:
 case XED_ICLASS_VXORPD:
 case XED_ICLASS_VXORPS:

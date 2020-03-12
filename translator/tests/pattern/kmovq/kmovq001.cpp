@@ -34,19 +34,10 @@ public:
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
 
-#ifdef XBYAK_TRANSLATE_AARCH64
     kmovq(k5, k1);
     kmovq(k6, k2);
     kmovq(k7, k3);
     kmovq(k4, k4);
-#else
-    /* Intention of KMOVW instruction is to move mask register data for 32-bit
-       data. For AArch64, it measn all 64-bit data copy. */
-    kmovq(k5, k1);
-    kmovq(k6, k2);
-    kmovq(k7, k3);
-    kmovq(k4, k4);
-#endif
   }
 };
 

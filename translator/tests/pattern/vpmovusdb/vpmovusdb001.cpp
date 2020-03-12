@@ -20,8 +20,8 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    //inputZReg[0].us_dt[0] = uint32_t(7);
-    //inputZReg[4].us_dt[0] = uint32_t(7);
+    // inputZReg[0].us_dt[0] = uint32_t(7);
+    // inputZReg[4].us_dt[0] = uint32_t(7);
   }
 
   void setCheckRegFlagAll() {
@@ -33,7 +33,7 @@ public:
     size_t addr;
     size_t addr1;
 
-    /* Address is aligned */
+/* Address is aligned */
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
@@ -43,7 +43,7 @@ public:
     vmovdqu8(Zmm(1), ptr[rbx]);
 #endif
 
-    /* Address is unaligned */
+/* Address is unaligned */
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
     addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 5;

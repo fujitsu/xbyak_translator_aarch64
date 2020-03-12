@@ -54,7 +54,8 @@ Xbyak_aarch64::XReg X_TMP_1 = x25;
 Xbyak_aarch64::XReg X_TMP_2 = x26;
 Xbyak_aarch64::XReg X_TMP_3 = x27;
 Xbyak_aarch64::XReg X_TMP_ADDR{28};
-Xbyak_aarch64::PReg P_TMP_0 = p12;
+Xbyak_aarch64::PReg P_TMP_0 = p11;
+Xbyak_aarch64::PReg P_TMP_1 = p12;
 Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
@@ -63,6 +64,14 @@ private:
 #define XT_UNIMPLEMENTED                                                       \
   std::cerr << __FILE__ << ":" << __LINE__ << ":Unimplemented" << std::endl;   \
   assert(NULL);
+
+#define XT_VALID_CHECK isValid = true;
+
+#define XT_VALID_CHECK_IF                                                      \
+  if (!isValid) {                                                              \
+    std::cerr << __FILE__ << ":" << __LINE__                                   \
+              << ":Unsupported operand variation" << std::endl;                \
+  }
 
 enum x64_inst_t {
   X64_NO_ASSIGN = 0,
@@ -410,7 +419,7 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
       continue;
     }
 
-    for (int idx = 0; i < xtNumOperands; idx) {
+    for (int idx = 0; idx < xtNumOperands; idx++) {
       if (a64->operands[idx].regIdx == i) {
         conflict = true;
       }
@@ -477,7 +486,7 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
       continue;
     }
 
-    for (int idx = 0; i < xtNumOperands; idx) {
+    for (int idx = 0; idx < xtNumOperands; idx++) {
       if (a64->operands[idx].regIdx == i) {
         conflict = true;
       }
@@ -603,7 +612,7 @@ bool decodeOpcode(const Label *label = nullptr) {
     exit(1);
   }
 
-  /* Dump debugging info */
+/* Dump debugging info */
 #ifdef XT_DEBUG
   xt_dump_x86_64_decoded_info(&xedd);
 #endif
@@ -1035,8 +1044,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
 
     /* (x86_64's CF)
        aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
-    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0,
-                               0x3);         // extract C and V flags
+    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
     CodeGeneratorAArch64::cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
     CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L0);
     CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
@@ -1061,8 +1069,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
 
     /* (x86_64's CF)
        aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
-    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0,
-                               0x3);         // extract C and V flags
+    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
     CodeGeneratorAArch64::cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
     CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L0);
     CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
