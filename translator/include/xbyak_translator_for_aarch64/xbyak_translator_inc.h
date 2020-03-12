@@ -73,13 +73,10 @@
 #include "instructions/vpshufb.h"
 #include "instructions/vpxor.h"
 #include "instructions/vpxord.h"
-<<<<<<< HEAD
-#include "instructions/vunpcklpd.h"
-=======
 #include "instructions/vsqrtps.h"
 #include "instructions/vsubps.h"
 #include "instructions/vunpckhpd.h"
->>>>>>> 3_implement_translation
+#include "instructions/vunpcklpd.h"
 #include "instructions/vxorps.h"
 #include "instructions/vzeroupper.h"
 #include "instructions/xadd_lock.h"
