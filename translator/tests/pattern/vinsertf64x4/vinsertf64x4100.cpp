@@ -38,19 +38,27 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vinsertf64x4(Zmm(0), Zmm(1), Ymm(8), 0);
-    vinsertf64x4(Zmm(2), Zmm(3), Ymm(9), 1);
+    size_t addr;
 
-    vinsertf64x4(Zmm(4), Zmm(4), Ymm(10), 0);
-    vinsertf64x4(Zmm(5), Zmm(5), Ymm(11), 1);
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    mov(rax, addr);
+    mov(rcx, addr);
+    add(rcx, 64);
 
-    vinsertf64x4(Zmm(6), Zmm(7), Ymm(12), 0xfe);
+    vinsertf64x4(Zmm(0), Zmm(30), ptr[rax], 0);
+    vinsertf64x4(Zmm(1), Zmm(30), ptr[rax], 1);
 
-    vinsertf64x4(Zmm(7), Zmm(10), Ymm(7), 0);
-    vinsertf64x4(Zmm(8), Zmm(10), Ymm(8), 1);
+    vinsertf64x4(Zmm(2), Zmm(2), ptr[rax], 0);
+    vinsertf64x4(Zmm(3), Zmm(3), ptr[rax], 1);
 
-    vinsertf64x4(Zmm(9), Zmm(9), Ymm(9), 0);
-    vinsertf64x4(Zmm(10), Zmm(10), Ymm(10), 1);
+    vinsertf64x4(Zmm(4), Zmm(30), ptr[rax], 0xfe);
+    vinsertf64x4(Zmm(5), Zmm(5), ptr[rax], 0xfe);
+
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(rcx,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 

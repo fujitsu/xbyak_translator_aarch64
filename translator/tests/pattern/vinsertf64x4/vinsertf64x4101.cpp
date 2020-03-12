@@ -38,19 +38,19 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vinsertf64x4(Zmm(0), Zmm(1), Ymm(8), 0);
-    vinsertf64x4(Zmm(2), Zmm(3), Ymm(9), 1);
+    vinsertf64x4(Zmm(0), Zmm(14), Ymm(15), 0);
+    vinsertf64x4(Zmm(1), Zmm(14), Ymm(15), 1);
 
-    vinsertf64x4(Zmm(4), Zmm(4), Ymm(10), 0);
-    vinsertf64x4(Zmm(5), Zmm(5), Ymm(11), 1);
+    vinsertf64x4(Zmm(2), Zmm(2), Ymm(15), 0);
+    vinsertf64x4(Zmm(3), Zmm(3), Ymm(15), 1);
 
-    vinsertf64x4(Zmm(6), Zmm(7), Ymm(12), 0xfe);
+    vinsertf64x4(Zmm(4), Zmm(14), Ymm(4), 0);
+    vinsertf64x4(Zmm(5), Zmm(14), Ymm(5), 1);
 
-    vinsertf64x4(Zmm(7), Zmm(10), Ymm(7), 0);
-    vinsertf64x4(Zmm(8), Zmm(10), Ymm(8), 1);
+    vinsertf64x4(Zmm(6), Zmm(6), Ymm(6), 0);
+    vinsertf64x4(Zmm(7), Zmm(7), Ymm(7), 1);
 
-    vinsertf64x4(Zmm(9), Zmm(9), Ymm(9), 0);
-    vinsertf64x4(Zmm(10), Zmm(10), Ymm(10), 1);
+    vinsertf64x4(Zmm(8), Zmm(14), Ymm(15), 0xfe);
   }
 };
 
