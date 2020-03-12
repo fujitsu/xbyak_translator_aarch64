@@ -60,8 +60,8 @@ public:
 
     /* Address is unaligned */
 #if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[20].ud_dt[3])+1);
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[5])+5);
+    addr = reinterpret_cast<size_t>(&(inputZReg[20].ud_dt[3]) + 1);
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[5]) + 5);
     mov(rax, addr);
     mov(rcx, addr);
 
@@ -73,8 +73,8 @@ public:
 #endif
 
 #if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[22].ud_dt[6])+3);
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[23].ud_dt[7])+7);
+    addr = reinterpret_cast<size_t>(&(inputZReg[22].ud_dt[6]) + 3);
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[23].ud_dt[7]) + 7);
     mov(rax, addr);
     mov(rcx, addr);
 
@@ -84,7 +84,6 @@ public:
     vmovdqu(ptr[rcx], Ymm(14));
     vmovdqu8(Zmm(15), ptr[rcx]);
 #endif
-
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64

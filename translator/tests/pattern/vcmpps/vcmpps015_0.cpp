@@ -30,25 +30,29 @@ public:
 
     inputZReg[4].us_dt[0] = inputZReg[5].us_dt[0] = float(3.3);
     inputZReg[4].us_dt[7] = inputZReg[5].us_dt[7] = float(4.4);
-    inputZReg[4].us_dt[15] =  inputZReg[5].us_dt[15] = float(5.5);
+    inputZReg[4].us_dt[15] = inputZReg[5].us_dt[15] = float(5.5);
 
     inputZReg[6].us_dt[13] = inputZReg[7].us_dt[13] = float(6.6);
     inputZReg[6].us_dt[15] = inputZReg[7].us_dt[15] = float(7.7);
 
     inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 6) | (1 << 7) | (1<<8) | (1<<12) |(1<<15) |/* x86_64 */
+                      (1 << 6) | (1 << 7) | (1 << 8) | (1 << 12) |
+                      (1 << 15) | /* x86_64 */
                       (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |
-      (1 << 24) | (1 << 28) |(uint64_t(1)<<32)|(uint64_t(1)<<48)|(uint64_t(1)<<60); /* aarch64 */
+                      (1 << 24) | (1 << 28) | (uint64_t(1) << 32) |
+                      (uint64_t(1) << 48) | (uint64_t(1) << 60); /* aarch64 */
 
     inputPredReg[1] = uint64_t(0x2);
     inputPredReg[2] = uint64_t(0x6);
-    inputPredReg[3] = (1<<3) | (1<<15) | /* x86_64 */
-      (1<<12) | (uint64_t(1<<64)); /* aarch64 */
+    inputPredReg[3] = (1 << 3) | (1 << 15) |           /* x86_64 */
+                      (1 << 12) | (uint64_t(1 << 64)); /* aarch64 */
 
     inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-      (1 << 6) | (1 << 7) | (1<<8) | (1<<12) |(1<<15) |/* x86_64 */
+                      (1 << 6) | (1 << 7) | (1 << 8) | (1 << 12) |
+                      (1 << 15) | /* x86_64 */
                       (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |
-      (1 << 24) | (1 << 28) |(uint64_t(1)<<32)|(uint64_t(1)<<48)|(uint64_t(1)<<60); /* aarch64 */
+                      (1 << 24) | (1 << 28) | (uint64_t(1) << 32) |
+                      (uint64_t(1) << 48) | (uint64_t(1) << 60); /* aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -57,13 +61,13 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vcmpps(k1|k6, Xmm(0), Xmm(1), 0); // EQ_OQ
-    vcmpps(k2|k6, Xmm(2), Xmm(3), 0); // EQ_OQ
-    vcmpps(k3|k6, Xmm(4), Xmm(5), 0); // EQ_OQ
-    vcmpps(k7|k6, Xmm(31), Xmm(31), 0); // EQ_OQ
-    
-    vcmpps(k6|k6, Xmm(6), Xmm(7), 0); // EQ_OQ
-    vcmpps(k5|k5, Xmm(8), Xmm(8), 0); // EQ_OQ
+    vcmpps(k1 | k6, Xmm(0), Xmm(1), 0);   // EQ_OQ
+    vcmpps(k2 | k6, Xmm(2), Xmm(3), 0);   // EQ_OQ
+    vcmpps(k3 | k6, Xmm(4), Xmm(5), 0);   // EQ_OQ
+    vcmpps(k7 | k6, Xmm(31), Xmm(31), 0); // EQ_OQ
+
+    vcmpps(k6 | k6, Xmm(6), Xmm(7), 0); // EQ_OQ
+    vcmpps(k5 | k5, Xmm(8), Xmm(8), 0); // EQ_OQ
   }
 };
 
@@ -90,8 +94,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f();                 /* Execute JIT code */
-
+    f(); /* Execute JIT code */
 
 #ifdef XBYAK_TRANSLATE_AARCH64
     gen.modifyPredRegAArch64(SP_DT);

@@ -2877,9 +2877,9 @@ public:
   void test(const Operand &op, const Reg &reg) {
     opModRM(reg, op, op.isREG() && (op.getKind() == reg.getKind()), op.isMEM(),
             0x84);
+    decodeAndTransToAArch64();
   }
   void test(const Operand &op, uint32 imm) {
-#ifndef XBYAK_TRANSLATE_AARCH64
     verifyMemHasSize(op);
     int immSize = (std::min)(op.getBit() / 8, 4U);
     if (op.isREG() && op.getIdx() == 0) { // al, ax, eax
@@ -2889,7 +2889,8 @@ public:
       opR_ModM(op, 0, 0, 0xF6, NONE, NONE, false, immSize);
     }
     db(imm, immSize);
-#endif //#ifdef XBYAK_TRANSLATE_AARCH64
+
+    decodeAndTransToAArch64();
   }
   void imul(const Reg &reg, const Operand &op) {
     opModRM(reg, op, op.isREG() && (reg.getKind() == op.getKind()), op.isMEM(),
@@ -2911,7 +2912,11 @@ public:
 #ifdef XBYAK_TRANSLATE_AARCH64
     decode_size_ = 0;
 
+#ifdef XT_AARCH64_STACK_REG
     CodeGeneratorAArch64::str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -8));
+#else //#ifdef XT_AARCH64_STACK_REG
+    CodeGeneratorAArch64::str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::pre_ptr(x4, -8));
+#endif //#ifdef XT_AARCH64_STACK_REG
     db_clear();
 #endif//#ifndef XBYAK_TRANSLATE_AARCH64
   }
@@ -2921,7 +2926,11 @@ public:
 #ifdef XBYAK_TRANSLATE_AARCH64
     decode_size_ = 0;
 
+#ifdef XT_AARCH64_STACK_REG
     CodeGeneratorAArch64::ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 8));
+#else //#ifdef XT_AARCH64_STACK_REG
+    CodeGeneratorAArch64::ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::post_ptr(x4, 8));
+#endif //#ifdef XT_AARCH64_STACK_REG
     db_clear();
 #endif//#ifndef XBYAK_TRANSLATE_AARCH64
 
