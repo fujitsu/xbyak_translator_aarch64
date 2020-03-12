@@ -29,7 +29,8 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14, r15 */
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
+     * r15 */
 
     /* VEX encode */
     vfmadd231ps(Xmm(0), Xmm(1), Xmm(2));
@@ -37,7 +38,7 @@ public:
     vfmadd231ps(Xmm(5), Xmm(6), Xmm(5));
     vfmadd231ps(Xmm(7), Xmm(8), Xmm(8));
     vfmadd231ps(Xmm(9), Xmm(9), Xmm(9));
-    
+
     /* EVEX encode */
     vfmadd231ps(Xmm(10), Xmm(11), Xmm(12));
     vfmadd231ps(Xmm(13), Xmm(13), Xmm(14));

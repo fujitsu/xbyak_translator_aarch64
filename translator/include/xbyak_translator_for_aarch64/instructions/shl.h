@@ -38,5 +38,6 @@ void translateSHL(xed_decoded_inst_t *p) {
               xa::WReg(a64.operands[1].regIdx));
   }
 
+
 #undef CG64
 }

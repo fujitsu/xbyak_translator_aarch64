@@ -47,13 +47,37 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vunpckhpd(Ymm(1)|k1|T_z, Ymm(1), Ymm(2));
-    vunpckhpd(Ymm(2)|k2|T_z, Ymm(1), Ymm(2));
-    vunpckhpd(Ymm(3)|k3|T_z, Ymm(1), Ymm(2));
-    vunpckhpd(Ymm(4)|k4|T_z, Ymm(1), Ymm(2));
-    vunpckhpd(Ymm(5)|k5|T_z, Ymm(1), Ymm(2));
-    vunpckhpd(Ymm(6)|k6|T_z, Ymm(1), Ymm(2));
-    vunpckhpd(Ymm(7)|k7|T_z, Ymm(1), Ymm(2));
+    vunpckhpd(Ymm(1) | k1 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(2) | k2 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(3) | k3 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(4) | k4 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(5) | k5 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(6) | k6 | T_z, Ymm(30), Ymm(31));
+    vunpckhpd(Ymm(7) | k7 | T_z, Ymm(30), Ymm(31));
+
+    vunpckhpd(Ymm(8) | k1 | T_z, Ymm(8), Ymm(31));
+    vunpckhpd(Ymm(9) | k2 | T_z, Ymm(9), Ymm(31));
+    vunpckhpd(Ymm(10) | k3 | T_z, Ymm(10), Ymm(31));
+    vunpckhpd(Ymm(11) | k4 | T_z, Ymm(11), Ymm(31));
+    vunpckhpd(Ymm(12) | k5 | T_z, Ymm(12), Ymm(31));
+    vunpckhpd(Ymm(13) | k6 | T_z, Ymm(13), Ymm(31));
+    vunpckhpd(Ymm(14) | k7 | T_z, Ymm(14), Ymm(31));
+
+    vunpckhpd(Ymm(15) | k1 | T_z, Ymm(30), Ymm(15));
+    vunpckhpd(Ymm(16) | k2 | T_z, Ymm(30), Ymm(16));
+    vunpckhpd(Ymm(17) | k3 | T_z, Ymm(30), Ymm(17));
+    vunpckhpd(Ymm(18) | k4 | T_z, Ymm(30), Ymm(18));
+    vunpckhpd(Ymm(19) | k5 | T_z, Ymm(30), Ymm(19));
+    vunpckhpd(Ymm(20) | k6 | T_z, Ymm(30), Ymm(20));
+    vunpckhpd(Ymm(21) | k7 | T_z, Ymm(30), Ymm(21));
+
+    vunpckhpd(Ymm(22) | k1 | T_z, Ymm(22), Ymm(22));
+    vunpckhpd(Ymm(23) | k2 | T_z, Ymm(23), Ymm(23));
+    vunpckhpd(Ymm(24) | k3 | T_z, Ymm(24), Ymm(24));
+    vunpckhpd(Ymm(25) | k4 | T_z, Ymm(25), Ymm(25));
+    vunpckhpd(Ymm(26) | k5 | T_z, Ymm(26), Ymm(26));
+    vunpckhpd(Ymm(27) | k6 | T_z, Ymm(27), Ymm(27));
+    vunpckhpd(Ymm(28) | k7 | T_z, Ymm(28), Ymm(28));
   }
 };
 

@@ -54,6 +54,8 @@ Xbyak_aarch64::XReg X_TMP_1 = x25;
 Xbyak_aarch64::XReg X_TMP_2 = x26;
 Xbyak_aarch64::XReg X_TMP_3 = x27;
 Xbyak_aarch64::XReg X_TMP_ADDR{28};
+Xbyak_aarch64::PReg P_TMP_0 = p11;
+Xbyak_aarch64::PReg P_TMP_1 = p12;
 Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
@@ -62,6 +64,14 @@ private:
 #define XT_UNIMPLEMENTED                                                       \
   std::cerr << __FILE__ << ":" << __LINE__ << ":Unimplemented" << std::endl;   \
   assert(NULL);
+
+#define XT_VALID_CHECK isValid = true;
+
+#define XT_VALID_CHECK_IF                                                      \
+  if (!isValid) {                                                              \
+    std::cerr << __FILE__ << ":" << __LINE__                                   \
+              << ":Unsupported operand variation" << std::endl;                \
+  }
 
 enum x64_inst_t {
   X64_NO_ASSIGN = 0,
@@ -378,10 +388,18 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i) {
       if (zreg_tmp_used[i] == false) {
         zreg_tmp_used[i] = true;
+
+#ifdef XT_AARCH64_STACK_REG
         CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
                                   CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
+        CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
         CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
-                                  Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                  Xbyak_aarch64::ptr(X_TMP_0));
+#else  //#ifdef XT_AARCH64_STACK_REG
+        CodeGeneratorAArch64::sub(x4, x4, NUM_BYTES_Z_REG);
+        CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
+                                  Xbyak_aarch64::ptr(x4));
+#endif //#ifdef XT_AARCH64_STACK_REG
         return i;
       }
     }
@@ -397,22 +415,29 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
 unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
   for (size_t i = AARCH64_NUM_ZREG - 1; i >= 0; i--) {
     bool conflict = false;
-    if(zreg_tmp_used[i] == true) {
+    if (zreg_tmp_used[i] == true) {
       continue;
     }
 
-    for(int idx=0; i<xtNumOperands; idx) {
-      if(a64->operands[idx].regIdx == i) {
-	conflict = true;
+    for (int idx = 0; i < xtNumOperands; idx) {
+      if (a64->operands[idx].regIdx == i) {
+        conflict = true;
       }
     }
 
     if (conflict == false) {
       zreg_tmp_used[i] = true;
+#ifdef XT_AARCH64_STACK_REG
       CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
-				CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
+                                CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
+
       CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
-				Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                Xbyak_aarch64::ptr(X_TMP_0));
+#else  //#ifdef XT_AARCH64_STACK_REG
+      CodeGeneratorAArch64::sub(x4, x4, NUM_BYTES_Z_REG);
+      CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(x4));
+#endif //#ifdef XT_AARCH64_STACK_REG
       return i;
     }
   }
@@ -424,8 +449,6 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
   return 31;
 }
 
-
-
 unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
   for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i &&
@@ -433,10 +456,17 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
       if (preg_tmp_used[i] == false) {
         preg_tmp_used[i] = true;
 
+#ifdef XT_AARCH64_STACK_REG
         CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
                                   CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+        CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
         CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
-                                  Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                  Xbyak_aarch64::ptr(X_TMP_0));
+#else  //#ifdef XT_AARCH64_STACK_REG
+        CodeGeneratorAArch64::sub(x4, x4, NUM_BYTES_PRED_REG);
+        CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
+                                  Xbyak_aarch64::ptr(x4));
+#endif //#ifdef XT_AARCH64_STACK_REG
         return i;
       }
     }
@@ -452,23 +482,29 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
 unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
   for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
     bool conflict = false;
-    if(preg_tmp_used[i] == true) {
+    if (preg_tmp_used[i] == true) {
       continue;
     }
 
-    for(int idx=0; i<xtNumOperands; idx) {
-      if(a64->operands[idx].regIdx == i) {
-	conflict = true;
+    for (int idx = 0; i < xtNumOperands; idx) {
+      if (a64->operands[idx].regIdx == i) {
+        conflict = true;
       }
     }
 
     if (conflict == false) {
       preg_tmp_used[i] = true;
-      
+
+#ifdef XT_AARCH64_STACK_REG
       CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
-				CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+                                CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
       CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
-				Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                Xbyak_aarch64::ptr(X_TMP_0));
+#else  //#ifdef XT_AARCH64_STACK_REG
+      CodeGeneratorAArch64::sub(x4, x4, NUM_BYTES_PRED_REG);
+      CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x4));
+#endif //#ifdef XT_AARCH64_STACK_REG
       return i;
     }
   }
@@ -485,10 +521,16 @@ void xt_pop_vreg() { xt_pop_zreg(); }
 void xt_pop_zreg() {
   for (size_t i = 0; i < AARCH64_NUM_ZREG; i++) {
     if (zreg_tmp_used[i] == true) {
+#ifdef XT_AARCH64_STACK_REG
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i),
-                                Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                Xbyak_aarch64::ptr(X_TMP_0));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
+#else  //#ifdef XT_AARCH64_STACK_REG
+      CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(x4));
+      CodeGeneratorAArch64::add(x4, x4, NUM_BYTES_Z_REG);
+#endif //#ifdef XT_AARCH64_STACK_REG
       zreg_tmp_used[i] = false;
       return;
     }
@@ -502,10 +544,16 @@ void xt_pop_zreg() {
 void xt_pop_preg() {
   for (size_t i = TMP_PREG_END; i <= TMP_PREG_START; i++) {
     if (preg_tmp_used[i] == true) {
+#ifdef XT_AARCH64_STACK_REG
+      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i),
-                                Xbyak_aarch64::ptr(CodeGeneratorAArch64::sp));
+                                Xbyak_aarch64::ptr(X_TMP_0));
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+#else  //#ifdef XT_AARCH64_STACK_REG
+      CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x4));
+      CodeGeneratorAArch64::add(x4, x4, NUM_BYTES_PRED_REG);
+#endif //#ifdef XT_AARCH64_STACK_REG
       preg_tmp_used[i] = false;
       return;
     }
@@ -536,10 +584,12 @@ bool decodeOpcode(const Label *label = nullptr) {
   xed3_operand_set_mpxmode(&xedd, 0);
   xed3_operand_set_cet(&xedd, 0);
 
+#ifdef XT_DEBUG
   printf("Attempting to decode: ");
   for (unsigned int i = 0; i < CodeArray::size_; i++)
     printf("%02x ", XED_STATIC_CAST(xed_uint_t, CodeArray::top_[i]));
   printf("\n");
+#endif
 
   xed_error = xed_decode(
       &xedd, XED_REINTERPRET_CAST(const xed_uint8_t *, CodeArray::top_),
@@ -562,11 +612,12 @@ bool decodeOpcode(const Label *label = nullptr) {
     exit(1);
   }
 
-  /* Dump debugging info */
+/* Dump debugging info */
+#ifdef XT_DEBUG
   xt_dump_x86_64_decoded_info(&xedd);
+#endif
 
   xed_iclass_enum_t p = xed_decoded_inst_get_iclass(&xedd);
-  std::cout << "xbyak_translator_switch.h" << std::endl;
 #include "xbyak_translator_switch.h"
 
   return true;
@@ -792,7 +843,9 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
     a64->src2Type = A64_OP_MBCST;
   }
 
+#ifdef XT_DEBUG
   xt_dump_a64fx_operands(a64);
+#endif
 }
 
 void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
@@ -832,25 +885,25 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
               xed_reg_class(xed_decoded_inst_get_reg(p, opName));
           a64->operands[l].opWidth = xed_decoded_inst_operand_length_bits(p, i);
 
-	  if(a64->operands[l].regClass == XED_REG_CLASS_MASK) {
-	    xed_bool_t isMasking = xed_decoded_inst_masking(p);
-	    xed_bool_t isMerging = xed_decoded_inst_merging(p);
-	    xed_bool_t isZeroing = xed_decoded_inst_zeroing(p);
-	    if (!isMasking) {
-	      a64->predType = A64_PRED_NO;
-	    } else if (isMerging) {
-	      a64->predType = A64_PRED_MERG;
-	    } else if (isZeroing) {
-	      a64->predType = A64_PRED_ZERO;
-	    } else {
-	      a64->predType = A64_PRED_MERG;
-	      /*            xt_msg_err(__FILE__, __LINE__,
-			    "Unknwon predicate type. Please contact to "
-			    "system administrator!");*/
-	    }
-	  }
-	  isSet = true;
-	}
+          if (a64->operands[l].regClass == XED_REG_CLASS_MASK) {
+            xed_bool_t isMasking = xed_decoded_inst_masking(p);
+            xed_bool_t isMerging = xed_decoded_inst_merging(p);
+            xed_bool_t isZeroing = xed_decoded_inst_zeroing(p);
+            if (!isMasking) {
+              a64->predType = A64_PRED_NO;
+            } else if (isMerging) {
+              a64->predType = A64_PRED_MERG;
+            } else if (isZeroing) {
+              a64->predType = A64_PRED_ZERO;
+            } else {
+              a64->predType = A64_PRED_MERG;
+              /*            xt_msg_err(__FILE__, __LINE__,
+                            "Unknwon predicate type. Please contact to "
+                            "system administrator!");*/
+            }
+          }
+          isSet = true;
+        }
       }
 
       if (isSet == false) {
@@ -966,7 +1019,9 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
     xt_msg_err(__FILE__, __LINE__, "Unsupported opName");
   } // for (int i = 0; i < num_operands; i++) {
 
+#ifdef XT_DEBUG
   xt_dump_a64fx_operandsV3(a64);
+#endif
 }
 
 void decodeAndTransToAArch64() {
@@ -989,8 +1044,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
 
     /* (x86_64's CF)
        aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
-    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0,
-                               0x3);         // extract C and V flags
+    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
     CodeGeneratorAArch64::cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
     CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L0);
     CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
@@ -1015,8 +1069,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
 
     /* (x86_64's CF)
        aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
-    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0,
-                               0x3);         // extract C and V flags
+    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
     CodeGeneratorAArch64::cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
     CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L0);
     CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,

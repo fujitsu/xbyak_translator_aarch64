@@ -19,6 +19,11 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    // setInputZregAllRandomHex();
+    inputGenReg[0] = 0x0001020304050607;
+    inputGenReg[1] = 0x08090A0B0C0D0E0F;
+    inputGenReg[2] = 0x0001020304050607;
+    inputGenReg[3] = 0x08090A0B0C0D0E0F;
   }
 
   void setCheckRegFlagAll() {
