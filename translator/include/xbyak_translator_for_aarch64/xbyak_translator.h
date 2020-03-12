@@ -419,7 +419,7 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
       continue;
     }
 
-    for (int idx = 0; i < xtNumOperands; idx) {
+    for (int idx = 0; idx < xtNumOperands; idx++) {
       if (a64->operands[idx].regIdx == i) {
         conflict = true;
       }
@@ -486,7 +486,7 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
       continue;
     }
 
-    for (int idx = 0; i < xtNumOperands; idx) {
+    for (int idx = 0; idx < xtNumOperands; idx++) {
       if (a64->operands[idx].regIdx == i) {
         conflict = true;
       }
