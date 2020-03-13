@@ -46,8 +46,10 @@ public:
     mov(rcx, addr);
     add(rcx, 64);
 
-    vextractf64x4(Ymm(0), Zmm(1), 0);
-    vextractf64x4(Ymm(2), Zmm(3), 1);
+    vextractf64x4(Ymm(0), Zmm(0), 0);
+    vextractf64x4(Ymm(1), Zmm(1), 1);
+    vextractf64x4(Ymm(2), Zmm(2), 6);
+    vextractf64x4(Ymm(3), Zmm(3), 7);
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
