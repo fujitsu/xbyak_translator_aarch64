@@ -26,6 +26,7 @@
 #include "instructions/vbroadcastss.h"
 #include "instructions/vcmpps.h"
 #include "instructions/vdivps.h"
+#include "instructions/vextracti32x8.h"
 #include "instructions/vfmadd213ps.h"
 #include "instructions/vfmadd231ps.h"
 #include "instructions/vfnmadd231ps.h"
