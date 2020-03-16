@@ -1398,6 +1398,8 @@ case XED_ICLASS_VPDPBUSDS:
 case XED_ICLASS_VPDPWSSD:
 case XED_ICLASS_VPDPWSSDS:
 case XED_ICLASS_VPERM2F128:
+  translateVPERM2F128(&xedd);
+  break;
 case XED_ICLASS_VPERM2I128:
   translateVPERM2I128(&xedd);
   break;

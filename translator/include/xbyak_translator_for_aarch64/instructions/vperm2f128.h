@@ -3,19 +3,15 @@ void translateVPERM2F128(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
 
-/* 2020/03/10 12:45 */
+/* 2020/03/16 11:26 */
 #define CG64 CodeGeneratorAArch64
   bool isValid = false;
   xt_reg_idx_t dstIdx;
   xt_reg_idx_t srcIdx;
   xt_reg_idx_t src2Idx;
-  xt_reg_idx_t src3Idx;
-  xt_reg_idx_t maskIdx;
   xt_reg_idx_t zTmpIdx;
   xt_reg_idx_t zTmp2Idx;
   xt_reg_idx_t pTmpIdx;
-  xt_reg_idx_t pTmp2Idx;
-  xt_reg_idx_t spIdx;
   xed_uint64_t uimm = a64.operands[3].uimm;
   int lsbElem;
   int msbElem;
@@ -233,6 +229,14 @@ void translateVPERM2F128(xed_decoded_inst_t *p) {
     }
     CG64::dup(xa::ZRegQ(dstIdx), xa::ZRegQ(srcIdx)[1]);
     CG64::mov(xa::ZRegD(dstIdx), P_MSB_384 / xa::T_m, 0);
+    isValid = true;
+    break;
+  }
+
+  switch (uimm & 0x88) {
+  case 0x88:
+    dstIdx = a64.operands[0].regIdx;
+    CG64::mov(xa::ZRegD(dstIdx), 0);
     isValid = true;
     break;
   }
