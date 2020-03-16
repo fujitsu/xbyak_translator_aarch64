@@ -79,6 +79,7 @@
 #include "instructions/vsubps.h"
 #include "instructions/vunpckhpd.h"
 #include "instructions/vunpcklpd.h"
+#include "instructions/vunpcklps.h"
 #include "instructions/vxorps.h"
 #include "instructions/vzeroupper.h"
 #include "instructions/xadd_lock.h"

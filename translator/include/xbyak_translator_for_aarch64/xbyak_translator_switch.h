@@ -1750,6 +1750,8 @@ case XED_ICLASS_VUNPCKLPD:
   translateVUNPCKLPD(&xedd);
   break;
 case XED_ICLASS_VUNPCKLPS:
+  translateVUNPCKLPS(&xedd);
+  break;
 case XED_ICLASS_VXORPD:
 case XED_ICLASS_VXORPS:
   translateVXORPS(&xedd);
