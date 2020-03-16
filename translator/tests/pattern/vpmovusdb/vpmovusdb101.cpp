@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-#include <vector>
 #include "test_generator2.h"
+#include <vector>
 
 class TestPtnGenerator : public TestGenerator {
 public:
@@ -24,7 +24,7 @@ public:
 
     std::vector<int> pattern = {30, 31};
 
-    for(auto i : pattern) {
+    for (auto i : pattern) {
       inputZReg[i].us_dt[0] = ~uint32_t(0);
       inputZReg[i].us_dt[1] = uint32_t(0x7FFFFFFF);
       inputZReg[i].us_dt[2] = uint32_t(0xFF);
@@ -57,7 +57,7 @@ public:
     /* Dst=Mem, src=Zmm */
     vpmovusdb(ptr[rax], Zmm(31));
     vmovups(Zmm(1), ptr[rax]);
-    
+
     add(rax, 64);
     vpmovusdb(ptr[rax], Zmm(31));
     vmovups(Zmm(2), ptr[rax]);

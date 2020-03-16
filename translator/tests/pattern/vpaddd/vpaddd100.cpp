@@ -48,7 +48,7 @@ public:
     vpaddd(Ymm(4), Ymm(30), Ymm(4));
     vpaddd(Ymm(5), Ymm(30), Ymm(30));
     vpaddd(Ymm(6), Ymm(6), Ymm(6));
-    
+
     vpaddd(Zmm(21), Zmm(30), Zmm(31));
     vpaddd(Zmm(22), Zmm(30), Zmm(31));
     vpaddd(Zmm(23), Zmm(23), Zmm(31));

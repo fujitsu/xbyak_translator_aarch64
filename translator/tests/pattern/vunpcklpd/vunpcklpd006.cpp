@@ -50,37 +50,37 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vunpcklpd(Ymm(1) | k1 , Ymm(30), Ymm(31));
-    vunpcklpd(Ymm(2) | k2 , Ymm(30), Ymm(31));
-    vunpcklpd(Ymm(3) | k3 , Ymm(30), Ymm(31));
-    vunpcklpd(Ymm(4) | k4 , Ymm(30), Ymm(31));
-    vunpcklpd(Ymm(5) | k5 , Ymm(30), Ymm(31));
-    vunpcklpd(Ymm(6) | k6 , Ymm(30), Ymm(31));
-    vunpcklpd(Ymm(7) | k7 , Ymm(30), Ymm(31));
+    vunpcklpd(Ymm(1) | k1, Ymm(30), Ymm(31));
+    vunpcklpd(Ymm(2) | k2, Ymm(30), Ymm(31));
+    vunpcklpd(Ymm(3) | k3, Ymm(30), Ymm(31));
+    vunpcklpd(Ymm(4) | k4, Ymm(30), Ymm(31));
+    vunpcklpd(Ymm(5) | k5, Ymm(30), Ymm(31));
+    vunpcklpd(Ymm(6) | k6, Ymm(30), Ymm(31));
+    vunpcklpd(Ymm(7) | k7, Ymm(30), Ymm(31));
 
-    vunpcklpd(Ymm(8) | k1 , Ymm(8), Ymm(31));
-    vunpcklpd(Ymm(9) | k2 , Ymm(9), Ymm(31));
-    vunpcklpd(Ymm(10) | k3 , Ymm(10), Ymm(31));
-    vunpcklpd(Ymm(11) | k4 , Ymm(11), Ymm(31));
-    vunpcklpd(Ymm(12) | k5 , Ymm(12), Ymm(31));
-    vunpcklpd(Ymm(13) | k6 , Ymm(13), Ymm(31));
-    vunpcklpd(Ymm(14) | k7 , Ymm(14), Ymm(31));
+    vunpcklpd(Ymm(8) | k1, Ymm(8), Ymm(31));
+    vunpcklpd(Ymm(9) | k2, Ymm(9), Ymm(31));
+    vunpcklpd(Ymm(10) | k3, Ymm(10), Ymm(31));
+    vunpcklpd(Ymm(11) | k4, Ymm(11), Ymm(31));
+    vunpcklpd(Ymm(12) | k5, Ymm(12), Ymm(31));
+    vunpcklpd(Ymm(13) | k6, Ymm(13), Ymm(31));
+    vunpcklpd(Ymm(14) | k7, Ymm(14), Ymm(31));
 
-    vunpcklpd(Ymm(15) | k1 , Ymm(30), Ymm(15));
-    vunpcklpd(Ymm(16) | k2 , Ymm(30), Ymm(16));
-    vunpcklpd(Ymm(17) | k3 , Ymm(30), Ymm(17));
-    vunpcklpd(Ymm(18) | k4 , Ymm(30), Ymm(18));
-    vunpcklpd(Ymm(19) | k5 , Ymm(30), Ymm(19));
-    vunpcklpd(Ymm(20) | k6 , Ymm(30), Ymm(20));
-    vunpcklpd(Ymm(21) | k7 , Ymm(30), Ymm(21));
+    vunpcklpd(Ymm(15) | k1, Ymm(30), Ymm(15));
+    vunpcklpd(Ymm(16) | k2, Ymm(30), Ymm(16));
+    vunpcklpd(Ymm(17) | k3, Ymm(30), Ymm(17));
+    vunpcklpd(Ymm(18) | k4, Ymm(30), Ymm(18));
+    vunpcklpd(Ymm(19) | k5, Ymm(30), Ymm(19));
+    vunpcklpd(Ymm(20) | k6, Ymm(30), Ymm(20));
+    vunpcklpd(Ymm(21) | k7, Ymm(30), Ymm(21));
 
-    vunpcklpd(Ymm(22) | k1 , Ymm(22), Ymm(22));
-    vunpcklpd(Ymm(23) | k2 , Ymm(23), Ymm(23));
-    vunpcklpd(Ymm(24) | k3 , Ymm(24), Ymm(24));
-    vunpcklpd(Ymm(25) | k4 , Ymm(25), Ymm(25));
-    vunpcklpd(Ymm(26) | k5 , Ymm(26), Ymm(26));
-    vunpcklpd(Ymm(27) | k6 , Ymm(27), Ymm(27));
-    vunpcklpd(Ymm(28) | k7 , Ymm(28), Ymm(28));
+    vunpcklpd(Ymm(22) | k1, Ymm(22), Ymm(22));
+    vunpcklpd(Ymm(23) | k2, Ymm(23), Ymm(23));
+    vunpcklpd(Ymm(24) | k3, Ymm(24), Ymm(24));
+    vunpcklpd(Ymm(25) | k4, Ymm(25), Ymm(25));
+    vunpcklpd(Ymm(26) | k5, Ymm(26), Ymm(26));
+    vunpcklpd(Ymm(27) | k6, Ymm(27), Ymm(27));
+    vunpcklpd(Ymm(28) | k7, Ymm(28), Ymm(28));
   }
 };
 

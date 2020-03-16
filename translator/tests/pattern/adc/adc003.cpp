@@ -41,19 +41,19 @@ public:
     mov(rax, addr);
     mov(rcx, addr1);
 
-    //mov(ptr[rax], uint64_t(1));
-    //mov(ptr[rcx], uint64_t(1));
+    // mov(ptr[rax], uint64_t(1));
+    // mov(ptr[rcx], uint64_t(1));
 
     mov(r8, uint64_t(0xabcd));
 
     mov(r11, ~uint64_t(0));
     mov(r12, 1);
-    add(r11, r12); //initialize carry flag(set carry flag for x86)
+    add(r11, r12); // initialize carry flag(set carry flag for x86)
     adc(ptr[rax], r8);
 
     mov(r11, ~uint64_t(0));
     mov(r12, 1);
-    add(r11, r12); //initialize carry flag(set carry flag for x86)
+    add(r11, r12); // initialize carry flag(set carry flag for x86)
     adc(ptr[rcx], r8d);
 
     mov(r9, ptr[rax]);

@@ -34,7 +34,6 @@ public:
     vpbroadcastb(Zmm(3), Xmm(30));
     vpbroadcastb(Zmm(4), Xmm(4));
     vpbroadcastb(Zmm(5), Xmm(5));
-
   }
 };
 

@@ -78,7 +78,7 @@ public:
     vpcmpub(k1, Zmm(9), Zmm(8), 4);
     vpcmpub(k2, Zmm(11), Zmm(10), 5);
     vpcmpub(k3, Zmm(13), Zmm(12), 6);
-    //vpcmpb(k4, Zmm(15), Zmm(14), 7); //not exist "true" pattern
+    // vpcmpb(k4, Zmm(15), Zmm(14), 7); //not exist "true" pattern
   }
 };
 

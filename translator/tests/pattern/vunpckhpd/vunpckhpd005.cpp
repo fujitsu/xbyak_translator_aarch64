@@ -23,21 +23,24 @@ public:
 
     inputPredReg[1] = (1 << 0);
     inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) |            /* x86_64 */
-      (1 << 0) | (1 << 8) | (uint64_t(1) << 32);            /* aarch64 */
+                      (1 << 0) | (1 << 8) | (uint64_t(1) << 32);  /* aarch64 */
     inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) | /* x86_64 */
-      (1 << 0) | (1 << 8) | (1 << 16) | (uint64_t(1) << 32); /* aarch64 */
-    inputPredReg[4] =
-        (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |  /* x86_64 */
-      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32); /* aarch64 */
+                      (1 << 0) | (1 << 8) | (1 << 16) |
+                      (uint64_t(1) << 32); /* aarch64 */
+    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) |
+                      (1 << 4) | /* x86_64 */
+                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+                      (uint64_t(1) << 32); /* aarch64 */
 
     inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
                       (1 << 6) | /* x86_64 */
-      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32) |
-						     (uint64_t(1) << 48); /* aarch64 */
+                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+                      (uint64_t(1) << 32) | (uint64_t(1) << 48); /* aarch64 */
     inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
                       (1 << 6) | (1 << 7) | /* x86_64 */
-						     (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32) |
-						     (uint64_t(1) << 48) | (uint64_t(1) << 56); /* aarch64 */
+                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+                      (uint64_t(1) << 32) | (uint64_t(1) << 48) |
+                      (uint64_t(1) << 56); /* aarch64 */
     inputPredReg[7] = ~uint64_t(0);
   }
 
@@ -47,37 +50,37 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vunpckhpd(Xmm(1) | k1 , Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(2) | k2 , Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(3) | k3 , Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(4) | k4 , Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(5) | k5 , Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(6) | k6 , Xmm(30), Xmm(31));
-    vunpckhpd(Xmm(7) | k7 , Xmm(30), Xmm(31));
+    vunpckhpd(Xmm(1) | k1, Xmm(30), Xmm(31));
+    vunpckhpd(Xmm(2) | k2, Xmm(30), Xmm(31));
+    vunpckhpd(Xmm(3) | k3, Xmm(30), Xmm(31));
+    vunpckhpd(Xmm(4) | k4, Xmm(30), Xmm(31));
+    vunpckhpd(Xmm(5) | k5, Xmm(30), Xmm(31));
+    vunpckhpd(Xmm(6) | k6, Xmm(30), Xmm(31));
+    vunpckhpd(Xmm(7) | k7, Xmm(30), Xmm(31));
 
-    vunpckhpd(Xmm(8) | k1 , Xmm(8), Xmm(31));
-    vunpckhpd(Xmm(9) | k2 , Xmm(9), Xmm(31));
-    vunpckhpd(Xmm(10) | k3 , Xmm(10), Xmm(31));
-    vunpckhpd(Xmm(11) | k4 , Xmm(11), Xmm(31));
-    vunpckhpd(Xmm(12) | k5 , Xmm(12), Xmm(31));
-    vunpckhpd(Xmm(13) | k6 , Xmm(13), Xmm(31));
-    vunpckhpd(Xmm(14) | k7 , Xmm(14), Xmm(31));
+    vunpckhpd(Xmm(8) | k1, Xmm(8), Xmm(31));
+    vunpckhpd(Xmm(9) | k2, Xmm(9), Xmm(31));
+    vunpckhpd(Xmm(10) | k3, Xmm(10), Xmm(31));
+    vunpckhpd(Xmm(11) | k4, Xmm(11), Xmm(31));
+    vunpckhpd(Xmm(12) | k5, Xmm(12), Xmm(31));
+    vunpckhpd(Xmm(13) | k6, Xmm(13), Xmm(31));
+    vunpckhpd(Xmm(14) | k7, Xmm(14), Xmm(31));
 
-    vunpckhpd(Xmm(15) | k1 , Xmm(30), Xmm(15));
-    vunpckhpd(Xmm(16) | k2 , Xmm(30), Xmm(16));
-    vunpckhpd(Xmm(17) | k3 , Xmm(30), Xmm(17));
-    vunpckhpd(Xmm(18) | k4 , Xmm(30), Xmm(18));
-    vunpckhpd(Xmm(19) | k5 , Xmm(30), Xmm(19));
-    vunpckhpd(Xmm(20) | k6 , Xmm(30), Xmm(20));
-    vunpckhpd(Xmm(21) | k7 , Xmm(30), Xmm(21));
+    vunpckhpd(Xmm(15) | k1, Xmm(30), Xmm(15));
+    vunpckhpd(Xmm(16) | k2, Xmm(30), Xmm(16));
+    vunpckhpd(Xmm(17) | k3, Xmm(30), Xmm(17));
+    vunpckhpd(Xmm(18) | k4, Xmm(30), Xmm(18));
+    vunpckhpd(Xmm(19) | k5, Xmm(30), Xmm(19));
+    vunpckhpd(Xmm(20) | k6, Xmm(30), Xmm(20));
+    vunpckhpd(Xmm(21) | k7, Xmm(30), Xmm(21));
 
-    vunpckhpd(Xmm(22) | k1 , Xmm(22), Xmm(22));
-    vunpckhpd(Xmm(23) | k2 , Xmm(23), Xmm(23));
-    vunpckhpd(Xmm(24) | k3 , Xmm(24), Xmm(24));
-    vunpckhpd(Xmm(25) | k4 , Xmm(25), Xmm(25));
-    vunpckhpd(Xmm(26) | k5 , Xmm(26), Xmm(26));
-    vunpckhpd(Xmm(27) | k6 , Xmm(27), Xmm(27));
-    vunpckhpd(Xmm(28) | k7 , Xmm(28), Xmm(28));
+    vunpckhpd(Xmm(22) | k1, Xmm(22), Xmm(22));
+    vunpckhpd(Xmm(23) | k2, Xmm(23), Xmm(23));
+    vunpckhpd(Xmm(24) | k3, Xmm(24), Xmm(24));
+    vunpckhpd(Xmm(25) | k4, Xmm(25), Xmm(25));
+    vunpckhpd(Xmm(26) | k5, Xmm(26), Xmm(26));
+    vunpckhpd(Xmm(27) | k6, Xmm(27), Xmm(27));
+    vunpckhpd(Xmm(28) | k7, Xmm(28), Xmm(28));
   }
 };
 

@@ -22,7 +22,6 @@ public:
     inputGenReg[8] = uint64_t(0xccccffff55553333);
     inputGenReg[9] = ~uint64_t(0);
     inputGenReg[10] = uint64_t(0x7FFFFFFFFFFFFFFF);
-
   }
 
   void setCheckRegFlagAll() {

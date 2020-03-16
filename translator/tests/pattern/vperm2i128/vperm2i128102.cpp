@@ -29,10 +29,10 @@ public:
   }
 
   void genJitTestCode() {
-    /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+/* Here write JIT code with x86_64 mnemonic function to be tested. */
+/* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
-    /* VEX */
+/* VEX */
 #define IMM 2
     vperm2i128(Ymm(0), Ymm(1), Ymm(2), IMM);
     vperm2i128(Ymm(3), Ymm(3), Ymm(4), IMM);
