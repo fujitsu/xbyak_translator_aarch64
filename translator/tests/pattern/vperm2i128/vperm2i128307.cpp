@@ -29,26 +29,33 @@ public:
   }
 
   void genJitTestCode() {
-    /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+/* Here write JIT code with x86_64 mnemonic function to be tested. */
+/* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    uint16_t flag = 0;
 
-    /* VEX */
-#define IMM 0
-    vperm2i128(Ymm(0), Ymm(14), Ymm(15), (IMM) << 4);
-    vperm2i128(Ymm(1), Ymm(14), Ymm(15), (IMM) << 4);
-    vperm2i128(Ymm(2), Ymm(14), Ymm(15), (IMM) << 4);
-    vperm2i128(Ymm(3), Ymm(14), Ymm(15), (IMM) << 4);
+#define MOVE_SEED 700
+    for (int i = 0; i < MOVE_SEED; i++) {
+      getLfsr();
+    }
+#undef MOVE_SEED
 
-    vperm2i128(Ymm(4), Ymm(14), Ymm(15), (IMM + (1 << 2))<<4);
-    vperm2i128(Ymm(5), Ymm(14), Ymm(15), (IMM + (1 << 2))<<4);
-    vperm2i128(Ymm(6), Ymm(14), Ymm(15), (IMM + (1 << 2))<<4);
-    vperm2i128(Ymm(7), Ymm(14), Ymm(15), (IMM + (1 << 2))<<4);
+    while (flag != uint16_t(0xffff)) {
+      uint16_t tmp0, tmp1, tmp2;
+      uint32_t uimm;
+      
+      /* Each register is used as destination only once. */
+      do {
+        tmp0 = getLfsr() % 16;
+      } while (flag & uint16_t(1 << tmp0));
 
-    vperm2i128(Ymm(8), Ymm(14), Ymm(15), (IMM + (1 << 3))<<4);
-    vperm2i128(Ymm(9), Ymm(14), Ymm(15), (IMM + (1 << 3))<<4);
-    vperm2i128(Ymm(10), Ymm(14), Ymm(15), (IMM + (1 << 3))<<4);
-    vperm2i128(Ymm(11), Ymm(14), Ymm(15), (IMM + (1 << 3))<<4);
-#undef IMM
+      tmp1 = getLfsr() % 16;
+      tmp2 = getLfsr() % 16;
+      uimm = (uint32_t(getLfsr()) << 16) + uint32_t(getLfsr());
+      
+      vperm2i128(Ymm(tmp0), Ymm(tmp1), Ymm(tmp2), uimm);
+
+      flag |= uint16_t(1 << tmp0);
+    }
   }
 };
 
