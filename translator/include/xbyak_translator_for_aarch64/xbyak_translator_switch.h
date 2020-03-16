@@ -1748,6 +1748,8 @@ case XED_ICLASS_VUNPCKHPD:
   translateVUNPCKHPD(&xedd);
   break;
 case XED_ICLASS_VUNPCKHPS:
+  translateVUNPCKHPS(&xedd);
+  break;
 case XED_ICLASS_VUNPCKLPD:
   translateVUNPCKLPD(&xedd);
   break;

@@ -79,6 +79,7 @@
 #include "instructions/vsqrtps.h"
 #include "instructions/vsubps.h"
 #include "instructions/vunpckhpd.h"
+#include "instructions/vunpckhps.h"
 #include "instructions/vunpcklpd.h"
 #include "instructions/vxorps.h"
 #include "instructions/vzeroupper.h"
