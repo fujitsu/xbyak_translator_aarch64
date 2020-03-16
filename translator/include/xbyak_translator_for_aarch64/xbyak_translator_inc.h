@@ -11,6 +11,7 @@
 #include "instructions/not.h"
 #include "instructions/or.h"
 #include "instructions/pause.h"
+#include "instructions/pxor.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
 #include "instructions/sub.h"

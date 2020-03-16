@@ -711,6 +711,8 @@ case XED_ICLASS_PUSHF:
 case XED_ICLASS_PUSHFD:
 case XED_ICLASS_PUSHFQ:
 case XED_ICLASS_PXOR:
+  translatePXOR(&xedd);
+  break;
 case XED_ICLASS_RCL:
 case XED_ICLASS_RCPPS:
 case XED_ICLASS_RCPSS:
