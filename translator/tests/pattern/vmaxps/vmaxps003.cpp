@@ -19,7 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-//    setInputZregAllRandomHex();
+    //    setInputZregAllRandomHex();
     setDumpZRegMode(SP_DT);
     setInputZregAllRandomFloat();
 
@@ -30,18 +30,21 @@ public:
                       (0x1 << 0) | (0x1 << 4) | (0x1 << 16); /* aarch64 */
 
     inputPredReg[5] =
-        (0x1 << 0) | (0x1 << 1) | (0x1 << 4) | (0x1 << 7) | /* x86_64 */
+        (0x1 << 0) | (0x1 << 1) | (0x1 << 4) | (0x1 << 7) |  /* x86_64 */
         (0x1 << 0) | (0x1 << 4) | (0x1 << 16) | (0x1 << 28); /* aarch64 */
 
     inputPredReg[6] = (0x1 << 0) | (0x1 << 1) | (0x1 << 4) | (0x1 << 7) |
                       (0x1 << 10) | /* x86_64 */
-                      (0x1 << 0) | (0x1 << 4) | (0x1 << 16) | (0x1 << 28); /* aarch64 */
+                      (0x1 << 0) | (0x1 << 4) | (0x1 << 16) |
+                      (0x1 << 28);              /* aarch64 */
     inputPredReg[6] |= uint64_t(0x10000000000); /* aarch64 (0x1 << 40) */
 
     inputPredReg[7] = (0x1 << 0) | (0x1 << 1) | (0x1 << 4) | (0x1 << 7) |
                       (0x1 << 10) | (0x1 << 13) | /* x86_64 */
-                      (0x1 << 0) | (0x1 << 4) | (0x1 << 16) | (0x1 << 28); /* aarch64 */
-    inputPredReg[7]|= uint64_t(0x10010000000000); /* aarch64 (0x1 << 40) | (0x1 << 52) */
+                      (0x1 << 0) | (0x1 << 4) | (0x1 << 16) |
+                      (0x1 << 28); /* aarch64 */
+    inputPredReg[7] |=
+        uint64_t(0x10010000000000); /* aarch64 (0x1 << 40) | (0x1 << 52) */
   }
 
   void setCheckRegFlagAll() {
@@ -56,17 +59,23 @@ public:
     addr1 = reinterpret_cast<size_t>(&(inputZReg[16].sp_dt[0]));
     mov(rax, addr1);
 
-    vmaxps(Zmm(0), Zmm(1)|k1, ptr[rax]);
-    vmaxps(Zmm(2), Zmm(3)|k2, ptr[rax]);
-    vmaxps(Zmm(4), Zmm(5)|k3, ptr[rax]);
-    vmaxps(Zmm(6), Zmm(7)|k4, ptr[rax]);
-    vmaxps(Zmm(8), Zmm(9)|k5, ptr[rax]);
-    vmaxps(Zmm(10), Zmm(11)|k6, ptr[rax]);
-    vmaxps(Zmm(12), Zmm(12)|k7, ptr[rax]);
+    vmaxps(Zmm(0), Zmm(1) | k1, ptr[rax]);
+    vmaxps(Zmm(2), Zmm(3) | k2, ptr[rax]);
+    vmaxps(Zmm(4), Zmm(5) | k3, ptr[rax]);
+    vmaxps(Zmm(6), Zmm(7) | k4, ptr[rax]);
+    vmaxps(Zmm(8), Zmm(9) | k5, ptr[rax]);
+    vmaxps(Zmm(10), Zmm(11) | k6, ptr[rax]);
+    vmaxps(Zmm(12), Zmm(12) | k7, ptr[rax]);
+    vmaxps(Zmm(14), Zmm(14) | k7, ptr[rax]); /* dstIdx = srcIdx */
+    vmaxps(Zmm(15), Zmm(16) | k7, ptr[rax]); /* src = *i(addr1) */
 
-    vmaxps(Zmm(14), Zmm(14)|k7, ptr[rax]);  /* dstIdx = srcIdx */
-
-    vmaxps(Zmm(15), Zmm(16)|k7, ptr[rax]);  /* src = *i(addr1) */
+    vmaxps(Zmm(21), Zmm(21) | k1, ptr[rax]);
+    vmaxps(Zmm(22), Zmm(22) | k2, ptr[rax]);
+    vmaxps(Zmm(23), Zmm(23) | k3, ptr[rax]);
+    vmaxps(Zmm(24), Zmm(24) | k4, ptr[rax]);
+    vmaxps(Zmm(25), Zmm(25) | k5, ptr[rax]);
+    vmaxps(Zmm(26), Zmm(26) | k6, ptr[rax]);
+    vmaxps(Zmm(27), Zmm(27) | k7, ptr[rax]);
 
     mov(rax, 5);
   }

@@ -26,12 +26,17 @@ public:
     inputPredReg[3] = (1 << 0);
     inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 4) | /* x86_64 */
                       (1 << 0) | (1 << 4) | (1 << 16); /* aarch64 */
-    inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 8) | (1 << 12) | /* x86_64 */
-                      (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) | (uint64_t(1) << 32) | (uint64_t(1) << 48); /* aarch64 */
-    inputPredReg[6] = (1 << 5) | (1 << 7) | (1 << 10) | (1 << 13) | (1 << 15) | /* x86_64 */
-                      (1 << 20) | (1 << 28) | (uint64_t(1) << 40) | (uint64_t(1) << 52) | (uint64_t(1) << 60); /* aarch64 */
+    inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
+                      (1 << 8) | (1 << 12) | /* x86_64 */
+                      (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |
+                      (uint64_t(1) << 32) | (uint64_t(1) << 48); /* aarch64 */
+    inputPredReg[6] = (1 << 5) | (1 << 7) | (1 << 10) | (1 << 13) |
+                      (1 << 15) | /* x86_64 */
+                      (1 << 20) | (1 << 28) | (uint64_t(1) << 40) |
+                      (uint64_t(1) << 52) | (uint64_t(1) << 60); /* aarch64 */
     inputPredReg[7] = (1 << 6) | (1 << 9) | (1 << 11) | (1 << 14) | /* x86_64 */
-                      (1 << 24) | (uint64_t(1) << 36) | (uint64_t(1) << 44) | (uint64_t(1) << 56); /* aarch64 */
+                      (1 << 24) | (uint64_t(1) << 36) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 56); /* aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -48,14 +53,14 @@ public:
     vpblendmd(Zmm(6) | k6, Zmm(30), Zmm(31));
     vpblendmd(Zmm(7) | k7, Zmm(30), Zmm(31));
 
-    vpblendmd(Zmm(10) | k6, Zmm(10), Zmm(31));  /* dstIdx = srcIdx */
-    vpblendmd(Zmm(11) | k7, Zmm(11), Zmm(31));  /* dstIdx = srcIdx */
+    vpblendmd(Zmm(10) | k6, Zmm(10), Zmm(31)); /* dstIdx = srcIdx */
+    vpblendmd(Zmm(11) | k7, Zmm(11), Zmm(31)); /* dstIdx = srcIdx */
 
-    vpblendmd(Zmm(12) | k6, Zmm(30), Zmm(12));  /* dstIdx = src2Idx */
-    vpblendmd(Zmm(13) | k7, Zmm(30), Zmm(13));  /* dstIdx = src2Idx */
+    vpblendmd(Zmm(12) | k6, Zmm(30), Zmm(12)); /* dstIdx = src2Idx */
+    vpblendmd(Zmm(13) | k7, Zmm(30), Zmm(13)); /* dstIdx = src2Idx */
 
-    vpblendmd(Zmm(14) | k6, Zmm(14), Zmm(14));  /* dstIdx = srcIdx = src2Idx */
-    vpblendmd(Zmm(15) | k7, Zmm(15), Zmm(15));  /* dstIdx = srcIdx = src2Idx */
+    vpblendmd(Zmm(14) | k6, Zmm(14), Zmm(14)); /* dstIdx = srcIdx = src2Idx */
+    vpblendmd(Zmm(15) | k7, Zmm(15), Zmm(15)); /* dstIdx = srcIdx = src2Idx */
   }
 };
 

@@ -24,10 +24,11 @@ public:
     inputPredReg[1] = uint64_t(0);
     inputPredReg[2] = ~uint64_t(0);
     inputPredReg[3] = (1 << 0);
-    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 <<5) | (1 <<6) | (1 <<7); /* x86_64 aarch64 */
-    inputPredReg[5] = uint64_t(0x5555555555555555); /* x86_64 aarch64 */
-    inputPredReg[6] = uint64_t(0x123456789ABCDEF0); /* x86_64 aarch64 */
-    inputPredReg[7] = uint64_t(0x0FEDCBA987654321); /* x86_64 aarch64 */
+    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
+                      (1 << 5) | (1 << 6) | (1 << 7); /* x86_64 aarch64 */
+    inputPredReg[5] = uint64_t(0x5555555555555555);   /* x86_64 aarch64 */
+    inputPredReg[6] = uint64_t(0x123456789ABCDEF0);   /* x86_64 aarch64 */
+    inputPredReg[7] = uint64_t(0x0FEDCBA987654321);   /* x86_64 aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -50,8 +51,8 @@ public:
     vpblendmb(Zmm(6) | k6, Zmm(30), ptr[rax]);
     vpblendmb(Zmm(7) | k7, Zmm(30), ptr[rax]);
 
-    vpblendmb(Zmm(10) | k6, Zmm(10), ptr[rax]);  /* dstIdx = srcIdx */
-    vpblendmb(Zmm(11) | k7, Zmm(11), ptr[rax]);  /* dstIdx = srcIdx */
+    vpblendmb(Zmm(10) | k6, Zmm(10), ptr[rax]); /* dstIdx = srcIdx */
+    vpblendmb(Zmm(11) | k7, Zmm(11), ptr[rax]); /* dstIdx = srcIdx */
 
     mov(rax, 5);
   }

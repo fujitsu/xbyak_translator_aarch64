@@ -32,17 +32,17 @@ public:
     vpblendmd(Ymm(1), Ymm(30), Ymm(31));
     vpblendmd(Zmm(2), Zmm(30), Zmm(31));
 
-    vpblendmd(Xmm(3), Xmm(3), Xmm(31));  /* dstIdx = srcIdx */
-    vpblendmd(Ymm(4), Ymm(4), Ymm(31));  /* dstIdx = srcIdx */
-    vpblendmd(Zmm(5), Zmm(5), Zmm(31));  /* dstIdx = srcIdx */
+    vpblendmd(Xmm(3), Xmm(3), Xmm(31)); /* dstIdx = srcIdx */
+    vpblendmd(Ymm(4), Ymm(4), Ymm(31)); /* dstIdx = srcIdx */
+    vpblendmd(Zmm(5), Zmm(5), Zmm(31)); /* dstIdx = srcIdx */
 
-    vpblendmd(Xmm(6), Xmm(30), Xmm(6));  /* dstIdx = src2Idx */
-    vpblendmd(Ymm(7), Ymm(30), Ymm(7));  /* dstIdx = src2Idx */
-    vpblendmd(Zmm(8), Zmm(30), Zmm(8));  /* dstIdx = src2Idx */
+    vpblendmd(Xmm(6), Xmm(30), Xmm(6)); /* dstIdx = src2Idx */
+    vpblendmd(Ymm(7), Ymm(30), Ymm(7)); /* dstIdx = src2Idx */
+    vpblendmd(Zmm(8), Zmm(30), Zmm(8)); /* dstIdx = src2Idx */
 
-    vpblendmd(Xmm(9), Xmm(9), Xmm(9));  /* dstIdx = srcIdx = src2Idx */
-    vpblendmd(Ymm(10), Ymm(10), Ymm(10));  /* dstIdx = srcIdx = src2Idx */
-    vpblendmd(Zmm(11), Zmm(11), Zmm(11));  /* dstIdx = srcIdx = src2Idx */
+    vpblendmd(Xmm(9), Xmm(9), Xmm(9));    /* dstIdx = srcIdx = src2Idx */
+    vpblendmd(Ymm(10), Ymm(10), Ymm(10)); /* dstIdx = srcIdx = src2Idx */
+    vpblendmd(Zmm(11), Zmm(11), Zmm(11)); /* dstIdx = srcIdx = src2Idx */
   }
 };
 

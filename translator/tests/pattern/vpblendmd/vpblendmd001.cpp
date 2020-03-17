@@ -38,9 +38,9 @@ public:
     vpblendmd(Ymm(1), Ymm(30), ptr[rax]);
     vpblendmd(Zmm(2), Zmm(30), ptr[rax]);
 
-    vpblendmd(Xmm(3), Xmm(3), ptr[rax]);  /* dstIdx = srcIdx */
-    vpblendmd(Ymm(4), Ymm(4), ptr[rax]);  /* dstIdx = srcIdx */
-    vpblendmd(Zmm(5), Zmm(5), ptr[rax]);  /* dstIdx = srcIdx */
+    vpblendmd(Xmm(3), Xmm(3), ptr[rax]); /* dstIdx = srcIdx */
+    vpblendmd(Ymm(4), Ymm(4), ptr[rax]); /* dstIdx = srcIdx */
+    vpblendmd(Zmm(5), Zmm(5), ptr[rax]); /* dstIdx = srcIdx */
 
     mov(rax, 5);
   }

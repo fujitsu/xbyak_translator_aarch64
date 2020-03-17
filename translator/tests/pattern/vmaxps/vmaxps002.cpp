@@ -19,7 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-//    setInputZregAllRandomHex();
+    //    setInputZregAllRandomHex();
     setDumpZRegMode(SP_DT);
     setInputZregAllRandomFloat();
   }
@@ -41,11 +41,11 @@ public:
     vmaxps(Ymm(0), Ymm(1), ptr[rax]);
     vmaxps(Ymm(2), Ymm(3), ptr[rcx]);
 
-    vmaxps(Ymm(4), Ymm(4), ptr[rax]);  /* dstIdx = srcIdx */
-    vmaxps(Ymm(5), Ymm(5), ptr[rcx]);  /* dstIdx = srcIdx */
+    vmaxps(Ymm(4), Ymm(4), ptr[rax]); /* dstIdx = srcIdx */
+    vmaxps(Ymm(5), Ymm(5), ptr[rcx]); /* dstIdx = srcIdx */
 
-    vmaxps(Ymm(6), Ymm(10), ptr[rax]);  /* src = *i(addr1) */
-    vmaxps(Ymm(7), Ymm(11), ptr[rcx]);  /* src = *i(addr2) */
+    vmaxps(Ymm(6), Ymm(10), ptr[rax]); /* src = *i(addr1) */
+    vmaxps(Ymm(7), Ymm(11), ptr[rcx]); /* src = *i(addr2) */
 
     mov(rax, 5);
     mov(rcx, 5);
