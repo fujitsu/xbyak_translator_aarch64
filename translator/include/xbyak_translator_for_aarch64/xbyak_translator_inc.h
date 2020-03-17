@@ -24,6 +24,7 @@
 #include "instructions/pinsrd.h"
 #include "instructions/pinsrw.h"
 #include "instructions/punpckhbw.h"
+#include "instructions/punpckhdq.h"
 #include "instructions/punpckhwd.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
