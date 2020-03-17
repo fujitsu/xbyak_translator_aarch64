@@ -72,6 +72,11 @@ public:
 int main(int argc, char *argv[]) {
   /* Initializing arrays of inputData, inputGenReg, inputPredReg, inputZReg,
    * checkGenRegMode, checkPredRegMode,checkZRegMode */
+
+  printf("TODO: this operand pattern is not yet implemented... %s %s %d\n",
+         __FILE__, __FUNCTION__, __LINE__);
+  abort();
+
   TestPtnGenerator gen;
 
   /* Set bool output_jit_on_, bool exec_jit_on_ = 0; */

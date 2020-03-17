@@ -50,19 +50,50 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vunpcklps(Xmm(1) | k1 | T_z, Xmm(1), Xmm(2));
-    vunpcklps(Xmm(2) | k2 | T_z, Xmm(1), Xmm(2));
-    vunpcklps(Xmm(3) | k3 | T_z, Xmm(1), Xmm(2));
-    vunpcklps(Xmm(4) | k4 | T_z, Xmm(1), Xmm(2));
-    vunpcklps(Xmm(5) | k5 | T_z, Xmm(1), Xmm(2));
-    vunpcklps(Xmm(6) | k6 | T_z, Xmm(1), Xmm(2));
-    vunpcklps(Xmm(7) | k7 | T_z, Xmm(1), Xmm(2));
+
+    vunpcklps(Xmm(1) | k1 | T_z, Xmm(30), Xmm(31));
+    vunpcklps(Xmm(2) | k2 | T_z, Xmm(30), Xmm(31));
+    vunpcklps(Xmm(3) | k3 | T_z, Xmm(30), Xmm(31));
+    vunpcklps(Xmm(4) | k4 | T_z, Xmm(30), Xmm(31));
+    vunpcklps(Xmm(5) | k5 | T_z, Xmm(30), Xmm(31));
+    vunpcklps(Xmm(6) | k6 | T_z, Xmm(30), Xmm(31));
+    vunpcklps(Xmm(7) | k7 | T_z, Xmm(30), Xmm(31));
+
+    vunpcklps(Xmm(8) | k1 | T_z, Xmm(8), Xmm(31));
+    vunpcklps(Xmm(9) | k2 | T_z, Xmm(9), Xmm(31));
+    vunpcklps(Xmm(10) | k3 | T_z, Xmm(10), Xmm(31));
+    vunpcklps(Xmm(11) | k4 | T_z, Xmm(11), Xmm(31));
+    vunpcklps(Xmm(12) | k5 | T_z, Xmm(12), Xmm(31));
+    vunpcklps(Xmm(13) | k6 | T_z, Xmm(13), Xmm(31));
+    vunpcklps(Xmm(14) | k7 | T_z, Xmm(14), Xmm(31));
+
+    vunpcklps(Xmm(15) | k1 | T_z, Xmm(30), Xmm(15));
+    vunpcklps(Xmm(16) | k2 | T_z, Xmm(30), Xmm(16));
+    vunpcklps(Xmm(17) | k3 | T_z, Xmm(30), Xmm(17));
+    vunpcklps(Xmm(18) | k4 | T_z, Xmm(30), Xmm(18));
+    vunpcklps(Xmm(19) | k5 | T_z, Xmm(30), Xmm(19));
+    vunpcklps(Xmm(20) | k6 | T_z, Xmm(30), Xmm(20));
+    vunpcklps(Xmm(21) | k7 | T_z, Xmm(30), Xmm(21));
+
+    vunpcklps(Xmm(22) | k1 | T_z, Xmm(22), Xmm(22));
+    vunpcklps(Xmm(23) | k2 | T_z, Xmm(23), Xmm(23));
+    vunpcklps(Xmm(24) | k3 | T_z, Xmm(24), Xmm(24));
+    vunpcklps(Xmm(25) | k4 | T_z, Xmm(25), Xmm(25));
+    vunpcklps(Xmm(26) | k5 | T_z, Xmm(26), Xmm(26));
+    vunpcklps(Xmm(27) | k6 | T_z, Xmm(27), Xmm(27));
+    vunpcklps(Xmm(28) | k7 | T_z, Xmm(28), Xmm(28));
+>>>>>>> 3_implement_translation_sakamoto_vunpcklps
   }
 };
 
 int main(int argc, char *argv[]) {
   /* Initializing arrays of inputData, inputGenReg, inputPredReg, inputZReg,
    * checkGenRegMode, checkPredRegMode,checkZRegMode */
+
+  printf("TODO: this operand pattern is not yet implemented... %s %s %d\n",
+         __FILE__, __FUNCTION__, __LINE__);
+  abort();
+
   TestPtnGenerator gen;
 
   /* Set bool output_jit_on_, bool exec_jit_on_ = 0; */

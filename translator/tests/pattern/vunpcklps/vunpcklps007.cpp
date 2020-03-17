@@ -50,19 +50,49 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vunpcklps(Zmm(1) | k1, Zmm(1), Zmm(2));
-    vunpcklps(Zmm(2) | k2, Zmm(1), Zmm(2));
-    vunpcklps(Zmm(3) | k3, Zmm(1), Zmm(2));
-    vunpcklps(Zmm(4) | k4, Zmm(1), Zmm(2));
-    vunpcklps(Zmm(5) | k5, Zmm(1), Zmm(2));
-    vunpcklps(Zmm(6) | k6, Zmm(1), Zmm(2));
-    vunpcklps(Zmm(7) | k7, Zmm(1), Zmm(2));
+
+    vunpcklps(Zmm(1) | k1, Zmm(30), Zmm(31));
+    vunpcklps(Zmm(2) | k2, Zmm(30), Zmm(31));
+    vunpcklps(Zmm(3) | k3, Zmm(30), Zmm(31));
+    vunpcklps(Zmm(4) | k4, Zmm(30), Zmm(31));
+    vunpcklps(Zmm(5) | k5, Zmm(30), Zmm(31));
+    vunpcklps(Zmm(6) | k6, Zmm(30), Zmm(31));
+    vunpcklps(Zmm(7) | k7, Zmm(30), Zmm(31));
+
+    vunpcklps(Zmm(8) | k1, Zmm(8), Zmm(31));
+    vunpcklps(Zmm(9) | k2, Zmm(9), Zmm(31));
+    vunpcklps(Zmm(10) | k3, Zmm(10), Zmm(31));
+    vunpcklps(Zmm(11) | k4, Zmm(11), Zmm(31));
+    vunpcklps(Zmm(12) | k5, Zmm(12), Zmm(31));
+    vunpcklps(Zmm(13) | k6, Zmm(13), Zmm(31));
+    vunpcklps(Zmm(14) | k7, Zmm(14), Zmm(31));
+
+    vunpcklps(Zmm(15) | k1, Zmm(30), Zmm(15));
+    vunpcklps(Zmm(16) | k2, Zmm(30), Zmm(16));
+    vunpcklps(Zmm(17) | k3, Zmm(30), Zmm(17));
+    vunpcklps(Zmm(18) | k4, Zmm(30), Zmm(18));
+    vunpcklps(Zmm(19) | k5, Zmm(30), Zmm(19));
+    vunpcklps(Zmm(20) | k6, Zmm(30), Zmm(20));
+    vunpcklps(Zmm(21) | k7, Zmm(30), Zmm(21));
+
+    vunpcklps(Zmm(22) | k1, Zmm(22), Zmm(22));
+    vunpcklps(Zmm(23) | k2, Zmm(23), Zmm(23));
+    vunpcklps(Zmm(24) | k3, Zmm(24), Zmm(24));
+    vunpcklps(Zmm(25) | k4, Zmm(25), Zmm(25));
+    vunpcklps(Zmm(26) | k5, Zmm(26), Zmm(26));
+    vunpcklps(Zmm(27) | k6, Zmm(27), Zmm(27));
+    vunpcklps(Zmm(28) | k7, Zmm(28), Zmm(28));
   }
 };
 
 int main(int argc, char *argv[]) {
   /* Initializing arrays of inputData, inputGenReg, inputPredReg, inputZReg,
    * checkGenRegMode, checkPredRegMode,checkZRegMode */
+
+  printf("TODO: this operand pattern is not yet implemented... %s %s %d\n",
+         __FILE__, __FUNCTION__, __LINE__);
+  abort();
+
   TestPtnGenerator gen;
 
   /* Set bool output_jit_on_, bool exec_jit_on_ = 0; */
