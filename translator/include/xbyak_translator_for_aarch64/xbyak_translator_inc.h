@@ -23,6 +23,7 @@
 #include "instructions/pinsrb.h"
 #include "instructions/pinsrd.h"
 #include "instructions/pinsrw.h"
+#include "instructions/punpckhbw.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
 #include "instructions/sub.h"
