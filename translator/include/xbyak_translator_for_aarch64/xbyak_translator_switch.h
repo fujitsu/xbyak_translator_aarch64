@@ -726,6 +726,8 @@ case XED_ICLASS_PUNPCKHDQ:
   translatePUNPCKHDQ(&xedd);
   break;
 case XED_ICLASS_PUNPCKHQDQ:
+  translatePUNPCKHQDQ(&xedd);
+  break;
 case XED_ICLASS_PUNPCKHWD:
   translatePUNPCKHWD(&xedd);
   break;
