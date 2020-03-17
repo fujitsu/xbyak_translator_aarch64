@@ -56,6 +56,7 @@
 #include "instructions/vpxor.h"
 #include "instructions/vpxord.h"
 #include "instructions/vshuff32x4.h"
+#include "instructions/vshufps.h"
 #include "instructions/vsqrtps.h"
 #include "instructions/vsubps.h"
 #include "instructions/vunpckhpd.h"
