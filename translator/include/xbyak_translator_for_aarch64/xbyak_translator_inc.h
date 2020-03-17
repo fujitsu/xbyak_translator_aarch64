@@ -28,6 +28,7 @@
 #include "instructions/punpckhqdq.h"
 #include "instructions/punpckhwd.h"
 #include "instructions/punpcklbw.h"
+#include "instructions/punpckldq.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
 #include "instructions/sub.h"

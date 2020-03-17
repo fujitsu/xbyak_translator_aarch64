@@ -876,7 +876,7 @@ void punpckhdq(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x6A); decode
 void punpckhqdq(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x6D, 0x66, isXMM_XMMorMEM); decodeAndTransToAArch64(); }
 void punpckhwd(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x69); decodeAndTransToAArch64(); }
 void punpcklbw(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x60); decodeAndTransToAArch64(); }
-void punpckldq(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x62); UNIMPLEMENTED; }
+void punpckldq(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x62); decodeAndTransToAArch64(); }
 void punpcklqdq(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x6C, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void punpcklwd(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x61); UNIMPLEMENTED; }
 void pushf() { db(0x9C); std::cerr << "No support for PUSHF instruction" << std::endl; }

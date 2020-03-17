@@ -735,6 +735,8 @@ case XED_ICLASS_PUNPCKLBW:
   translatePUNPCKLBW(&xedd);
   break;
 case XED_ICLASS_PUNPCKLDQ:
+  translatePUNPCKLDQ(&xedd);
+  break;
 case XED_ICLASS_PUNPCKLQDQ:
 case XED_ICLASS_PUNPCKLWD:
 case XED_ICLASS_PUSH:
