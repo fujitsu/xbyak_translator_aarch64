@@ -35,9 +35,9 @@ public:
     inputZReg[0].sp_dt[10] = 3.5f;
     inputZReg[0].sp_dt[11] = 4.5f;
     inputZReg[0].sp_dt[12] = 5.5f;
-    inputZReg[0].sp_dt[13] = 2147483646.0f;
-    inputZReg[0].sp_dt[14] = 2147483646.5f;
-    inputZReg[0].sp_dt[15] = 2147483647.0f;
+    inputZReg[0].us_dt[15] = 0x4efffffd;
+    inputZReg[0].us_dt[15] = 0x4efffffe;
+    inputZReg[0].us_dt[15] = 0x4effffff; /* max float number represented by int32_t */
 
     inputZReg[1].sp_dt[0] = 0.0f;
     inputZReg[1].sp_dt[1] = -0.4f;
@@ -52,9 +52,18 @@ public:
     inputZReg[1].sp_dt[10] = -3.5f;
     inputZReg[1].sp_dt[11] = -4.5f;
     inputZReg[1].sp_dt[12] = -5.5f;
-    inputZReg[1].sp_dt[13] = -2147483647.0f;
-    inputZReg[1].sp_dt[14] = -2147483647.5f;
-    inputZReg[1].sp_dt[15] = -2147483648.0f;
+    inputZReg[1].us_dt[15] = 0xcefffffd;
+    inputZReg[1].us_dt[15] = 0xcefffffe;
+    inputZReg[1].us_dt[15] = 0xceffffff; /* min float number represented by int32_t */
+    
+    for(int j=2; j<32; j++) {
+      for(int i=0; i<16; i++) {
+	while(inputZReg[j].sp_dt[i] < -2.14748352e+9 || 2.14748352e+9 < inputZReg[j].sp_dt[i]) {
+	  inputZReg[j].uh_dt[2*i+0] = getLfsr();
+	  inputZReg[j].uh_dt[2*i+1] = getLfsr();
+	}
+      }
+    }
   }
 
   void setCheckRegFlagAll() {
@@ -69,7 +78,7 @@ public:
     /* Register index is VEX range. */
     vcvtps2dq(Zmm(2), Zmm(0));
     vcvtps2dq(Zmm(3), Zmm(1));
-#if 0
+
     vcvtps2dq(Xmm(0), Xmm(10));
     vcvtps2dq(Ymm(1), Ymm(10));
     vcvtps2dq(Zmm(2), Zmm(10));
@@ -92,7 +101,6 @@ public:
     vcvtps2dq(Xmm(26), Xmm(26)); /* dstIdx = srcIdx */
     vcvtps2dq(Ymm(27), Ymm(27)); /* dstIdx = srcIdx */
     vcvtps2dq(Zmm(28), Zmm(28)); /* dstIdx = srcIdx */
-#endif
   }
 };
 
