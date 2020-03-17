@@ -874,7 +874,7 @@ void ptest(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x17, 0x66, isXMM
 void punpckhbw(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x68); decodeAndTransToAArch64(); }
 void punpckhdq(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x6A); UNIMPLEMENTED; }
 void punpckhqdq(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x6D, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
-void punpckhwd(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x69); UNIMPLEMENTED; }
+void punpckhwd(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x69); decodeAndTransToAArch64(); }
 void punpcklbw(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x60); UNIMPLEMENTED; }
 void punpckldq(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x62); UNIMPLEMENTED; }
 void punpcklqdq(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x6C, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
