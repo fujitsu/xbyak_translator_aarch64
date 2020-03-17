@@ -30,6 +30,7 @@
 #include "instructions/punpcklbw.h"
 #include "instructions/punpckldq.h"
 #include "instructions/punpcklqdq.h"
+#include "instructions/punpcklwd.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
 #include "instructions/sub.h"
