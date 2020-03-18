@@ -85,6 +85,7 @@
 #include "instructions/vpord.h"
 #include "instructions/vpshufb.h"
 #include "instructions/vpslld.h"
+#include "instructions/vpsrld.h"
 #include "instructions/vpxor.h"
 #include "instructions/vpxord.h"
 #include "instructions/vshuff32x4.h"
