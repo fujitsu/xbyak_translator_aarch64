@@ -3,7 +3,8 @@ void translateVPSLLD(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/03/18 13:56 */
+  /* 2020/03/18 15:15 */
+  bool isValid = false;
 #define CG64 CodeGeneratorAArch64
 
   /* Col=S143*/
@@ -227,6 +228,8 @@ void translateVPSLLD(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_MEM && a64.src2Type == A64_OP_IMM && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
        a64.srcType == A64_OP_MEM && a64.src2Type == A64_OP_IMM && true)) {
+    XT_VALID_CHECK;
   }
+  XT_VALID_CHECK_IF;
 }
 #undef CG64

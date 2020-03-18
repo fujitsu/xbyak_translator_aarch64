@@ -46,13 +46,20 @@ public:
     mov(rcx, addr);
     add(rcx, 64);
 
-    vpslld(Xmm(0), Xmm(1), 1);
-    vpslld(Xmm(2), Xmm(3), 5);
-    vpslld(Xmm(4), Xmm(4), 10);
-    vpslld(Ymm(5), Ymm(6), 4);
-    vpslld(Ymm(7), Ymm(7), 8);
-    vpslld(Zmm(8), Zmm(9), 20);
-    vpslld(Zmm(10), Zmm(10), 15);
+    vpslld(Xmm(0), Xmm(1), 31);
+    vpslld(Xmm(2), Xmm(3), 1);
+    vpslld(Xmm(4), Xmm(4), 31);
+    vpslld(Xmm(5), Xmm(5), 1);
+
+    vpslld(Ymm(6), Ymm(7), 31);
+    vpslld(Ymm(8), Ymm(9), 1);
+    vpslld(Ymm(10), Ymm(10), 31);
+    vpslld(Ymm(11), Ymm(11), 1);
+
+    vpslld(Zmm(12), Zmm(13), 31);
+    vpslld(Zmm(14), Zmm(15), 1);
+    vpslld(Zmm(16), Zmm(16), 31);
+    vpslld(Zmm(17), Zmm(17), 1);
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
