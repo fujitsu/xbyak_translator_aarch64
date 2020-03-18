@@ -47,11 +47,11 @@ public:
     vpord(Xmm(7), Xmm(8), Xmm(8));
     vpord(Xmm(9), Xmm(9), Xmm(9));
 
-    vpord(Xmm(10), Xmm(11), Xmm(12));
-    vpord(Xmm(13), Xmm(13), Xmm(14));
-    vpord(Xmm(15), Xmm(16), Xmm(15));
-    vpord(Xmm(17), Xmm(18), Xmm(18));
-    vpord(Xmm(19), Xmm(19), Xmm(19));
+    vpord(Ymm(10), Ymm(11), Ymm(12));
+    vpord(Ymm(13), Ymm(13), Ymm(14));
+    vpord(Ymm(15), Ymm(16), Ymm(15));
+    vpord(Ymm(17), Ymm(18), Ymm(18));
+    vpord(Ymm(19), Ymm(19), Ymm(19));
 
     vpord(Zmm(20), Zmm(21), Zmm(22));
     vpord(Zmm(23), Zmm(23), Zmm(24));
