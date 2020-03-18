@@ -21,6 +21,7 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
+#if 0    
     for (int j = 0; j < 32; j++) {
       for (int i = 0; i < 16; i++) {
         inputZReg[j].us_dt[i] = (j << 16) + i;
@@ -30,6 +31,7 @@ public:
     for (int i = 0; i < 16; i++) {
       inputZReg[31].us_dt[i] = 0x11111111 * i;
     }
+#endif
   }
 
   void setCheckRegFlagAll() {
@@ -46,13 +48,14 @@ public:
     mov(rcx, addr);
     add(rcx, 64);
 
-    vinsertf128(Ymm(0), Ymm(1), ptr[rax], 0);
-    vinsertf128(Ymm(2), Ymm(3), ptr[rax], 1);
+    vinsertf128(Ymm(0), Ymm(15), ptr[rax], 0);
+    vinsertf128(Ymm(1), Ymm(15), ptr[rax], 1);
 
-    vinsertf128(Ymm(4), Ymm(4), ptr[rax], 0);
-    vinsertf128(Ymm(5), Ymm(5), ptr[rax], 1);
+    vinsertf128(Ymm(2), Ymm(2), ptr[rax], 0);
+    vinsertf128(Ymm(3), Ymm(3), ptr[rax], 1);
 
-    vinsertf128(Ymm(6), Ymm(7), ptr[rax], 0xfe);
+    vinsertf128(Ymm(4), Ymm(15), ptr[rax], 0xfe);
+    vinsertf128(Ymm(5), Ymm(5), ptr[rax], 0xfe);
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64

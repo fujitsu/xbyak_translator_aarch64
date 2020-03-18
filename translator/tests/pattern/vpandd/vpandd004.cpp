@@ -42,22 +42,22 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-/*
-    vandps(Xmm(2), Xmm(0) | k1, Xmm(1));
-    vandps(Xmm(3), Xmm(0) | k2 | T_z, Xmm(1));
-    vandps(Xmm(4), Xmm(0) | k3, Xmm(1));
-    vandps(Xmm(5), Xmm(0) | k4 | T_z, Xmm(1));
+    /*
+        vandps(Xmm(2), Xmm(0) | k1, Xmm(1));
+        vandps(Xmm(3), Xmm(0) | k2 | T_z, Xmm(1));
+        vandps(Xmm(4), Xmm(0) | k3, Xmm(1));
+        vandps(Xmm(5), Xmm(0) | k4 | T_z, Xmm(1));
 
-    vandps(Ymm(6), Ymm(0) | k5, Xmm(1));
-    vandps(Ymm(7), Ymm(0) | k6 | T_z, Xmm(1));
-    vandps(Ymm(8), Ymm(0) | k7, Xmm(1));
-    vandps(Ymm(9), Ymm(0) | k1 | T_z, Xmm(1));
+        vandps(Ymm(6), Ymm(0) | k5, Xmm(1));
+        vandps(Ymm(7), Ymm(0) | k6 | T_z, Xmm(1));
+        vandps(Ymm(8), Ymm(0) | k7, Xmm(1));
+        vandps(Ymm(9), Ymm(0) | k1 | T_z, Xmm(1));
 
-    vandps(Zmm(10), Zmm(0) | k2, Xmm(1));
-    vandps(Zmm(11), Zmm(0) | k3 | T_z, Xmm(1));
-    vandps(Zmm(12), Zmm(0) | k4, Xmm(1));
-    vandps(Zmm(13), Zmm(0) | k5 | T_z, Xmm(1));
-*/
+        vandps(Zmm(10), Zmm(0) | k2, Xmm(1));
+        vandps(Zmm(11), Zmm(0) | k3 | T_z, Xmm(1));
+        vandps(Zmm(12), Zmm(0) | k4, Xmm(1));
+        vandps(Zmm(13), Zmm(0) | k5 | T_z, Xmm(1));
+    */
   }
 };
 
