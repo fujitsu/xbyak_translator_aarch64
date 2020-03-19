@@ -33,6 +33,8 @@ case XED_ICLASS_ADD:
   break;
 case XED_ICLASS_ADDPD:
 case XED_ICLASS_ADDPS:
+  translateADDPS(&xedd);
+  break;
 case XED_ICLASS_ADDSD:
 case XED_ICLASS_ADDSS:
 case XED_ICLASS_ADDSUBPD:
