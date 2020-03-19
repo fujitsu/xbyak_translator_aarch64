@@ -1,6 +1,7 @@
 #include "instructions/adc.h"
 #include "instructions/add.h"
 #include "instructions/addps.h"
+#include "instructions/addss.h"
 #include "instructions/and.h"
 #include "instructions/cmp.h"
 #include "instructions/dec.h"
