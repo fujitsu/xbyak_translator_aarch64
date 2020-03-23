@@ -27,6 +27,7 @@
 #include "instructions/pmovsxbd.h"
 #include "instructions/pmovsxbw.h"
 #include "instructions/pmovsxwd.h"
+#include "instructions/pmovzxbd.h"
 #include "instructions/pxor.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
