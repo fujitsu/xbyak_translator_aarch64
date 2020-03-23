@@ -14,6 +14,7 @@
 #include "instructions/movd.h"
 #include "instructions/movdqa.h"
 #include "instructions/movdqu.h"
+#include "instructions/movhlps.h"
 #include "instructions/movq.h"
 #include "instructions/movsd.h"
 #include "instructions/movss.h"

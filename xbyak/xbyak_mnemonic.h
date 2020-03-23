@@ -685,7 +685,7 @@ void movdqa(const Address& addr, const Xmm& xmm) { db(0x66); opModM(addr, xmm, 0
 void movdqa(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x6F, 0x66); decodeAndTransToAArch64(); }
 void movdqu(const Address& addr, const Xmm& xmm) { db(0xF3); opModM(addr, xmm, 0x0F, 0x7F); decodeAndTransToAArch64(); }
 void movdqu(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x6F, 0xF3); decodeAndTransToAArch64(); }
-void movhlps(const Xmm& reg1, const Xmm& reg2) {  opModR(reg1, reg2, 0x0F, 0x12); UNIMPLEMENTED; }
+void movhlps(const Xmm& reg1, const Xmm& reg2) {  opModR(reg1, reg2, 0x0F, 0x12); decodeAndTransToAArch64(); }
 void movhpd(const Operand& op1, const Operand& op2) { opMovXMM(op1, op2, 0x16, 0x66); UNIMPLEMENTED; }
 void movhps(const Operand& op1, const Operand& op2) { opMovXMM(op1, op2, 0x16, 0x100); UNIMPLEMENTED; }
 void movlhps(const Xmm& reg1, const Xmm& reg2) {  opModR(reg1, reg2, 0x0F, 0x16); UNIMPLEMENTED; }

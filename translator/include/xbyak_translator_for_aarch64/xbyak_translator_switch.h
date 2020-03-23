@@ -475,6 +475,8 @@ case XED_ICLASS_MOVDQU:
   translateMOVDQU(&xedd);
   break;
 case XED_ICLASS_MOVHLPS:
+  translateMOVHLPS(&xedd);
+  break;
 case XED_ICLASS_MOVHPD:
 case XED_ICLASS_MOVHPS:
 case XED_ICLASS_MOVLHPS:
