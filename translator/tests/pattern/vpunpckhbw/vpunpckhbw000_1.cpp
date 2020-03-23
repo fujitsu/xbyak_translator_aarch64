@@ -28,28 +28,17 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
+    vpunpckhbw(Ymm(0), Ymm(1), Ymm(2));
+    vpunpckhbw(Ymm(3), Ymm(3), Ymm(4));
+    vpunpckhbw(Ymm(5), Ymm(6), Ymm(5));
+    vpunpckhbw(Ymm(7), Ymm(8), Ymm(8));
+    vpunpckhbw(Ymm(9), Ymm(9), Ymm(9));
 
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
-    mov(rax, addr);
-
-    vpunpckhbw(Xmm(0), Xmm(1), ptr[rax]);
-    vpunpckhbw(Xmm(2), Xmm(2), ptr[rax]);
-
-    vpunpckhbw(Ymm(3), Ymm(4), ptr[rax]);
-    vpunpckhbw(Ymm(5), Ymm(5), ptr[rax]);
-
-    vpunpckhbw(Zmm(6), Zmm(7), ptr[rax]);
-    vpunpckhbw(Zmm(8), Zmm(8), ptr[rax]);
-
-    vpunpckhbw(Xmm(16), Xmm(17), ptr[rax]);
-    vpunpckhbw(Xmm(18), Xmm(18), ptr[rax]);
-
-    vpunpckhbw(Ymm(20), Ymm(21), ptr[rax]);
-    vpunpckhbw(Ymm(22), Ymm(22), ptr[rax]);
-
-    mov(rax, 5);
+    vpunpckhbw(Xmm(10), Xmm(11), Xmm(12));
+    vpunpckhbw(Xmm(13), Xmm(13), Xmm(14));
+    vpunpckhbw(Xmm(15), Xmm(16), Xmm(15));
+    vpunpckhbw(Xmm(17), Xmm(18), Xmm(18));
+    vpunpckhbw(Xmm(19), Xmm(19), Xmm(19));
   }
 };
 

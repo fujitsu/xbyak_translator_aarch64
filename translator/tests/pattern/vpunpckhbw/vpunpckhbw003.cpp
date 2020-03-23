@@ -22,25 +22,25 @@ public:
     setInputZregAllRandomHex();
 
     inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) |            /* x86_64 */
-                      (1 << 0) | (1 << 8) | (uint64_t(1) << 32);  /* aarch64 */
-    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) | /* x86_64 */
-                      (1 << 0) | (1 << 8) | (1 << 16) |
-                      (uint64_t(1) << 32); /* aarch64 */
-    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) |
-                      (1 << 4) | /* x86_64 */
-                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
-                      (uint64_t(1) << 32); /* aarch64 */
+    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4); /* x86_64 */
+    //(1 << 0) | (1 << 8) | (uint64_t(1) << 32);  /* aarch64 */
+    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4); /* x86_64 */
+    //                      (1 << 0) | (1 << 8) | (1 << 16) |
+    //              (uint64_t(1) << 32); /* aarch64 */
+    inputPredReg[4] =
+        (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4); /* x86_64 */
+    //                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+    //               (uint64_t(1) << 32); /* aarch64 */
 
     inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-                      (1 << 6) | /* x86_64 */
-                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
-                      (uint64_t(1) << 32) | (uint64_t(1) << 48); /* aarch64 */
+                      (1 << 6); /* x86_64 */
+    //                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+    //              (uint64_t(1) << 32) | (uint64_t(1) << 48); /* aarch64 */
     inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-                      (1 << 6) | (1 << 7) | /* x86_64 */
-                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
-                      (uint64_t(1) << 32) | (uint64_t(1) << 48) |
-                      (uint64_t(1) << 56); /* aarch64 */
+                      (1 << 6) | (1 << 7); /* x86_64 */
+    //                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+    //              (uint64_t(1) << 32) | (uint64_t(1) << 48) |
+    //              (uint64_t(1) << 56); /* aarch64 */
     inputPredReg[7] = ~uint64_t(0);
   }
 
@@ -50,14 +50,14 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vunpckhpd(Ymm(1) | k1 | T_z, Ymm(30), Ymm(31));
-    vunpckhpd(Ymm(2) | k2 | T_z, Ymm(30), Ymm(31));
-    vunpckhpd(Ymm(3) | k3 | T_z, Ymm(30), Ymm(31));
-    vunpckhpd(Ymm(4) | k4 | T_z, Ymm(30), Ymm(31));
-    vunpckhpd(Ymm(5) | k5 | T_z, Ymm(30), Ymm(31));
-    vunpckhpd(Ymm(6) | k6 | T_z, Ymm(30), Ymm(31));
-    vunpckhpd(Ymm(7) | k7 | T_z, Ymm(30), Ymm(31));
-
+    vpunpckhbw(Ymm(1) | k1 | T_z, Ymm(30), Ymm(31));
+    vpunpckhbw(Ymm(2) | k2 | T_z, Ymm(30), Ymm(31));
+    vpunpckhbw(Ymm(3) | k3 | T_z, Ymm(30), Ymm(31));
+    vpunpckhbw(Ymm(4) | k4 | T_z, Ymm(30), Ymm(31));
+    vpunpckhbw(Ymm(5) | k5 | T_z, Ymm(30), Ymm(31));
+    vpunpckhbw(Ymm(6) | k6 | T_z, Ymm(30), Ymm(31));
+    vpunpckhbw(Ymm(7) | k7 | T_z, Ymm(30), Ymm(31));
+    /*
     vunpckhpd(Ymm(8) | k1 | T_z, Ymm(8), Ymm(31));
     vunpckhpd(Ymm(9) | k2 | T_z, Ymm(9), Ymm(31));
     vunpckhpd(Ymm(10) | k3 | T_z, Ymm(10), Ymm(31));
@@ -73,14 +73,14 @@ public:
     vunpckhpd(Ymm(19) | k5 | T_z, Ymm(30), Ymm(19));
     vunpckhpd(Ymm(20) | k6 | T_z, Ymm(30), Ymm(20));
     vunpckhpd(Ymm(21) | k7 | T_z, Ymm(30), Ymm(21));
-
-    vunpckhpd(Ymm(22) | k1 | T_z, Ymm(22), Ymm(22));
-    vunpckhpd(Ymm(23) | k2 | T_z, Ymm(23), Ymm(23));
-    vunpckhpd(Ymm(24) | k3 | T_z, Ymm(24), Ymm(24));
-    vunpckhpd(Ymm(25) | k4 | T_z, Ymm(25), Ymm(25));
-    vunpckhpd(Ymm(26) | k5 | T_z, Ymm(26), Ymm(26));
-    vunpckhpd(Ymm(27) | k6 | T_z, Ymm(27), Ymm(27));
-    vunpckhpd(Ymm(28) | k7 | T_z, Ymm(28), Ymm(28));
+    */
+    vpunpckhbw(Ymm(22) | k1 | T_z, Ymm(22), Ymm(22));
+    vpunpckhbw(Ymm(23) | k2 | T_z, Ymm(23), Ymm(23));
+    vpunpckhbw(Ymm(24) | k3 | T_z, Ymm(24), Ymm(24));
+    vpunpckhbw(Ymm(25) | k4 | T_z, Ymm(25), Ymm(25));
+    vpunpckhbw(Ymm(26) | k5 | T_z, Ymm(26), Ymm(26));
+    vpunpckhbw(Ymm(27) | k6 | T_z, Ymm(27), Ymm(27));
+    vpunpckhbw(Ymm(28) | k7 | T_z, Ymm(28), Ymm(28));
   }
 };
 
