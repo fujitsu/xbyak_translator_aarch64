@@ -75,6 +75,7 @@
 #include "instructions/vpmovsdb.h"
 #include "instructions/vpmovsxbd.h"
 #include "instructions/vpmovsxbw.h"
+#include "instructions/vpmovsxwd.h"
 #include "instructions/vpmovusdb.h"
 #include "instructions/vpmovzxbd.h"
 #include "instructions/vpmovzxwd.h"

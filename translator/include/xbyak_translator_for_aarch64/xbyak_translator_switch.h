@@ -1540,6 +1540,8 @@ case XED_ICLASS_VPMOVSXBW:
   break;
 case XED_ICLASS_VPMOVSXDQ:
 case XED_ICLASS_VPMOVSXWD:
+  translateVPMOVSXWD(&xedd);
+  break;
 case XED_ICLASS_VPMOVSXWQ:
 case XED_ICLASS_VPMOVUSDB:
   translateVPMOVUSDB(&xedd);
