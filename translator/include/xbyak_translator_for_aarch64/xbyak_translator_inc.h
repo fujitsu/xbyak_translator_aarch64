@@ -24,6 +24,7 @@
 #include "instructions/pextrd.h"
 #include "instructions/pinsrb.h"
 #include "instructions/pinsrd.h"
+#include "instructions/pmovsxbd.h"
 #include "instructions/pxor.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
