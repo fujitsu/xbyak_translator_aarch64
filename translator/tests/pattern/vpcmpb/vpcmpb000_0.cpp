@@ -30,6 +30,30 @@ public:
     inputZReg[4].ub_dt[0] = inputZReg[5].ub_dt[0] = 3;
     inputZReg[4].ub_dt[7] = inputZReg[5].ub_dt[7] = 4;
     inputZReg[4].ub_dt[15] = inputZReg[5].ub_dt[15] = 5;
+
+    inputZReg[4].ub_dt[33] = 0xff;
+    inputZReg[5].ub_dt[33] = 0xff;
+
+    inputZReg[4].ub_dt[34] = 0xff;
+    inputZReg[5].ub_dt[34] = 0x7f;
+
+    inputZReg[4].ub_dt[35] = 0x7f;
+    inputZReg[5].ub_dt[35] = 0xff;
+
+    inputZReg[4].ub_dt[36] = 0x7f;
+    inputZReg[5].ub_dt[36] = 0x7f;
+
+    inputZReg[4].ub_dt[37] = 0xff;
+    inputZReg[5].ub_dt[37] = 0x0;
+
+    inputZReg[4].ub_dt[38] = 0x7f;
+    inputZReg[5].ub_dt[38] = 0x0;
+
+    inputZReg[4].ub_dt[39] = 0x0;
+    inputZReg[5].ub_dt[39] = 0xff;
+
+    inputZReg[4].ub_dt[40] = 0x0;
+    inputZReg[5].ub_dt[40] = 0x7f;
   }
 
   void setCheckRegFlagAll() {
@@ -38,10 +62,12 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vcmpps(k1, Zmm(0), Zmm(1), 0);   // EQ
-    vcmpps(k2, Zmm(2), Zmm(3), 0);   // EQ
-    vcmpps(k3, Zmm(4), Zmm(5), 0);   // EQ
-    vcmpps(k7, Zmm(31), Zmm(31), 0); // EQ
+#define UIMM 0
+    vcmpps(k1, Zmm(0), Zmm(1), UIMM);   
+    vcmpps(k2, Zmm(2), Zmm(3), UIMM);   
+    vcmpps(k3, Zmm(4), Zmm(5), UIMM);   
+    vcmpps(k7, Zmm(31), Zmm(31), UIMM); 
+#undef UIMM
   }
 };
 
