@@ -49,19 +49,19 @@ public:
     vpsrad(Xmm(0), Xmm(1), 31);
     vpsrad(Xmm(2), Xmm(3), 1);
     vpsrad(Xmm(4), Xmm(4), 31);
-    vpsrad(Xmm(30), Xmm(31), 8);
-    /*
-        vpsrad(Ymm(6), Ymm(7), 31);
-        vpsrad(Ymm(8), Ymm(9), 1);
-        vpsrad(Ymm(10), Ymm(10), 31);
-        vpsrad(Ymm(11), Ymm(11), 1);
+    vpsrad(Xmm(5), Xmm(5), 1);
 
-        vpsrad(Zmm(12), Zmm(13), 31);
-        vpsrad(Zmm(14), Zmm(15), 1);
-        vpsrad(Zmm(16), Zmm(16), 31);
-        vpsrad(Zmm(17), Zmm(17), 1);
-        vpsrad(Zmm(30), Zmm(31), 8);
-    */
+    vpsrad(Ymm(6), Ymm(7), 31);
+    vpsrad(Ymm(8), Ymm(9), 1);
+    vpsrad(Ymm(10), Ymm(10), 31);
+    vpsrad(Ymm(11), Ymm(11), 1);
+
+    vpsrad(Zmm(12), Zmm(13), 31);
+    vpsrad(Zmm(14), Zmm(15), 1);
+    vpsrad(Zmm(16), Zmm(16), 31);
+    vpsrad(Zmm(17), Zmm(17), 1);
+    vpsrad(Zmm(18), Zmm(31), 8);
+
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
     mov(rcx,

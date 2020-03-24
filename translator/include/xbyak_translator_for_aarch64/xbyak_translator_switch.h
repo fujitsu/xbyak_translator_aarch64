@@ -1643,7 +1643,7 @@ case XED_ICLASS_VPSLLVQ:
 case XED_ICLASS_VPSLLVW:
 case XED_ICLASS_VPSLLW:
 case XED_ICLASS_VPSRAD:
-  translateVPSLLD(&xedd);
+  translateVPSRAD(&xedd);
   break;
 case XED_ICLASS_VPSRAQ:
 case XED_ICLASS_VPSRAVD:
