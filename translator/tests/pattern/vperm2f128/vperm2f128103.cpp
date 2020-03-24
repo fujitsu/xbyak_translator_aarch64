@@ -34,20 +34,21 @@ public:
 
 /* VEX */
 #define IMM 3
-    vperm2f128(Ymm(0), Ymm(1), Ymm(2), IMM);
-    vperm2f128(Ymm(3), Ymm(3), Ymm(4), IMM);
-    vperm2f128(Ymm(5), Ymm(6), Ymm(5), IMM);
-    vperm2f128(Ymm(7), Ymm(8), Ymm(8), IMM);
-    vperm2f128(Ymm(9), Ymm(9), Ymm(9), IMM);
+    vperm2f128(Ymm(0), Ymm(14), Ymm(15), IMM);
+    vperm2f128(Ymm(1), Ymm(14), Ymm(15), IMM);
+    vperm2f128(Ymm(2), Ymm(14), Ymm(15), IMM);
+    vperm2f128(Ymm(3), Ymm(14), Ymm(15), IMM);
 
-    vperm2f128(Ymm(4), Ymm(14), Ymm(15), (1 << 2) + IMM);
-    vperm2f128(Ymm(5), Ymm(14), Ymm(15), (1 << 2) + IMM);
-    vperm2f128(Ymm(6), Ymm(14), Ymm(15), (1 << 2) + IMM);
-    vperm2f128(Ymm(7), Ymm(14), Ymm(15), (1 << 2) + IMM);
-    vperm2f128(Ymm(8), Ymm(14), Ymm(15), (1 << 3) + IMM);
-    vperm2f128(Ymm(9), Ymm(14), Ymm(15), (1 << 3) + IMM);
-    vperm2f128(Ymm(10), Ymm(14), Ymm(15), (1 << 3) + IMM);
-    vperm2f128(Ymm(11), Ymm(14), Ymm(15), (1 << 3) + IMM);
+    vperm2f128(Ymm(4), Ymm(14), Ymm(15), IMM + (1 << 2));
+    vperm2f128(Ymm(5), Ymm(14), Ymm(15), IMM + (1 << 2));
+    vperm2f128(Ymm(6), Ymm(14), Ymm(15), IMM + (1 << 2));
+    vperm2f128(Ymm(7), Ymm(14), Ymm(15), IMM + (1 << 2));
+
+    vperm2f128(Ymm(8), Ymm(14), Ymm(15), IMM + (1 << 3));
+    vperm2f128(Ymm(9), Ymm(14), Ymm(15), IMM + (1 << 3));
+    vperm2f128(Ymm(10), Ymm(14), Ymm(15), IMM + (1 << 3));
+    vperm2f128(Ymm(11), Ymm(14), Ymm(15), IMM + (1 << 3));
+#undef IMM
   }
 };
 
