@@ -73,7 +73,6 @@ public:
     vpmovzxbd(Xmm(25) | k5, Xmm(20));
     vpmovzxbd(Xmm(26) | k6, Xmm(20));
     vpmovzxbd(Xmm(27) | k7, Xmm(20));
-    vpmovzxbd(Xmm(28) | k7, Xmm(28)); /* dstIdx = srcIdx */
 
     vpmovzxbd(Xmm(15) | k1, Xmm(15));
     vpmovzxbd(Xmm(16) | k2, Xmm(16));
