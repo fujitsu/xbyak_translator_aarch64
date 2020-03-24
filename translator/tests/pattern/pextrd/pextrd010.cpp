@@ -30,14 +30,14 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
     /* Register index is within SSE range. */
-    pextrd(r8d, Xmm(0), 0);
-    pextrd(r9d, Xmm(1), 1);
-    pextrd(r10d, Xmm(2), 2);
-    pextrd(r11d, Xmm(3), 3);
-    pextrd(r12d, Xmm(4), 4);
-    pextrd(r13d, Xmm(5), 5);
-    pextrd(r14d, Xmm(6), 6);
-    pextrd(r15d, Xmm(7), 7);
+    pextrd(r8d, Xmm(0), getLfsr());
+    pextrd(r9d, Xmm(1), getLfsr());
+    pextrd(r10d, Xmm(2),getLfsr());
+    pextrd(r11d, Xmm(3),getLfsr());
+    pextrd(r12d, Xmm(4),getLfsr());
+    pextrd(r13d, Xmm(5),getLfsr());
+    pextrd(r14d, Xmm(6),getLfsr());
+    pextrd(r15d, Xmm(7),getLfsr());
   }
 };
 

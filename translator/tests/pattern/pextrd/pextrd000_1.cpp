@@ -29,15 +29,15 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
-    /* Register index is within SSE range. */
-    pextrd(r8d, Xmm(0), 0);
-    pextrd(r9d, Xmm(1), 1);
-    pextrd(r10d, Xmm(2), 2);
-    pextrd(r11d, Xmm(3), 3);
-    pextrd(r12d, Xmm(4), 4);
-    pextrd(r13d, Xmm(5), 5);
-    pextrd(r14d, Xmm(6), 6);
-    pextrd(r15d, Xmm(7), 7);
+    /* Register index is within VEX range. */
+    pextrd(r8d, Xmm(8), 0);
+    pextrd(r9d, Xmm(9), 1);
+    pextrd(r10d, Xmm(10), 2);
+    pextrd(r11d, Xmm(11), 3);
+    pextrd(r12d, Xmm(12), 4);
+    pextrd(r13d, Xmm(13), 5);
+    pextrd(r14d, Xmm(14), 6);
+    pextrd(r15d, Xmm(15), 7);
   }
 };
 
