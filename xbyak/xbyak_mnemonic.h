@@ -745,7 +745,7 @@ void packsswb(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x63); UNIMPLE
 void packusdw(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x2B, 0x66, isXMM_XMMorMEM, NONE, 0x38); UNIMPLEMENTED; }
 void packuswb(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x67); UNIMPLEMENTED; }
 void paddb(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xFC); UNIMPLEMENTED; }
-void paddd(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xFE); UNIMPLEMENTED; }
+void paddd(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xFE); decodeAndTransToAArch64(); }
 void paddq(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xD4); UNIMPLEMENTED; }
 void paddsb(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xEC); UNIMPLEMENTED; }
 void paddsw(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xED); UNIMPLEMENTED; }

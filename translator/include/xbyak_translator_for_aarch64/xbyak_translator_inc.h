@@ -21,6 +21,7 @@
 #include "instructions/movups.h"
 #include "instructions/not.h"
 #include "instructions/or.h"
+#include "instructions/paddd.h"
 #include "instructions/pause.h"
 #include "instructions/pextrd.h"
 #include "instructions/pinsrb.h"
