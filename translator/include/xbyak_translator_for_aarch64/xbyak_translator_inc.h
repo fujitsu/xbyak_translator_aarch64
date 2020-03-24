@@ -118,6 +118,7 @@
 #include "instructions/vpxord.h"
 #include "instructions/vpxorq.h"
 #include "instructions/vshuff32x4.h"
+#include "instructions/vshufi32x4.h"
 #include "instructions/vshufps.h"
 #include "instructions/vsqrtps.h"
 #include "instructions/vsubps.h"
