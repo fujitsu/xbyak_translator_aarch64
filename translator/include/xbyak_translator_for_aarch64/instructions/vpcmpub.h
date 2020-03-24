@@ -3,19 +3,7 @@ void translateVPCMPUB(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/03/23 23:45 */
-/* Col=S103*/
-if(false ||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_EQ&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_LT&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_LE&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_NEQ&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_NLT&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_NLE&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_EQ&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_LT&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_LE&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_NEQ&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_NLT&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_NLE&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_EQ&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_LT&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_LE&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_NEQ&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_NLT&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==128&&a64.uimm==A64_CMP_NLE&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_EQ&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_LT&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_LE&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_NEQ&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_NLT&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==128&&a64.uimm==A64_CMP_NLE&&true)) {
-  XT_UNIMPLEMENTED;
-}
-
-/* 2020/03/23 23:45 */
-    /* Col=S103*/
-    if(false ||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_EQ&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_LT&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_LE&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_NEQ&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_NLT&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_NLE&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_EQ&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_LT&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_LE&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_NEQ&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_NLT&&true)||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_NLE&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_EQ&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_LT&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_LE&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_NEQ&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_NLT&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==256&&a64.uimm==A64_CMP_NLE&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_EQ&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_LT&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_LE&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_NEQ&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_NLT&&true)||(a64.PredType==A64_PRED_ZERO&&a64.src2Type==A64_OP_MEM&&a64.srcWidth==256&&a64.uimm==A64_CMP_NLE&&true)) {
-      XT_UNIMPLEMENTED;
-    }
-  
-  /* 2020/03/09 11:54 */
+  /* 2020/03/24 15:11 */
   /* Col=S103*/
   if (false || (a64.PredType == A64_PRED_NO && a64.src2Type == A64_OP_MEM &&
                 a64.srcWidth == 512 && a64.uimm == A64_CMP_EQ && true) ||
@@ -148,7 +136,7 @@ if(false ||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==1
   }
   /* Col=Z103*/
   if (false || (a64.PredType == A64_PRED_NO && a64.src2Type == A64_OP_REG &&
-                a64.srcWidth == 512 && a64.uimm == A64_CMP_LT && true) ||
+                a64.srcWidth == 512 && a64.uimm == A64_CMP_LE && true) ||
       (a64.PredType == A64_PRED_NO && a64.src2Type == A64_OP_REG &&
        a64.srcWidth == 512 && a64.uimm == A64_CMP_NLE && true)) {
     CodeGeneratorAArch64::cmpls(xa::PRegB(a64.dstIdx), xa::PReg(a64.pTmpIdx),
@@ -156,7 +144,7 @@ if(false ||(a64.PredType==A64_PRED_NO&&a64.src2Type==A64_OP_REG&&a64.srcWidth==1
   }
   /* Col=AA103*/
   if (false || (a64.PredType == A64_PRED_NO && a64.src2Type == A64_OP_REG &&
-                a64.srcWidth == 512 && a64.uimm == A64_CMP_LE && true) ||
+                a64.srcWidth == 512 && a64.uimm == A64_CMP_LT && true) ||
       (a64.PredType == A64_PRED_NO && a64.src2Type == A64_OP_REG &&
        a64.srcWidth == 512 && a64.uimm == A64_CMP_NLT && true)) {
     CodeGeneratorAArch64::cmplo(xa::PRegB(a64.dstIdx), xa::PReg(a64.pTmpIdx),
