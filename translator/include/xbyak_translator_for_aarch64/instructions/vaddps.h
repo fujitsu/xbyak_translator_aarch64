@@ -3,7 +3,7 @@ void translateVADDPS(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/02/26 23:59 */
+/* 2020/03/24 13:36 */
 #define CG64 CodeGeneratorAArch64
   /* Col=S103*/
   if (false ||
@@ -85,9 +85,6 @@ void translateVADDPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
-       a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_REG && true) ||
@@ -640,6 +637,5 @@ void translateVADDPS(xed_decoded_inst_t *p) {
        a64.src2Type == A64_OP_MEM && true)) {
     xt_pop_preg();
   }
-
 #undef CG64
 }
