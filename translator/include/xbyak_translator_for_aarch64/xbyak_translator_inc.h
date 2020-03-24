@@ -95,6 +95,7 @@
 #include "instructions/vpord.h"
 #include "instructions/vpshufb.h"
 #include "instructions/vpslld.h"
+#include "instructions/vpsrad.h"
 #include "instructions/vpsrld.h"
 #include "instructions/vpxor.h"
 #include "instructions/vpxord.h"
