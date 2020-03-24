@@ -85,6 +85,7 @@
 #include "instructions/vpshufb.h"
 #include "instructions/vpxor.h"
 #include "instructions/vpxord.h"
+#include "instructions/vpxorq.h"
 #include "instructions/vsqrtps.h"
 #include "instructions/vsubps.h"
 #include "instructions/vunpckhpd.h"

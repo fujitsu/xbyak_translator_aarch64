@@ -1687,6 +1687,8 @@ case XED_ICLASS_VPXORD:
   translateVPXORD(&xedd);
   break;
 case XED_ICLASS_VPXORQ:
+  translateVPXORQ(&xedd);
+  break;
 case XED_ICLASS_VRANGEPD:
 case XED_ICLASS_VRANGEPS:
 case XED_ICLASS_VRANGESD:
