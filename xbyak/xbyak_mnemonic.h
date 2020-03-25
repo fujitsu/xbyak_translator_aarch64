@@ -837,7 +837,7 @@ void prefetchw(const Address& addr) { opModM(addr, Reg32(1), 0x0F, 0x0D); UNIMPL
 void prefetchwt1(const Address& addr) { opModM(addr, Reg32(2), 0x0F, 0x0D); UNIMPLEMENTED; }
 void psadbw(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xF6); UNIMPLEMENTED; }
 void pshufb(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0x00, 0x66, NONE, 0x38); UNIMPLEMENTED; }
-void pshufd(const Mmx& mmx, const Operand& op, uint8 imm8) { opMMX(mmx, op, 0x70, 0x66, imm8); UNIMPLEMENTED; }
+void pshufd(const Mmx& mmx, const Operand& op, uint8 imm8) { opMMX(mmx, op, 0x70, 0x66, imm8); decodeAndTransToAArch64(); }
 void pshufhw(const Mmx& mmx, const Operand& op, uint8 imm8) { opMMX(mmx, op, 0x70, 0xF3, imm8); UNIMPLEMENTED; }
 void pshuflw(const Mmx& mmx, const Operand& op, uint8 imm8) { opMMX(mmx, op, 0x70, 0xF2, imm8); UNIMPLEMENTED; }
 void pshufw(const Mmx& mmx, const Operand& op, uint8 imm8) { opMMX(mmx, op, 0x70, 0x00, imm8); UNIMPLEMENTED; }

@@ -23,6 +23,7 @@
 #include "instructions/pinsrb.h"
 #include "instructions/pinsrd.h"
 #include "instructions/pinsrw.h"
+#include "instructions/pshufd.h"
 #include "instructions/punpckhbw.h"
 #include "instructions/punpckhdq.h"
 #include "instructions/punpckhqdq.h"
