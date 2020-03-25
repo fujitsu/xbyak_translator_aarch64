@@ -20,6 +20,7 @@
 #include "instructions/movss.h"
 #include "instructions/movups.h"
 #include "instructions/mulps.h"
+#include "instructions/mulss.h"
 #include "instructions/not.h"
 #include "instructions/or.h"
 #include "instructions/paddd.h"

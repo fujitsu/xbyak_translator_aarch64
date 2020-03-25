@@ -527,6 +527,8 @@ case XED_ICLASS_MULPS:
   break;
 case XED_ICLASS_MULSD:
 case XED_ICLASS_MULSS:
+  translateMULSS(&xedd);
+  break;
 case XED_ICLASS_MULX:
 case XED_ICLASS_MWAIT:
 case XED_ICLASS_MWAITX:

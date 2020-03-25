@@ -722,7 +722,7 @@ void mul(const Operand& op) { opR_ModM(op, 0, 4, 0xF6); UNIMPLEMENTED; }
 void mulpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x59, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void mulps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x59, 0x100, isXMM_XMMorMEM); decodeAndTransToAArch64(); }
 void mulsd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x59, 0xF2, isXMM_XMMorMEM); UNIMPLEMENTED; }
-void mulss(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x59, 0xF3, isXMM_XMMorMEM); UNIMPLEMENTED; }
+void mulss(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x59, 0xF3, isXMM_XMMorMEM); decodeAndTransToAArch64(); }
 void mulx(const Reg32e& r1, const Reg32e& r2, const Operand& op) { opGpr(r1, r2, op, T_F2 | T_0F38, 0xf6, true); UNIMPLEMENTED; }
 void mwait() { db(0x0F); db(0x01); db(0xC9); UNIMPLEMENTED; }
 void mwaitx() { db(0x0F); db(0x01); db(0xFB); UNIMPLEMENTED; }
