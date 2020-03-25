@@ -1706,6 +1706,8 @@ case XED_ICLASS_VPUNPCKLBW:
   translateVPUNPCKLBW(&xedd);
   break;
 case XED_ICLASS_VPUNPCKLDQ:
+  translateVPUNPCKLDQ(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKLQDQ:
   translateVPUNPCKLQDQ(&xedd);
   break;
