@@ -523,6 +523,8 @@ case XED_ICLASS_MPSADBW:
 case XED_ICLASS_MUL:
 case XED_ICLASS_MULPD:
 case XED_ICLASS_MULPS:
+  translateMULPS(&xedd);
+  break;
 case XED_ICLASS_MULSD:
 case XED_ICLASS_MULSS:
 case XED_ICLASS_MULX:
