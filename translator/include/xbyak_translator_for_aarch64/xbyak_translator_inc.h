@@ -102,6 +102,7 @@
 #include "instructions/vshuff32x4.h"
 #include "instructions/vshuff64x2.h"
 #include "instructions/vshufi32x4.h"
+#include "instructions/vshufpd.h"
 #include "instructions/vshufps.h"
 #include "instructions/vsqrtps.h"
 #include "instructions/vsubps.h"
