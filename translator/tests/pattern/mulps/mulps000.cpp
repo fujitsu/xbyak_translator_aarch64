@@ -32,6 +32,7 @@ public:
     mulps(Xmm(28), Xmm(27));
     mulps(Xmm(25), Xmm(24));
     mulps(Xmm(22), Xmm(21));
+    mulps(Xmm(7), Xmm(7));
   }
 };
 
