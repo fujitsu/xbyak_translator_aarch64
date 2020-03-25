@@ -1480,7 +1480,7 @@ void vpunpckhbw(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(
 void vpunpckhdq(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW0 | T_YMM | T_EVEX | T_B32, 0x6A); UNIMPLEMENTED; }
 void vpunpckhqdq(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW1 | T_YMM | T_EVEX | T_B64, 0x6D); decodeAndTransToAArch64(); }
 void vpunpckhwd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0x69); decodeAndTransToAArch64(); }
-void vpunpcklbw(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0x60); UNIMPLEMENTED; }
+void vpunpcklbw(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0x60); decodeAndTransToAArch64(); }
 void vpunpckldq(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW0 | T_YMM | T_EVEX | T_B32, 0x62); UNIMPLEMENTED; }
 void vpunpcklqdq(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW1 | T_YMM | T_EVEX | T_B64, 0x6C); UNIMPLEMENTED; }
 void vpunpcklwd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0x61); UNIMPLEMENTED; }
@@ -1766,7 +1766,7 @@ void vpunpckhbw(const Xmm& x, const Operand& op) { vpunpckhbw(x, x, op); /*UNIMP
 void vpunpckhdq(const Xmm& x, const Operand& op) { vpunpckhdq(x, x, op); UNIMPLEMENTED; }
 void vpunpckhqdq(const Xmm& x, const Operand& op) { vpunpckhqdq(x, x, op); /*UNIMPLEMENTED;*/ }
 void vpunpckhwd(const Xmm& x, const Operand& op) { vpunpckhwd(x, x, op); /*UNIMPLEMENTED;*/ }
-void vpunpcklbw(const Xmm& x, const Operand& op) { vpunpcklbw(x, x, op); UNIMPLEMENTED; }
+void vpunpcklbw(const Xmm& x, const Operand& op) { vpunpcklbw(x, x, op); /*UNIMPLEMENTED;*/ }
 void vpunpckldq(const Xmm& x, const Operand& op) { vpunpckldq(x, x, op); UNIMPLEMENTED; }
 void vpunpcklqdq(const Xmm& x, const Operand& op) { vpunpcklqdq(x, x, op); UNIMPLEMENTED; }
 void vpunpcklwd(const Xmm& x, const Operand& op) { vpunpcklwd(x, x, op); UNIMPLEMENTED; }
