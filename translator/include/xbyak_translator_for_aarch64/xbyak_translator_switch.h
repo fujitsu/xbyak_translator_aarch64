@@ -1769,6 +1769,8 @@ case XED_ICLASS_VSHUFF32X4:
   translateVSHUFF32X4(&xedd);
   break;
 case XED_ICLASS_VSHUFF64X2:
+  translateVSHUFF64X2(&xedd);
+  break;
 case XED_ICLASS_VSHUFI32X4:
   translateVSHUFI32X4(&xedd);
   break;
