@@ -716,6 +716,8 @@ case XED_ICLASS_PREFETCH_RESERVED:
 case XED_ICLASS_PSADBW:
 case XED_ICLASS_PSHUFB:
 case XED_ICLASS_PSHUFD:
+  translatePSHUFD(&xedd);
+  break;
 case XED_ICLASS_PSHUFHW:
 case XED_ICLASS_PSHUFLW:
 case XED_ICLASS_PSHUFW:
@@ -1739,11 +1741,23 @@ case XED_ICLASS_VPUNPCKHBW:
   break;
 case XED_ICLASS_VPUNPCKHDQ:
 case XED_ICLASS_VPUNPCKHQDQ:
+  translateVPUNPCKHQDQ(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKHWD:
+  translateVPUNPCKHWD(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKLBW:
+  translateVPUNPCKLBW(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKLDQ:
+  translateVPUNPCKLDQ(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKLQDQ:
+  translateVPUNPCKLQDQ(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKLWD:
+  translateVPUNPCKLWD(&xedd);
+  break;
 case XED_ICLASS_VPXOR:
   translateVPXOR(&xedd);
   break;
