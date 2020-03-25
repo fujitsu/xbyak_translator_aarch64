@@ -98,6 +98,7 @@
 #include "instructions/vpunpckhqdq.h"
 #include "instructions/vpunpckhwd.h"
 #include "instructions/vpunpcklbw.h"
+#include "instructions/vpunpcklqdq.h"
 #include "instructions/vpunpcklwd.h"
 #include "instructions/vpxor.h"
 #include "instructions/vpxord.h"
