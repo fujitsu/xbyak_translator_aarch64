@@ -21,6 +21,7 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
+#if 0
     for (int j = 0; j < 32; j++) {
       for (int i = 0; i < 16; i++) {
         inputZReg[j].us_dt[i] = (j << 16) + i;
@@ -30,6 +31,7 @@ public:
     for (int i = 0; i < 16; i++) {
       inputZReg[31].us_dt[i] = 0x11111111 * i;
     }
+#endif
   }
 
   void setCheckRegFlagAll() {
