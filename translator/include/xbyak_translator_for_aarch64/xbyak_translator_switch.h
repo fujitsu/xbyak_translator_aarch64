@@ -996,7 +996,7 @@ case XED_ICLASS_VBROADCASTI64X4:
   translateVBROADCASTI64X4(&xedd);
   break;
 case XED_ICLASS_VBROADCASTSD:
-  xed_assert(0);
+  translateVBROADCASTSD(&xedd);
   break;
 case XED_ICLASS_VBROADCASTSS:
   translateVBROADCASTSS(&xedd);
