@@ -19,6 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    setInputZregAllRandomFloat();
     setDumpZRegMode(SP_DT); // set float mode
     inputZReg[0].sp_dt[7] = float(500.3);
     inputZReg[0].sp_dt[6] = float(10);
