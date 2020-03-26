@@ -35,6 +35,7 @@
 #include "instructions/pxor.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
+#include "instructions/shufps.h"
 #include "instructions/sub.h"
 #include "instructions/test.h"
 #include "instructions/vaddps.h"

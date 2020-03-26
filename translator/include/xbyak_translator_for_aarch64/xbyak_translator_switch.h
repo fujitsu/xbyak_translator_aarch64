@@ -881,6 +881,8 @@ case XED_ICLASS_SHRD:
 case XED_ICLASS_SHRX:
 case XED_ICLASS_SHUFPD:
 case XED_ICLASS_SHUFPS:
+  translateSHUFPS(&xedd);
+  break;
 case XED_ICLASS_SIDT:
 case XED_ICLASS_SKINIT:
 case XED_ICLASS_SLDT:
