@@ -38,15 +38,15 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
     mov(rax, addr);
 
-//    vandps(Xmm(1), Xmm(0) | k1, ptr[rax]);
-//    vandps(Xmm(2), Xmm(0) | k1 | T_z, ptr[rax]);
-//    vandps(Xmm(3), Xmm(0) | k1, ptr_b[rax]);
-//    vandps(Xmm(4), Xmm(0) | k1 | T_z, ptr_b[rax]);
+    //    vandps(Xmm(1), Xmm(0) | k1, ptr[rax]);
+    //    vandps(Xmm(2), Xmm(0) | k1 | T_z, ptr[rax]);
+    //    vandps(Xmm(3), Xmm(0) | k1, ptr_b[rax]);
+    //    vandps(Xmm(4), Xmm(0) | k1 | T_z, ptr_b[rax]);
 
-//    vandps(Ymm(5), Ymm(0) | k1, ptr[rax]);
-//    vandps(Ymm(6), Ymm(0) | k1 | T_z, ptr[rax]);
-//    vandps(Ymm(7), Ymm(0) | k1, ptr_b[rax]);
-//    vandps(Ymm(8), Ymm(0) | k1 | T_z, ptr_b[rax]);
+    //    vandps(Ymm(5), Ymm(0) | k1, ptr[rax]);
+    //    vandps(Ymm(6), Ymm(0) | k1 | T_z, ptr[rax]);
+    //    vandps(Ymm(7), Ymm(0) | k1, ptr_b[rax]);
+    //    vandps(Ymm(8), Ymm(0) | k1 | T_z, ptr_b[rax]);
 
     vandps(Zmm(9), Zmm(0) | k1, ptr[rax]);
     vandps(Zmm(10), Zmm(0) | k1 | T_z, ptr[rax]);

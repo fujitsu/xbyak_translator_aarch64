@@ -523,8 +523,12 @@ case XED_ICLASS_MPSADBW:
 case XED_ICLASS_MUL:
 case XED_ICLASS_MULPD:
 case XED_ICLASS_MULPS:
+  translateMULPS(&xedd);
+  break;
 case XED_ICLASS_MULSD:
 case XED_ICLASS_MULSS:
+  translateMULSS(&xedd);
+  break;
 case XED_ICLASS_MULX:
 case XED_ICLASS_MWAIT:
 case XED_ICLASS_MWAITX:
@@ -643,6 +647,8 @@ case XED_ICLASS_PINSRD:
   break;
 case XED_ICLASS_PINSRQ:
 case XED_ICLASS_PINSRW:
+  translatePINSRW(&xedd);
+  break;
 case XED_ICLASS_PMADDUBSW:
 case XED_ICLASS_PMADDWD:
 case XED_ICLASS_PMAXSB:
@@ -710,6 +716,8 @@ case XED_ICLASS_PREFETCH_RESERVED:
 case XED_ICLASS_PSADBW:
 case XED_ICLASS_PSHUFB:
 case XED_ICLASS_PSHUFD:
+  translatePSHUFD(&xedd);
+  break;
 case XED_ICLASS_PSHUFHW:
 case XED_ICLASS_PSHUFLW:
 case XED_ICLASS_PSHUFW:
@@ -738,13 +746,29 @@ case XED_ICLASS_PSWAPD:
 case XED_ICLASS_PTEST:
 case XED_ICLASS_PTWRITE:
 case XED_ICLASS_PUNPCKHBW:
+  translatePUNPCKHBW(&xedd);
+  break;
 case XED_ICLASS_PUNPCKHDQ:
+  translatePUNPCKHDQ(&xedd);
+  break;
 case XED_ICLASS_PUNPCKHQDQ:
+  translatePUNPCKHQDQ(&xedd);
+  break;
 case XED_ICLASS_PUNPCKHWD:
+  translatePUNPCKHWD(&xedd);
+  break;
 case XED_ICLASS_PUNPCKLBW:
+  translatePUNPCKLBW(&xedd);
+  break;
 case XED_ICLASS_PUNPCKLDQ:
+  translatePUNPCKLDQ(&xedd);
+  break;
 case XED_ICLASS_PUNPCKLQDQ:
+  translatePUNPCKLQDQ(&xedd);
+  break;
 case XED_ICLASS_PUNPCKLWD:
+  translatePUNPCKLWD(&xedd);
+  break;
 case XED_ICLASS_PUSH:
   break;
 case XED_ICLASS_PUSHA:
@@ -1385,7 +1409,11 @@ case XED_ICLASS_VPBROADCASTD:
 case XED_ICLASS_VPBROADCASTMB2Q:
 case XED_ICLASS_VPBROADCASTMW2D:
 case XED_ICLASS_VPBROADCASTQ:
+  translateVPBROADCASTQ(&xedd);
+  break;
 case XED_ICLASS_VPBROADCASTW:
+  translateVPBROADCASTW(&xedd);
+  break;
 case XED_ICLASS_VPCLMULQDQ:
 case XED_ICLASS_VPCMOV:
 case XED_ICLASS_VPCMPB:
@@ -1436,6 +1464,8 @@ case XED_ICLASS_VPDPBUSDS:
 case XED_ICLASS_VPDPWSSD:
 case XED_ICLASS_VPDPWSSDS:
 case XED_ICLASS_VPERM2F128:
+  translateVPERM2F128(&xedd);
+  break;
 case XED_ICLASS_VPERM2I128:
   translateVPERM2I128(&xedd);
   break;
@@ -1558,16 +1588,24 @@ case XED_ICLASS_VPMOVQB:
 case XED_ICLASS_VPMOVQD:
 case XED_ICLASS_VPMOVQW:
 case XED_ICLASS_VPMOVSDB:
+  translateVPMOVSDB(&xedd);
+  break;
 case XED_ICLASS_VPMOVSDW:
 case XED_ICLASS_VPMOVSQB:
 case XED_ICLASS_VPMOVSQD:
 case XED_ICLASS_VPMOVSQW:
 case XED_ICLASS_VPMOVSWB:
 case XED_ICLASS_VPMOVSXBD:
+  translateVPMOVSXBD(&xedd);
+  break;
 case XED_ICLASS_VPMOVSXBQ:
 case XED_ICLASS_VPMOVSXBW:
+  translateVPMOVSXBW(&xedd);
+  break;
 case XED_ICLASS_VPMOVSXDQ:
 case XED_ICLASS_VPMOVSXWD:
+  translateVPMOVSXWD(&xedd);
+  break;
 case XED_ICLASS_VPMOVSXWQ:
 case XED_ICLASS_VPMOVUSDB:
   translateVPMOVUSDB(&xedd);
@@ -1701,13 +1739,27 @@ case XED_ICLASS_VPTESTNMD:
 case XED_ICLASS_VPTESTNMQ:
 case XED_ICLASS_VPTESTNMW:
 case XED_ICLASS_VPUNPCKHBW:
+  translateVPUNPCKHBW(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKHDQ:
 case XED_ICLASS_VPUNPCKHQDQ:
+  translateVPUNPCKHQDQ(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKHWD:
+  translateVPUNPCKHWD(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKLBW:
+  translateVPUNPCKLBW(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKLDQ:
+  translateVPUNPCKLDQ(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKLQDQ:
+  translateVPUNPCKLQDQ(&xedd);
+  break;
 case XED_ICLASS_VPUNPCKLWD:
+  translateVPUNPCKLWD(&xedd);
+  break;
 case XED_ICLASS_VPXOR:
   translateVPXOR(&xedd);
   break;
@@ -1715,6 +1767,8 @@ case XED_ICLASS_VPXORD:
   translateVPXORD(&xedd);
   break;
 case XED_ICLASS_VPXORQ:
+  translateVPXORQ(&xedd);
+  break;
 case XED_ICLASS_VRANGEPD:
 case XED_ICLASS_VRANGEPS:
 case XED_ICLASS_VRANGESD:
@@ -1804,10 +1858,14 @@ case XED_ICLASS_VUNPCKHPD:
   translateVUNPCKHPD(&xedd);
   break;
 case XED_ICLASS_VUNPCKHPS:
+  translateVUNPCKHPS(&xedd);
+  break;
 case XED_ICLASS_VUNPCKLPD:
   translateVUNPCKLPD(&xedd);
   break;
 case XED_ICLASS_VUNPCKLPS:
+  translateVUNPCKLPS(&xedd);
+  break;
 case XED_ICLASS_VXORPD:
 case XED_ICLASS_VXORPS:
   translateVXORPS(&xedd);

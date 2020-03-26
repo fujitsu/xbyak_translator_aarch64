@@ -20,7 +20,7 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
+#if 0
     for (int j = 0; j < 32; j++) {
       for (int i = 0; i < 16; i++) {
         inputZReg[j].us_dt[i] = (j << 16) + i;
@@ -30,6 +30,7 @@ public:
     for (int i = 0; i < 16; i++) {
       inputZReg[31].us_dt[i] = 0x11111111 * i;
     }
+#endif
   }
 
   void setCheckRegFlagAll() {
@@ -43,16 +44,14 @@ public:
     /* Address is aligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[30].ud_dt[0]));
     mov(rax, addr);
-    mov(rcx, addr);
-    add(rcx, 64);
 
     pxor(Xmm(0), Xmm(1));
-    pxor(Xmm(2), Xmm(2));
-    pxor(Xmm(3), ptr[rax]);
+    pxor(Xmm(2), Xmm(3));
+    pxor(Xmm(4), Xmm(4));
+    pxor(Xmm(5), ptr[rax]);
+    pxor(Xmm(6), ptr[rax]);
 
     mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-    mov(rcx,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };

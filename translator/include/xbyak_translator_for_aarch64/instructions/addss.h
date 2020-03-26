@@ -3,7 +3,7 @@ void translateADDSS(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-  /* 2020/03/19 15:51 */
+  /* 2020/03/26 15:59 */
   bool isValid = false;
 #define CG64 CodeGeneratorAArch64
 
@@ -69,14 +69,14 @@ void translateADDSS(xed_decoded_inst_t *p) {
   /* Col=AM143*/
   if (false || (a64.dstWidth == 32 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::add(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx),
-                              xa::ZRegS(a64.srcIdx));
+    CodeGeneratorAArch64::fadd(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx),
+                               xa::ZRegS(a64.srcIdx));
   }
   /* Col=AO143*/
   if (false || (a64.dstWidth == 32 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::add(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx),
-                              xa::ZRegS(a64.zTmpIdx));
+    CodeGeneratorAArch64::fadd(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx),
+                               xa::ZRegS(a64.zTmpIdx));
   }
 
   /* Col=AW143*/
