@@ -905,6 +905,8 @@ case XED_ICLASS_SHRD:
 case XED_ICLASS_SHRX:
 case XED_ICLASS_SHUFPD:
 case XED_ICLASS_SHUFPS:
+  translateSHUFPS(&xedd);
+  break;
 case XED_ICLASS_SIDT:
 case XED_ICLASS_SKINIT:
 case XED_ICLASS_SLDT:
@@ -1018,7 +1020,7 @@ case XED_ICLASS_VBROADCASTI64X4:
   translateVBROADCASTI64X4(&xedd);
   break;
 case XED_ICLASS_VBROADCASTSD:
-  xed_assert(0);
+  translateVBROADCASTSD(&xedd);
   break;
 case XED_ICLASS_VBROADCASTSS:
   translateVBROADCASTSS(&xedd);
