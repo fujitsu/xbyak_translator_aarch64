@@ -20,18 +20,6 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    /*
-    uint32_t tmp1 = uint32_t(0x11001100);
-    uint32_t tmp2 = uint32_t(0x00220022);
-    uint32_t tmp3 = uint32_t(0x00000000);
-    uint32_t tmp4 = uint32_t(0x00000000);
-    for (int i = 0; i < 16; i++) {
-      tmp3 += tmp1;
-      tmp4 += tmp2;
-      inputZReg[21].us_dt[15-i] += tmp3;
-      inputZReg[22].us_dt[i] += tmp4;
-    }
-    */
   }
 
   void setCheckRegFlagAll() {
@@ -40,23 +28,38 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vunpckhps(Xmm(0), Xmm(1), Xmm(2));
-    vunpckhps(Xmm(3), Xmm(3), Xmm(4));
-    vunpckhps(Xmm(5), Xmm(6), Xmm(5));
-    vunpckhps(Xmm(7), Xmm(8), Xmm(8));
-    vunpckhps(Xmm(9), Xmm(9), Xmm(9));
 
-    vunpckhps(Ymm(10), Ymm(11), Ymm(12));
-    vunpckhps(Ymm(13), Ymm(13), Ymm(14));
-    vunpckhps(Ymm(15), Ymm(16), Ymm(15));
-    vunpckhps(Ymm(17), Ymm(18), Ymm(18));
-    vunpckhps(Ymm(19), Ymm(19), Ymm(19));
+    /* Register index is inside VEX range. */
+    vunpckhps(Xmm(0), Xmm(14), Xmm(15));
+    vunpckhps(Xmm(1), Xmm(14), Xmm(15));
+    vunpckhps(Xmm(2), Xmm(2), Xmm(15));
+    vunpckhps(Xmm(3), Xmm(14), Xmm(3));
+    vunpckhps(Xmm(4), Xmm(4), Xmm(4));
 
-    vunpckhps(Zmm(20), Zmm(21), Zmm(22));
-    vunpckhps(Zmm(23), Zmm(23), Zmm(24));
-    vunpckhps(Zmm(25), Zmm(26), Zmm(25));
-    vunpckhps(Zmm(27), Zmm(28), Zmm(28));
-    vunpckhps(Zmm(29), Zmm(29), Zmm(29));
+    vunpckhps(Ymm(5), Ymm(14), Ymm(15));
+    vunpckhps(Ymm(6), Ymm(14), Ymm(15));
+    vunpckhps(Ymm(7), Ymm(7), Ymm(15));
+    vunpckhps(Ymm(8), Ymm(14), Ymm(8));
+    vunpckhps(Ymm(9), Ymm(9), Ymm(9));
+
+    /* Register index is inside EVEX range. */
+    vunpckhps(Xmm(16), Xmm(14), Xmm(15));
+    vunpckhps(Xmm(17), Xmm(14), Xmm(15));
+    vunpckhps(Xmm(18), Xmm(18), Xmm(15));
+    vunpckhps(Xmm(19), Xmm(14), Xmm(19));
+    vunpckhps(Xmm(20), Xmm(20), Xmm(20));
+
+    vunpckhps(Ymm(21), Ymm(14), Ymm(15));
+    vunpckhps(Ymm(22), Ymm(14), Ymm(15));
+    vunpckhps(Ymm(23), Ymm(23), Ymm(15));
+    vunpckhps(Ymm(24), Ymm(14), Ymm(24));
+    vunpckhps(Ymm(25), Ymm(25), Ymm(25));
+
+    vunpckhps(Zmm(26), Zmm(14), Zmm(15));
+    vunpckhps(Zmm(27), Zmm(14), Zmm(15));
+    vunpckhps(Zmm(28), Zmm(28), Zmm(15));
+    vunpckhps(Zmm(29), Zmm(14), Zmm(29));
+    vunpckhps(Zmm(30), Zmm(30), Zmm(30));
   }
 };
 

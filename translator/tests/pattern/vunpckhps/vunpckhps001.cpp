@@ -34,14 +34,27 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
     mov(rax, addr);
 
-    vunpckhps(Xmm(0), Xmm(1), ptr[rax]);
+    /* Register index is inside VEX range. */
+    vunpckhps(Xmm(0), Xmm(15), ptr[rax]);
+    vunpckhps(Xmm(1), Xmm(15), ptr[rax]);
     vunpckhps(Xmm(2), Xmm(2), ptr[rax]);
 
-    vunpckhps(Ymm(3), Ymm(4), ptr[rax]);
+    vunpckhps(Ymm(3), Ymm(15), ptr[rax]);
+    vunpckhps(Ymm(4), Ymm(15), ptr[rax]);
     vunpckhps(Ymm(5), Ymm(5), ptr[rax]);
 
-    vunpckhps(Zmm(6), Zmm(7), ptr[rax]);
-    vunpckhps(Zmm(8), Zmm(8), ptr[rax]);
+    /* Register index is inside EVEX range. */
+    vunpckhps(Xmm(16), Xmm(15), ptr[rax]);
+    vunpckhps(Xmm(17), Xmm(15), ptr[rax]);
+    vunpckhps(Xmm(18), Xmm(18), ptr[rax]);
+
+    vunpckhps(Ymm(19), Ymm(15), ptr[rax]);
+    vunpckhps(Ymm(20), Ymm(15), ptr[rax]);
+    vunpckhps(Ymm(21), Ymm(21), ptr[rax]);
+
+    vunpckhps(Zmm(22), Zmm(15), ptr[rax]);
+    vunpckhps(Zmm(23), Zmm(15), ptr[rax]);
+    vunpckhps(Zmm(24), Zmm(24), ptr[rax]);
 
     mov(rax, 5);
   }
