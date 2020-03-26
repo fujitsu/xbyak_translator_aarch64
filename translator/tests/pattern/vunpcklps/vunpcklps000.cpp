@@ -28,23 +28,38 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vunpcklps(Xmm(0), Xmm(1), Xmm(2));
-    vunpcklps(Xmm(3), Xmm(3), Xmm(4));
-    vunpcklps(Xmm(5), Xmm(6), Xmm(5));
-    vunpcklps(Xmm(7), Xmm(8), Xmm(8));
-    vunpcklps(Xmm(9), Xmm(9), Xmm(9));
 
-    vunpcklps(Ymm(10), Ymm(11), Ymm(12));
-    vunpcklps(Ymm(13), Ymm(13), Ymm(14));
-    vunpcklps(Ymm(15), Ymm(16), Ymm(15));
-    vunpcklps(Ymm(17), Ymm(18), Ymm(18));
-    vunpcklps(Ymm(19), Ymm(19), Ymm(19));
+    /* Register index is inside VEX range. */
+    vunpcklps(Xmm(0), Xmm(14), Xmm(15));
+    vunpcklps(Xmm(1), Xmm(14), Xmm(15));
+    vunpcklps(Xmm(2), Xmm(2), Xmm(15));
+    vunpcklps(Xmm(3), Xmm(14), Xmm(3));
+    vunpcklps(Xmm(4), Xmm(4), Xmm(4));
 
-    vunpcklps(Zmm(20), Zmm(21), Zmm(22));
-    vunpcklps(Zmm(23), Zmm(23), Zmm(24));
-    vunpcklps(Zmm(25), Zmm(26), Zmm(25));
-    vunpcklps(Zmm(27), Zmm(28), Zmm(28));
-    vunpcklps(Zmm(29), Zmm(29), Zmm(29));
+    vunpcklps(Ymm(5), Ymm(14), Ymm(15));
+    vunpcklps(Ymm(6), Ymm(14), Ymm(15));
+    vunpcklps(Ymm(7), Ymm(7), Ymm(15));
+    vunpcklps(Ymm(8), Ymm(14), Ymm(8));
+    vunpcklps(Ymm(9), Ymm(9), Ymm(9));
+
+    /* Register index is inside EVEX range. */
+    vunpcklps(Xmm(16), Xmm(14), Xmm(15));
+    vunpcklps(Xmm(17), Xmm(14), Xmm(15));
+    vunpcklps(Xmm(18), Xmm(18), Xmm(15));
+    vunpcklps(Xmm(19), Xmm(14), Xmm(19));
+    vunpcklps(Xmm(20), Xmm(20), Xmm(20));
+
+    vunpcklps(Ymm(21), Ymm(14), Ymm(15));
+    vunpcklps(Ymm(22), Ymm(14), Ymm(15));
+    vunpcklps(Ymm(23), Ymm(23), Ymm(15));
+    vunpcklps(Ymm(24), Ymm(14), Ymm(24));
+    vunpcklps(Ymm(25), Ymm(25), Ymm(25));
+
+    vunpcklps(Zmm(26), Zmm(14), Zmm(15));
+    vunpcklps(Zmm(27), Zmm(14), Zmm(15));
+    vunpcklps(Zmm(28), Zmm(28), Zmm(15));
+    vunpcklps(Zmm(29), Zmm(14), Zmm(29));
+    vunpcklps(Zmm(30), Zmm(30), Zmm(30));
   }
 };
 

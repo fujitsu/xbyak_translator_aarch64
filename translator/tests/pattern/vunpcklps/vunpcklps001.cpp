@@ -34,14 +34,27 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
     mov(rax, addr);
 
-    vunpcklps(Xmm(0), Xmm(1), ptr[rax]);
+    /* Register index is inside VEX range. */
+    vunpcklps(Xmm(0), Xmm(15), ptr[rax]);
+    vunpcklps(Xmm(1), Xmm(15), ptr[rax]);
     vunpcklps(Xmm(2), Xmm(2), ptr[rax]);
 
-    vunpcklps(Ymm(3), Ymm(4), ptr[rax]);
+    vunpcklps(Ymm(3), Ymm(15), ptr[rax]);
+    vunpcklps(Ymm(4), Ymm(15), ptr[rax]);
     vunpcklps(Ymm(5), Ymm(5), ptr[rax]);
 
-    vunpcklps(Zmm(6), Zmm(7), ptr[rax]);
-    vunpcklps(Zmm(8), Zmm(8), ptr[rax]);
+    /* Register index is inside EVEX range. */
+    vunpcklps(Xmm(16), Xmm(15), ptr[rax]);
+    vunpcklps(Xmm(17), Xmm(15), ptr[rax]);
+    vunpcklps(Xmm(18), Xmm(18), ptr[rax]);
+
+    vunpcklps(Ymm(19), Ymm(15), ptr[rax]);
+    vunpcklps(Ymm(20), Ymm(15), ptr[rax]);
+    vunpcklps(Ymm(21), Ymm(21), ptr[rax]);
+
+    vunpcklps(Zmm(22), Zmm(15), ptr[rax]);
+    vunpcklps(Zmm(23), Zmm(15), ptr[rax]);
+    vunpcklps(Zmm(24), Zmm(24), ptr[rax]);
 
     mov(rax, 5);
   }
@@ -50,11 +63,6 @@ public:
 int main(int argc, char *argv[]) {
   /* Initializing arrays of inputData, inputGenReg, inputPredReg, inputZReg,
    * checkGenRegMode, checkPredRegMode,checkZRegMode */
-
-  printf("TODO: this operand pattern is not yet implemented... %s %s %d\n",
-         __FILE__, __FUNCTION__, __LINE__);
-  abort();
-
   TestPtnGenerator gen;
 
   /* Set bool output_jit_on_, bool exec_jit_on_ = 0; */
