@@ -26,6 +26,7 @@
 #include "instructions/paddd.h"
 #include "instructions/pause.h"
 #include "instructions/pextrd.h"
+#include "instructions/phaddw.h"
 #include "instructions/pinsrb.h"
 #include "instructions/pinsrd.h"
 #include "instructions/pinsrw.h"
