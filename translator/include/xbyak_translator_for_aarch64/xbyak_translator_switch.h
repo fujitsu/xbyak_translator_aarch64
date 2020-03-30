@@ -1311,6 +1311,8 @@ case XED_ICLASS_VPACKSSWB:
 case XED_ICLASS_VPACKUSDW:
 case XED_ICLASS_VPACKUSWB:
 case XED_ICLASS_VPADDB:
+  translateVPADDB(&xedd);
+  break;
 case XED_ICLASS_VPADDD:
   translateVPADDD(&xedd);
   break;

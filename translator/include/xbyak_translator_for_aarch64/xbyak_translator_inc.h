@@ -59,6 +59,7 @@
 #include "instructions/vmovups.h"
 #include "instructions/vmulps.h"
 #include "instructions/vorps.h"
+#include "instructions/vpaddb.h"
 #include "instructions/vpaddd.h"
 #include "instructions/vpaddq.h"
 #include "instructions/vpandd.h"
