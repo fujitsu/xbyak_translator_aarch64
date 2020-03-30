@@ -104,6 +104,7 @@
 #include "instructions/vpcmpub.h"
 #include "instructions/vperm2f128.h"
 #include "instructions/vperm2i128.h"
+#include "instructions/vphaddd.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
 #include "instructions/vpmaxsd.h"
