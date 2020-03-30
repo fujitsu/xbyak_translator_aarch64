@@ -60,6 +60,7 @@
 #include "instructions/vmulps.h"
 #include "instructions/vorps.h"
 #include "instructions/vpaddd.h"
+#include "instructions/vpaddq.h"
 #include "instructions/vpandd.h"
 #include "instructions/vpblendmb.h"
 #include "instructions/vpblendmd.h"

@@ -1315,6 +1315,8 @@ case XED_ICLASS_VPADDD:
   translateVPADDD(&xedd);
   break;
 case XED_ICLASS_VPADDQ:
+  translateVPADDQ(&xedd);
+  break;
 case XED_ICLASS_VPADDSB:
 case XED_ICLASS_VPADDSW:
 case XED_ICLASS_VPADDUSB:
