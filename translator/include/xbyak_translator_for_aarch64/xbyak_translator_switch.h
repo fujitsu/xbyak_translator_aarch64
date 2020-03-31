@@ -1425,6 +1425,8 @@ case XED_ICLASS_VPCMPD:
   translateVPCMPD(&xedd);
   break;
 case XED_ICLASS_VPCMPEQB:
+  translateVPCMPEQB(&xedd);
+  break;
 case XED_ICLASS_VPCMPEQD:
 case XED_ICLASS_VPCMPEQQ:
 case XED_ICLASS_VPCMPEQW:
