@@ -101,6 +101,7 @@
 #include "instructions/vpbroadcastw.h"
 #include "instructions/vpcmpb.h"
 #include "instructions/vpcmpd.h"
+#include "instructions/vpcmpeqd.h"
 #include "instructions/vpcmpub.h"
 #include "instructions/vperm2f128.h"
 #include "instructions/vperm2i128.h"
