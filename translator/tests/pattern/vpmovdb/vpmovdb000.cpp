@@ -21,7 +21,8 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
     for(int i=0; i<4; i++){
-        inputZReg[0].us_dt[i] = uint32_t(286331153);
+        if(i%2 == 0) inputZReg[0].us_dt[i] = uint32_t(286392319);
+        else inputZReg[0].us_dt[i] = uint32_t(286326784);
         inputZReg[2].us_dt[i] = uint32_t(17);
     }
   }
