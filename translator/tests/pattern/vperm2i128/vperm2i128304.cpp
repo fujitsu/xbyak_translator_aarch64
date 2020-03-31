@@ -29,8 +29,8 @@ public:
   }
 
   void genJitTestCode() {
-/* Here write JIT code with x86_64 mnemonic function to be tested. */
-/* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    /* Here write JIT code with x86_64 mnemonic function to be tested. */
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
     uint16_t flag = 0;
 
 #define MOVE_SEED 400
@@ -42,7 +42,7 @@ public:
     while (flag != uint16_t(0xffff)) {
       uint16_t tmp0, tmp1, tmp2;
       uint32_t uimm;
-      
+
       /* Each register is used as destination only once. */
       do {
         tmp0 = getLfsr() % 16;
@@ -51,7 +51,7 @@ public:
       tmp1 = getLfsr() % 16;
       tmp2 = getLfsr() % 16;
       uimm = (uint32_t(getLfsr()) << 16) + uint32_t(getLfsr());
-      
+
       vperm2i128(Ymm(tmp0), Ymm(tmp1), Ymm(tmp2), uimm);
 
       flag |= uint16_t(1 << tmp0);

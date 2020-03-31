@@ -31,7 +31,7 @@ public:
     size_t addr;
     size_t addr1;
 
-    /* Address is aligned */
+/* Address is aligned */
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[6].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[7].ud_dt[0]));
@@ -62,7 +62,7 @@ public:
     vmovdqu32(Zmm(5), ptr[rbx]);
 #endif
 
-    /* Address is unaligned */
+/* Address is unaligned */
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[18].ud_dt[0])) + 3;
     addr1 = reinterpret_cast<size_t>(&(inputZReg[19].ud_dt[0])) + 5;

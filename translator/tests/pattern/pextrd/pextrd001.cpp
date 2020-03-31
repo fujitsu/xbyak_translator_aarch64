@@ -36,29 +36,11 @@ public:
     std::cout << "Address is " << std::hex << addr << std::endl;
     mov(rax, addr);
 
-    pextrd(ptr[rax], Xmm(0), 0);
-    mov(r8d, ptr[rax]);
-
-    pextrd(ptr[rax], Xmm(1), 1);
-    mov(r9d, ptr[rax]);
-
-    pextrd(ptr[rax], Xmm(2), 2);
-    mov(r10d, ptr[rax]);
-
-    pextrd(ptr[rax], Xmm(3), 3);
-    mov(r11d, ptr[rax]);
-
-    pextrd(ptr[rax], Xmm(4), 4);
-    mov(r12d, ptr[rax]);
-
-    pextrd(ptr[rax], Xmm(5), 5);
-    mov(r13d, ptr[rax]);
-
-    pextrd(ptr[rax], Xmm(6), 6);
-    mov(r14d, ptr[rax]);
-
-    pextrd(ptr[rax], Xmm(7), 7);
-    mov(r15d, ptr[rax]);
+    /* Register index is within SSE range. */
+    for(int i=0; i<8; i++) {
+      pextrd(ptr[rax], Xmm(i), i);
+      vmovdqu8(Zmm(16+i), ptr[rax]);
+    }
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
