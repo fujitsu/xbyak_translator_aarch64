@@ -73,6 +73,7 @@
 #include "instructions/vpinsrq.h"
 #include "instructions/vpmaxsd.h"
 #include "instructions/vpmovdb.h"
+#include "instructions/vpmovdw.h"
 #include "instructions/vpmovusdb.h"
 #include "instructions/vpmovzxbd.h"
 #include "instructions/vpmovzxwd.h"

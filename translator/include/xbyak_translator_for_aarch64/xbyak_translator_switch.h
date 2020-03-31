@@ -1516,6 +1516,8 @@ case XED_ICLASS_VPMOVDB:
   translateVPMOVDB(&xedd);
   break;
 case XED_ICLASS_VPMOVDW:
+  translateVPMOVDW(&xedd);
+  break;
 case XED_ICLASS_VPMOVM2B:
 case XED_ICLASS_VPMOVM2D:
 case XED_ICLASS_VPMOVM2Q:
