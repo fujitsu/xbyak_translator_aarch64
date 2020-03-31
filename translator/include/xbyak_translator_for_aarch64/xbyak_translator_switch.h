@@ -1428,6 +1428,8 @@ case XED_ICLASS_VPCMPEQB:
   translateVPCMPEQB(&xedd);
   break;
 case XED_ICLASS_VPCMPEQD:
+  translateVPCMPEQD(&xedd);
+  break;
 case XED_ICLASS_VPCMPEQQ:
 case XED_ICLASS_VPCMPEQW:
 case XED_ICLASS_VPCMPESTRI:
