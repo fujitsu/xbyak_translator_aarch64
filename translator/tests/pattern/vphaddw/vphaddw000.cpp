@@ -19,7 +19,8 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomFloat();
+    // setInputZregAllRandomFloat();
+    setInputZregAllRandomHex();
     setDumpZRegMode(SP_DT);
   }
 
@@ -38,14 +39,10 @@ public:
     add(rcx, 64);
 
     vphaddw(Xmm(0), Xmm(1), Xmm(2));
-    vphaddw(Xmm(3), Xmm(4), Xmm(5));
-    vphaddw(Xmm(6), Xmm(6), Xmm(6));
-    vphaddw(Xmm(7), Xmm(7), Xmm(7));
-
-    vphaddw(Ymm(8), Ymm(9), Ymm(10));
-    vphaddw(Ymm(11), Ymm(12), Ymm(13));
-    vphaddw(Ymm(14), Ymm(14), Ymm(14));
-    vphaddw(Ymm(15), Ymm(15), Ymm(15));
+    vphaddw(Xmm(3), Xmm(4), Xmm(3));
+    vphaddw(Xmm(5), Xmm(6), Xmm(6));
+    vphaddw(Xmm(7), Xmm(7), Xmm(8));
+    vphaddw(Xmm(9), Xmm(9), Xmm(9));
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64

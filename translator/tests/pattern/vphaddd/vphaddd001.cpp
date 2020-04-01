@@ -38,11 +38,11 @@ public:
     mov(rcx, addr);
     add(rcx, 64);
 
-    vphaddd(Xmm(0), Xmm(1), Xmm(2));
-    vphaddd(Xmm(3), Xmm(4), Xmm(3));
-    vphaddd(Xmm(5), Xmm(6), Xmm(6));
-    vphaddd(Xmm(7), Xmm(7), Xmm(8));
-    vphaddd(Xmm(9), Xmm(9), Xmm(9));
+    vphaddd(Ymm(0), Ymm(1), Ymm(2));
+    vphaddd(Ymm(3), Ymm(4), Ymm(3));
+    vphaddd(Ymm(5), Ymm(6), Ymm(6));
+    vphaddd(Ymm(7), Ymm(7), Ymm(8));
+    vphaddd(Ymm(9), Ymm(9), Ymm(9));
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64

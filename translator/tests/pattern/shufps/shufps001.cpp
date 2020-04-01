@@ -19,9 +19,18 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    // setInputZregAllRandomFloat();
-    setInputZregAllRandomHex();
-    setDumpZRegMode(SP_DT);
+    // setInputZregAllRandomHex();
+    setInputZregAllRandomFloat();
+
+    /*for (int j = 0; j < 32; j++) {
+      for (int i = 0; i < 16; i++) {
+        inputZReg[j].us_dt[i] = (j << 16) + i;
+      }
+    }
+
+    for (int i = 0; i < 16; i++) {
+      inputZReg[31].us_dt[i] = 0x11111111 * i;
+      }*/
   }
 
   void setCheckRegFlagAll() {
@@ -30,24 +39,30 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
 
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[30].ud_dt[0]));
-    mov(rax, addr);
-    mov(rcx, addr);
-    add(rcx, 64);
+    int sel;
 
-    vphaddd(Xmm(0), Xmm(1), Xmm(2));
-    vphaddd(Xmm(3), Xmm(4), Xmm(3));
-    vphaddd(Xmm(5), Xmm(6), Xmm(6));
-    vphaddd(Xmm(7), Xmm(7), Xmm(8));
-    vphaddd(Xmm(9), Xmm(9), Xmm(9));
+    for (int i = 0; i < 15; i++) {
+      sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
+      shufps(Xmm(i), Xmm(i), sel);
+    }
 
-    mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-    mov(rcx,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    /*
+    shufps(Xmm(0), Xmm(0), 0);
+    shufps(Xmm(1), Xmm(1), 2);
+    shufps(Xmm(2), Xmm(2), 10);
+    shufps(Xmm(3), Xmm(3), 42);
+    shufps(Xmm(4), Xmm(4), 170);
+    shufps(Xmm(5), Xmm(5), 1);
+    shufps(Xmm(6), Xmm(6), 5);
+    shufps(Xmm(7), Xmm(7), 21);
+    shufps(Xmm(8), Xmm(8), 170);
+    shufps(Xmm(9), Xmm(9), 15);
+    shufps(Xmm(10), Xmm(10), 240);
+    shufps(Xmm(11), Xmm(12), 204);
+    shufps(Xmm(13), Xmm(14), 51);
+    shufps(Xmm(15), Xmm(16), 111);
+    */
   }
 };
 
