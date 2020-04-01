@@ -44,8 +44,21 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vpaddq(Ymm(0), Ymm(1), Ymm(2));
     vpaddq(Ymm(3), Ymm(3), Ymm(4));
+    vpaddq(Ymm(5), Ymm(6), Ymm(6));
+    vpaddq(Ymm(7), Ymm(8), Ymm(7));
+    vpaddq(Ymm(9), Ymm(9), Ymm(9));
+
+    vpaddq(Zmm(10), Zmm(11), Zmm(12));
+    vpaddq(Zmm(13), Zmm(13), Zmm(14));
+    vpaddq(Zmm(15), Zmm(16), Zmm(16));
+    vpaddq(Zmm(17), Zmm(18), Zmm(17));
+    vpaddq(Zmm(19), Zmm(19), Zmm(19));
+    /*
+    vpaddq(Ymm(0), Ymm(1), Ymm(2));
+    vpaddq(Ymm(3), Ymm(3), Ymm(4));
     vpaddq(Zmm(5), Zmm(6), Zmm(5));
     vpaddq(Zmm(7), Zmm(8), Zmm(8));
+    */
   }
 };
 

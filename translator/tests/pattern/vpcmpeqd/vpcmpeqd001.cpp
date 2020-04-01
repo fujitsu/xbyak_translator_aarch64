@@ -21,7 +21,7 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-    inputZReg[0].us_dt[0] = 0;
+    /*inputZReg[0].us_dt[0] = 0;
     inputZReg[1].us_dt[0] = 0;
 
     inputZReg[2].us_dt[0] = inputZReg[3].us_dt[0] = 1;
@@ -56,7 +56,7 @@ public:
     inputZReg[7].us_dt[7] = uint32_t(0x7fffffff);
 
     inputZReg[12] = inputZReg[6];
-    inputZReg[13] = inputZReg[7];
+    inputZReg[13] = inputZReg[7];*/
   }
 
   void setCheckRegFlagAll() {
@@ -68,7 +68,7 @@ public:
     vpcmpeqd(Ymm(8), Ymm(0), Ymm(1));
     vpcmpeqd(Ymm(9), Ymm(2), Ymm(3));
     vpcmpeqd(Ymm(10), Ymm(4), Ymm(5));
-    vpcmpeqd(Ymm(11), Ymm(6), Ymm(7));
+    vpcmpeqd(Ymm(11), Ymm(6), Ymm(6));
     vpcmpeqd(Ymm(12), Ymm(12), Ymm(7));  /* dstIdx = srcIdx */
     vpcmpeqd(Ymm(13), Ymm(6), Ymm(13));  /* dstIdx = src2Idx */
     vpcmpeqd(Ymm(14), Ymm(14), Ymm(14)); /* dstIdx = srcIdx = src2Idx */

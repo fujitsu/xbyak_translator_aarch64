@@ -66,6 +66,7 @@ public:
     vpcmpeqd(k2, Zmm(2), Zmm(3));
     vpcmpeqd(k3, Zmm(4), Zmm(5));
     vpcmpeqd(k4, Zmm(6), Zmm(7));
+    vpcmpeqd(k5, Zmm(21), Zmm(20));
     vpcmpeqd(k7, Zmm(31), Zmm(31));
   }
 };

@@ -52,6 +52,9 @@ public:
     vpaddb(Ymm(0), Ymm(1), ptr[rax]);
     vpaddb(Ymm(2), Ymm(2), ptr[rax]);
 
+    vpaddb(Ymm(20), Ymm(21), ptr[rax]);
+    vpaddb(Ymm(22), Ymm(22), ptr[rax]);
+
     vpaddb(Zmm(3), Zmm(4), ptr[rax]);
     vpaddb(Zmm(5), Zmm(5), ptr[rax]);
 

@@ -22,11 +22,12 @@ public:
     //    setInputZregAllRandomHex();
     setDumpZRegMode(SP_DT);
     setInputZregAllRandomFloat();
-
+    /*
     for (int i = 0; i < 16; i++) {
       inputZReg[11].sp_dt[i] = inputZReg[12].sp_dt[i];
       inputZReg[21].sp_dt[i] = inputZReg[22].sp_dt[i];
     }
+    */
   }
 
   void setCheckRegFlagAll() {

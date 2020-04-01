@@ -19,9 +19,29 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    //    setInputZregAllRandomHex();
-    setDumpZRegMode(SP_DT);
-    setInputZregAllRandomFloat();
+    setInputZregAllRandomHex();
+#if 0
+    /*
+    for (int i = 0; i < 16; i++) {
+      inputZReg[0].us_dt[i] = ~uint64_t(0);
+      inputZReg[3].us_dt[i] = ~uint64_t(0);
+      inputZReg[6].us_dt[i] = ~uint64_t(0);
+    }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[1].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[4].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[7].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+    }
+    */
+#endif
+    inputPredReg[1] = uint64_t(0);
+    inputPredReg[2] = ~uint64_t(0);
+    inputPredReg[3] = (1 << 0);
+    inputPredReg[4] = (1 << 0) | (1 << 3);
+    /* x86_64 */                                                 /* aarch64 */
+    inputPredReg[5] = uint64_t(0xFF00FF00AA55AA55); /* x86_64 */ /* aarch64 */
+    inputPredReg[6] = uint64_t(0x0123456789abcdef); /* x86_64 */ /* aarch64 */
+    inputPredReg[7] = uint64_t(0xfedcba9876543210); /* x86_64 */ /* aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -30,34 +50,30 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
-     * r15 */
-    size_t addr1, addr2;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[10].sp_dt[0]));
-    addr2 = reinterpret_cast<size_t>(&(inputZReg[11].sp_dt[0]));
-    mov(rax, addr1);
-    mov(rcx, addr2);
 
-    vminps(Ymm(0), Ymm(1), ptr[rax]);
-    vminps(Ymm(2), Ymm(3), ptr[rcx]);
+    /* Register index is VEX range. */
+    vpaddb(Zmm(1) | k1, Zmm(10), Zmm(11));
+    vpaddb(Zmm(2) | k2, Zmm(10), Zmm(11));
+    vpaddb(Zmm(3) | k3, Zmm(10), Zmm(11));
+    vpaddb(Zmm(4) | k4, Zmm(10), Zmm(11));
+    vpaddb(Zmm(5) | k5, Zmm(10), Zmm(11));
+    vpaddb(Zmm(6) | k6, Zmm(11), Zmm(11));
+    vpaddb(Zmm(7) | k7, Zmm(10), Zmm(11));
+    vpaddb(Zmm(8) | k5, Zmm(8), Zmm(11));
+    vpaddb(Zmm(9) | k6, Zmm(10), Zmm(9));
+    vpaddb(Zmm(0) | k7, Zmm(0), Zmm(0));
 
-    vminps(Ymm(4), Ymm(4), ptr[rax]); /* dstIdx = srcIdx */
-    vminps(Ymm(5), Ymm(5), ptr[rcx]); /* dstIdx = srcIdx */
-
-    vminps(Ymm(6), Ymm(10), ptr[rax]); /* src = *(addr1) */
-    vminps(Ymm(7), Ymm(11), ptr[rcx]); /* src = *(addr2) */
-
-    vminps(Ymm(20), Ymm(21), ptr[rax]);
-    vminps(Ymm(22), Ymm(23), ptr[rcx]);
-
-    vminps(Ymm(24), Ymm(24), ptr[rax]); /* dstIdx = srcIdx */
-    vminps(Ymm(25), Ymm(25), ptr[rcx]); /* dstIdx = srcIdx */
-
-    vminps(Ymm(26), Ymm(30), ptr[rax]); /* src = *(addr1) */
-    vminps(Ymm(27), Ymm(31), ptr[rcx]); /* src = *(addr2) */
-
-    mov(rax, 5);
-    mov(rcx, 5);
+    /* Register index is EVEX range. */
+    vpaddb(Zmm(21) | k1, Zmm(30), Zmm(31));
+    vpaddb(Zmm(22) | k2, Zmm(30), Zmm(31));
+    vpaddb(Zmm(23) | k3, Zmm(30), Zmm(31));
+    vpaddb(Zmm(24) | k4, Zmm(30), Zmm(31));
+    vpaddb(Zmm(25) | k5, Zmm(30), Zmm(31));
+    vpaddb(Zmm(26) | k6, Zmm(31), Zmm(31));
+    vpaddb(Zmm(27) | k7, Zmm(30), Zmm(31));
+    vpaddb(Zmm(28) | k5, Zmm(28), Zmm(31));
+    vpaddb(Zmm(29) | k6, Zmm(30), Zmm(29));
+    vpaddb(Zmm(20) | k7, Zmm(20), Zmm(20));
   }
 };
 

@@ -55,6 +55,9 @@ public:
     vpaddq(Zmm(3), Zmm(4), ptr[rax]);
     vpaddq(Zmm(5), Zmm(5), ptr[rax]);
 
+    vpaddq(Ymm(20), Ymm(21), ptr[rax]);
+    vpaddq(Ymm(22), Ymm(22), ptr[rax]);
+
     mov(rax, 5);
   }
 };

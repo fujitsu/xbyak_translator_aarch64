@@ -42,19 +42,12 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vpaddb(Ymm(1), Ymm(30), Ymm(31));
-    vpaddb(Ymm(2), Ymm(30), Ymm(31));
-    vpaddb(Ymm(3), Ymm(3), Ymm(31));
-    vpaddb(Ymm(4), Ymm(30), Ymm(4));
-    vpaddb(Ymm(5), Ymm(30), Ymm(30));
-    vpaddb(Ymm(6), Ymm(6), Ymm(6));
-
-    vpaddb(Zmm(21), Zmm(30), Zmm(31));
-    vpaddb(Zmm(22), Zmm(30), Zmm(31));
-    vpaddb(Zmm(23), Zmm(23), Zmm(31));
-    vpaddb(Zmm(24), Zmm(30), Zmm(24));
-    vpaddb(Zmm(25), Zmm(30), Zmm(30));
-    vpaddb(Zmm(26), Zmm(26), Zmm(26));
+    vpaddb(Ymm(21), Ymm(30), Ymm(31));
+    vpaddb(Ymm(22), Ymm(30), Ymm(30));
+    vpaddb(Ymm(23), Ymm(23), Ymm(31));
+    vpaddb(Ymm(24), Ymm(30), Ymm(24));
+    vpaddb(Ymm(25), Ymm(30), Ymm(30));
+    vpaddb(Ymm(26), Ymm(26), Ymm(26));
   }
 };
 
