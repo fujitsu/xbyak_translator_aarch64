@@ -22,16 +22,15 @@ public:
     setInputZregAllRandomHex();
 
     inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 4) | (uint64_t(1) << 7) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 32) |
-                      (uint64_t(1) << 56); /* aarch64 */
-    inputPredReg[3] = (1 << 0) | (1 << 4) | (1 << 6) |
+    inputPredReg[2] = (1 << 0) | (1 << 2) |           /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 16); /* aarch64 */
+    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 6) |
                       (uint64_t(1) << 7) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 32) | (uint64_t(1) << 48) |
+                      (1 << 0) | (uint64_t(1) << 8) | (uint64_t(1) << 48) |
                       (uint64_t(1) << 56); /* aarch64 */
-    inputPredReg[4] = (1 << 0) | (1 << 3) | (1 << 5) | (1 << 6) |
+    inputPredReg[4] = (1 << 0) | (1 << 2) | (1 << 5) | (1 << 6) |
                       (uint64_t(1) << 7) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 24) | (uint64_t(1) << 40) |
+                      (1 << 0) | (uint64_t(1) << 16) | (uint64_t(1) << 40) |
                       (uint64_t(1) << 48) | (uint64_t(1) << 56); /* aarch64 */
     inputPredReg[5] = (1 << 0) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) |
                       (uint64_t(1) << 7) | /* x86_64 */
@@ -53,10 +52,10 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vpunpckhqdq(Xmm(1) | k1 | T_z, Xmm(30), Xmm(31));
-    vpunpckhqdq(Xmm(2) | k2 | T_z, Xmm(30), Xmm(31));
-    vpunpckhqdq(Xmm(3) | k3 | T_z, Xmm(30), Xmm(31));
-    vpunpckhqdq(Xmm(4) | k4 | T_z, Xmm(30), Xmm(31));
-    vpunpckhqdq(Xmm(5) | k5 | T_z, Xmm(30), Xmm(31));
+    vpunpckhqdq(Xmm(2) | k2 | T_z, Xmm(30), Xmm(30));
+    vpunpckhqdq(Xmm(3) | k3 | T_z, Xmm(3), Xmm(31));
+    vpunpckhqdq(Xmm(4) | k4 | T_z, Xmm(30), Xmm(4));
+    vpunpckhqdq(Xmm(5) | k5 | T_z, Xmm(5), Xmm(5));
     vpunpckhqdq(Xmm(6) | k6 | T_z, Xmm(30), Xmm(31));
     vpunpckhqdq(Xmm(7) | k7 | T_z, Xmm(30), Xmm(31));
     /*
@@ -76,10 +75,10 @@ public:
     vpunpckhqdq(Xmm(20) | k6 | T_z, Xmm(30), Xmm(20));
     vpunpckhqdq(Xmm(21) | k7 | T_z, Xmm(30), Xmm(21));
     */
-    vpunpckhqdq(Xmm(22) | k1 | T_z, Xmm(22), Xmm(22));
-    vpunpckhqdq(Xmm(23) | k2 | T_z, Xmm(23), Xmm(23));
-    vpunpckhqdq(Xmm(24) | k3 | T_z, Xmm(24), Xmm(24));
-    vpunpckhqdq(Xmm(25) | k4 | T_z, Xmm(25), Xmm(25));
+    vpunpckhqdq(Xmm(22) | k1 | T_z, Xmm(20), Xmm(20));
+    vpunpckhqdq(Xmm(23) | k2 | T_z, Xmm(23), Xmm(20));
+    vpunpckhqdq(Xmm(24) | k3 | T_z, Xmm(20), Xmm(24));
+    vpunpckhqdq(Xmm(25) | k4 | T_z, Xmm(20), Xmm(21));
     vpunpckhqdq(Xmm(26) | k5 | T_z, Xmm(26), Xmm(26));
     vpunpckhqdq(Xmm(27) | k6 | T_z, Xmm(27), Xmm(27));
     vpunpckhqdq(Xmm(28) | k7 | T_z, Xmm(28), Xmm(28));

@@ -22,13 +22,13 @@ public:
     setInputZregAllRandomHex();
 
     inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 17) | (uint64_t(1) << 31) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 34) |
-                      (uint64_t(1) << 62); /* aarch64 */
-    inputPredReg[3] = (1 << 0) | (1 << 17) | (1 << 19) |
+    inputPredReg[2] = (1 << 0) | (1 << 9) | (uint64_t(1) << 18) | /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 18) |
+                      (uint64_t(1) << 36); /* aarch64 */
+    inputPredReg[3] = (1 << 0) | (1 << 9) | (uint64_t(1) << 18) | (1 << 19) |
                       (uint64_t(1) << 31) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 38) |
-                      (uint64_t(1) << 62); /* aarch64 */
+                      (1 << 0) | (uint64_t(1) << 18) | (uint64_t(1) << 36) |
+                      (uint64_t(1) << 38) | (uint64_t(1) << 62); /* aarch64 */
     inputPredReg[4] = (1 << 0) | (1 << 17) | (1 << 21) | (1 << 25) |
                       (uint64_t(1) << 31) | /* x86_64 */
                       (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 42) |
@@ -53,33 +53,33 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vpunpckhwd(Ymm(1) | k1 | T_z, Ymm(30), Ymm(31));
-    vpunpckhwd(Ymm(2) | k2 | T_z, Ymm(30), Ymm(31));
-    vpunpckhwd(Ymm(3) | k3 | T_z, Ymm(30), Ymm(31));
-    vpunpckhwd(Ymm(4) | k4 | T_z, Ymm(30), Ymm(31));
-    vpunpckhwd(Ymm(5) | k5 | T_z, Ymm(30), Ymm(31));
+    vpunpckhwd(Ymm(2) | k2 | T_z, Ymm(30), Ymm(30));
+    vpunpckhwd(Ymm(3) | k3 | T_z, Ymm(3), Ymm(31));
+    vpunpckhwd(Ymm(4) | k4 | T_z, Ymm(30), Ymm(4));
+    vpunpckhwd(Ymm(5) | k5 | T_z, Ymm(5), Ymm(5));
     vpunpckhwd(Ymm(6) | k6 | T_z, Ymm(30), Ymm(31));
     vpunpckhwd(Ymm(7) | k7 | T_z, Ymm(30), Ymm(31));
     /*
-    vunpckhpd(Ymm(8) | k1 | T_z, Ymm(8), Ymm(31));
-    vunpckhpd(Ymm(9) | k2 | T_z, Ymm(9), Ymm(31));
-    vunpckhpd(Ymm(10) | k3 | T_z, Ymm(10), Ymm(31));
-    vunpckhpd(Ymm(11) | k4 | T_z, Ymm(11), Ymm(31));
-    vunpckhpd(Ymm(12) | k5 | T_z, Ymm(12), Ymm(31));
-    vunpckhpd(Ymm(13) | k6 | T_z, Ymm(13), Ymm(31));
-    vunpckhpd(Ymm(14) | k7 | T_z, Ymm(14), Ymm(31));
+    vpunpckhwd(Ymm(8) | k1 | T_z, Ymm(8), Ymm(31));
+    vpunpckhwd(Ymm(9) | k2 | T_z, Ymm(9), Ymm(31));
+    vpunpckhwd(Ymm(10) | k3 | T_z, Ymm(10), Ymm(31));
+    vpunpckhwd(Ymm(11) | k4 | T_z, Ymm(11), Ymm(31));
+    vpunpckhwd(Ymm(12) | k5 | T_z, Ymm(12), Ymm(31));
+    vpunpckhwd(Ymm(13) | k6 | T_z, Ymm(13), Ymm(31));
+    vpunpckhwd(Ymm(14) | k7 | T_z, Ymm(14), Ymm(31));
 
-    vunpckhpd(Ymm(15) | k1 | T_z, Ymm(30), Ymm(15));
-    vunpckhpd(Ymm(16) | k2 | T_z, Ymm(30), Ymm(16));
-    vunpckhpd(Ymm(17) | k3 | T_z, Ymm(30), Ymm(17));
-    vunpckhpd(Ymm(18) | k4 | T_z, Ymm(30), Ymm(18));
-    vunpckhpd(Ymm(19) | k5 | T_z, Ymm(30), Ymm(19));
-    vunpckhpd(Ymm(20) | k6 | T_z, Ymm(30), Ymm(20));
-    vunpckhpd(Ymm(21) | k7 | T_z, Ymm(30), Ymm(21));
+    vpunpckhwd(Ymm(15) | k1 | T_z, Ymm(30), Ymm(15));
+    vpunpckhwd(Ymm(16) | k2 | T_z, Ymm(30), Ymm(16));
+    vpunpckhwd(Ymm(17) | k3 | T_z, Ymm(30), Ymm(17));
+    vpunpckhwd(Ymm(18) | k4 | T_z, Ymm(30), Ymm(18));
+    vpunpckhwd(Ymm(19) | k5 | T_z, Ymm(30), Ymm(19));
+    vpunpckhwd(Ymm(20) | k6 | T_z, Ymm(30), Ymm(20));
+    vpunpckhwd(Ymm(21) | k7 | T_z, Ymm(30), Ymm(21));
     */
-    vpunpckhwd(Ymm(22) | k1 | T_z, Ymm(22), Ymm(22));
-    vpunpckhwd(Ymm(23) | k2 | T_z, Ymm(23), Ymm(23));
-    vpunpckhwd(Ymm(24) | k3 | T_z, Ymm(24), Ymm(24));
-    vpunpckhwd(Ymm(25) | k4 | T_z, Ymm(25), Ymm(25));
+    vpunpckhwd(Ymm(22) | k1 | T_z, Ymm(20), Ymm(22));
+    vpunpckhwd(Ymm(23) | k2 | T_z, Ymm(23), Ymm(20));
+    vpunpckhwd(Ymm(24) | k3 | T_z, Ymm(20), Ymm(20));
+    vpunpckhwd(Ymm(25) | k4 | T_z, Ymm(20), Ymm(21));
     vpunpckhwd(Ymm(26) | k5 | T_z, Ymm(26), Ymm(26));
     vpunpckhwd(Ymm(27) | k6 | T_z, Ymm(27), Ymm(27));
     vpunpckhwd(Ymm(28) | k7 | T_z, Ymm(28), Ymm(28));

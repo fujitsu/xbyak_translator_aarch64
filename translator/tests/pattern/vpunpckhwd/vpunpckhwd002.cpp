@@ -22,13 +22,13 @@ public:
     setInputZregAllRandomHex();
 
     inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 17) | (uint64_t(1) << 31) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 34) |
-                      (uint64_t(1) << 62); /* aarch64 */
-    inputPredReg[3] = (1 << 0) | (1 << 17) | (1 << 19) |
+    inputPredReg[2] = (1 << 0) | (1 << 9) | (uint64_t(1) << 18) | /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 18) |
+                      (uint64_t(1) << 36); /* aarch64 */
+    inputPredReg[3] = (1 << 0) | (1 << 9) | (uint64_t(1) << 18) | (1 << 19) |
                       (uint64_t(1) << 31) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 38) |
-                      (uint64_t(1) << 62); /* aarch64 */
+                      (1 << 0) | (uint64_t(1) << 18) | (uint64_t(1) << 36) |
+                      (uint64_t(1) << 38) | (uint64_t(1) << 62); /* aarch64 */
     inputPredReg[4] = (1 << 0) | (1 << 17) | (1 << 21) | (1 << 25) |
                       (uint64_t(1) << 31) | /* x86_64 */
                       (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 42) |
@@ -53,10 +53,10 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vpunpckhwd(Xmm(1) | k1 | T_z, Xmm(30), Xmm(31));
-    vpunpckhwd(Xmm(2) | k2 | T_z, Xmm(30), Xmm(31));
-    vpunpckhwd(Xmm(3) | k3 | T_z, Xmm(30), Xmm(31));
-    vpunpckhwd(Xmm(4) | k4 | T_z, Xmm(30), Xmm(31));
-    vpunpckhwd(Xmm(5) | k5 | T_z, Xmm(30), Xmm(31));
+    vpunpckhwd(Xmm(2) | k2 | T_z, Xmm(30), Xmm(30));
+    vpunpckhwd(Xmm(3) | k3 | T_z, Xmm(3), Xmm(31));
+    vpunpckhwd(Xmm(4) | k4 | T_z, Xmm(30), Xmm(4));
+    vpunpckhwd(Xmm(5) | k5 | T_z, Xmm(5), Xmm(5));
     vpunpckhwd(Xmm(6) | k6 | T_z, Xmm(30), Xmm(31));
     vpunpckhwd(Xmm(7) | k7 | T_z, Xmm(30), Xmm(31));
     /*
@@ -76,10 +76,10 @@ public:
     vpunpckhwd(Xmm(20) | k6 | T_z, Xmm(30), Xmm(20));
     vpunpckhwd(Xmm(21) | k7 | T_z, Xmm(30), Xmm(21));
     */
-    vpunpckhwd(Xmm(22) | k1 | T_z, Xmm(22), Xmm(22));
-    vpunpckhwd(Xmm(23) | k2 | T_z, Xmm(23), Xmm(23));
-    vpunpckhwd(Xmm(24) | k3 | T_z, Xmm(24), Xmm(24));
-    vpunpckhwd(Xmm(25) | k4 | T_z, Xmm(25), Xmm(25));
+    vpunpckhwd(Xmm(22) | k1 | T_z, Xmm(20), Xmm(22));
+    vpunpckhwd(Xmm(23) | k2 | T_z, Xmm(23), Xmm(20));
+    vpunpckhwd(Xmm(24) | k3 | T_z, Xmm(20), Xmm(20));
+    vpunpckhwd(Xmm(25) | k4 | T_z, Xmm(20), Xmm(21));
     vpunpckhwd(Xmm(26) | k5 | T_z, Xmm(26), Xmm(26));
     vpunpckhwd(Xmm(27) | k6 | T_z, Xmm(27), Xmm(27));
     vpunpckhwd(Xmm(28) | k7 | T_z, Xmm(28), Xmm(28));

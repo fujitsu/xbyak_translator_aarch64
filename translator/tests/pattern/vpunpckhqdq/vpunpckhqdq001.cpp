@@ -43,8 +43,8 @@ public:
     vpunpckhqdq(Zmm(6), Zmm(7), ptr[rax]);
     vpunpckhqdq(Zmm(8), Zmm(8), ptr[rax]);
 
-    vpunpckhqdq(Xmm(16), Xmm(17), ptr[rax]);
-    vpunpckhqdq(Xmm(18), Xmm(18), ptr[rax]);
+    vpunpckhqdq(Xmm(26), Xmm(27), ptr[rax]);
+    vpunpckhqdq(Xmm(28), Xmm(28), ptr[rax]);
 
     vpunpckhqdq(Ymm(20), Ymm(21), ptr[rax]);
     vpunpckhqdq(Ymm(22), Ymm(22), ptr[rax]);

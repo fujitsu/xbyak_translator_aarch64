@@ -34,17 +34,17 @@ public:
     vpunpckhqdq(Xmm(7), Xmm(8), Xmm(8));
     vpunpckhqdq(Xmm(9), Xmm(9), Xmm(9));
 
-    vpunpckhqdq(Ymm(10), Ymm(11), Ymm(12));
-    vpunpckhqdq(Ymm(13), Ymm(13), Ymm(14));
-    vpunpckhqdq(Ymm(15), Ymm(16), Ymm(15));
-    vpunpckhqdq(Ymm(17), Ymm(18), Ymm(18));
-    vpunpckhqdq(Ymm(19), Ymm(19), Ymm(19));
+    vpunpckhqdq(Xmm(10), Xmm(11), Xmm(12));
+    vpunpckhqdq(Xmm(13), Xmm(13), Xmm(14));
+    vpunpckhqdq(Xmm(15), Xmm(16), Xmm(15));
+    vpunpckhqdq(Xmm(17), Xmm(18), Xmm(18));
+    vpunpckhqdq(Xmm(19), Xmm(19), Xmm(19));
 
-    vpunpckhqdq(Zmm(20), Zmm(21), Zmm(22));
-    vpunpckhqdq(Zmm(23), Zmm(23), Zmm(24));
-    vpunpckhqdq(Zmm(25), Zmm(26), Zmm(25));
-    vpunpckhqdq(Zmm(27), Zmm(28), Zmm(28));
-    vpunpckhqdq(Zmm(29), Zmm(29), Zmm(29));
+    vpunpckhqdq(Xmm(20), Xmm(21), Xmm(22));
+    vpunpckhqdq(Xmm(23), Xmm(23), Xmm(24));
+    vpunpckhqdq(Xmm(25), Xmm(26), Xmm(25));
+    vpunpckhqdq(Xmm(27), Xmm(28), Xmm(28));
+    vpunpckhqdq(Xmm(29), Xmm(29), Xmm(29));
   }
 };
 

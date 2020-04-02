@@ -23,25 +23,27 @@ public:
 
     inputPredReg[1] = (1 << 0);
     inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4); /* x86_64 */
-    //                      (1 << 0) | (1 << 8) | (uint64_t(1) << 32);  /*
-    //                      aarch64 */
-    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4); /* x86_64 */
-    //(1 << 0) | (1 << 8) | (1 << 16) |
-    //              (uint64_t(1) << 32); /* aarch64 */
-    inputPredReg[4] =
-        (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4); /* x86_64 */
-    //       (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+    //(1 << 0) | (1 << 8) | (uint64_t(1) << 32);  /* aarch64 */
+    inputPredReg[3] = (1 << 0) | (1 << 1) | (uint64_t(1) << 20) |
+                      (uint64_t(1) << 28); /* x86_64 */
+    //                      (1 << 0) | (1 << 8) | (1 << 16) |
     //                (uint64_t(1) << 32); /* aarch64 */
-
-    inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-                      (1 << 6); /* x86_64 */
-    //       (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
-    //                (uint64_t(1) << 32) | (uint64_t(1) << 48); /* aarch64 */
-    inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
-                      (1 << 6) | (1 << 7); /* x86_64 */
+    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (uint64_t(1) << 30) |
+                      (uint64_t(1) << 31); /* x86_64 */
     //                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
-    //                (uint64_t(1) << 32) | (uint64_t(1) << 48) |
-    //                (uint64_t(1) << 56); /* aarch64 */
+    //              (uint64_t(1) << 32); /* aarch64 */
+
+    inputPredReg[5] = (1 << 0) | (1 << 1) | (uint64_t(1) << 25) |
+                      (uint64_t(1) << 29) | (uint64_t(1) << 50) |
+                      (1 << 60); /* x86_64 */
+    //       (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+    //              (uint64_t(1) << 32) | (uint64_t(1) << 48); /* aarch64 */
+    inputPredReg[6] = (1 << 0) | (1 << 1) | (uint64_t(1) << 22) |
+                      (uint64_t(1) << 27) | (uint64_t(1) << 53) |
+                      (uint64_t(1) << 57) | (uint64_t(1) << 62); /* x86_64 */
+    //       (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+    //              (uint64_t(1) << 32) | (uint64_t(1) << 48) |
+    //              (uint64_t(1) << 56); /* aarch64 */
     inputPredReg[7] = ~uint64_t(0);
   }
 
@@ -52,10 +54,10 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vpunpcklbw(Ymm(1) | k1, Ymm(30), Ymm(31));
-    vpunpcklbw(Ymm(2) | k2, Ymm(30), Ymm(31));
-    vpunpcklbw(Ymm(3) | k3, Ymm(30), Ymm(31));
-    vpunpcklbw(Ymm(4) | k4, Ymm(30), Ymm(31));
-    vpunpcklbw(Ymm(5) | k5, Ymm(30), Ymm(31));
+    vpunpcklbw(Ymm(2) | k2, Ymm(30), Ymm(30));
+    vpunpcklbw(Ymm(3) | k3, Ymm(3), Ymm(31));
+    vpunpcklbw(Ymm(4) | k4, Ymm(30), Ymm(4));
+    vpunpcklbw(Ymm(5) | k5, Ymm(5), Ymm(5));
     vpunpcklbw(Ymm(6) | k6, Ymm(30), Ymm(31));
     vpunpcklbw(Ymm(7) | k7, Ymm(30), Ymm(31));
     /*
@@ -75,10 +77,10 @@ public:
     vpunpcklbw(Ymm(20) | k6, Ymm(30), Ymm(20));
     vpunpcklbw(Ymm(21) | k7, Ymm(30), Ymm(21));
     */
-    vpunpcklbw(Ymm(22) | k1, Ymm(22), Ymm(22));
-    vpunpcklbw(Ymm(23) | k2, Ymm(23), Ymm(23));
-    vpunpcklbw(Ymm(24) | k3, Ymm(24), Ymm(24));
-    vpunpcklbw(Ymm(25) | k4, Ymm(25), Ymm(25));
+    vpunpcklbw(Ymm(22) | k1, Ymm(20), Ymm(21));
+    vpunpcklbw(Ymm(23) | k2, Ymm(23), Ymm(20));
+    vpunpcklbw(Ymm(24) | k3, Ymm(20), Ymm(24));
+    vpunpcklbw(Ymm(25) | k4, Ymm(20), Ymm(20));
     vpunpcklbw(Ymm(26) | k5, Ymm(26), Ymm(26));
     vpunpcklbw(Ymm(27) | k6, Ymm(27), Ymm(27));
     vpunpcklbw(Ymm(28) | k7, Ymm(28), Ymm(28));

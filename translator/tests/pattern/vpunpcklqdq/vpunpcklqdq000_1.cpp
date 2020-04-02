@@ -20,29 +20,6 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
-    inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 2) |           /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 16); /* aarch64 */
-    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 6) |
-                      (uint64_t(1) << 7) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 8) | (uint64_t(1) << 48) |
-                      (uint64_t(1) << 56); /* aarch64 */
-    inputPredReg[4] = (1 << 0) | (1 << 2) | (1 << 5) | (1 << 6) |
-                      (uint64_t(1) << 7) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 16) | (uint64_t(1) << 40) |
-                      (uint64_t(1) << 48) | (uint64_t(1) << 56); /* aarch64 */
-    inputPredReg[5] = (1 << 0) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) |
-                      (uint64_t(1) << 7) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 24) | (uint64_t(1) << 32) |
-                      (uint64_t(1) << 40) | (uint64_t(1) << 48) |
-                      (uint64_t(1) << 56); /* aarch64 */
-    inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 3) | (1 << 4) | (1 << 5) |
-                      (uint64_t(1) << 6) | (uint64_t(1) << 7) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 8) | (uint64_t(1) << 24) |
-                      (uint64_t(1) << 32) | (uint64_t(1) << 40) |
-                      (uint64_t(1) << 48) | (uint64_t(1) << 56); /* aarch64 */
-    inputPredReg[7] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -51,28 +28,23 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
+    vpunpcklqdq(Ymm(0), Ymm(1), Ymm(2));
+    vpunpcklqdq(Ymm(3), Ymm(3), Ymm(4));
+    vpunpcklqdq(Ymm(5), Ymm(6), Ymm(5));
+    vpunpcklqdq(Ymm(7), Ymm(8), Ymm(8));
+    vpunpcklqdq(Ymm(9), Ymm(9), Ymm(9));
 
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
-    mov(rax, addr);
+    vpunpcklqdq(Ymm(10), Ymm(11), Ymm(12));
+    vpunpcklqdq(Ymm(13), Ymm(13), Ymm(14));
+    vpunpcklqdq(Ymm(15), Ymm(16), Ymm(15));
+    vpunpcklqdq(Ymm(17), Ymm(18), Ymm(18));
+    vpunpcklqdq(Ymm(19), Ymm(19), Ymm(19));
 
-    vpunpcklqdq(Xmm(0) | k1, Xmm(1), ptr[rax]);
-    vpunpcklqdq(Xmm(2) | k2, Xmm(2), ptr[rax]);
-
-    vpunpcklqdq(Ymm(3) | k3, Ymm(4), ptr[rax]);
-    vpunpcklqdq(Ymm(5) | k4, Ymm(5), ptr[rax]);
-
-    vpunpcklqdq(Zmm(6) | k5, Zmm(7), ptr[rax]);
-    vpunpcklqdq(Zmm(8) | k6, Zmm(8), ptr[rax]);
-
-    vpunpcklqdq(Xmm(20) | k1, Xmm(21), ptr[rax]);
-    vpunpcklqdq(Xmm(22) | k2, Xmm(22), ptr[rax]);
-
-    vpunpcklqdq(Ymm(23) | k3, Ymm(24), ptr[rax]);
-    vpunpcklqdq(Ymm(25) | k4, Ymm(25), ptr[rax]);
-
-    mov(rax, 5);
+    vpunpcklqdq(Ymm(20), Ymm(21), Ymm(22));
+    vpunpcklqdq(Ymm(23), Ymm(23), Ymm(24));
+    vpunpcklqdq(Ymm(25), Ymm(26), Ymm(25));
+    vpunpcklqdq(Ymm(27), Ymm(28), Ymm(28));
+    vpunpcklqdq(Ymm(29), Ymm(29), Ymm(29));
   }
 };
 
