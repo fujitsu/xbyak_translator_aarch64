@@ -70,6 +70,7 @@
 #include "instructions/vpcmpd.h"
 #include "instructions/vpcmpub.h"
 #include "instructions/vperm2i128.h"
+#include "instructions/vpextrb.h"
 #include "instructions/vpinsrb.h"
 #include "instructions/vpinsrq.h"
 #include "instructions/vpmaxsd.h"
