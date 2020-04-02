@@ -38,6 +38,7 @@ public:
     vpmovdw(Ymm(0), Zmm(1)); // truncate
     vpmovdw(Ymm(2), Zmm(3)); // no truncate
     vpmovdw(Ymm(4), Zmm(5)); // random
+    vpmovdw(Ymm(6), Zmm(6)); // random
   }
 };
 
