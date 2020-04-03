@@ -1383,6 +1383,5 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
     xt_pop_zreg();
   }
 
->>>>>>> 3_implement_translation_higuchi
-  #undef CG64
+#undef CG64
 }
