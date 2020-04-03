@@ -21,12 +21,12 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomFloat();
     setDumpZRegMode(SP_DT); // set float mode
-
+    /*
     for (int j = 20; j < NUM_Z_REG; j++) {
       for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
         inputZReg[j].sp_dt[i] = float((0.5 + i) * (j - 20));
       }
-    }
+      }*/
   }
 
   void setCheckRegFlagAll() {
@@ -39,11 +39,11 @@ public:
      * r15 */
 
     /* VEX encode */
-    /*vfmadd132ps(Zmm(0), Zmm(1), Zmm(2));
+    vfmadd132ps(Zmm(0), Zmm(1), Zmm(2));
     vfmadd132ps(Zmm(3), Zmm(3), Zmm(4));
     vfmadd132ps(Zmm(5), Zmm(6), Zmm(5));
     vfmadd132ps(Zmm(7), Zmm(8), Zmm(8));
-    vfmadd132ps(Zmm(9), Zmm(9), Zmm(9));*/
+    vfmadd132ps(Zmm(9), Zmm(9), Zmm(9));
 
     /* EVEX encode */
     vfmadd132ps(Zmm(20), Zmm(21), Zmm(22));
