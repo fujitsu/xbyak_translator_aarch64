@@ -61,20 +61,20 @@ public:
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
     vpshufd(Ymm(3) | k3 | T_z, Ymm(30), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(4) | k4 | T_z, Ymm(30), sel);
+    vpshufd(Ymm(4) | k4 | T_z, Ymm(4), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(5) | k5 | T_z, Ymm(30), sel);
+    vpshufd(Ymm(5) | k5 | T_z, Ymm(5), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(6) | k6 | T_z, Ymm(30), sel);
+    vpshufd(Ymm(6) | k6 | T_z, Ymm(6), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(7) | k7 | T_z, Ymm(30), sel);
+    vpshufd(Ymm(7) | k7 | T_z, Ymm(7), sel);
 
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(22) | k1 | T_z, Ymm(22), sel);
+    vpshufd(Ymm(22) | k1 | T_z, Ymm(30), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(23) | k2 | T_z, Ymm(23), sel);
+    vpshufd(Ymm(23) | k2 | T_z, Ymm(30), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(24) | k3 | T_z, Ymm(24), sel);
+    vpshufd(Ymm(24) | k3 | T_z, Ymm(30), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
     vpshufd(Ymm(25) | k4 | T_z, Ymm(25), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));

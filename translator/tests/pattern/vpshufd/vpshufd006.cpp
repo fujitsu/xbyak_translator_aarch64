@@ -63,11 +63,11 @@ public:
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
     vpshufd(Ymm(4) | k4, Ymm(30), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(5) | k5, Ymm(30), sel);
+    vpshufd(Ymm(5) | k5, Ymm(5), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(6) | k6, Ymm(30), sel);
+    vpshufd(Ymm(6) | k6, Ymm(6), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(7) | k7, Ymm(30), sel);
+    vpshufd(Ymm(7) | k7, Ymm(7), sel);
 
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
     vpshufd(Ymm(22) | k1, Ymm(22), sel);
@@ -78,11 +78,11 @@ public:
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
     vpshufd(Ymm(25) | k4, Ymm(25), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(26) | k5, Ymm(26), sel);
+    vpshufd(Ymm(26) | k5, Ymm(30), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(27) | k6, Ymm(27), sel);
+    vpshufd(Ymm(27) | k6, Ymm(30), sel);
     sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-    vpshufd(Ymm(28) | k7, Ymm(28), sel);
+    vpshufd(Ymm(28) | k7, Ymm(30), sel);
   }
 };
 

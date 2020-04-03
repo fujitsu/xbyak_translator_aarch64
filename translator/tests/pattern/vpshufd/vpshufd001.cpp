@@ -61,6 +61,11 @@ public:
       vpshufd(Zmm(i + 1), ptr[rax], sel);
     }
 
+    for (int i = 27; i < 30; i++) {
+      sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
+      vpshufd(Xmm(i + 1), ptr[rax], sel);
+    }
+
     mov(rax, 5);
   }
 };
