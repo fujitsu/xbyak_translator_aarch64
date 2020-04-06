@@ -90,6 +90,7 @@
 #include "instructions/vmovlps.h"
 #include "instructions/vmovntps.h"
 #include "instructions/vmovsd.h"
+#include "instructions/vmovss.h"
 #include "instructions/vmovups.h"
 #include "instructions/vmulps.h"
 #include "instructions/vorps.h"
