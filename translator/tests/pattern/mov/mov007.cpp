@@ -32,14 +32,15 @@ public:
     /* Address is aligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
     std::cout << "Address is " << std::hex << addr << std::endl;
-    mov(rax, addr);
+    mov(rcx, addr);
 
     mov(r9, uint64_t(0xbbbbbbbbbbbbbbbb));
-    mov(ptr[rax], r9d);
+    mov(ptr[rcx], r9);
 
-    mov(bl, ptr[rax]);
+    mov(bl, ptr[rcx]);
+    mov(al, ptr[rcx]);
 
-    mov(rax,
+    mov(rcx,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };

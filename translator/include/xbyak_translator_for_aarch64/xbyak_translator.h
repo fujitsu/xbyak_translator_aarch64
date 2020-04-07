@@ -259,9 +259,6 @@ struct xt_a64fx_operands_struct_t {
 void db_clear() { CodeArray::size_ = 0; }
 
 xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
-  if (r == XED_REG_BL) { // temporaly process for 8byte register access.
-    return XED_REG_RBX - XED_REG_RAX;
-  }
   if (XED_REG_RAX <= r && r <= XED_REG_R15) {
     return r - XED_REG_RAX;
   } else if (XED_REG_K0 <= r && r <= XED_REG_K7) {
@@ -278,6 +275,8 @@ xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
     return r - XED_REG_EAX;
   } else if (XED_REG_AX <= r && r <= XED_REG_R15W) {
     return r - XED_REG_AX;
+  } else if (XED_REG_AL <= r && r <= XED_REG_R15B) {
+    return r - XED_REG_AL;
   } else if (r == XED_REG_RFLAGS) {
     /* In case of 2nd operand of DEC instruction, this "else if" is passed */
     return XT_REG_INVALID;
