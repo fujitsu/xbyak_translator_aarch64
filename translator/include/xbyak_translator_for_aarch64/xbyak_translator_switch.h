@@ -1917,6 +1917,8 @@ case XED_ICLASS_XADD_LOCK:
   break;
 case XED_ICLASS_XBEGIN:
 case XED_ICLASS_XCHG:
+  translateXCHG(&xedd);
+  break;
 case XED_ICLASS_XEND:
 case XED_ICLASS_XGETBV:
 case XED_ICLASS_XLAT:

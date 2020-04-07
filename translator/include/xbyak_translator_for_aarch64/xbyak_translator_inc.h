@@ -155,6 +155,7 @@
 #include "instructions/vxorps.h"
 #include "instructions/vzeroupper.h"
 #include "instructions/xadd_lock.h"
+#include "instructions/xchg.h"
 #include "instructions/xor.h"
 
 #if 0
