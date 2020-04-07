@@ -259,6 +259,9 @@ struct xt_a64fx_operands_struct_t {
 void db_clear() { CodeArray::size_ = 0; }
 
 xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
+  if (r == XED_REG_BL) { // temporaly process for 8byte register access.
+    return XED_REG_RBX - XED_REG_RAX;
+  }
   if (XED_REG_RAX <= r && r <= XED_REG_R15) {
     return r - XED_REG_RAX;
   } else if (XED_REG_K0 <= r && r <= XED_REG_K7) {

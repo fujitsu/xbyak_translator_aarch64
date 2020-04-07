@@ -3,22 +3,15 @@ void translateAND(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-  /* 2020/02/17 16:43 */
+  /* 2020/04/07 10:12 */
   /* Col=S103*/
-  if (false ||
-      (a64.dstWidth == 8 && a64.dstType == A64_OP_REG &&
+  if (false || (a64.dstWidth == 16 && a64.dstType == A64_OP_REG &&
+                a64.srcType == A64_OP_IMM && true) ||
+      (a64.dstWidth == 8 && a64.dstType == A64_OP_MEM &&
+       a64.srcType == A64_OP_IMM && true) ||
+      (a64.dstWidth == 8 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_IMM && true) ||
       (a64.dstWidth == 16 && a64.dstType == A64_OP_REG &&
-       a64.srcType == A64_OP_IMM && true) ||
-      (a64.dstWidth == 8 && a64.dstType == A64_OP_REG &&
-       a64.srcType == A64_OP_IMM && true) ||
-      (a64.dstWidth == 8 && a64.dstType == A64_OP_MEM &&
-       a64.srcType == A64_OP_IMM && true) ||
-      (a64.dstWidth == 8 && a64.dstType == A64_OP_REG &&
-       a64.srcType == A64_OP_IMM && true) ||
-      (a64.dstWidth == 8 && a64.dstType == A64_OP_MEM &&
-       a64.srcType == A64_OP_IMM && true) ||
-      (a64.dstWidth == 8 && a64.dstType == A64_OP_REG &&
        a64.srcType == A64_OP_IMM && true) ||
       (a64.dstWidth == 8 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_IMM && true) ||
@@ -68,10 +61,28 @@ void translateAND(xed_decoded_inst_t *p) {
                                Xbyak_aarch64::XReg(a64.dstIdx), X_TMP_1);
   }
 
-  /* Col=X103*/
-  if (false ||
-      (a64.dstWidth == 32 && a64.dstType == A64_OP_MEM &&
+  /* Col=W103*/
+  if (false || (a64.dstWidth == 8 && a64.dstType == A64_OP_REG &&
+                a64.srcType == A64_OP_IMM && true) ||
+      (a64.dstWidth == 8 && a64.dstType == A64_OP_REG &&
        a64.srcType == A64_OP_IMM && true) ||
+      (a64.dstWidth == 8 && a64.dstType == A64_OP_REG &&
+       a64.srcType == A64_OP_IMM && true)) {
+    if (std::numeric_limits<uint32_t>::max() < a64.uimm &&
+        a64.uimm < ~uint64_t(0xFFFFFFFF)) {
+      xt_msg_err(__FILE__, __LINE__,
+                 "Invalid uimm=" + std::to_string(a64.uimm));
+    }
+    xed_int64_t tmp = uint64_t(0xFFFFFFFFFFFFFF00);
+    CodeGeneratorAArch64::mov_imm(X_TMP_1, tmp, X_TMP_0);
+    CodeGeneratorAArch64::orr(X_TMP_1, X_TMP_1,
+                              static_cast<uint32_t>(a64.uimm));
+    CodeGeneratorAArch64::and_(Xbyak_aarch64::XReg(a64.dstIdx),
+                               Xbyak_aarch64::XReg(a64.dstIdx), X_TMP_1);
+  }
+  /* Col=X103*/
+  if (false || (a64.dstWidth == 32 && a64.dstType == A64_OP_MEM &&
+                a64.srcType == A64_OP_IMM && true) ||
       (a64.dstWidth == 32 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 32 && a64.dstType == A64_OP_REG &&
@@ -79,9 +90,8 @@ void translateAND(xed_decoded_inst_t *p) {
     CodeGeneratorAArch64::ldr(W_TMP_0, xa::ptr(X_TMP_ADDR));
   }
   /* Col=Y103*/
-  if (false ||
-      (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&
-       a64.srcType == A64_OP_IMM && true) ||
+  if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&
+                a64.srcType == A64_OP_IMM && true) ||
       (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
@@ -144,17 +154,15 @@ void translateAND(xed_decoded_inst_t *p) {
   }
 
   /* Col=AU103*/
-  if (false ||
-      (a64.dstWidth == 32 && a64.dstType == A64_OP_MEM &&
-       a64.srcType == A64_OP_IMM && true) ||
+  if (false || (a64.dstWidth == 32 && a64.dstType == A64_OP_MEM &&
+                a64.srcType == A64_OP_IMM && true) ||
       (a64.dstWidth == 32 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_REG && true)) {
     CodeGeneratorAArch64::str(W_TMP_0, xa::ptr(X_TMP_ADDR));
   }
   /* Col=AV103*/
-  if (false ||
-      (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&
-       a64.srcType == A64_OP_IMM && true) ||
+  if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&
+                a64.srcType == A64_OP_IMM && true) ||
       (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_REG && true)) {
     CodeGeneratorAArch64::str(X_TMP_0, xa::ptr(X_TMP_ADDR));
