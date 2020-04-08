@@ -19,11 +19,6 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    // setInputZregAllRandomHex();
-    inputGenReg[0] = 0x0001020304050607;
-    inputGenReg[1] = 0x08090A0B0C0D0E0F;
-    inputGenReg[2] = 0x0001020304050607;
-    inputGenReg[3] = 0x08090A0B0C0D0E0F;
   }
 
   void setCheckRegFlagAll() {
@@ -35,30 +30,36 @@ public:
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
     mov(rax, 1);
-    mov(cl, 2);
+    mov(rcx, 2);
     shl(rax, cl);
-    /*
+
+    mov(rdx, 2);
+    mov(rcx, 4);
+    shl(rdx, cl);
+
+    mov(rbx, 4);
     mov(rcx, 1);
-    shl(rcx, 31);
+    shl(rbx, cl);
 
-    mov(rdx, 1);
-    shl(rdx, 32);
+    mov(r8, 6);
+    mov(rcx, 3);
+    shl(r8d, cl);
 
-    mov(rbx, 1);
-    shl(rbx, 63);
+    mov(r9, 2);
+    mov(rcx, 15);
+    shl(r9d, cl);
 
-    mov(r8, 1);
-    shl(r8d, 1);
+    mov(r9, 31);
+    mov(rcx, 15);
+    shl(r9d, cl);
 
-    mov(r9, 1);
-    shl(r9d, 31);
+    mov(r10, 63);
+    mov(rcx, 15);
+    shl(r10d, cl);
 
-    mov(r10, 1);
-    shl(r10d, 32);
-
-    mov(r11, 1);
-    shl(r11d, 63);
-    */
+    mov(r10, 127);
+    mov(rcx, 15);
+    shl(r10d, cl);
   }
 };
 

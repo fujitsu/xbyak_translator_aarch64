@@ -285,8 +285,6 @@ xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
   } else if (r == XED_REG_RIP) {
     return XT_REG_INVALID;
   } else {
-    printf("debug!!! %s %s %d %s\n", __FILE__, __FUNCTION__, __LINE__,
-           xed_reg_enum_t2str(r));
     xt_msg_err(__FILE__, __LINE__, ":Under construction!");
     assert(NULL);
   }
