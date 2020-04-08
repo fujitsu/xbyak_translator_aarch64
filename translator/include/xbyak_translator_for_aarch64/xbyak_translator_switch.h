@@ -863,6 +863,8 @@ case XED_ICLASS_RSTORSSP:
 case XED_ICLASS_SAHF:
 case XED_ICLASS_SALC:
 case XED_ICLASS_SAR:
+  translateSAR(&xedd);
+  break;
 case XED_ICLASS_SARX:
 case XED_ICLASS_SAVEPREVSSP:
 case XED_ICLASS_SBB:

@@ -47,6 +47,7 @@
 #include "instructions/punpcklwd.h"
 #include "instructions/pxor.h"
 #include "instructions/ret.h"
+#include "instructions/sar.h"
 #include "instructions/shl.h"
 #include "instructions/shufps.h"
 #include "instructions/sub.h"
