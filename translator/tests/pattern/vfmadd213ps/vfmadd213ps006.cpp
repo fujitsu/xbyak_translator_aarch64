@@ -21,11 +21,18 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomFloat();
     setDumpZRegMode(SP_DT); // set float mode
+
     for (int j = 0; j < NUM_Z_REG; j++) {
       for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
-        inputZReg[j].sp_dt[i] = float((0.5 + i) * (j));
+        inputZReg[j].sp_dt[i] = float((0.5 + i) * j);
       }
     }
+    inputPredReg[1] = uint64_t(0);
+    inputPredReg[2] = ~uint64_t(0);
+    inputPredReg[3] = (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7); /* Both x86_64 and aarch64 */
+    inputPredReg[4] = (1 << 3) | (1 << 6); /* Both x86_64 and aarch64 */
+    inputPredReg[5] = (1 << 0) | (1 << 10) |
+                      (1 << 3) | (1 << 6); /* Both x86_64 and aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -34,59 +41,15 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    size_t addr1;
-    size_t addr2;
-    size_t addr3;
-    size_t addr4;
-    size_t addr5;
-    size_t addr6;
-    size_t addr7;
-    size_t addr8;
-    size_t addr9;
-
-/* Address is aligned */
-#if 1
-    /* VEX encode */
-    addr = reinterpret_cast<size_t>(&(inputZReg[2].ud_dt[0]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[4].ud_dt[0]));
-    addr2 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0]));
-    addr3 = reinterpret_cast<size_t>(&(inputZReg[8].ud_dt[0]));
-    addr4 = reinterpret_cast<size_t>(&(inputZReg[9].ud_dt[0]));
-    
-    mov(rax, addr);  
-    vfmadd213ps(Ymm(0), Ymm(1), ptr[rax]);
-    mov(rax, addr1);  
-    vfmadd213ps(Ymm(3), Ymm(3), ptr[rax]);
-    mov(rax, addr2);  
-    vfmadd213ps(Ymm(5), Ymm(6), ptr[rax]);
-    mov(rax, addr3);  
-    vfmadd213ps(Ymm(7), Ymm(8), ptr[rax]);
-    mov(rax, addr4);  
-    vfmadd213ps(Ymm(9), Ymm(9), ptr[rax]);
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
+     * r15 */
 
     /* EVEX encode */
-    addr5 = reinterpret_cast<size_t>(&(inputZReg[18].ud_dt[0]));
-    addr6 = reinterpret_cast<size_t>(&(inputZReg[20].ud_dt[0]));
-    addr7 = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[0]));
-    addr8 = reinterpret_cast<size_t>(&(inputZReg[23].ud_dt[0]));
-    addr9 = reinterpret_cast<size_t>(&(inputZReg[24].ud_dt[0]));
-
-    mov(rax, addr5);
-    vfmadd213ps(Ymm(16), Ymm(17), ptr[rax]);
-    mov(rax, addr6);
-    vfmadd213ps(Ymm(19), Ymm(19), ptr[rax]);
-    mov(rax, addr7);
-    vfmadd213ps(Ymm(21), Ymm(22), ptr[rax]);
-    mov(rax, addr8);
-    vfmadd213ps(Ymm(22), Ymm(23), ptr[rax]);
-    mov(rax, addr9);
-    vfmadd213ps(Ymm(24), Ymm(24), ptr[rax]);
-    mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-    mov(rbx,
-        size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
-#endif
+    vfmadd213ps(Xmm(20) | k5 | T_z, Xmm(21), Xmm(22));
+    vfmadd213ps(Xmm(23) | k4 | T_z, Xmm(23), Xmm(24));
+    vfmadd213ps(Xmm(25) | k3 | T_z, Xmm(26), Xmm(25));
+    vfmadd213ps(Xmm(27) | k2 | T_z, Xmm(28), Xmm(28));
+    vfmadd213ps(Xmm(29) | k1 | T_z, Xmm(29), Xmm(29));
   }
 };
 

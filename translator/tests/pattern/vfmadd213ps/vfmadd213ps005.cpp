@@ -55,15 +55,15 @@ public:
     addr4 = reinterpret_cast<size_t>(&(inputZReg[9].ud_dt[0]));
     
     mov(rax, addr);  
-    vfmadd213ps(Ymm(0), Ymm(1), ptr[rax]);
+    vfmadd213ps(Xmm(0), Xmm(1), ptr[rax]);
     mov(rax, addr1);  
-    vfmadd213ps(Ymm(3), Ymm(3), ptr[rax]);
+    vfmadd213ps(Xmm(3), Xmm(3), ptr[rax]);
     mov(rax, addr2);  
-    vfmadd213ps(Ymm(5), Ymm(6), ptr[rax]);
+    vfmadd213ps(Xmm(5), Xmm(6), ptr[rax]);
     mov(rax, addr3);  
-    vfmadd213ps(Ymm(7), Ymm(8), ptr[rax]);
+    vfmadd213ps(Xmm(7), Xmm(8), ptr[rax]);
     mov(rax, addr4);  
-    vfmadd213ps(Ymm(9), Ymm(9), ptr[rax]);
+    vfmadd213ps(Xmm(9), Xmm(9), ptr[rax]);
 
     /* EVEX encode */
     addr5 = reinterpret_cast<size_t>(&(inputZReg[18].ud_dt[0]));
@@ -73,15 +73,15 @@ public:
     addr9 = reinterpret_cast<size_t>(&(inputZReg[24].ud_dt[0]));
 
     mov(rax, addr5);
-    vfmadd213ps(Ymm(16), Ymm(17), ptr[rax]);
+    vfmadd213ps(Xmm(16), Xmm(17), ptr[rax]);
     mov(rax, addr6);
-    vfmadd213ps(Ymm(19), Ymm(19), ptr[rax]);
+    vfmadd213ps(Xmm(19), Xmm(19), ptr[rax]);
     mov(rax, addr7);
-    vfmadd213ps(Ymm(21), Ymm(22), ptr[rax]);
+    vfmadd213ps(Xmm(21), Xmm(22), ptr[rax]);
     mov(rax, addr8);
-    vfmadd213ps(Ymm(22), Ymm(23), ptr[rax]);
+    vfmadd213ps(Xmm(22), Xmm(23), ptr[rax]);
     mov(rax, addr9);
-    vfmadd213ps(Ymm(24), Ymm(24), ptr[rax]);
+    vfmadd213ps(Xmm(24), Xmm(24), ptr[rax]);
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
     mov(rbx,
