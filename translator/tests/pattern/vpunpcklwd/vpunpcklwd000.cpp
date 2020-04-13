@@ -34,17 +34,17 @@ public:
     vpunpcklwd(Xmm(7), Xmm(8), Xmm(8));
     vpunpcklwd(Xmm(9), Xmm(9), Xmm(9));
 
-    vpunpcklwd(Ymm(10), Ymm(11), Ymm(12));
-    vpunpcklwd(Ymm(13), Ymm(13), Ymm(14));
-    vpunpcklwd(Ymm(15), Ymm(16), Ymm(15));
-    vpunpcklwd(Ymm(17), Ymm(18), Ymm(18));
-    vpunpcklwd(Ymm(19), Ymm(19), Ymm(19));
+    vpunpcklwd(Xmm(10), Xmm(11), Xmm(12));
+    vpunpcklwd(Xmm(13), Xmm(13), Xmm(14));
+    vpunpcklwd(Xmm(15), Xmm(16), Xmm(15));
+    vpunpcklwd(Xmm(17), Xmm(18), Xmm(18));
+    vpunpcklwd(Xmm(19), Xmm(19), Xmm(19));
 
-    vpunpcklwd(Zmm(20), Zmm(21), Zmm(22));
-    vpunpcklwd(Zmm(23), Zmm(23), Zmm(24));
-    vpunpcklwd(Zmm(25), Zmm(26), Zmm(25));
-    vpunpcklwd(Zmm(27), Zmm(28), Zmm(28));
-    vpunpcklwd(Zmm(29), Zmm(29), Zmm(29));
+    vpunpcklwd(Xmm(20), Xmm(21), Xmm(22));
+    vpunpcklwd(Xmm(23), Xmm(23), Xmm(24));
+    vpunpcklwd(Xmm(25), Xmm(26), Xmm(25));
+    vpunpcklwd(Xmm(27), Xmm(28), Xmm(28));
+    vpunpcklwd(Xmm(29), Xmm(29), Xmm(29));
   }
 };
 

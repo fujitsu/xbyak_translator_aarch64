@@ -34,11 +34,11 @@ public:
     vpunpckhbw(Ymm(7), Ymm(8), Ymm(8));
     vpunpckhbw(Ymm(9), Ymm(9), Ymm(9));
 
-    vpunpckhbw(Xmm(10), Xmm(11), Xmm(12));
-    vpunpckhbw(Xmm(13), Xmm(13), Xmm(14));
-    vpunpckhbw(Xmm(15), Xmm(16), Xmm(15));
-    vpunpckhbw(Xmm(17), Xmm(18), Xmm(18));
-    vpunpckhbw(Xmm(19), Xmm(19), Xmm(19));
+    vpunpckhbw(Ymm(20), Ymm(21), Ymm(22));
+    vpunpckhbw(Ymm(23), Ymm(23), Ymm(24));
+    vpunpckhbw(Ymm(25), Ymm(26), Ymm(25));
+    vpunpckhbw(Ymm(27), Ymm(28), Ymm(28));
+    vpunpckhbw(Ymm(29), Ymm(29), Ymm(29));
   }
 };
 

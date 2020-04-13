@@ -275,6 +275,8 @@ xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
     return r - XED_REG_EAX;
   } else if (XED_REG_AX <= r && r <= XED_REG_R15W) {
     return r - XED_REG_AX;
+  } else if (XED_REG_AL <= r && r <= XED_REG_R15B) {
+    return r - XED_REG_AL;
   } else if (r == XED_REG_RFLAGS) {
     /* In case of 2nd operand of DEC instruction, this "else if" is passed */
     return XT_REG_INVALID;

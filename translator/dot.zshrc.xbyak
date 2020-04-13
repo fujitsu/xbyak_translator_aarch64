@@ -53,35 +53,41 @@ AS() {
 }
 
 msg_ok() {
-    echo "###################################"
-    echo " OK, Congratulation! "
-    echo "###################################"
+    echo "#######################################################"
+    echo " $ALLTEST OK, Congratulation! ${INSTRUCTION}${PATTERN}"
+    echo "#######################################################"
 }
 
 msg_ng() {
-    echo "###################################"
-    echo " NG, It seems a little different. "
-    echo "###################################"
+    echo "#######################################################"
+    echo " $ALLTEST NG, It seems a little different. ${INSTRUCTION}${PATTERN}"
+    echo "#######################################################"
 }
 
 TEST() {
 # example:TEST vmulps000
-# example:TEST vmulps000 -x
-# example:TEST vmulps000 -a
     TP_BASE=`echo ${1} | sed -e "s/_[0-9]\+//" | sed -e "s/[0-9]\{3\}$//"`
 
-    if [ ${2:-"-x"} = "-x" ] ; then
-	./test2.sh -x -X -E pattern/${TP_BASE}/${1}.cpp
-	if [ $? -ne 0 ] ; then
-	    echo "x86_64 failed"
+    if [ -z "$2" ] ; then
+       ALLTEST=""
+       INSTRUCTION=""
+       PATTERN=""
+    else
+       ALLTEST="[ALLTEST]"
+    fi
+
+    ./test2.sh -x -X -E pattern/${TP_BASE}/${1}.cpp
+    if [ $? -ne 0 ] ; then
+	echo "x86_64 failed"
+	if [ -z "$2" ] ; then
 	    return 1
 	fi
     fi
 
-    if [ ${2:-"-a"} = "-a" ] ; then
-	./test2.sh -a -A -E pattern/${TP_BASE}/${1}.cpp
-	if [ $? -ne 0 ] ; then
-	    echo "aarch64 failed"
+    ./test2.sh -a -A -E pattern/${TP_BASE}/${1}.cpp
+    if [ $? -ne 0 ] ; then
+	echo "aarch64 failed"
+	if [ -z "$2" ] ; then
 	    return 1
 	fi
     fi
@@ -97,10 +103,24 @@ TEST() {
     fi
 }
 
+TALL() {
+    INSTRUCTIONS=`ls pattern/ | sed -z 's/\n/ /g'`
+    NUM_INSTRUCTIONS=`echo $INSTRUCTIONS | awk '{count += (split($0, a, "\/") - 1)} END{print count}'`
+    for j in `seq 1 $NUM_INSTRUCTIONS`
+    do
+	INSTRUCTION=`echo $INSTRUCTIONS | sed -z 's/\n/ /g' | cut -d' ' -f${j} | sed -e 's/\///'`
+	TEST_PATTERNS=`ls pattern/${INSTRUCTION}/ | grep cpp | sed -e "s/${INSTRUCTION}//g" | sed -e "s/\.cpp//g"`
+	NUM_PATTERNS=`echo $TEST_PATTERNS | wc | awk '{ print $1 }'`
+	for i in `seq 1 $NUM_PATTERNS`
+	do
+	    PATTERN=`echo $TEST_PATTERNS | sed -n "${i}p"`
+	    TE ${INSTRUCTION}${PATTERN} all 2>/dev/null | grep ALLTEST
+	done
+    done
+}
+
 TE() {
 # example:TE vmulps000
-# example:TE vmulps000 -x
-# example:TE vmulps000 -a
     TEST $@
 }
 

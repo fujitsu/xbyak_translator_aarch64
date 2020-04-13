@@ -22,27 +22,26 @@ public:
     setInputZregAllRandomHex();
 
     inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 17) | (uint64_t(1) << 31) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 34) |
-                      (uint64_t(1) << 62); /* aarch64 */
-    inputPredReg[3] = (1 << 0) | (1 << 17) | (1 << 19) |
-                      (uint64_t(1) << 31) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 38) |
-                      (uint64_t(1) << 62); /* aarch64 */
-    inputPredReg[4] = (1 << 0) | (1 << 17) | (1 << 21) | (1 << 25) |
-                      (uint64_t(1) << 31) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 42) |
-                      (uint64_t(1) << 50) | (uint64_t(1) << 62); /* aarch64 */
-    inputPredReg[5] = (1 << 0) | (1 << 17) | (1 << 21) | (1 << 25) | (1 << 27) |
-                      (uint64_t(1) << 31) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 42) |
-                      (uint64_t(1) << 50) | (uint64_t(1) << 54) |
-                      (uint64_t(1) << 62); /* aarch64 */
-    inputPredReg[6] = (1 << 0) | (1 << 17) | (1 << 21) | (1 << 23) | (1 << 25) |
-                      (uint64_t(1) << 29) | (uint64_t(1) << 31) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 34) | (uint64_t(1) << 42) |
-                      (uint64_t(1) << 46) | (uint64_t(1) << 50) |
-                      (uint64_t(1) << 58) | (uint64_t(1) << 62); /* aarch64 */
+    inputPredReg[2] = (1 << 0) | (1 << 7) |           /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 28); /* aarch64 */
+    inputPredReg[3] = (1 << 0) | (1 << 7) | (1 << 11) |
+                      (uint64_t(1) << 15) | /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 28) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 60); /* aarch64 */
+    inputPredReg[4] = (1 << 0) | (1 << 7) | (1 << 11) | (1 << 13) |
+                      (uint64_t(1) << 15) | /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 28) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 52) | (uint64_t(1) << 60); /* aarch64 */
+    inputPredReg[5] = (1 << 0) | (1 << 9) | (1 << 11) | (1 << 13) | (1 << 14) |
+                      (uint64_t(1) << 15) | /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 36) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 52) | (uint64_t(1) << 56) |
+                      (uint64_t(1) << 60); /* aarch64 */
+    inputPredReg[6] = (1 << 0) | (1 << 9) | (1 << 10) | (1 << 11) | (1 << 13) |
+                      (uint64_t(1) << 14) | (uint64_t(1) << 15) | /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 36) | (uint64_t(1) << 40) |
+                      (uint64_t(1) << 44) | (uint64_t(1) << 52) |
+                      (uint64_t(1) << 56) | (uint64_t(1) << 60); /* aarch64 */
     inputPredReg[7] = ~uint64_t(0);
   }
 
@@ -66,6 +65,12 @@ public:
 
     vpunpckldq(Zmm(6) | k5 | T_z, Zmm(7), ptr[rax]);
     vpunpckldq(Zmm(8) | k6 | T_z, Zmm(8), ptr[rax]);
+
+    vpunpckldq(Xmm(20) | k1 | T_z, Xmm(21), ptr[rax]);
+    vpunpckldq(Xmm(22) | k2 | T_z, Xmm(22), ptr[rax]);
+
+    vpunpckldq(Ymm(23) | k3 | T_z, Ymm(24), ptr[rax]);
+    vpunpckldq(Ymm(25) | k4 | T_z, Ymm(25), ptr[rax]);
 
     mov(rax, 5);
   }

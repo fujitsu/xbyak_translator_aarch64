@@ -38,7 +38,7 @@ public:
 
     for (int i = 0; i < 20; i++) {
       int sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
-      pshufd(Xmm(0), ptr[rax], sel);
+      pshufd(Xmm(i), ptr[rax], sel);
     }
 
     mov(rax,

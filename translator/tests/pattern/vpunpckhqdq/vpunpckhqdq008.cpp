@@ -22,16 +22,15 @@ public:
     setInputZregAllRandomHex();
 
     inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 4) | (uint64_t(1) << 7) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 32) |
-                      (uint64_t(1) << 56); /* aarch64 */
-    inputPredReg[3] = (1 << 0) | (1 << 4) | (1 << 6) |
+    inputPredReg[2] = (1 << 0) | (1 << 2) |           /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 16); /* aarch64 */
+    inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 6) |
                       (uint64_t(1) << 7) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 32) | (uint64_t(1) << 48) |
+                      (1 << 0) | (uint64_t(1) << 8) | (uint64_t(1) << 48) |
                       (uint64_t(1) << 56); /* aarch64 */
-    inputPredReg[4] = (1 << 0) | (1 << 3) | (1 << 5) | (1 << 6) |
+    inputPredReg[4] = (1 << 0) | (1 << 2) | (1 << 5) | (1 << 6) |
                       (uint64_t(1) << 7) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 24) | (uint64_t(1) << 40) |
+                      (1 << 0) | (uint64_t(1) << 16) | (uint64_t(1) << 40) |
                       (uint64_t(1) << 48) | (uint64_t(1) << 56); /* aarch64 */
     inputPredReg[5] = (1 << 0) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) |
                       (uint64_t(1) << 7) | /* x86_64 */
@@ -66,6 +65,12 @@ public:
 
     vpunpckhqdq(Zmm(6) | k5 | T_z, Zmm(7), ptr[rax]);
     vpunpckhqdq(Zmm(8) | k6 | T_z, Zmm(8), ptr[rax]);
+
+    vpunpckhqdq(Xmm(20) | k1 | T_z, Xmm(21), ptr[rax]);
+    vpunpckhqdq(Xmm(22) | k2 | T_z, Xmm(22), ptr[rax]);
+
+    vpunpckhqdq(Ymm(23) | k3 | T_z, Ymm(24), ptr[rax]);
+    vpunpckhqdq(Ymm(25) | k4 | T_z, Ymm(25), ptr[rax]);
 
     mov(rax, 5);
   }
