@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -20,6 +19,17 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    setInputZregAllRandomHex();
+
+    for (int j = 0; j < 5; j++) {
+      for (int i = 0; i < 2; i++) {
+        inputr8.us_dt[i] = (j << 16) + i;
+      }
+    }
+
+    for (int i = 0; i < 16; i++) {
+      inputZReg[31].us_dt[i] = 0x11111111 * i;
+    }
   }
 
   void setCheckRegFlagAll() {
@@ -29,44 +39,7 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
-    /*    mov(rax, uint64_t(0x10)); //0
-        mov(rbx, uint64_t(0x5)); //3
-        mov(rcx, uint64_t(0x15)); //1
-        mov(rdx, uint64_t(0x10)); //2
-        mov(rdi, uint64_t(0x10)); //7
-        mov(rsi, uint64_t(0x10)); //6
-    */
-    mov(r8, uint64_t(0x7));
-    mov(r9, uint64_t(0x9));
-    mov(r10, uint64_t(0x10));
-    mov(r11, uint64_t(0x11));
-    //    mov(r12, uint64_t(0x12));
-    //    mov(r13, uint64_t(0x13));
-    //    mov(r14, uint64_t(0x14));
-    //    mov(r15, uint64_t(0x15));
-
-    //    add(r9, r8);
-    sub(r9, r8);
-    //    cmp(r8, r9)
-    cmovg(r11, r10);
-
-    //    cmp(r12, r12);
-    //    cmovg(r11, r10);
-
-    //    cmovg(r9, r8);
-    //    cmovg(r10, r8);
-    //    cmovg(r11, r8);
-
-    /*    cmovg(r12, int64_t(0xaaaaaaaaaaaaaaaa));
-        cmovg(r13, int32_t(0xaaaaaaaa));
-        cmovg(r14, int16_t(0xaaaa));
-        cmovg(r15, int8_t(0xaa));
-
-        cmovg(rax, int64_t(0x5555555555555555));
-        cmovg(rcx, int32_t(0x55555555));
-        cmovg(rdx, int16_t(0x5555));
-        cmovg(rbx, int8_t(0x55));
-    */
+    cmovg(r8, r9);
   }
 };
 

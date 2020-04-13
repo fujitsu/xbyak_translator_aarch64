@@ -36,21 +36,23 @@ public:
         mov(rdi, uint64_t(0x10)); //7
         mov(rsi, uint64_t(0x10)); //6
     */
-    mov(r8, uint64_t(0x7));
-    mov(r9, uint64_t(0x9));
+    mov(r8, uint64_t(0x8));
+    mov(r9, uint64_t(0x0fffffffffffffff));
     mov(r10, uint64_t(0x10));
     mov(r11, uint64_t(0x11));
-    //    mov(r12, uint64_t(0x12));
-    //    mov(r13, uint64_t(0x13));
-    //    mov(r14, uint64_t(0x14));
-    //    mov(r15, uint64_t(0x15));
+    mov(r12, uint64_t(0x12));
+    mov(r13, uint64_t(0x13));
+    mov(r14, uint64_t(0x14));
+    mov(r15, uint64_t(0x15));
 
-    //    add(r9, r8);
-    sub(r9, r8);
-    //    cmp(r8, r9)
+    add(r14, r10);
+
+    //    pushf(rax);
+
     cmovg(r11, r10);
 
     //    cmp(r12, r12);
+
     //    cmovg(r11, r10);
 
     //    cmovg(r9, r8);
