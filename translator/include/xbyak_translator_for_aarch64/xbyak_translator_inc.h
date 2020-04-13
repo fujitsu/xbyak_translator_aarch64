@@ -110,6 +110,7 @@
 #include "instructions/vpcmpub.h"
 #include "instructions/vperm2f128.h"
 #include "instructions/vperm2i128.h"
+#include "instructions/vpermw.h"
 #include "instructions/vpextrb.h"
 #include "instructions/vphaddd.h"
 #include "instructions/vphaddw.h"
