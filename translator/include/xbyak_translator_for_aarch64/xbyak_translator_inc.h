@@ -72,6 +72,7 @@
 #include "instructions/vfmadd213ps.h"
 #include "instructions/vfmadd231ps.h"
 #include "instructions/vfnmadd231ps.h"
+#include "instructions/vgatherqps.h"
 #include "instructions/vinsertf128.h"
 #include "instructions/vinsertf64x4.h"
 #include "instructions/vinserti32x4.h"
