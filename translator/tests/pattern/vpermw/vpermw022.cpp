@@ -55,13 +55,13 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-    vpunpcklwd(Ymm(1) | k1 | T_z, Ymm(30), Ymm(31));
-    vpunpcklwd(Ymm(2) | k2 | T_z, Ymm(30), Ymm(30));
-    vpunpcklwd(Ymm(3) | k3 | T_z, Ymm(3), Ymm(31));
-    vpunpcklwd(Ymm(4) | k4 | T_z, Ymm(30), Ymm(4));
-    vpunpcklwd(Ymm(5) | k5 | T_z, Ymm(5), Ymm(5));
-    vpunpcklwd(Ymm(6) | k6 | T_z, Ymm(30), Ymm(31));
-    vpunpcklwd(Ymm(7) | k7 | T_z, Ymm(30), Ymm(31));
+    vpermw(Ymm(1) | k1 | T_z, Ymm(30), Ymm(31));
+    vpermw(Ymm(2) | k2 | T_z, Ymm(30), Ymm(30));
+    vpermw(Ymm(3) | k3 | T_z, Ymm(3), Ymm(31));
+    vpermw(Ymm(4) | k4 | T_z, Ymm(30), Ymm(4));
+    vpermw(Ymm(5) | k5 | T_z, Ymm(5), Ymm(5));
+    vpermw(Ymm(6) | k6 | T_z, Ymm(30), Ymm(31));
+    vpermw(Ymm(7) | k7 | T_z, Ymm(30), Ymm(31));
   }
 };
 

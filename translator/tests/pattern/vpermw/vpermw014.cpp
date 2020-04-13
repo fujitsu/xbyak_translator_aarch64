@@ -64,13 +64,13 @@ public:
     mov(rcx, addr);
 
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-    vpunpcklwd(Xmm(1) | k1 | T_z, Xmm(30), ptr[rcx]);
-    vpunpcklwd(Xmm(2) | k2 | T_z, Xmm(30), ptr[rcx]);
-    vpunpcklwd(Xmm(3) | k3 | T_z, Xmm(3), ptr[rcx]);
-    vpunpcklwd(Xmm(4) | k4 | T_z, Xmm(30), ptr[rcx]);
-    vpunpcklwd(Xmm(5) | k5 | T_z, Xmm(5), ptr[rcx]);
-    vpunpcklwd(Xmm(6) | k6 | T_z, Xmm(30), ptr[rcx]);
-    vpunpcklwd(Xmm(7) | k7 | T_z, Xmm(30), ptr[rcx]);
+    vpermw(Xmm(1) | k1 | T_z, Xmm(30), ptr[rcx]);
+    vpermw(Xmm(2) | k2 | T_z, Xmm(30), ptr[rcx]);
+    vpermw(Xmm(3) | k3 | T_z, Xmm(3), ptr[rcx]);
+    vpermw(Xmm(4) | k4 | T_z, Xmm(30), ptr[rcx]);
+    vpermw(Xmm(5) | k5 | T_z, Xmm(5), ptr[rcx]);
+    vpermw(Xmm(6) | k6 | T_z, Xmm(30), ptr[rcx]);
+    vpermw(Xmm(7) | k7 | T_z, Xmm(30), ptr[rcx]);
 
     mov(rcx, 0x5);
   }
