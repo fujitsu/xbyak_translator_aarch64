@@ -22,12 +22,13 @@ public:
     setInputZregAllRandomHex();
 
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-
-    for (int j = 0; j < 32; j++) {
-      for (int i = 0; i < 32; i++) {
-        inputZReg[j].uh_dt[i] = 128 - i;
-      }
-    }
+    inputPredReg[1] = (1 << 0);
+    inputPredReg[2] = (1 << 0) | (1 << 6) | (uint64_t(1) << 15) | /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 24) |
+                      (uint64_t(1) << 60); /* aarch64 */
+    inputPredReg[3] = inputPredReg[4] = inputPredReg[5] = inputPredReg[6] =
+        inputPredReg[2];
+    inputPredReg[7] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -37,15 +38,13 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-    vpermw(Zmm(1), Zmm(18), Zmm(19));
-    vpermw(Zmm(2), Zmm(2), Zmm(19));
-    vpermw(Zmm(3), Zmm(18), Zmm(3));
-    vpermw(Zmm(4), Zmm(18), Zmm(18));
-    vpermw(Zmm(5), Zmm(5), Zmm(5));
-
-    vpermw(Zmm(29), Zmm(29), Zmm(29));
-    vpermw(Zmm(30), Zmm(30), Zmm(30));
-    vpermw(Zmm(31), Zmm(31), Zmm(31));
+    vpermd(Ymm(1) | k1 | T_z, Ymm(30), Ymm(31));
+    vpermd(Ymm(2) | k2 | T_z, Ymm(30), Ymm(30));
+    vpermd(Ymm(3) | k3 | T_z, Ymm(3), Ymm(31));
+    vpermd(Ymm(4) | k4 | T_z, Ymm(30), Ymm(4));
+    vpermd(Ymm(5) | k5 | T_z, Ymm(5), Ymm(5));
+    vpermd(Ymm(6) | k6 | T_z, Ymm(30), Ymm(31));
+    vpermd(Ymm(7) | k7 | T_z, Ymm(30), Ymm(31));
   }
 };
 

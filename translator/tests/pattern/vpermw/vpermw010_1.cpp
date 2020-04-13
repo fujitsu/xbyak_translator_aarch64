@@ -19,7 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    // setInputZregAllRandomHex();
+    setInputZregAllRandomHex();
 
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 

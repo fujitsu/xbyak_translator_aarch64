@@ -23,10 +23,21 @@ public:
 
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
-    for (int j = 0; j < 32; j++) {
-      for (int i = 0; i < 32; i++) {
-        inputZReg[j].uh_dt[i] = 128 - i;
-      }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[15].us_dt[i] = i;
+    }
+
+    for (int i = 0; i < 16; i++) {
+      inputZReg[8].us_dt[i] = 16 - i;
+    }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[9].us_dt[i] = 3;
+    }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[10].us_dt[i] = 0xfff0;
+    }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[11].us_dt[i] = (16 - i) | 0xfff0;
     }
   }
 
@@ -36,16 +47,41 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-    vpermw(Zmm(1), Zmm(18), Zmm(19));
-    vpermw(Zmm(2), Zmm(2), Zmm(19));
-    vpermw(Zmm(3), Zmm(18), Zmm(3));
-    vpermw(Zmm(4), Zmm(18), Zmm(18));
-    vpermw(Zmm(5), Zmm(5), Zmm(5));
+    size_t addr;
 
-    vpermw(Zmm(29), Zmm(29), Zmm(29));
-    vpermw(Zmm(30), Zmm(30), Zmm(30));
-    vpermw(Zmm(31), Zmm(31), Zmm(31));
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    addr = reinterpret_cast<size_t>(&(inputZReg[19].ud_dt[0]));
+    mov(rcx, addr);
+
+    /* Register index is EVEX range*/
+    vpermd(Ymm(16), Ymm(18), ptr[rcx]);
+    vpermd(Ymm(17), Ymm(17), ptr[rcx]);
+
+    addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0]));
+    mov(rcx, addr);
+    vpermd(Ymm(3), Ymm(18), ptr[rcx]);
+
+    addr = reinterpret_cast<size_t>(&(inputZReg[18].ud_dt[0]));
+    mov(rcx, addr);
+    vpermd(Ymm(4), Ymm(18), ptr[rcx]);
+
+    addr = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0]));
+    mov(rcx, addr);
+    vpermd(Ymm(19), Ymm(19), ptr[rcx]);
+
+    addr = reinterpret_cast<size_t>(&(inputZReg[29].ud_dt[0]));
+    mov(rcx, addr);
+    vpermd(Ymm(29), Ymm(29), ptr[rcx]);
+
+    addr = reinterpret_cast<size_t>(&(inputZReg[30].ud_dt[0]));
+    mov(rcx, addr);
+    vpermd(Ymm(30), Ymm(30), ptr[rcx]);
+
+    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    mov(rcx, addr);
+    vpermd(Ymm(31), Ymm(31), ptr[rcx]);
+
+    mov(rcx, 0x5);
   }
 };
 

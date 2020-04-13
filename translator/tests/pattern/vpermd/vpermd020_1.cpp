@@ -23,9 +23,9 @@ public:
 
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
-    for (int j = 0; j < 32; j++) {
-      for (int i = 0; i < 32; i++) {
-        inputZReg[j].uh_dt[i] = 128 - i;
+    for (int j = 0; j < 16; j++) {
+      for (int i = 0; i < 16; i++) {
+        inputZReg[j].us_dt[i] = 128 - i;
       }
     }
   }
@@ -37,15 +37,17 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-    vpermw(Zmm(1), Zmm(18), Zmm(19));
-    vpermw(Zmm(2), Zmm(2), Zmm(19));
-    vpermw(Zmm(3), Zmm(18), Zmm(3));
-    vpermw(Zmm(4), Zmm(18), Zmm(18));
-    vpermw(Zmm(5), Zmm(5), Zmm(5));
 
-    vpermw(Zmm(29), Zmm(29), Zmm(29));
-    vpermw(Zmm(30), Zmm(30), Zmm(30));
-    vpermw(Zmm(31), Zmm(31), Zmm(31));
+    /* Register index is EVEX range*/
+    vpermd(Ymm(1), Ymm(18), Ymm(19));
+    vpermd(Ymm(2), Ymm(2), Ymm(19));
+    vpermd(Ymm(3), Ymm(18), Ymm(3));
+    vpermd(Ymm(4), Ymm(18), Ymm(18));
+    vpermd(Ymm(5), Ymm(5), Ymm(5));
+
+    vpermd(Ymm(29), Ymm(29), Ymm(29));
+    vpermd(Ymm(30), Ymm(30), Ymm(30));
+    vpermd(Ymm(31), Ymm(31), Ymm(31));
   }
 };
 

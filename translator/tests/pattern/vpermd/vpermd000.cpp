@@ -23,10 +23,21 @@ public:
 
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
-    for (int j = 0; j < 32; j++) {
-      for (int i = 0; i < 32; i++) {
-        inputZReg[j].uh_dt[i] = 128 - i;
-      }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[15].us_dt[i] = i;
+    }
+
+    for (int i = 0; i < 16; i++) {
+      inputZReg[8].us_dt[i] = 16 - i;
+    }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[9].us_dt[i] = 3;
+    }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[10].us_dt[i] = 0xffe0;
+    }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[11].us_dt[i] = (16 - i) | 0xffe0;
     }
   }
 
@@ -37,15 +48,14 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-    vpermw(Zmm(1), Zmm(18), Zmm(19));
-    vpermw(Zmm(2), Zmm(2), Zmm(19));
-    vpermw(Zmm(3), Zmm(18), Zmm(3));
-    vpermw(Zmm(4), Zmm(18), Zmm(18));
-    vpermw(Zmm(5), Zmm(5), Zmm(5));
+    vpermd(Zmm(0), Zmm(8), Zmm(15));
+    vpermd(Zmm(1), Zmm(9), Zmm(15));
+    vpermd(Zmm(2), Zmm(10), Zmm(15));
+    vpermd(Zmm(3), Zmm(11), Zmm(15));
 
-    vpermw(Zmm(29), Zmm(29), Zmm(29));
-    vpermw(Zmm(30), Zmm(30), Zmm(30));
-    vpermw(Zmm(31), Zmm(31), Zmm(31));
+    vpermd(Zmm(29), Zmm(8), Zmm(15));
+    vpermd(Zmm(30), Zmm(9), Zmm(15));
+    vpermd(Zmm(31), Zmm(10), Zmm(15));
   }
 };
 

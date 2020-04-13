@@ -23,10 +23,21 @@ public:
 
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
-    for (int j = 0; j < 32; j++) {
-      for (int i = 0; i < 32; i++) {
-        inputZReg[j].uh_dt[i] = 128 - i;
-      }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[15].us_dt[i] = 128 + i;
+    }
+
+    for (int i = 0; i < 16; i++) {
+      inputZReg[8].us_dt[i] = 16 - i;
+    }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[9].us_dt[i] = 3;
+    }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[10].us_dt[i] = 0xfff0;
+    }
+    for (int i = 0; i < 16; i++) {
+      inputZReg[11].us_dt[i] = (16 - i) | 0xfff0;
     }
   }
 
@@ -36,16 +47,22 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-    vpermw(Zmm(1), Zmm(18), Zmm(19));
-    vpermw(Zmm(2), Zmm(2), Zmm(19));
-    vpermw(Zmm(3), Zmm(18), Zmm(3));
-    vpermw(Zmm(4), Zmm(18), Zmm(18));
-    vpermw(Zmm(5), Zmm(5), Zmm(5));
+    size_t addr;
+    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rcx, addr);
 
-    vpermw(Zmm(29), Zmm(29), Zmm(29));
-    vpermw(Zmm(30), Zmm(30), Zmm(30));
-    vpermw(Zmm(31), Zmm(31), Zmm(31));
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    vpermd(Ymm(0), Ymm(8), ptr_b[rcx]);
+    vpermd(Ymm(1), Ymm(9), ptr_b[rcx]);
+    vpermd(Ymm(2), Ymm(10), ptr_b[rcx]);
+    vpermd(Ymm(3), Ymm(11), ptr_b[rcx]);
+
+    vpermd(Ymm(29), Ymm(8), ptr_b[rcx]);
+    vpermd(Ymm(30), Ymm(9), ptr_b[rcx]);
+    vpermd(Ymm(31), Ymm(10), ptr_b[rcx]);
+
+    mov(rcx, 0x5);
   }
 };
 

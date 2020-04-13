@@ -21,13 +21,18 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-
-    for (int j = 0; j < 32; j++) {
-      for (int i = 0; i < 32; i++) {
-        inputZReg[j].uh_dt[i] = 128 - i;
-      }
+    for (int i = 0; i < 32; i++) {
+      inputZReg[6].uh_dt[i] = 0xffff;
     }
+
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    inputPredReg[1] = (1 << 0);
+    inputPredReg[2] = (1 << 0) | (1 << 6) | (uint64_t(1) << 15) | /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 24) |
+                      (uint64_t(1) << 60); /* aarch64 */
+    inputPredReg[3] = inputPredReg[4] = inputPredReg[5] = inputPredReg[6] =
+        inputPredReg[2];
+    inputPredReg[7] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -36,16 +41,21 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-    vpermw(Zmm(1), Zmm(18), Zmm(19));
-    vpermw(Zmm(2), Zmm(2), Zmm(19));
-    vpermw(Zmm(3), Zmm(18), Zmm(3));
-    vpermw(Zmm(4), Zmm(18), Zmm(18));
-    vpermw(Zmm(5), Zmm(5), Zmm(5));
+    size_t addr;
+    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rcx, addr);
 
-    vpermw(Zmm(29), Zmm(29), Zmm(29));
-    vpermw(Zmm(30), Zmm(30), Zmm(30));
-    vpermw(Zmm(31), Zmm(31), Zmm(31));
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    vpermd(Ymm(1) | k1 | T_z, Ymm(30), ptr[rcx]);
+    vpermd(Ymm(2) | k2 | T_z, Ymm(30), ptr[rcx]);
+    vpermd(Ymm(3) | k3 | T_z, Ymm(3), ptr[rcx]);
+    vpermd(Ymm(4) | k4 | T_z, Ymm(30), ptr[rcx]);
+    vpermd(Ymm(5) | k5 | T_z, Ymm(5), ptr[rcx]);
+    vpermd(Ymm(6) | k6 | T_z, Ymm(30), ptr[rcx]);
+    vpermd(Ymm(7) | k7 | T_z, Ymm(30), ptr[rcx]);
+
+    mov(rcx, 0x5);
   }
 };
 
