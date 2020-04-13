@@ -3304,10 +3304,12 @@ public:
           use single byte nop if useMultiByteNop = false
   */
   void nop(size_t size = 1, bool useMultiByteNop = true) {
-#ifndef XBYAK_TRANSLATE_AARCH64
     if (!useMultiByteNop) {
       for (size_t i = 0; i < size; i++) {
         db(0x90);
+#ifdef XBYAK_TRANSLATE_AARCH64
+	decodeAndTransToAArch64();
+#endif
       }
       return;
     }
@@ -3333,9 +3335,11 @@ public:
       size_t len = (std::min)(n, size);
       const uint8 *seq = nopTbl[len - 1];
       db(seq, len);
+#ifdef XBYAK_TRANSLATE_AARCH64
+      decodeAndTransToAArch64();
+#endif
       size -= len;
     }
-#endif //#ifndef XBYAK_TRANSLATE_AARCH64
   }
 
 #ifndef XBYAK_DONT_READ_LIST
