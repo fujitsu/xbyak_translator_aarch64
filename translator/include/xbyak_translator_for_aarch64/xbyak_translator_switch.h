@@ -1231,6 +1231,8 @@ case XED_ICLASS_VGATHERPF1QPD:
 case XED_ICLASS_VGATHERPF1QPS:
 case XED_ICLASS_VGATHERQPD:
 case XED_ICLASS_VGATHERQPS:
+  translateVGATHERQPS(&xedd);
+  break;
 case XED_ICLASS_VGETEXPPD:
 case XED_ICLASS_VGETEXPPS:
 case XED_ICLASS_VGETEXPSD:
@@ -1437,6 +1439,8 @@ case XED_ICLASS_VPCMPD:
   translateVPCMPD(&xedd);
   break;
 case XED_ICLASS_VPCMPEQB:
+  translateVPCMPEQB(&xedd);
+  break;
 case XED_ICLASS_VPCMPEQD:
   translateVPCMPEQD(&xedd);
   break;

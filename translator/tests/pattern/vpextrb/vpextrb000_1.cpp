@@ -20,40 +20,6 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
-    inputZReg[0].us_dt[0] = 0;
-    inputZReg[1].us_dt[0] = 0;
-
-    inputZReg[2].us_dt[0] = inputZReg[3].us_dt[0] = 1;
-    inputZReg[2].us_dt[7] = inputZReg[3].us_dt[7] = 2;
-
-    inputZReg[4].us_dt[0] = inputZReg[5].us_dt[0] = 3;
-    inputZReg[4].us_dt[7] = inputZReg[5].us_dt[7] = 4;
-    inputZReg[4].us_dt[15] = inputZReg[5].us_dt[15] = 5;
-
-    inputZReg[6].us_dt[0] = uint32_t(0xffffffff);
-    inputZReg[7].us_dt[0] = uint32_t(0xffffffff);
-
-    inputZReg[6].us_dt[1] = uint32_t(0xffffffff);
-    inputZReg[7].us_dt[1] = uint32_t(0x7fffffff);
-
-    inputZReg[6].us_dt[2] = uint32_t(0x7fffffff);
-    inputZReg[7].us_dt[2] = uint32_t(0xffffffff);
-
-    inputZReg[6].us_dt[3] = uint32_t(0x7fffffff);
-    inputZReg[7].us_dt[3] = uint32_t(0x7fffffff);
-
-    inputZReg[6].us_dt[4] = uint32_t(0xffffffff);
-    inputZReg[7].us_dt[4] = uint32_t(0x0);
-
-    inputZReg[6].us_dt[5] = uint32_t(0x7fffffff);
-    inputZReg[7].us_dt[5] = uint32_t(0x0);
-
-    inputZReg[6].us_dt[6] = uint32_t(0x0);
-    inputZReg[7].us_dt[6] = uint32_t(0xffffffff);
-
-    inputZReg[6].us_dt[7] = uint32_t(0x0);
-    inputZReg[7].us_dt[7] = uint32_t(0x7fffffff);
   }
 
   void setCheckRegFlagAll() {
@@ -62,11 +28,62 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vpcmpeqd(k1, Zmm(0), Zmm(1));
-    vpcmpeqd(k2, Zmm(2), Zmm(3));
-    vpcmpeqd(k3, Zmm(4), Zmm(5));
-    vpcmpeqd(k4, Zmm(6), Zmm(7));
-    vpcmpeqd(k7, Zmm(31), Zmm(31));
+    size_t addr;
+    size_t addr1;
+    size_t addr2;
+
+/* Address is aligned */
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0]));
+    mov(rax, addr);
+    /*
+    vpextrb(ptr[rax], Xmm(3), 10);
+    vmovdqu8(Xmm(4), ptr[rax]);
+    mov(rax, addr1);
+    vpextrb(ptr[rax], Xmm(3), 7);
+    vmovdqu8(Xmm(5), ptr[rax]);
+    mov(rax, addr2);
+    vpextrb(ptr[rax], Xmm(3), 24);
+    vmovdqu8(Xmm(6), ptr[rax]);
+    */
+
+    for (int i = 0; i < 15; i++) {
+      int sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
+      vpextrb(ptr[rax], Xmm(i), sel);
+      vmovdqu8(Xmm(i + 1), ptr[rax]);
+    }
+
+#endif
+
+/* Address is unaligned */
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[10].ud_dt[0])) + 4;
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0])) + 8;
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[12].ud_dt[0])) + 12;
+    mov(rax, addr);
+    /*
+    vpextrb(ptr[rax], Xmm(3), 0);
+    vmovdqu8(Xmm(7), ptr[rax]);
+    mov(rax, addr1);
+    vpextrb(ptr[rax], Xmm(3), 15);
+    vmovdqu8(Xmm(8), ptr[rax]);
+    mov(rax, addr2);
+    vpextrb(ptr[rax], Xmm(3), 16);
+    vmovdqu8(Xmm(9), ptr[rax]);
+    */
+    for (int i = 16; i < 31; i++) {
+      int sel = 0 + (int)(rand() * (255 - 0 + 1.0) / (1.0 + RAND_MAX));
+      vpextrb(ptr[rax], Xmm(i), sel);
+      vmovdqu8(Xmm(i + 1), ptr[rax]);
+    }
+#endif
+
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(rbx,
+        size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 
@@ -93,15 +110,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f(); /* Execute JIT code */
-
-#ifndef XBYAK_TRANSLATE_AARCH64
-    /* Bit order of mask registers are different from x86_64 and aarch64.
-       In order to compare output values of mask registers by test script,
-       Bit order of x86_64 mask register values is modified here. */
-    gen.modifyPredReg(SS_DT);
-#endif
-
+    f();                 /* Execute JIT code */
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */
   }

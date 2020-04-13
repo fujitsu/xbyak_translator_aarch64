@@ -20,7 +20,7 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
+    /*
     inputZReg[0].us_dt[0] = 0;
     inputZReg[1].us_dt[0] = 0;
 
@@ -28,8 +28,8 @@ public:
     inputZReg[2].us_dt[7] = inputZReg[3].us_dt[7] = 2;
 
     inputZReg[4].us_dt[0] = inputZReg[5].us_dt[0] = 3;
-    inputZReg[4].us_dt[7] = inputZReg[5].us_dt[7] = 4;
-    inputZReg[4].us_dt[15] = inputZReg[5].us_dt[15] = 5;
+    inputZReg[4].us_dt[5] = inputZReg[5].us_dt[5] = 4;
+    inputZReg[4].us_dt[7] = inputZReg[5].us_dt[7] = 5;
 
     inputZReg[6].us_dt[0] = uint32_t(0xffffffff);
     inputZReg[7].us_dt[0] = uint32_t(0xffffffff);
@@ -54,6 +54,10 @@ public:
 
     inputZReg[6].us_dt[7] = uint32_t(0x0);
     inputZReg[7].us_dt[7] = uint32_t(0x7fffffff);
+
+    inputZReg[12] = inputZReg[6];
+    inputZReg[13] = inputZReg[7];
+    */
   }
 
   void setCheckRegFlagAll() {
@@ -62,11 +66,13 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vpcmpeqd(k1, Zmm(0), Zmm(1));
-    vpcmpeqd(k2, Zmm(2), Zmm(3));
-    vpcmpeqd(k3, Zmm(4), Zmm(5));
-    vpcmpeqd(k4, Zmm(6), Zmm(7));
-    vpcmpeqd(k7, Zmm(31), Zmm(31));
+    vpcmpeqb(Xmm(8), Xmm(0), Xmm(1));
+    vpcmpeqb(Xmm(9), Xmm(2), Xmm(3));
+    vpcmpeqb(Xmm(10), Xmm(4), Xmm(5));
+    vpcmpeqb(Xmm(11), Xmm(6), Xmm(6));   /* srcIdx = src2Idx */
+    vpcmpeqb(Xmm(12), Xmm(12), Xmm(7));  /* dstIdx = srcIdx */
+    vpcmpeqb(Xmm(13), Xmm(6), Xmm(13));  /* dstIdx = src2Idx */
+    vpcmpeqb(Xmm(14), Xmm(14), Xmm(14)); /* dstIdx = srcIdx = src2Idx */
   }
 };
 
