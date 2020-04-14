@@ -3308,9 +3308,12 @@ public:
       for (size_t i = 0; i < size; i++) {
         db(0x90);
 #ifdef XBYAK_TRANSLATE_AARCH64
-	decodeAndTransToAArch64();
+	db_clear();
 #endif
       }
+#ifdef XBYAK_TRANSLATE_AARCH64
+      CodeGeneratorAArch64::nop();
+#endif
       return;
     }
     /*
@@ -3336,10 +3339,13 @@ public:
       const uint8 *seq = nopTbl[len - 1];
       db(seq, len);
 #ifdef XBYAK_TRANSLATE_AARCH64
-      decodeAndTransToAArch64();
+      db_clear();
 #endif
       size -= len;
     }
+#ifdef XBYAK_TRANSLATE_AARCH64
+    CodeGeneratorAArch64::nop();
+#endif
   }
 
 #ifndef XBYAK_DONT_READ_LIST
