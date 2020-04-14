@@ -63,6 +63,7 @@ public:
     vpmovsxbw(Ymm(5) | k5, Xmm(0));
     vpmovsxbw(Ymm(6) | k6, Xmm(0));
     vpmovsxbw(Ymm(7) | k7, Xmm(0));
+    vpmovsxbw(Ymm(8) | k7, Xmm(8)); /* dstIdx = srcIdx */
 
     /* Register index is EVEX range. */
     vpmovsxbw(Ymm(21) | k1, Xmm(20));
@@ -72,6 +73,7 @@ public:
     vpmovsxbw(Ymm(25) | k5, Xmm(20));
     vpmovsxbw(Ymm(26) | k6, Xmm(20));
     vpmovsxbw(Ymm(27) | k7, Xmm(20));
+    vpmovsxbw(Ymm(28) | k7, Xmm(28)); /* dstIdx = srcIdx */
   }
 };
 

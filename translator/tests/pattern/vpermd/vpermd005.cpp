@@ -21,15 +21,18 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-    for (int j = 0; j < 32; j++) {
-      for (int i = 0; i < 16; i++) {
-        inputZReg[j].us_dt[i] = (j << 16) + i;
-      }
+    for (int i = 0; i < 32; i++) {
+      inputZReg[6].uh_dt[i] = 0;
     }
 
-    for (int i = 0; i < 16; i++) {
-      inputZReg[31].us_dt[i] = 0x11111111 * i;
-    }
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    inputPredReg[1] = (1 << 0);
+    inputPredReg[2] = (1 << 0) | (1 << 6) | (uint64_t(1) << 15) | /* x86_64 */
+                      (1 << 0) | (uint64_t(1) << 24) |
+                      (uint64_t(1) << 60); /* aarch64 */
+    inputPredReg[3] = inputPredReg[4] = inputPredReg[5] = inputPredReg[6] =
+        inputPredReg[2];
+    inputPredReg[7] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -39,22 +42,20 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr;
-
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[30].ud_dt[0]));
-    mov(rax, addr);
+    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
     mov(rcx, addr);
-    add(rcx, 64);
 
-    pmovsxbd(Xmm(0), ptr[rax]);
-    pmovsxbd(Xmm(1), ptr[rax]);
-    pmovsxbd(Xmm(2), ptr[rax]);
-    pmovsxbd(Xmm(3), ptr[rax]);
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    vpermd(Zmm(1) | k1, Zmm(30), ptr[rcx]);
+    vpermd(Zmm(2) | k2, Zmm(30), ptr[rcx]);
+    vpermd(Zmm(3) | k3, Zmm(3), ptr[rcx]);
+    vpermd(Zmm(4) | k4, Zmm(30), ptr[rcx]);
+    vpermd(Zmm(5) | k5, Zmm(5), ptr[rcx]);
+    vpermd(Zmm(6) | k6, Zmm(30), ptr[rcx]);
+    vpermd(Zmm(7) | k7, Zmm(30), ptr[rcx]);
 
-    mov(rax,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-    mov(rcx,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(rcx, 0x5);
   }
 };
 
