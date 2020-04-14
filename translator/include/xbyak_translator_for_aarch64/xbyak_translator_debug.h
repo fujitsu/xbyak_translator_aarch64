@@ -419,6 +419,13 @@ void xt_dump_a64fx_operandsV3(xt_a64fx_operands_structV3_t *a64) {
               << std::endl;
     std::cout << std::left << "operands[" << i << std::setw(11)
               << "].uimm=" << xt_to_string(a64->operands[i].uimm) << std::endl;
+
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].vmIndexRegIdx="
+              << xt_to_string(a64->operands[i].vmIndexRegIdx) << std::endl;
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].vmIndexRegWidth=" << a64->operands[i].vmIndexRegWidth
+              << std::endl;
   }
 }
 
