@@ -832,7 +832,7 @@ void por(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xEB); UNIMPLEMENTE
 void prefetchnta(const Address& addr) { opModM(addr, Reg32(0), 0x0F, 0x18); UNIMPLEMENTED; }
 void prefetcht0(const Address& addr) { opModM(addr, Reg32(1), 0x0F, 0x18); decodeAndTransToAArch64(); }
 void prefetcht1(const Address& addr) { opModM(addr, Reg32(2), 0x0F, 0x18); decodeAndTransToAArch64(); }
-void prefetcht2(const Address& addr) { opModM(addr, Reg32(3), 0x0F, 0x18); UNIMPLEMENTED; }
+void prefetcht2(const Address& addr) { opModM(addr, Reg32(3), 0x0F, 0x18); decodeAndTransToAArch64(); }
 void prefetchw(const Address& addr) { opModM(addr, Reg32(1), 0x0F, 0x0D); UNIMPLEMENTED; }
 void prefetchwt1(const Address& addr) { opModM(addr, Reg32(2), 0x0F, 0x0D); UNIMPLEMENTED; }
 void psadbw(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xF6); UNIMPLEMENTED; }
