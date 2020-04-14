@@ -20,16 +20,6 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
-    for (int j = 0; j < 32; j++) {
-      for (int i = 0; i < 16; i++) {
-        inputZReg[j].us_dt[i] = (j << 16) + i;
-      }
-    }
-
-    for (int i = 0; i < 16; i++) {
-      inputZReg[31].us_dt[i] = 0x11111111 * i;
-    }
   }
 
   void setCheckRegFlagAll() {
@@ -39,19 +29,9 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
-    vshufpd(Zmm(0), Zmm(0), Zmm(0), 0);
-    vshufpd(Zmm(1), Zmm(1), Zmm(1), 2);
-    vshufpd(Zmm(2), Zmm(2), Zmm(2), 10);
-    vshufpd(Zmm(3), Zmm(3), Zmm(3), 42);
-    vshufpd(Zmm(4), Zmm(4), Zmm(4), 170);
-    vshufpd(Zmm(5), Zmm(5), Zmm(5), 1);
-    vshufpd(Zmm(6), Zmm(6), Zmm(6), 5);
-    vshufpd(Zmm(7), Zmm(7), Zmm(7), 21);
-    vshufpd(Zmm(8), Zmm(8), Zmm(8), 170);
-    vshufpd(Zmm(9), Zmm(9), Zmm(9), 15);
-    vshufpd(Zmm(10), Zmm(10), Zmm(10), 240);
-    vshufpd(Zmm(11), Zmm(12), Zmm(13), 204);
-    vshufpd(Zmm(14), Zmm(15), Zmm(16), 51);
+    for (int i = 0; i < 16; i++) {
+      vshufpd(Ymm(1 + i), Ymm(1 + i), Ymm(1 + i), i + 0x10);
+    }
   }
 };
 
