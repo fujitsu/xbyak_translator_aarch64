@@ -29,23 +29,26 @@ public:
   }
 
   void genJitTestCode() {
-    /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+/* Here write JIT code with x86_64 mnemonic function to be tested. */
+/* z31 - z29 are used as zTmpIdx - zTmp3Idx */
 
-    /* VEX */
-#define IMM 1
-    vperm2i128(Ymm(0), Ymm(14), Ymm(15), (0) << 4);
-    vperm2i128(Ymm(1), Ymm(14), Ymm(15), (1) << 4);
-    vperm2i128(Ymm(2), Ymm(14), Ymm(15), (2) << 4);
-    vperm2i128(Ymm(3), Ymm(14), Ymm(15), (3) << 4);
-    vperm2i128(Ymm(4), Ymm(14), Ymm(15), (0 + (1 << 2)) << 4);
-    vperm2i128(Ymm(5), Ymm(14), Ymm(15), (1 + (1 << 2)) << 4);
-    vperm2i128(Ymm(6), Ymm(14), Ymm(15), (2 + (1 << 2)) << 4);
-    vperm2i128(Ymm(7), Ymm(14), Ymm(15), (3 + (1 << 2)) << 4);
-    vperm2i128(Ymm(8), Ymm(14), Ymm(15), (0 + (1 << 3)) << 4);
-    vperm2i128(Ymm(9), Ymm(14), Ymm(15), (1 + (1 << 3)) << 4);
-    vperm2i128(Ymm(10), Ymm(14), Ymm(15), (2 + (1 << 3)) << 4);
-    vperm2i128(Ymm(11), Ymm(14), Ymm(15), (3 + (1 << 3)) << 4);
+/* VEX */
+#define IMM 0
+    vperm2i128(Ymm(0), Ymm(14), Ymm(15), (IMM) << 4);
+    vperm2i128(Ymm(1), Ymm(14), Ymm(15), (IMM) << 4);
+    vperm2i128(Ymm(2), Ymm(14), Ymm(15), (IMM) << 4);
+    vperm2i128(Ymm(3), Ymm(14), Ymm(15), (IMM) << 4);
+
+    vperm2i128(Ymm(4), Ymm(14), Ymm(15), (IMM + (1 << 2)) << 4);
+    vperm2i128(Ymm(5), Ymm(14), Ymm(15), (IMM + (1 << 2)) << 4);
+    vperm2i128(Ymm(6), Ymm(14), Ymm(15), (IMM + (1 << 2)) << 4);
+    vperm2i128(Ymm(7), Ymm(14), Ymm(15), (IMM + (1 << 2)) << 4);
+
+    vperm2i128(Ymm(8), Ymm(14), Ymm(15), (IMM + (1 << 3)) << 4);
+    vperm2i128(Ymm(9), Ymm(14), Ymm(15), (IMM + (1 << 3)) << 4);
+    vperm2i128(Ymm(10), Ymm(14), Ymm(15), (IMM + (1 << 3)) << 4);
+    vperm2i128(Ymm(11), Ymm(14), Ymm(15), (IMM + (1 << 3)) << 4);
+#undef IMM
   }
 };
 

@@ -43,6 +43,11 @@
 private:
 const xt_reg_idx_t xtDefaultAddrIdx = 28;
 constexpr static unsigned int xtNumOperands = 4;
+#ifdef XT_TEST
+constexpr static unsigned int xt_sp_reg_idx = 31;
+#else
+constexpr static unsigned int xt_sp_reg_idx = 4;
+#endif
 
 public:
 Xbyak_aarch64::WReg W_TMP_0 = w24;
@@ -54,7 +59,8 @@ Xbyak_aarch64::XReg X_TMP_1 = x25;
 Xbyak_aarch64::XReg X_TMP_2 = x26;
 Xbyak_aarch64::XReg X_TMP_3 = x27;
 Xbyak_aarch64::XReg X_TMP_ADDR{28};
-Xbyak_aarch64::PReg P_TMP_0 = p12;
+Xbyak_aarch64::PReg P_TMP_0 = p11;
+Xbyak_aarch64::PReg P_TMP_1 = p12;
 Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
@@ -63,16 +69,14 @@ private:
 #define XT_UNIMPLEMENTED                                                       \
   std::cerr << __FILE__ << ":" << __LINE__ << ":Unimplemented" << std::endl;   \
   assert(NULL);
-#define XT_VALID_CHECK
-#define XT_VALID_CHECK_IF
 
 #define XT_VALID_CHECK isValid = true;
 
 #define XT_VALID_CHECK_IF                                                      \
   if (!isValid) {                                                              \
     std::cerr << __FILE__ << ":" << __LINE__                                   \
-              << ":Unsupported operand variation" << std::endl;
-}
+              << ":Unsupported operand variation" << std::endl;                \
+  }
 
 enum x64_inst_t {
   X64_NO_ASSIGN = 0,
@@ -180,6 +184,10 @@ struct xt_a64fx_operands_structV3_core_t {
   xed_uint_t opWidth = 0;
   xed_reg_class_enum_t regClass = XED_REG_CLASS_INVALID;
   xed_uint64_t uimm = 0;
+
+  /* For operand of vm64(x|y|z) */
+  xt_reg_idx_t vmIndexRegIdx = XT_REG_INVALID;
+  xed_uint_t vmIndexRegWidth = 0;
 };
 
 struct xt_a64fx_operands_structV3_t {
@@ -271,6 +279,8 @@ xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
     return r - XED_REG_EAX;
   } else if (XED_REG_AX <= r && r <= XED_REG_R15W) {
     return r - XED_REG_AX;
+  } else if (XED_REG_AL <= r && r <= XED_REG_R15B) {
+    return r - XED_REG_AL;
   } else if (r == XED_REG_RFLAGS) {
     /* In case of 2nd operand of DEC instruction, this "else if" is passed */
     return XT_REG_INVALID;
@@ -298,7 +308,8 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
                                     unsigned int index, xed_uint_t scale,
                                     const Xbyak_aarch64::XReg tmp0,
                                     const Xbyak_aarch64::XReg tmp1,
-                                    const Xbyak_aarch64::XReg tmp2) {
+                                    const Xbyak_aarch64::XReg tmp2,
+                                    bool vm64 = false) {
 
   unsigned int shift = 0;
   if (scale == 0) {
@@ -325,9 +336,14 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
   std::cout << "tmp0=" << tmp0.getIdx() << std::endl;
   std::cout << "tmp1=" << tmp1.getIdx() << std::endl;
   std::cout << "tmp2=" << tmp2.getIdx() << std::endl;
+  std::cout << "vm64=" << vm64 << std::endl;
 #endif
 
   Xbyak_aarch64::XReg retReg{xtDefaultAddrIdx};
+
+  if (vm64) { /* VSIB addressing */
+    index = XT_REG_INVALID;
+  }
 
   if (base != XT_REG_INVALID /* Base only */
       && disp == 0 && index == XT_REG_INVALID) {
@@ -420,7 +436,7 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
       continue;
     }
 
-    for (int idx = 0; i < xtNumOperands; idx) {
+    for (int idx = 0; idx < xtNumOperands; idx++) {
       if (a64->operands[idx].regIdx == i) {
         conflict = true;
       }
@@ -487,7 +503,7 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
       continue;
     }
 
-    for (int idx = 0; i < xtNumOperands; idx) {
+    for (int idx = 0; idx < xtNumOperands; idx++) {
       if (a64->operands[idx].regIdx == i) {
         conflict = true;
       }
@@ -850,7 +866,8 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
 }
 
 void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
-                                   xt_a64fx_operands_structV3_t *a64) {
+                                   xt_a64fx_operands_structV3_t *a64,
+                                   bool vm64 = false) {
   unsigned int num_operands;
 
   unsigned int baseIdx = XT_REG_INVALID;
@@ -921,6 +938,7 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
       unsigned int width =
           xed_decoded_inst_get_memop_address_width(p, memOpIdx);
 
+      int tmpOpIdx = 0;
       bool isSet = false;
 
       for (int l = 0; l < 4 && isSet == false; l++) {
@@ -929,6 +947,7 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
           a64->operands[l].opWidth = width;
           a64->operands[l].opWidth = xed_decoded_inst_operand_length_bits(p, i);
           isSet = true;
+          tmpOpIdx = l;
         }
       }
 
@@ -954,6 +973,27 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
       tmpReg = xed_decoded_inst_get_index_reg(p, memOpIdx);
       if (tmpReg != XED_REG_INVALID) {
         indexIdx = xt_get_register_index(tmpReg);
+
+        if (vm64) {
+          a64->operands[tmpOpIdx].vmIndexRegIdx = indexIdx;
+
+          switch (xed_reg_class(tmpReg)) {
+          case XED_REG_CLASS_XMM:
+            a64->operands[tmpOpIdx].vmIndexRegWidth = 128;
+            break;
+          case XED_REG_CLASS_YMM:
+            a64->operands[tmpOpIdx].vmIndexRegWidth = 256;
+            break;
+          case XED_REG_CLASS_ZMM:
+            a64->operands[tmpOpIdx].vmIndexRegWidth = 512;
+            break;
+          default:
+            xt_msg_err(__FILE__, __LINE__,
+                       "Unknwon vm64 index register width. Please contact to "
+                       "system administrator!");
+          }
+        }
+
         tmpScale = xed_decoded_inst_get_scale(p, memOpIdx);
         if (tmpScale) {
           scale = tmpScale;
@@ -963,7 +1003,7 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
       disp = xed_decoded_inst_get_memory_displacement(p, memOpIdx);
 
       X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
-                                   X_TMP_1, X_TMP_2);
+                                   X_TMP_1, X_TMP_2, vm64);
 
       memOpIdx++;
       continue;

@@ -375,11 +375,10 @@ void print_operands(xed_decoded_inst_t *xedd) {
 
     rw = xed_decoded_inst_operand_action(xedd, i);
 
-    printf(
-        " %10s %3s %9s",
-        xed_operand_visibility_enum_t2str(xed_operand_operand_visibility(op)),
-        xed_operand_action_enum_t2str(rw),
-        xed_operand_width_enum_t2str(xed_operand_width(op)));
+    printf(" %10s %3s %9s", xed_operand_visibility_enum_t2str(
+                                xed_operand_operand_visibility(op)),
+           xed_operand_action_enum_t2str(rw),
+           xed_operand_width_enum_t2str(xed_operand_width(op)));
 
     bits = xed_decoded_inst_operand_length_bits(xedd, i);
     printf("  %3u", bits);
@@ -419,6 +418,13 @@ void xt_dump_a64fx_operandsV3(xt_a64fx_operands_structV3_t *a64) {
               << std::endl;
     std::cout << std::left << "operands[" << i << std::setw(11)
               << "].uimm=" << xt_to_string(a64->operands[i].uimm) << std::endl;
+
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].vmIndexRegIdx="
+              << xt_to_string(a64->operands[i].vmIndexRegIdx) << std::endl;
+    std::cout << std::left << "operands[" << i << std::setw(11)
+              << "].vmIndexRegWidth=" << a64->operands[i].vmIndexRegWidth
+              << std::endl;
   }
 }
 

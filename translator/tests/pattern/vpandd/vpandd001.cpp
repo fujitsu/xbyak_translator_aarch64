@@ -48,6 +48,8 @@ public:
     //    vandps(Ymm(11), Ymm(11), ptr_b[rax]);
     //    vpandd(Zmm(12), Zmm(12), ptr_b[rax]);
 
+    vpandd(Zmm(21), Zmm(22), ptr[rax]);
+
     mov(rax, 5);
   }
 };

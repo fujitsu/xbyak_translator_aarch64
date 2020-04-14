@@ -48,11 +48,12 @@ public:
     //    vandps(Ymm(7), Ymm(0) | k1, ptr_b[rax]);
     //    vandps(Ymm(8), Ymm(0) | k1 | T_z, ptr_b[rax]);
 
+    /* This test pattern is currelently not required.
     vandps(Zmm(9), Zmm(0) | k1, ptr[rax]);
     vandps(Zmm(10), Zmm(0) | k1 | T_z, ptr[rax]);
     vandps(Zmm(11), Zmm(0) | k1, ptr_b[rax]);
     vandps(Zmm(12), Zmm(0) | k1 | T_z, ptr_b[rax]);
-
+    */
     mov(rax, 5);
   }
 };
