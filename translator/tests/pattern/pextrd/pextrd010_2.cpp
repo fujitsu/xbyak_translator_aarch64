@@ -30,14 +30,14 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
     /* Register index is within EVEX range. */
-    pextrd(r8d, Xmm(16), getLfsr()); 
-    pextrd(r9d, Xmm(17), getLfsr()); 
-    pextrd(r10d, Xmm(18),getLfsr()); 
-    pextrd(r11d, Xmm(19),getLfsr()); 
-    pextrd(r12d, Xmm(20),getLfsr()); 
-    pextrd(r13d, Xmm(21),getLfsr()); 
-    pextrd(r14d, Xmm(22),getLfsr()); 
-    pextrd(r15d, Xmm(23),getLfsr()); 
+    pextrd(r8d, Xmm(16), getLfsr());
+    pextrd(r9d, Xmm(17), getLfsr());
+    pextrd(r10d, Xmm(18), getLfsr());
+    pextrd(r11d, Xmm(19), getLfsr());
+    pextrd(r12d, Xmm(20), getLfsr());
+    pextrd(r13d, Xmm(21), getLfsr());
+    pextrd(r14d, Xmm(22), getLfsr());
+    pextrd(r15d, Xmm(23), getLfsr());
   }
 };
 

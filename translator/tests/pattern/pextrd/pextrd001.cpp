@@ -37,9 +37,9 @@ public:
     mov(rax, addr);
 
     /* Register index is within SSE range. */
-    for(int i=0; i<8; i++) {
+    for (int i = 0; i < 8; i++) {
       pextrd(ptr[rax], Xmm(i), i);
-      vmovdqu8(Zmm(16+i), ptr[rax]);
+      vmovdqu8(Zmm(16 + i), ptr[rax]);
     }
 
     mov(rax,

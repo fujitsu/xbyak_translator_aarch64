@@ -54,9 +54,9 @@ public:
     vextractf64x4(Ymm(3), Zmm(31), 1);
     vextractf64x4(Ymm(4), Zmm(4), 0);
     vextractf64x4(Ymm(5), Zmm(5), 1);
-    
-    vextractf64x4(Ymm(6), Zmm(31), 0+256);
-    vextractf64x4(Ymm(7), Zmm(31), 1+256);
+
+    vextractf64x4(Ymm(6), Zmm(31), 0 + 256);
+    vextractf64x4(Ymm(7), Zmm(31), 1 + 256);
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64

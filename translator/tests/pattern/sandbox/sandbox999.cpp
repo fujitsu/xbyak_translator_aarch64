@@ -29,14 +29,28 @@ public:
   void genJitTestCode() {
     uint32_t *matArray = (uint32_t *)std::malloc(8 * 8 * sizeof(uint32_t));
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    CodeGeneratorAArch64::trn1(Xbyak_aarch64::VReg4S(0), Xbyak_aarch64::VReg4S(30), Xbyak_aarch64::VReg4S(31));
-    CodeGeneratorAArch64::trn2(Xbyak_aarch64::VReg4S(1), Xbyak_aarch64::VReg4S(30), Xbyak_aarch64::VReg4S(31));
-    CodeGeneratorAArch64::zip1(Xbyak_aarch64::VReg4S(2), Xbyak_aarch64::VReg4S(30), Xbyak_aarch64::VReg4S(31));
-    CodeGeneratorAArch64::zip2(Xbyak_aarch64::VReg4S(3), Xbyak_aarch64::VReg4S(30), Xbyak_aarch64::VReg4S(31));
-    CodeGeneratorAArch64::uzp1(Xbyak_aarch64::VReg4S(4), Xbyak_aarch64::VReg4S(30), Xbyak_aarch64::VReg4S(31));
-    CodeGeneratorAArch64::uzp2(Xbyak_aarch64::VReg4S(5), Xbyak_aarch64::VReg4S(30), Xbyak_aarch64::VReg4S(31));
-    CodeGeneratorAArch64::xtn(Xbyak_aarch64::VReg2S(6), Xbyak_aarch64::VReg2D(30));
-    CodeGeneratorAArch64::xtn2(Xbyak_aarch64::VReg4S(7), Xbyak_aarch64::VReg2D(30));
+    CodeGeneratorAArch64::trn1(Xbyak_aarch64::VReg4S(0),
+                               Xbyak_aarch64::VReg4S(30),
+                               Xbyak_aarch64::VReg4S(31));
+    CodeGeneratorAArch64::trn2(Xbyak_aarch64::VReg4S(1),
+                               Xbyak_aarch64::VReg4S(30),
+                               Xbyak_aarch64::VReg4S(31));
+    CodeGeneratorAArch64::zip1(Xbyak_aarch64::VReg4S(2),
+                               Xbyak_aarch64::VReg4S(30),
+                               Xbyak_aarch64::VReg4S(31));
+    CodeGeneratorAArch64::zip2(Xbyak_aarch64::VReg4S(3),
+                               Xbyak_aarch64::VReg4S(30),
+                               Xbyak_aarch64::VReg4S(31));
+    CodeGeneratorAArch64::uzp1(Xbyak_aarch64::VReg4S(4),
+                               Xbyak_aarch64::VReg4S(30),
+                               Xbyak_aarch64::VReg4S(31));
+    CodeGeneratorAArch64::uzp2(Xbyak_aarch64::VReg4S(5),
+                               Xbyak_aarch64::VReg4S(30),
+                               Xbyak_aarch64::VReg4S(31));
+    CodeGeneratorAArch64::xtn(Xbyak_aarch64::VReg2S(6),
+                              Xbyak_aarch64::VReg2D(30));
+    CodeGeneratorAArch64::xtn2(Xbyak_aarch64::VReg4S(7),
+                               Xbyak_aarch64::VReg2D(30));
   }
 };
 

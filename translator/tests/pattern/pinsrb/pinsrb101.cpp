@@ -37,17 +37,17 @@ public:
     std::cout << "Address is " << std::hex << addr << std::endl;
     mov(rax, addr);
     mov(rcx, addr1);
-    
-    /* pinsrb is one of SSE4_1 instructions. Register index must be less than 16. */
+
+    /* pinsrb is one of SSE4_1 instructions. Register index must be less than
+     * 16. */
     for (int i = 0; i < 8; i++) {
       pinsrb(Xmm(i), ptr[rax], i);
-      pinsrb(Xmm(8+i), ptr[rcx], 8+i);
+      pinsrb(Xmm(8 + i), ptr[rcx], 8 + i);
     }
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-    mov(rcx,
-        size_t(0x5));
+    mov(rcx, size_t(0x5));
   }
 };
 
