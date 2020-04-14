@@ -22,6 +22,8 @@
 #include "instructions/pextrd.h"
 #include "instructions/pinsrb.h"
 #include "instructions/pinsrd.h"
+#include "instructions/prefetcht0.h"
+#include "instructions/prefetcht1.h"
 #include "instructions/ret.h"
 #include "instructions/shl.h"
 #include "instructions/sub.h"

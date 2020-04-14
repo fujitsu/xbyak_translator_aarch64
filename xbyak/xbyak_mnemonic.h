@@ -830,8 +830,8 @@ void popcnt(const Reg&reg, const Operand& op) { opSp1(reg, op, 0xF3, 0x0F, 0xB8)
 void popf() { db(0x9D); UNIMPLEMENTED; }
 void por(const Mmx& mmx, const Operand& op) { opMMX(mmx, op, 0xEB); UNIMPLEMENTED; }
 void prefetchnta(const Address& addr) { opModM(addr, Reg32(0), 0x0F, 0x18); UNIMPLEMENTED; }
-void prefetcht0(const Address& addr) { opModM(addr, Reg32(1), 0x0F, 0x18); UNIMPLEMENTED; }
-void prefetcht1(const Address& addr) { opModM(addr, Reg32(2), 0x0F, 0x18); UNIMPLEMENTED; }
+void prefetcht0(const Address& addr) { opModM(addr, Reg32(1), 0x0F, 0x18); decodeAndTransToAArch64(); }
+void prefetcht1(const Address& addr) { opModM(addr, Reg32(2), 0x0F, 0x18); decodeAndTransToAArch64(); }
 void prefetcht2(const Address& addr) { opModM(addr, Reg32(3), 0x0F, 0x18); UNIMPLEMENTED; }
 void prefetchw(const Address& addr) { opModM(addr, Reg32(1), 0x0F, 0x0D); UNIMPLEMENTED; }
 void prefetchwt1(const Address& addr) { opModM(addr, Reg32(2), 0x0F, 0x0D); UNIMPLEMENTED; }
