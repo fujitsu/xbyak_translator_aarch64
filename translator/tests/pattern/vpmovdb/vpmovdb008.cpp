@@ -46,13 +46,13 @@ public:
     addr1 = reinterpret_cast<size_t>(&(inputZReg[29].ud_dt[0]));
     addr2 = reinterpret_cast<size_t>(&(inputZReg[27].ud_dt[0]));
     mov(rbx, addr);
-    vpmovdb(ptr[rbx], Zmm(0)); // truncate
+    vpmovdb(ptr[rbx], Xmm(0)); // truncate
     vmovdqu8(Zmm(1), ptr[rbx]);
     mov(rbx, addr1);
-    vpmovdb(ptr[rbx], Zmm(2)); // no truncate
+    vpmovdb(ptr[rbx], Xmm(2)); // no truncate
     vmovdqu8(Zmm(3), ptr[rbx]);
     mov(rbx, addr2);
-    vpmovdb(ptr[rbx], Zmm(4)); // random
+    vpmovdb(ptr[rbx], Xmm(4)); // random
     vmovdqu8(Zmm(5), ptr[rbx]);
 #endif
 
@@ -62,13 +62,13 @@ public:
     addr1 = reinterpret_cast<size_t>(&(inputZReg[23].ud_dt[0])) + 5;
     addr2 = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[0])) + 7;
     mov(rbx, addr);
-    vpmovdb(ptr[rbx], Zmm(6));
+    vpmovdb(ptr[rbx], Xmm(6));
     vmovdqu8(Zmm(7), ptr[rbx]);
     mov(rbx, addr1);
-    vpmovdb(ptr[rbx], Zmm(8));
+    vpmovdb(ptr[rbx], Xmm(8));
     vmovdqu8(Zmm(9), ptr[rbx]);
     mov(rbx, addr2);
-    vpmovdb(ptr[rbx], Zmm(10));
+    vpmovdb(ptr[rbx], Xmm(10));
     vmovdqu8(Zmm(11), ptr[rbx]);
 #endif
 

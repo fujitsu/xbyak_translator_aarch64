@@ -27,12 +27,6 @@ public:
         if(i%2 == 0) inputZReg[6].us_dt[i] = uint32_t(286392319);
         else inputZReg[6].us_dt[i] = uint32_t(286326784);
         inputZReg[8].us_dt[i] = uint32_t(17);
-        /*inputZReg[13].us_dt[i] = uint32_t(4294967295);
-        inputZReg[14].us_dt[i] = uint32_t(4294967295);
-        inputZReg[15].us_dt[i] = uint32_t(4294967295);
-        inputZReg[18].us_dt[i] = uint32_t(4294967295);
-        inputZReg[20].us_dt[i] = uint32_t(4294967295);
-        inputZReg[22].us_dt[i] = uint32_t(4294967295);*/
     }
     inputPredReg[1] = (1 << 0) | (1 << 1); /* Both x86_64 and aarch64 */
     inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) |
@@ -64,7 +58,6 @@ public:
     mov(rax, addr2);
     vpmovdb(ptr[rax], Zmm(4) | k7);
     vmovdqu8(Zmm(5), ptr[rax]);
-
 #endif
 
 /* Address is unaligned */
