@@ -869,6 +869,8 @@ case XED_ICLASS_RSTORSSP:
 case XED_ICLASS_SAHF:
 case XED_ICLASS_SALC:
 case XED_ICLASS_SAR:
+  translateSAR(&xedd);
+  break;
 case XED_ICLASS_SARX:
 case XED_ICLASS_SAVEPREVSSP:
 case XED_ICLASS_SBB:
@@ -1345,6 +1347,8 @@ case XED_ICLASS_VMOVSD:
 case XED_ICLASS_VMOVSHDUP:
 case XED_ICLASS_VMOVSLDUP:
 case XED_ICLASS_VMOVSS:
+  translateVMOVSS(&xedd);
+  break;
 case XED_ICLASS_VMOVUPD:
 case XED_ICLASS_VMOVUPS:
   translateVMOVUPS(&xedd);
@@ -1929,6 +1933,8 @@ case XED_ICLASS_XADD_LOCK:
   break;
 case XED_ICLASS_XBEGIN:
 case XED_ICLASS_XCHG:
+  translateXCHG(&xedd);
+  break;
 case XED_ICLASS_XEND:
 case XED_ICLASS_XGETBV:
 case XED_ICLASS_XLAT:

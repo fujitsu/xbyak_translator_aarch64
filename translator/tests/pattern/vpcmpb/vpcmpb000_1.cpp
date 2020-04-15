@@ -61,12 +61,12 @@ public:
   }
 
   void genJitTestCode() {
-    /* Here write JIT code with x86_64 mnemonic function to be tested. */
+/* Here write JIT code with x86_64 mnemonic function to be tested. */
 #define UIMM 1
-    vpcmpb(k1, Zmm(0), Zmm(1), UIMM);   
-    vpcmpb(k2, Zmm(2), Zmm(3), UIMM);   
-    vpcmpb(k3, Zmm(4), Zmm(5), UIMM);   
-    vpcmpb(k7, Zmm(31), Zmm(31), UIMM); 
+    vpcmpb(k1, Zmm(0), Zmm(1), UIMM);
+    vpcmpb(k2, Zmm(2), Zmm(3), UIMM);
+    vpcmpb(k3, Zmm(4), Zmm(5), UIMM);
+    vpcmpb(k7, Zmm(31), Zmm(31), UIMM);
 #undef UIMM
   }
 };

@@ -19,41 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
-
-    inputZReg[0].ub_dt[0] = 0;
-    inputZReg[1].ub_dt[0] = 0;
-
-    inputZReg[2].ub_dt[0] = inputZReg[3].ub_dt[0] = 1;
-    inputZReg[2].ub_dt[7] = inputZReg[3].ub_dt[7] = 2;
-
-    inputZReg[4].ub_dt[0] = inputZReg[5].ub_dt[0] = 3;
-    inputZReg[4].ub_dt[7] = inputZReg[5].ub_dt[7] = 4;
-    inputZReg[4].ub_dt[15] = inputZReg[5].ub_dt[15] = 5;
-
-    inputZReg[4].ub_dt[33] = 0xff;
-    inputZReg[5].ub_dt[33] = 0xff;
-
-    inputZReg[4].ub_dt[34] = 0xff;
-    inputZReg[5].ub_dt[34] = 0x7f;
-
-    inputZReg[4].ub_dt[35] = 0x7f;
-    inputZReg[5].ub_dt[35] = 0xff;
-
-    inputZReg[4].ub_dt[36] = 0x7f;
-    inputZReg[5].ub_dt[36] = 0x7f;
-
-    inputZReg[4].ub_dt[37] = 0xff;
-    inputZReg[5].ub_dt[37] = 0x0;
-
-    inputZReg[4].ub_dt[38] = 0x7f;
-    inputZReg[5].ub_dt[38] = 0x0;
-
-    inputZReg[4].ub_dt[39] = 0x0;
-    inputZReg[5].ub_dt[39] = 0xff;
-
-    inputZReg[4].ub_dt[40] = 0x0;
-    inputZReg[5].ub_dt[40] = 0x7f;
+    setInputZregAllRandomFloat();
   }
 
   void setCheckRegFlagAll() {
@@ -61,13 +27,41 @@ public:
   }
 
   void genJitTestCode() {
-/* Here write JIT code with x86_64 mnemonic function to be tested. */
-#define UIMM 2
-    vpcmpub(k1, Zmm(0), Zmm(1), UIMM);
-    vpcmpub(k2, Zmm(2), Zmm(3), UIMM);
-    vpcmpub(k3, Zmm(4), Zmm(5), UIMM);
-    vpcmpub(k7, Zmm(31), Zmm(31), UIMM);
-#undef UIMM
+    /* Here write JIT code with x86_64 mnemonic function to be tested. */
+    size_t addr;
+    size_t addr1;
+
+/* Address is aligned */
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
+    mov(rax, addr);
+    vmovss(Xmm(0), ptr[rax]);
+    vmovss(Xmm(1), ptr[rax]);
+    vmovss(Xmm(2), ptr[rax]);
+    vmovss(Xmm(20), ptr[rax]);
+    vmovss(Xmm(21), ptr[rax]);
+    vmovss(Xmm(22), ptr[rax]);
+#endif
+
+/* Address is unaligned */
+
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 5;
+    mov(rbx, addr);
+    vmovss(Xmm(3), ptr[rbx]);
+    vmovss(Xmm(4), ptr[rbx]);
+    vmovss(Xmm(5), ptr[rbx]);
+    vmovss(Xmm(23), ptr[rbx]);
+    vmovss(Xmm(24), ptr[rbx]);
+    vmovss(Xmm(25), ptr[rbx]);
+#endif
+
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(rbx,
+        size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 
@@ -94,15 +88,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f(); /* Execute JIT code */
-
-#ifndef XBYAK_TRANSLATE_AARCH64
-    /* Bit order of mask registers are different from x86_64 and aarch64.
-       In order to compare output values of mask registers by test script,
-       Bit order of x86_64 mask register values is modified here. */
-    gen.modifyPredReg(UB_DT);
-#endif
-
+    f();                 /* Execute JIT code */
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */
   }

@@ -917,8 +917,8 @@ void rsqrtss(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x52, 0xF3, isX
 void sahf() { db(0x9E); UNIMPLEMENTED; }
 void sal(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 4); UNIMPLEMENTED; }
 void sal(const Operand& op, int imm) { opShift(op, imm, 4); decodeAndTransToAArch64(); }
-void sar(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 7); UNIMPLEMENTED; }
-void sar(const Operand& op, int imm) { opShift(op, imm, 7); UNIMPLEMENTED; }
+void sar(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 7); decodeAndTransToAArch64(); }
+void sar(const Operand& op, int imm) { opShift(op, imm, 7); decodeAndTransToAArch64(); }
 void sarx(const Reg32e& r1, const Operand& op, const Reg32e& r2) { opGpr(r1, op, r2, T_F3 | T_0F38, 0xf7, false); UNIMPLEMENTED; }
 void sbb(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x18, 3); UNIMPLEMENTED; }
 void sbb(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x18); UNIMPLEMENTED; }
@@ -1312,9 +1312,9 @@ void vmovsd(const Xmm& x, const Address& addr) { opAVX_X_X_XM(x, xm0, addr, T_N8
 void vmovsd(const Xmm& x1, const Xmm& x2, const Operand& op = Operand()) { if (!op.isNone() && !op.isXMM()) throw Error(ERR_BAD_COMBINATION); opAVX_X_X_XM(x1, x2, op, T_N8 | T_F2 | T_0F | T_EW1 | T_EVEX, 0x10); decodeAndTransToAArch64(); }
 void vmovshdup(const Xmm& xm, const Operand& op) { opAVX_X_XM_IMM(xm, op, T_F3 | T_0F | T_EW0 | T_YMM | T_EVEX, 0x16); UNIMPLEMENTED; }
 void vmovsldup(const Xmm& xm, const Operand& op) { opAVX_X_XM_IMM(xm, op, T_F3 | T_0F | T_EW0 | T_YMM | T_EVEX, 0x12); UNIMPLEMENTED; }
-void vmovss(const Address& addr, const Xmm& x) { opAVX_X_X_XM(x, xm0, addr, T_N4 | T_F3 | T_0F | T_EW0 | T_EVEX | T_M_K, 0x11); UNIMPLEMENTED; }
-void vmovss(const Xmm& x, const Address& addr) { opAVX_X_X_XM(x, xm0, addr, T_N4 | T_F3 | T_0F | T_EW0 | T_EVEX, 0x10); UNIMPLEMENTED; }
-void vmovss(const Xmm& x1, const Xmm& x2, const Operand& op = Operand()) { if (!op.isNone() && !op.isXMM()) throw Error(ERR_BAD_COMBINATION); opAVX_X_X_XM(x1, x2, op, T_N4 | T_F3 | T_0F | T_EW0 | T_EVEX, 0x10); UNIMPLEMENTED; }
+void vmovss(const Address& addr, const Xmm& x) { opAVX_X_X_XM(x, xm0, addr, T_N4 | T_F3 | T_0F | T_EW0 | T_EVEX | T_M_K, 0x11); decodeAndTransToAArch64(); }
+void vmovss(const Xmm& x, const Address& addr) { opAVX_X_X_XM(x, xm0, addr, T_N4 | T_F3 | T_0F | T_EW0 | T_EVEX, 0x10); decodeAndTransToAArch64(); }
+void vmovss(const Xmm& x1, const Xmm& x2, const Operand& op = Operand()) { if (!op.isNone() && !op.isXMM()) throw Error(ERR_BAD_COMBINATION); opAVX_X_X_XM(x1, x2, op, T_N4 | T_F3 | T_0F | T_EW0 | T_EVEX, 0x10); decodeAndTransToAArch64(); }
 void vmovupd(const Address& addr, const Xmm& xmm) { opAVX_X_XM_IMM(xmm, addr, T_66 | T_0F | T_EW1 | T_YMM | T_EVEX | T_M_K, 0x11); UNIMPLEMENTED; }
 void vmovupd(const Xmm& xm, const Operand& op) { opAVX_X_XM_IMM(xm, op, T_66 | T_0F | T_EW1 | T_YMM | T_EVEX, 0x10); UNIMPLEMENTED; }
 void vmovups(const Address& addr, const Xmm& xmm) { opAVX_X_XM_IMM(xmm, addr, T_0F | T_EW0 | T_YMM | T_EVEX | T_M_K, 0x11); decodeAndTransToAArch64(); }

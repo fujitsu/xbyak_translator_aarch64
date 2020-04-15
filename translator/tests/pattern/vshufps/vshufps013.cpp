@@ -41,20 +41,20 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
-    vshufps(Zmm(0), Zmm(30), Zmm(31), 0+256);
-    vshufps(Zmm(1), Zmm(30), Zmm(31), 1+256);
-    vshufps(Zmm(2), Zmm(30), Zmm(31), 2+256);
-    vshufps(Zmm(3), Zmm(30), Zmm(31), 4+256);
-    vshufps(Zmm(4), Zmm(30), Zmm(31), 8+256);
-    vshufps(Zmm(5), Zmm(30), Zmm(31), 16+256);
-    vshufps(Zmm(6), Zmm(30), Zmm(31), 32+256);
-    vshufps(Zmm(7), Zmm(30), Zmm(31), 64+256);
-    vshufps(Zmm(8), Zmm(30), Zmm(31), 128+256);
+    vshufps(Zmm(0), Zmm(30), Zmm(31), 0 + 256);
+    vshufps(Zmm(1), Zmm(30), Zmm(31), 1 + 256);
+    vshufps(Zmm(2), Zmm(30), Zmm(31), 2 + 256);
+    vshufps(Zmm(3), Zmm(30), Zmm(31), 4 + 256);
+    vshufps(Zmm(4), Zmm(30), Zmm(31), 8 + 256);
+    vshufps(Zmm(5), Zmm(30), Zmm(31), 16 + 256);
+    vshufps(Zmm(6), Zmm(30), Zmm(31), 32 + 256);
+    vshufps(Zmm(7), Zmm(30), Zmm(31), 64 + 256);
+    vshufps(Zmm(8), Zmm(30), Zmm(31), 128 + 256);
 
-    vshufps(Zmm(9), Zmm(9), Zmm(31), 8+256);
-    vshufps(Zmm(10), Zmm(30), Zmm(10), 16+256);
-    vshufps(Zmm(11), Zmm(30), Zmm(30), 16+256);
-    vshufps(Zmm(12), Zmm(12), Zmm(12), 16+256);
+    vshufps(Zmm(9), Zmm(9), Zmm(31), 8 + 256);
+    vshufps(Zmm(10), Zmm(30), Zmm(10), 16 + 256);
+    vshufps(Zmm(11), Zmm(30), Zmm(30), 16 + 256);
+    vshufps(Zmm(12), Zmm(12), Zmm(12), 16 + 256);
   }
 };
 

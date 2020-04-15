@@ -1,3 +1,4 @@
+
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -19,41 +20,6 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
-
-    inputZReg[0].ub_dt[0] = 0;
-    inputZReg[1].ub_dt[0] = 0;
-
-    inputZReg[2].ub_dt[0] = inputZReg[3].ub_dt[0] = 1;
-    inputZReg[2].ub_dt[7] = inputZReg[3].ub_dt[7] = 2;
-
-    inputZReg[4].ub_dt[0] = inputZReg[5].ub_dt[0] = 3;
-    inputZReg[4].ub_dt[7] = inputZReg[5].ub_dt[7] = 4;
-    inputZReg[4].ub_dt[15] = inputZReg[5].ub_dt[15] = 5;
-
-    inputZReg[4].ub_dt[33] = 0xff;
-    inputZReg[5].ub_dt[33] = 0xff;
-
-    inputZReg[4].ub_dt[34] = 0xff;
-    inputZReg[5].ub_dt[34] = 0x7f;
-
-    inputZReg[4].ub_dt[35] = 0x7f;
-    inputZReg[5].ub_dt[35] = 0xff;
-
-    inputZReg[4].ub_dt[36] = 0x7f;
-    inputZReg[5].ub_dt[36] = 0x7f;
-
-    inputZReg[4].ub_dt[37] = 0xff;
-    inputZReg[5].ub_dt[37] = 0x0;
-
-    inputZReg[4].ub_dt[38] = 0x7f;
-    inputZReg[5].ub_dt[38] = 0x0;
-
-    inputZReg[4].ub_dt[39] = 0x0;
-    inputZReg[5].ub_dt[39] = 0xff;
-
-    inputZReg[4].ub_dt[40] = 0x0;
-    inputZReg[5].ub_dt[40] = 0x7f;
   }
 
   void setCheckRegFlagAll() {
@@ -61,13 +27,31 @@ public:
   }
 
   void genJitTestCode() {
-/* Here write JIT code with x86_64 mnemonic function to be tested. */
-#define UIMM 2
-    vpcmpub(k1, Zmm(0), Zmm(1), UIMM);
-    vpcmpub(k2, Zmm(2), Zmm(3), UIMM);
-    vpcmpub(k3, Zmm(4), Zmm(5), UIMM);
-    vpcmpub(k7, Zmm(31), Zmm(31), UIMM);
-#undef UIMM
+    /* Here write JIT code with x86_64 mnemonic function to be tested. */
+    // mov(r8, uint64_t(0xaaaaaaaaaaaaaaaa));
+    // mov(r9, uint32_t(0xaaaaaaaa));
+    // mov(r10, uint16_t(0xaaaa));
+    // mov(r11, uint8_t(0xaa));
+    // mov(r11, ~uint64_t(0));
+
+    mov(r12, int64_t(0xaaaaaaaaaaaaaaaa));
+    // mov(r12, int64_t(0xaaaaaaaaaaaaaaaa));
+    // mov(r13, int32_t(0xaaaaaaaa));
+    mov(r14, int16_t(0xaaa0));
+    mov(rax, 1);
+    mov(rcx, 1);
+    mov(rdx, 1);
+    mov(rbx, 1);
+
+    // mov(rax, int64_t(0x5555555555555555));
+    // mov(rcx, int32_t(0x55555555));
+    // mov(rdx, int16_t(0x5555));
+    // mov(rbx, int8_t(0x55));
+
+    sar(r12, 4);
+    adc(rax, rcx);
+    sar(r14, 4);
+    adc(rdx, rbx);
   }
 };
 
@@ -94,15 +78,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f(); /* Execute JIT code */
-
-#ifndef XBYAK_TRANSLATE_AARCH64
-    /* Bit order of mask registers are different from x86_64 and aarch64.
-       In order to compare output values of mask registers by test script,
-       Bit order of x86_64 mask register values is modified here. */
-    gen.modifyPredReg(UB_DT);
-#endif
-
+    f();                 /* Execute JIT code */
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */
   }

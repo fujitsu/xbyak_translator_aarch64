@@ -50,6 +50,7 @@
 #include "instructions/punpcklwd.h"
 #include "instructions/pxor.h"
 #include "instructions/ret.h"
+#include "instructions/sar.h"
 #include "instructions/shl.h"
 #include "instructions/shufps.h"
 #include "instructions/sub.h"
@@ -94,6 +95,7 @@
 #include "instructions/vmovlps.h"
 #include "instructions/vmovntps.h"
 #include "instructions/vmovsd.h"
+#include "instructions/vmovss.h"
 #include "instructions/vmovups.h"
 #include "instructions/vmulps.h"
 #include "instructions/vorps.h"
@@ -161,6 +163,7 @@
 #include "instructions/vxorps.h"
 #include "instructions/vzeroupper.h"
 #include "instructions/xadd_lock.h"
+#include "instructions/xchg.h"
 #include "instructions/xor.h"
 
 #if 0

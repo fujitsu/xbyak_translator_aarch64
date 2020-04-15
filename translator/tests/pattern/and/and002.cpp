@@ -20,40 +20,6 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
-    inputZReg[0].ub_dt[0] = 0;
-    inputZReg[1].ub_dt[0] = 0;
-
-    inputZReg[2].ub_dt[0] = inputZReg[3].ub_dt[0] = 1;
-    inputZReg[2].ub_dt[7] = inputZReg[3].ub_dt[7] = 2;
-
-    inputZReg[4].ub_dt[0] = inputZReg[5].ub_dt[0] = 3;
-    inputZReg[4].ub_dt[7] = inputZReg[5].ub_dt[7] = 4;
-    inputZReg[4].ub_dt[15] = inputZReg[5].ub_dt[15] = 5;
-
-    inputZReg[4].ub_dt[33] = 0xff;
-    inputZReg[5].ub_dt[33] = 0xff;
-
-    inputZReg[4].ub_dt[34] = 0xff;
-    inputZReg[5].ub_dt[34] = 0x7f;
-
-    inputZReg[4].ub_dt[35] = 0x7f;
-    inputZReg[5].ub_dt[35] = 0xff;
-
-    inputZReg[4].ub_dt[36] = 0x7f;
-    inputZReg[5].ub_dt[36] = 0x7f;
-
-    inputZReg[4].ub_dt[37] = 0xff;
-    inputZReg[5].ub_dt[37] = 0x0;
-
-    inputZReg[4].ub_dt[38] = 0x7f;
-    inputZReg[5].ub_dt[38] = 0x0;
-
-    inputZReg[4].ub_dt[39] = 0x0;
-    inputZReg[5].ub_dt[39] = 0xff;
-
-    inputZReg[4].ub_dt[40] = 0x0;
-    inputZReg[5].ub_dt[40] = 0x7f;
   }
 
   void setCheckRegFlagAll() {
@@ -61,13 +27,15 @@ public:
   }
 
   void genJitTestCode() {
-/* Here write JIT code with x86_64 mnemonic function to be tested. */
-#define UIMM 2
-    vpcmpub(k1, Zmm(0), Zmm(1), UIMM);
-    vpcmpub(k2, Zmm(2), Zmm(3), UIMM);
-    vpcmpub(k3, Zmm(4), Zmm(5), UIMM);
-    vpcmpub(k7, Zmm(31), Zmm(31), UIMM);
-#undef UIMM
+    /* Here write JIT code with x86_64 mnemonic function to be tested. */
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
+       r13, r14, r15 */
+    // mov(rax, std::numeric_limits<uint64_t>::max());
+    // mov(rbx, std::numeric_limits<uint64_t>::max());
+    mov(rbx, std::numeric_limits<uint32_t>::max());
+
+    and_(bl, uint32_t(0xF0));
+    // and_(al, uint32_t(0xF0));
   }
 };
 
@@ -94,15 +62,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f(); /* Execute JIT code */
-
-#ifndef XBYAK_TRANSLATE_AARCH64
-    /* Bit order of mask registers are different from x86_64 and aarch64.
-       In order to compare output values of mask registers by test script,
-       Bit order of x86_64 mask register values is modified here. */
-    gen.modifyPredReg(UB_DT);
-#endif
-
+    f();                 /* Execute JIT code */
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */
   }

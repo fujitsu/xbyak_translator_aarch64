@@ -428,10 +428,10 @@ void translateVPERMW(xed_decoded_inst_t *p) {
     src2Idx = zTmp4Idx;
   }
   /* Col=AF103*/
-  if (false ||
-      (a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
-       true) ||
+  if (false || (a64.operands[3].opName == XED_OPERAND_REG3 &&
+                a64.operands[0].opWidth == 128 &&
+                a64.predType == A64_PRED_ZERO && true) ||
+
       (a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true) ||
@@ -820,10 +820,10 @@ void translateVPERMW(xed_decoded_inst_t *p) {
     CG64::mov(xa::ZRegD(dstIdx), xa::ZRegD(zTmp3Idx));
   }
   /* Col=AZ103*/
-  if (false ||
-      (a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
-       true) ||
+  if (false || (a64.operands[3].opName == XED_OPERAND_REG3 &&
+                a64.operands[0].opWidth == 128 &&
+                a64.predType == A64_PRED_ZERO && true) ||
+
       (a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
        true) ||
@@ -836,10 +836,9 @@ void translateVPERMW(xed_decoded_inst_t *p) {
     CG64::mov(xa::ZRegH(dstIdx), 0);
   }
   /* Col=BA103*/
-  if (false ||
-      (a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
-       true) ||
+  if (false || (a64.operands[3].opName == XED_OPERAND_REG3 &&
+                a64.operands[0].opWidth == 128 &&
+                a64.predType == A64_PRED_ZERO && true) ||
       (a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true) ||
@@ -877,10 +876,9 @@ void translateVPERMW(xed_decoded_inst_t *p) {
               xa::ZRegH(zTmp3Idx));
   }
   /* Col=BB103*/
-  if (false ||
-      (a64.operands[3].opName == XED_OPERAND_MEM0 &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
-       true) ||
+  if (false || (a64.operands[3].opName == XED_OPERAND_MEM0 &&
+                a64.operands[0].opWidth == 128 &&
+                a64.predType == A64_PRED_ZERO && true) ||
       (a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
        true)) {
