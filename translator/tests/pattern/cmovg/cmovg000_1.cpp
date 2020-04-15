@@ -1,3 +1,4 @@
+
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -19,17 +20,6 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
-
-    for (int j = 0; j < 5; j++) {
-      for (int i = 0; i < 2; i++) {
-        inputr8.us_dt[i] = (j << 16) + i;
-      }
-    }
-
-    for (int i = 0; i < 16; i++) {
-      inputZReg[31].us_dt[i] = 0x11111111 * i;
-    }
   }
 
   void setCheckRegFlagAll() {
@@ -39,7 +29,37 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
-    cmovg(r8, r9);
+    mov(r8, int64_t(0x8));
+    mov(r9, int64_t(0x9));
+    mov(r10, int64_t(0x10));
+    mov(r11, int64_t(0x11));
+
+    //    mov(r11, int64_t(0x0));
+    mov(r12, int64_t(0xFFFF000000000000));
+    //    mov(r13, int64_t(0x0));
+    mov(r14, int64_t(0x8000000000000000));
+    mov(r15, int64_t(0x7FFF000000000000));
+
+    cmp(r15, r14);
+
+    /*
+    #ifdef XBYAK_TRANSLATE_AARCH64
+        Xbyak_aarch64::XReg x_tmpFlag{x0};
+        mrs(x_tmpFlag, 0x3, 0x3, 0x4, 0x2, 0x0);
+    #endif
+    */
+    cmovg(r9, r8);
+
+    cmp(r15, r11);
+
+    cmovg(r11, r10);
+
+    //#ifdef XBYAK_TRANSLATE_AARCH64
+    //      Xbyak_aarch64::XReg x_tmpFlag{x0};
+    //      Xbyak_aarch64::XReg y_tmpFlag{x12};
+    //      msr(0x3, 0x3, 0x4, 0x2, 0x0, y_tmpFlag);
+    //      mrs(x_tmpFlag, 0x3, 0x3, 0x4, 0x2, 0x0);
+    //#endif
   }
 };
 
