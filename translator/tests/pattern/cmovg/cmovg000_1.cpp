@@ -29,44 +29,37 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
-    /*    mov(rax, uint64_t(0x10)); //0
-        mov(rbx, uint64_t(0x5)); //3
-        mov(rcx, uint64_t(0x15)); //1
-        mov(rdx, uint64_t(0x10)); //2
-        mov(rdi, uint64_t(0x10)); //7
-        mov(rsi, uint64_t(0x10)); //6
-    */
-    mov(r8, uint64_t(0x8));
-    mov(r9, uint64_t(0x9));
-    mov(r10, uint64_t(0x10));
-    mov(r11, uint64_t(0x11));
-    //    mov(r12, uint64_t(0x12));
-    //    mov(r13, uint64_t(0x13));
-    //    mov(r14, uint64_t(0x14));
-    //    mov(r15, uint64_t(0x15));
+    mov(r8, int64_t(0x8));
+    mov(r9, int64_t(0x9));
+    mov(r10, int64_t(0x10));
+    mov(r11, int64_t(0x11));
 
-    //    add(r9, r8);
-    sub(r9, r8);
-    //    cmp(r8, r9)
+    //    mov(r11, int64_t(0x0));
+    mov(r12, int64_t(0xFFFF000000000000));
+    //    mov(r13, int64_t(0x0));
+    mov(r14, int64_t(0x8000000000000000));
+    mov(r15, int64_t(0x7FFF000000000000));
+
+    cmp(r15, r14);
+
+    /*
+    #ifdef XBYAK_TRANSLATE_AARCH64
+        Xbyak_aarch64::XReg x_tmpFlag{x0};
+        mrs(x_tmpFlag, 0x3, 0x3, 0x4, 0x2, 0x0);
+    #endif
+    */
+    cmovg(r9, r8);
+
+    cmp(r15, r11);
+
     cmovg(r11, r10);
 
-    //    cmp(r12, r12);
-    //    cmovg(r11, r10);
-
-    //    cmovg(r9, r8);
-    //    cmovg(r10, r8);
-    //    cmovg(r11, r8);
-
-    /*    cmovg(r12, int64_t(0xaaaaaaaaaaaaaaaa));
-        cmovg(r13, int32_t(0xaaaaaaaa));
-        cmovg(r14, int16_t(0xaaaa));
-        cmovg(r15, int8_t(0xaa));
-
-        cmovg(rax, int64_t(0x5555555555555555));
-        cmovg(rcx, int32_t(0x55555555));
-        cmovg(rdx, int16_t(0x5555));
-        cmovg(rbx, int8_t(0x55));
-    */
+    //#ifdef XBYAK_TRANSLATE_AARCH64
+    //      Xbyak_aarch64::XReg x_tmpFlag{x0};
+    //      Xbyak_aarch64::XReg y_tmpFlag{x12};
+    //      msr(0x3, 0x3, 0x4, 0x2, 0x0, y_tmpFlag);
+    //      mrs(x_tmpFlag, 0x3, 0x3, 0x4, 0x2, 0x0);
+    //#endif
   }
 };
 
