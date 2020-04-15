@@ -1,5 +1,4 @@
-/*******************************************************************************
- * Copyright 2020 FUJITSU LIMITED
+/*Copyright 2020 FUJITSU LIMITED
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,14 +20,6 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomFloat();
     setDumpZRegMode(SP_DT); // set float mode
-
-    /*
-    for (int j = 0; j < NUM_Z_REG; j++) {
-      for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
-        inputZReg[j].sp_dt[i] = float((0.5 + i) * (j));
-      }
-    }
-    */
   }
 
   void setCheckRegFlagAll() {
@@ -39,20 +30,29 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
+    size_t addr;
+
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[31].ub_dt[0]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rax, addr);
 
     /* VEX encode */
-    vfmadd132ps(Ymm(0), Ymm(1), Ymm(2));
-    vfmadd132ps(Ymm(3), Ymm(3), Ymm(4));
-    vfmadd132ps(Ymm(5), Ymm(6), Ymm(5));
-    vfmadd132ps(Ymm(7), Ymm(8), Ymm(8));
-    vfmadd132ps(Ymm(9), Ymm(9), Ymm(9));
+    vfmadd231ps(Zmm(0), Zmm(1), ptr_b[rax]);
+    vfmadd231ps(Zmm(3), Zmm(3), ptr_b[rax]);
+    vfmadd231ps(Zmm(5), Zmm(6), ptr_b[rax]);
+    vfmadd231ps(Zmm(7), Zmm(8), ptr_b[rax]);
+    vfmadd231ps(Zmm(9), Zmm(9), ptr_b[rax]);
 
     /* EVEX encode */
-    vfmadd132ps(Ymm(20), Ymm(21), Ymm(22));
-    vfmadd132ps(Ymm(23), Ymm(23), Ymm(24));
-    vfmadd132ps(Ymm(25), Ymm(26), Ymm(25));
-    vfmadd132ps(Ymm(27), Ymm(28), Ymm(28));
-    vfmadd132ps(Ymm(29), Ymm(29), Ymm(29));
+    vfmadd231ps(Zmm(10), Zmm(11), ptr_b[rax]);
+    vfmadd231ps(Zmm(13), Zmm(13), ptr_b[rax]);
+    vfmadd231ps(Zmm(15), Zmm(16), ptr_b[rax]);
+    vfmadd231ps(Zmm(17), Zmm(18), ptr_b[rax]);
+    vfmadd231ps(Zmm(19), Zmm(19), ptr_b[rax]);
+
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 

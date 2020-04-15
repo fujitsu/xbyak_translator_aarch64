@@ -21,14 +21,11 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomFloat();
     setDumpZRegMode(SP_DT); // set float mode
-
-    /*
     for (int j = 0; j < NUM_Z_REG; j++) {
-      for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
+      for (int i = 0; i < NUM_BYTES_Z_REG / 2 / sizeof(float); i++) {
         inputZReg[j].sp_dt[i] = float((0.5 + i) * (j));
       }
     }
-    */
   }
 
   void setCheckRegFlagAll() {
@@ -37,22 +34,67 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
-     * r15 */
+    size_t addr;
+    size_t addr1;
+    size_t addr2;
+    size_t addr3;
+    size_t addr4;
+    size_t addr5;
+    size_t addr6;
+    size_t addr7;
+    size_t addr8;
+    size_t addr9;
 
-    /* VEX encode */
-    vfmadd132ps(Ymm(0), Ymm(1), Ymm(2));
-    vfmadd132ps(Ymm(3), Ymm(3), Ymm(4));
-    vfmadd132ps(Ymm(5), Ymm(6), Ymm(5));
-    vfmadd132ps(Ymm(7), Ymm(8), Ymm(8));
-    vfmadd132ps(Ymm(9), Ymm(9), Ymm(9));
+/* Address is aligned */
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[2].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[4].ud_dt[0]));
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0]));
+    addr3 = reinterpret_cast<size_t>(&(inputZReg[8].ud_dt[0]));
+    addr4 = reinterpret_cast<size_t>(&(inputZReg[9].ud_dt[0]));
 
-    /* EVEX encode */
-    vfmadd132ps(Ymm(20), Ymm(21), Ymm(22));
-    vfmadd132ps(Ymm(23), Ymm(23), Ymm(24));
-    vfmadd132ps(Ymm(25), Ymm(26), Ymm(25));
-    vfmadd132ps(Ymm(27), Ymm(28), Ymm(28));
-    vfmadd132ps(Ymm(29), Ymm(29), Ymm(29));
+    mov(rax, addr);
+    vfmadd132ps(Ymm(0), Ymm(1), ptr[rax]);
+    vmovdqu8(Ymm(10), ptr[rax]);
+    mov(rax, addr1);
+    vfmadd132ps(Ymm(3), Ymm(3), ptr[rax]);
+    vmovdqu8(Ymm(11), ptr[rax]);
+    mov(rax, addr2);
+    vfmadd132ps(Ymm(5), Ymm(6), ptr[rax]);
+    vmovdqu8(Ymm(12), ptr[rax]);
+    mov(rax, addr3);
+    vfmadd132ps(Ymm(7), Ymm(8), ptr[rax]);
+    vmovdqu8(Ymm(13), ptr[rax]);
+    mov(rax, addr4);
+    vfmadd132ps(Ymm(9), Ymm(9), ptr[rax]);
+    vmovdqu8(Ymm(14), ptr[rax]);
+
+    addr5 = reinterpret_cast<size_t>(&(inputZReg[18].ud_dt[0]));
+    addr6 = reinterpret_cast<size_t>(&(inputZReg[20].ud_dt[0]));
+    addr7 = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[0]));
+    addr8 = reinterpret_cast<size_t>(&(inputZReg[23].ud_dt[0]));
+    addr9 = reinterpret_cast<size_t>(&(inputZReg[24].ud_dt[0]));
+
+    mov(rax, addr5);
+    vfmadd132ps(Ymm(16), Ymm(17), ptr[rax]);
+    vmovdqu8(Ymm(25), ptr[rax]);
+    mov(rax, addr6);
+    vfmadd132ps(Ymm(19), Ymm(19), ptr[rax]);
+    vmovdqu8(Ymm(26), ptr[rax]);
+    mov(rax, addr7);
+    vfmadd132ps(Ymm(21), Ymm(22), ptr[rax]);
+    vmovdqu8(Ymm(27), ptr[rax]);
+    mov(rax, addr8);
+    vfmadd132ps(Ymm(22), Ymm(23), ptr[rax]);
+    vmovdqu8(Ymm(28), ptr[rax]);
+    mov(rax, addr9);
+    vfmadd132ps(Ymm(24), Ymm(24), ptr[rax]);
+    vmovdqu8(Ymm(29), ptr[rax]);
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(rbx,
+        size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
+#endif
   }
 };
 

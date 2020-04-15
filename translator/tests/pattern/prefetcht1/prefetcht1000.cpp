@@ -14,21 +14,13 @@
  * limitations under the License.
  *******************************************************************************/
 #include "test_generator2.h"
+#include <limits>
 
 class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomFloat();
-    setDumpZRegMode(SP_DT); // set float mode
-
-    /*
-    for (int j = 0; j < NUM_Z_REG; j++) {
-      for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
-        inputZReg[j].sp_dt[i] = float((0.5 + i) * (j));
-      }
-    }
-    */
+    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -37,22 +29,19 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
-     * r15 */
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
+       r13, r14, r15 */
+    size_t addr, addr1;
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
 
-    /* VEX encode */
-    vfmadd132ps(Ymm(0), Ymm(1), Ymm(2));
-    vfmadd132ps(Ymm(3), Ymm(3), Ymm(4));
-    vfmadd132ps(Ymm(5), Ymm(6), Ymm(5));
-    vfmadd132ps(Ymm(7), Ymm(8), Ymm(8));
-    vfmadd132ps(Ymm(9), Ymm(9), Ymm(9));
+    mov(rax, addr);
 
-    /* EVEX encode */
-    vfmadd132ps(Ymm(20), Ymm(21), Ymm(22));
-    vfmadd132ps(Ymm(23), Ymm(23), Ymm(24));
-    vfmadd132ps(Ymm(25), Ymm(26), Ymm(25));
-    vfmadd132ps(Ymm(27), Ymm(28), Ymm(28));
-    vfmadd132ps(Ymm(29), Ymm(29), Ymm(29));
+    /* Address is aligned */
+
+    prefetcht1(byte[rax]);
+
+    mov(rax, 5);
+    mov(rcx, 5);
   }
 };
 

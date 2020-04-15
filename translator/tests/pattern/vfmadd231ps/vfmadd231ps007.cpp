@@ -21,14 +21,13 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomFloat();
     setDumpZRegMode(SP_DT); // set float mode
-
-    /*
-    for (int j = 0; j < NUM_Z_REG; j++) {
-      for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
-        inputZReg[j].sp_dt[i] = float((0.5 + i) * (j));
-      }
-    }
-    */
+    inputPredReg[1] = uint64_t(0);
+    inputPredReg[2] = ~uint64_t(0);
+    inputPredReg[3] =
+        (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7); /* Both x86_64 and aarch64 */
+    inputPredReg[4] = (1 << 3) | (1 << 6);         /* Both x86_64 and aarch64 */
+    inputPredReg[5] = (1 << 0) | (1 << 10) | (1 << 3) |
+                      (1 << 6); /* Both x86_64 and aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -41,18 +40,18 @@ public:
      * r15 */
 
     /* VEX encode */
-    vfmadd132ps(Ymm(0), Ymm(1), Ymm(2));
-    vfmadd132ps(Ymm(3), Ymm(3), Ymm(4));
-    vfmadd132ps(Ymm(5), Ymm(6), Ymm(5));
-    vfmadd132ps(Ymm(7), Ymm(8), Ymm(8));
-    vfmadd132ps(Ymm(9), Ymm(9), Ymm(9));
+    vfmadd231ps(Xmm(0) | k1, Xmm(1), Xmm(2));
+    vfmadd231ps(Xmm(3) | k2, Xmm(3), Xmm(4));
+    vfmadd231ps(Xmm(5) | k3, Xmm(6), Xmm(5));
+    vfmadd231ps(Xmm(7) | k4, Xmm(8), Xmm(8));
+    vfmadd231ps(Xmm(9) | k5, Xmm(9), Xmm(9));
 
     /* EVEX encode */
-    vfmadd132ps(Ymm(20), Ymm(21), Ymm(22));
-    vfmadd132ps(Ymm(23), Ymm(23), Ymm(24));
-    vfmadd132ps(Ymm(25), Ymm(26), Ymm(25));
-    vfmadd132ps(Ymm(27), Ymm(28), Ymm(28));
-    vfmadd132ps(Ymm(29), Ymm(29), Ymm(29));
+    vfmadd231ps(Xmm(10) | k1, Xmm(11), Xmm(12));
+    vfmadd231ps(Xmm(13) | k2, Xmm(13), Xmm(14));
+    vfmadd231ps(Xmm(15) | k3, Xmm(16), Xmm(15));
+    vfmadd231ps(Xmm(17) | k4, Xmm(18), Xmm(18));
+    vfmadd231ps(Xmm(19) | k5, Xmm(19), Xmm(19));
   }
 };
 
