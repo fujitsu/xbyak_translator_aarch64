@@ -20,7 +20,6 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
     for (int i = 0; i < 16; i++) {
       if (i % 2 == 0)
         inputZReg[0].us_dt[i] = uint32_t(286392319);
@@ -55,13 +54,13 @@ public:
     addr1 = reinterpret_cast<size_t>(&(inputZReg[14].ud_dt[0]));
     addr2 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
     mov(rax, addr);
-    vpmovdb(ptr[rax], Zmm(0) | k1);
+    vpmovdb(ptr[rax], Xmm(0) | k1);
     vmovdqu8(Zmm(1), ptr[rax]);
     mov(rax, addr1);
-    vpmovdb(ptr[rax], Zmm(2) | k2);
+    vpmovdb(ptr[rax], Xmm(2) | k2);
     vmovdqu8(Zmm(3), ptr[rax]);
     mov(rax, addr2);
-    vpmovdb(ptr[rax], Zmm(4) | k7);
+    vpmovdb(ptr[rax], Xmm(4) | k7);
     vmovdqu8(Zmm(5), ptr[rax]);
 #endif
 
@@ -71,13 +70,13 @@ public:
     addr1 = reinterpret_cast<size_t>(&(inputZReg[20].ud_dt[0])) + 5;
     addr2 = reinterpret_cast<size_t>(&(inputZReg[18].ud_dt[0])) + 3;
     mov(rax, addr);
-    vpmovdb(ptr[rax], Zmm(6) | k1);
+    vpmovdb(ptr[rax], Xmm(6) | k1);
     vmovdqu8(Zmm(7), ptr[rax]);
     mov(rax, addr1);
-    vpmovdb(ptr[rax], Zmm(8) | k2);
+    vpmovdb(ptr[rax], Xmm(8) | k2);
     vmovdqu8(Zmm(9), ptr[rax]);
     mov(rax, addr2);
-    vpmovdb(ptr[rax], Zmm(10) | k7);
+    vpmovdb(ptr[rax], Xmm(10) | k7);
     vmovdqu8(Zmm(11), ptr[rax]);
 #endif
 

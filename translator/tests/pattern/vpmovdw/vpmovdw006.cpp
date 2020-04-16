@@ -20,23 +20,13 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
     for (int i = 0; i < 16; i++) {
       if (i % 2 == 0)
-        inputZReg[0].us_dt[i] = uint32_t(286392319);
+        inputZReg[1].us_dt[i] = uint32_t(286392319);
       else
-        inputZReg[0].us_dt[i] = uint32_t(286326784);
-      inputZReg[2].us_dt[i] = uint32_t(17);
-      if (i % 2 == 0)
-        inputZReg[6].us_dt[i] = uint32_t(286392319);
-      else
-        inputZReg[6].us_dt[i] = uint32_t(286326784);
-      inputZReg[8].us_dt[i] = uint32_t(17);
+        inputZReg[1].us_dt[i] = uint32_t(286326784);
+      inputZReg[3].us_dt[i] = uint32_t(17);
     }
-    inputPredReg[1] = (1 << 0) | (1 << 1); /* Both x86_64 and aarch64 */
-    inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) |
-                      (1 << 15); /* Both x86_64 and aarch64 */
-    inputPredReg[7] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -51,34 +41,34 @@ public:
 
 /* Address is aligned */
 #if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[14].ud_dt[0]));
-    addr2 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
-    mov(rax, addr);
-    vpmovdb(ptr[rax], Zmm(0) | k1);
-    vmovdqu8(Zmm(1), ptr[rax]);
-    mov(rax, addr1);
-    vpmovdb(ptr[rax], Zmm(2) | k2);
-    vmovdqu8(Zmm(3), ptr[rax]);
-    mov(rax, addr2);
-    vpmovdb(ptr[rax], Zmm(4) | k7);
-    vmovdqu8(Zmm(5), ptr[rax]);
+    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[29].ud_dt[0]));
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[27].ud_dt[0]));
+    mov(rbx, addr);
+    vpmovdw(ptr[rbx], Ymm(1)); // truncate
+    vmovdqu8(Zmm(0), ptr[rbx]);
+    mov(rbx, addr1);
+    vpmovdw(ptr[rbx], Ymm(3)); // no truncate
+    vmovdqu8(Zmm(2), ptr[rbx]);
+    mov(rbx, addr2);
+    vpmovdw(ptr[rbx], Ymm(5)); // random
+    vmovdqu8(Zmm(4), ptr[rbx]);
 #endif
 
 /* Address is unaligned */
 #if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[22].ud_dt[0])) + 7;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[20].ud_dt[0])) + 5;
-    addr2 = reinterpret_cast<size_t>(&(inputZReg[18].ud_dt[0])) + 3;
-    mov(rax, addr);
-    vpmovdb(ptr[rax], Zmm(6) | k1);
-    vmovdqu8(Zmm(7), ptr[rax]);
-    mov(rax, addr1);
-    vpmovdb(ptr[rax], Zmm(8) | k2);
-    vmovdqu8(Zmm(9), ptr[rax]);
-    mov(rax, addr2);
-    vpmovdb(ptr[rax], Zmm(10) | k7);
-    vmovdqu8(Zmm(11), ptr[rax]);
+    addr = reinterpret_cast<size_t>(&(inputZReg[25].ud_dt[0])) + 3;
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[23].ud_dt[0])) + 5;
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[0])) + 7;
+    mov(rbx, addr);
+    vpmovdw(ptr[rbx], Ymm(1));
+    vmovdqu8(Zmm(7), ptr[rbx]);
+    mov(rbx, addr1);
+    vpmovdw(ptr[rbx], Ymm(3));
+    vmovdqu8(Zmm(9), ptr[rbx]);
+    mov(rbx, addr2);
+    vpmovdw(ptr[rbx], Ymm(5));
+    vmovdqu8(Zmm(11), ptr[rbx]);
 #endif
 
     mov(rax,
