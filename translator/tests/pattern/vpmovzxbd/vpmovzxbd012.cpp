@@ -57,13 +57,13 @@ public:
     vpmovzxbd(Xmm(6) | k6 | T_z, Xmm(0));
     vpmovzxbd(Xmm(7) | k7 | T_z, Xmm(0));
 
-    vpmovzxbd(Xmm(8) | k1| T_z, Xmm(8));
-    vpmovzxbd(Xmm(9) | k2| T_z, Xmm(9));
-    vpmovzxbd(Xmm(10) | k3| T_z, Xmm(10));
-    vpmovzxbd(Xmm(11) | k4| T_z, Xmm(11));
-    vpmovzxbd(Xmm(12) | k5| T_z, Xmm(12));
-    vpmovzxbd(Xmm(13) | k6| T_z, Xmm(13));
-    vpmovzxbd(Xmm(14) | k7| T_z, Xmm(14));
+    vpmovzxbd(Xmm(8) | k1 | T_z, Xmm(8));
+    vpmovzxbd(Xmm(9) | k2 | T_z, Xmm(9));
+    vpmovzxbd(Xmm(10) | k3 | T_z, Xmm(10));
+    vpmovzxbd(Xmm(11) | k4 | T_z, Xmm(11));
+    vpmovzxbd(Xmm(12) | k5 | T_z, Xmm(12));
+    vpmovzxbd(Xmm(13) | k6 | T_z, Xmm(13));
+    vpmovzxbd(Xmm(14) | k7 | T_z, Xmm(14));
 
     /* Register index is EVEX range. */
     vpmovzxbd(Xmm(21) | k1 | T_z, Xmm(20));
@@ -74,13 +74,13 @@ public:
     vpmovzxbd(Xmm(26) | k6 | T_z, Xmm(20));
     vpmovzxbd(Xmm(27) | k7 | T_z, Xmm(20));
 
-    vpmovzxbd(Xmm(15) | k1| T_z, Xmm(15));
-    vpmovzxbd(Xmm(16) | k2| T_z, Xmm(16));
-    vpmovzxbd(Xmm(17) | k3| T_z, Xmm(17));
-    vpmovzxbd(Xmm(18) | k4| T_z, Xmm(18));
-    vpmovzxbd(Xmm(19) | k5| T_z, Xmm(19));
-    vpmovzxbd(Xmm(20) | k6| T_z, Xmm(20));
-    vpmovzxbd(Xmm(28) | k7| T_z, Xmm(28));
+    vpmovzxbd(Xmm(15) | k1 | T_z, Xmm(15));
+    vpmovzxbd(Xmm(16) | k2 | T_z, Xmm(16));
+    vpmovzxbd(Xmm(17) | k3 | T_z, Xmm(17));
+    vpmovzxbd(Xmm(18) | k4 | T_z, Xmm(18));
+    vpmovzxbd(Xmm(19) | k5 | T_z, Xmm(19));
+    vpmovzxbd(Xmm(20) | k6 | T_z, Xmm(20));
+    vpmovzxbd(Xmm(28) | k7 | T_z, Xmm(28));
   }
 };
 

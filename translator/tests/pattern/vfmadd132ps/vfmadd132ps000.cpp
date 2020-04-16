@@ -22,11 +22,13 @@ public:
     setInputZregAllRandomFloat();
     setDumpZRegMode(SP_DT); // set float mode
 
-    /*for (int j = 20; j < NUM_Z_REG; j++) {
+    /*
+    for (int j = 0; j < NUM_Z_REG; j++) {
       for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
-        inputZReg[j].sp_dt[i] = float((0.5 + i) * (j - 20));
+        inputZReg[j].sp_dt[i] = float((0.5 + i) * (j));
       }
-      }*/
+    }
+    */
   }
 
   void setCheckRegFlagAll() {

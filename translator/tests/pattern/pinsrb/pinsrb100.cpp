@@ -30,11 +30,12 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     mov(eax, 0xFF);
     mov(ecx, 0xaaaabbbb);
-    
-    /* pinsrb is one of SSE4_1 instructions. Register index must be less than 16. */
+
+    /* pinsrb is one of SSE4_1 instructions. Register index must be less than
+     * 16. */
     for (int i = 0; i < 8; i++) {
       pinsrb(Xmm(i), eax, i);
-      pinsrb(Xmm(8+i), ecx, 8+i);
+      pinsrb(Xmm(8 + i), ecx, 8 + i);
     }
   }
 };

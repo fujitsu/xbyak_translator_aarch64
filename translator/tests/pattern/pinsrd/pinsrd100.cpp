@@ -32,7 +32,7 @@ public:
     mov(ecx, 0xaabb);
     for (int i = 0; i < 4; i++) {
       pinsrd(Xmm(i), eax, i);
-      pinsrd(Xmm(4+i), ecx, i);
+      pinsrd(Xmm(4 + i), ecx, i);
     }
   }
 };

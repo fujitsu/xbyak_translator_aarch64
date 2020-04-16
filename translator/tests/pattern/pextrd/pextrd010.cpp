@@ -32,12 +32,12 @@ public:
     /* Register index is within SSE range. */
     pextrd(r8d, Xmm(0), getLfsr());
     pextrd(r9d, Xmm(1), getLfsr());
-    pextrd(r10d, Xmm(2),getLfsr());
-    pextrd(r11d, Xmm(3),getLfsr());
-    pextrd(r12d, Xmm(4),getLfsr());
-    pextrd(r13d, Xmm(5),getLfsr());
-    pextrd(r14d, Xmm(6),getLfsr());
-    pextrd(r15d, Xmm(7),getLfsr());
+    pextrd(r10d, Xmm(2), getLfsr());
+    pextrd(r11d, Xmm(3), getLfsr());
+    pextrd(r12d, Xmm(4), getLfsr());
+    pextrd(r13d, Xmm(5), getLfsr());
+    pextrd(r14d, Xmm(6), getLfsr());
+    pextrd(r15d, Xmm(7), getLfsr());
   }
 };
 

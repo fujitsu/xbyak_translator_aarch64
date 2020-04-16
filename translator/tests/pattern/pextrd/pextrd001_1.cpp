@@ -37,9 +37,9 @@ public:
     mov(rax, addr);
 
     /* Register index is within VEX range. */
-    for(int i=0; i<8; i++) {
-      pextrd(ptr[rax], Xmm(8+i), i);
-      vmovdqu8(Zmm(16+i), ptr[rax]);
+    for (int i = 0; i < 8; i++) {
+      pextrd(ptr[rax], Xmm(8 + i), i);
+      vmovdqu8(Zmm(16 + i), ptr[rax]);
     }
 
     mov(rax,

@@ -20,12 +20,18 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
     for (int i = 0; i < 4; i++) {
       if (i % 2 == 0)
         inputZReg[0].us_dt[i] = uint32_t(286392319);
       else
         inputZReg[0].us_dt[i] = uint32_t(286326784);
       inputZReg[2].us_dt[i] = uint32_t(17);
+      if (i % 2 == 0)
+        inputZReg[6].us_dt[i] = uint32_t(286392319);
+      else
+        inputZReg[6].us_dt[i] = uint32_t(286326784);
+      inputZReg[8].us_dt[i] = uint32_t(17);
     }
   }
 
@@ -37,33 +43,37 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr;
     size_t addr1;
+    size_t addr2;
 
 /* Address is aligned */
 #if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
-    mov(rax, addr);
+    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[29].ud_dt[0]));
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[27].ud_dt[0]));
     mov(rbx, addr);
     vpmovdb(ptr[rbx], Zmm(0)); // truncate
     vmovdqu8(Zmm(1), ptr[rbx]);
+    mov(rbx, addr1);
     vpmovdb(ptr[rbx], Zmm(2)); // no truncate
     vmovdqu8(Zmm(3), ptr[rbx]);
+    mov(rbx, addr2);
     vpmovdb(ptr[rbx], Zmm(4)); // random
     vmovdqu8(Zmm(5), ptr[rbx]);
-
 #endif
 
 /* Address is unaligned */
 #if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 5;
-    mov(rax, addr);
+    addr = reinterpret_cast<size_t>(&(inputZReg[25].ud_dt[0])) + 3;
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[23].ud_dt[0])) + 5;
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[0])) + 7;
     mov(rbx, addr);
-    vpmovdb(ptr[rbx], Zmm(6) | k1);
+    vpmovdb(ptr[rbx], Zmm(6));
     vmovdqu8(Zmm(7), ptr[rbx]);
-    vpmovdb(ptr[rbx], Zmm(8) | k2);
+    mov(rbx, addr1);
+    vpmovdb(ptr[rbx], Zmm(8));
     vmovdqu8(Zmm(9), ptr[rbx]);
-    vpmovdb(ptr[rbx], Zmm(10) | k7);
+    mov(rbx, addr2);
+    vpmovdb(ptr[rbx], Zmm(10));
     vmovdqu8(Zmm(11), ptr[rbx]);
 #endif
 

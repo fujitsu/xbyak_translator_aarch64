@@ -3,7 +3,7 @@ void translateMOV(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-  /* 2020/03/01 09:24 */
+  /* 2020/04/07 11:20 */
 
   /* Col=M103*/
   if (false ||
@@ -13,8 +13,6 @@ void translateMOV(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG) ||
       (a64.dstWidth == 16 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_REG) ||
-      (a64.dstWidth == 8 && a64.dstType == A64_OP_REG &&
-       a64.srcType == A64_OP_MEM) ||
       (a64.dstWidth == 16 && a64.dstType == A64_OP_REG &&
        a64.srcType == A64_OP_MEM) ||
       (a64.dstWidth == 8 && a64.dstType == A64_OP_REG &&
@@ -65,6 +63,17 @@ void translateMOV(xed_decoded_inst_t *p) {
                 a64.srcType == A64_OP_MEM)) {
     CodeGeneratorAArch64::ldr(Xbyak_aarch64::WReg(a64.dstIdx),
                               Xbyak_aarch64::ptr(X_TMP_ADDR));
+  }
+  /* Col=AA103*/
+  if (false || (a64.dstWidth == 8 && a64.dstType == A64_OP_REG &&
+                a64.srcType == A64_OP_MEM)) {
+    CodeGeneratorAArch64::ldr(W_TMP_0, Xbyak_aarch64::ptr(X_TMP_ADDR));
+  }
+  /* Col=AB103*/
+  if (false || (a64.dstWidth == 8 && a64.dstType == A64_OP_REG &&
+                a64.srcType == A64_OP_MEM)) {
+    CodeGeneratorAArch64::and_(Xbyak_aarch64::WReg(a64.dstIdx), W_TMP_0,
+                               uint32_t(0xFF));
   }
 
   /* Col=AG103*/

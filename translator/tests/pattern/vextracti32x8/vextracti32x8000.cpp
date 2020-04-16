@@ -54,9 +54,9 @@ public:
     vextracti32x8(Ymm(3), Zmm(31), 1);
     vextracti32x8(Ymm(4), Zmm(4), 0);
     vextracti32x8(Ymm(5), Zmm(5), 1);
-    
-    vextracti32x8(Ymm(6), Zmm(31), 0+256);
-    vextracti32x8(Ymm(7), Zmm(31), 1+256);
+
+    vextracti32x8(Ymm(6), Zmm(31), 0 + 256);
+    vextracti32x8(Ymm(7), Zmm(31), 1 + 256);
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
