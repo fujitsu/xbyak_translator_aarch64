@@ -65,6 +65,21 @@ Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
 
+void binCommit() {
+  size_t num32bits = CodeArray::size_;
+
+  num32bits = (num32bits + 3) - ((num32bits + 3) % 4);
+  num32bits /= 4;
+
+  uint32_t *tmp = reinterpret_cast<uint32_t *>(CodeArray::top_);
+
+  for (size_t i = 0; i < num32bits; i++) {
+    dw_aarch64(tmp[i]);
+  }
+
+  db_clear();
+}
+
 private:
 #define XT_UNIMPLEMENTED                                                       \
   std::cerr << __FILE__ << ":" << __LINE__ << ":Unimplemented" << std::endl;   \

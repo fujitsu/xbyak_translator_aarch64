@@ -3025,8 +3025,7 @@ public:
   void mov(const NativeReg &reg, const char *label) // can't use std::string
   {
 #ifdef XBYAK_TRANSLATE_AARCH64
-    /* Unimplemented */
-    assert(NULL);
+    UNIMPLEMENTED;
 #else
     if (label == 0) {
       mov(static_cast<const Operand &>(reg), 0); // call imm
@@ -3039,7 +3038,7 @@ public:
   void mov(const NativeReg &reg, const Label &label) {
 #ifdef XBYAK_TRANSLATE_AARCH64
     /* Unimplemented */
-    assert(NULL);
+    CodeGeneratorAArch64::adr(Xbyak_aarch64::XReg(reg.getIdx()), label);
 #else
     mov_imm(reg, dummyAddr);
     putL(label);
