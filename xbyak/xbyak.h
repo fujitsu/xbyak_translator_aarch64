@@ -3354,6 +3354,9 @@ public:
           use single byte nop if useMultiByteNop = false
   */
   void align(size_t x = 16, bool useMultiByteNop = true) {
+#ifdef XBYAK_TRANSLATE_AARCH64
+    CodeGeneratorAArch64::align(x);
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
     if (x == 1)
       return;
     if (x < 1 || (x & (x - 1)))
@@ -3365,6 +3368,7 @@ public:
     if (remain) {
       nop(x - remain, useMultiByteNop);
     }
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
   }
 #endif
 }; // namespace Xbyak
