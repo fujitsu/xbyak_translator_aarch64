@@ -1997,6 +1997,7 @@ case XED_ICLASS_VEXTRACTPS:
 case XED_ICLASS_VFIXUPIMMPD:
   break;
 case XED_ICLASS_VFIXUPIMMPS:
+  translateVFIXUPIMMPS(&xedd);
   break;
 case XED_ICLASS_VFIXUPIMMSD:
   break;

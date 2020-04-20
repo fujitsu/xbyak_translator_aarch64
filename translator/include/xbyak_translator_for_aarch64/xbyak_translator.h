@@ -42,7 +42,7 @@
 // namespace xbyak_translator {
 private:
 const xt_reg_idx_t xtDefaultAddrIdx = 28;
-constexpr static unsigned int xtNumOperands = 4;
+constexpr static unsigned int xtNumOperands = 5;
 #ifdef XT_TEST
 constexpr static unsigned int xt_sp_reg_idx = 31;
 #else
@@ -1029,7 +1029,7 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
     if (opName == XED_OPERAND_IMM0) {
       bool isSet = false;
 
-      for (int l = 0; l < 4 && isSet == false; l++) {
+      for (int l = 0; l < xtNumOperands && isSet == false; l++) {
         if (a64->operands[l].opName == XED_OPERAND_INVALID) {
           a64->operands[l].opName = opName;
 

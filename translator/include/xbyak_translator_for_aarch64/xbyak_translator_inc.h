@@ -73,6 +73,7 @@
 #include "instructions/vdivps.h"
 #include "instructions/vextractf64x4.h"
 #include "instructions/vextracti32x8.h"
+#include "instructions/vfixupimmps.h"
 #include "instructions/vfmadd132ps.h"
 #include "instructions/vfmadd213ps.h"
 #include "instructions/vfmadd231ps.h"
