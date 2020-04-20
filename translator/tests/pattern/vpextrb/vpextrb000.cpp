@@ -22,6 +22,7 @@ public:
     setInputZregAllRandomHex();
     for(int i=0; i<16; i++){
         inputZReg[3].ub_dt[i] = uint8_t(i);
+        inputZReg[31].ub_dt[i] = uint8_t(i);
     }
     
   }
@@ -69,6 +70,38 @@ public:
     vmovdqu8(Xmm(9), ptr[rax]);
 #endif
 
+/* Address is aligned */
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[27].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[28].ud_dt[0]));
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[29].ud_dt[0]));
+    mov(rax, addr);   
+    vpextrb(ptr[rax], Xmm(31), 10);
+    vmovdqu8(Xmm(17), ptr[rax]);
+    mov(rax, addr1);
+    vpextrb(ptr[rax], Xmm(31), 7);
+    vmovdqu8(Xmm(18), ptr[rax]);
+    mov(rax, addr2);
+    vpextrb(ptr[rax], Xmm(31), 24);
+    vmovdqu8(Xmm(19), ptr[rax]);
+
+#endif
+
+/* Address is unaligned */
+#if 1
+    addr = reinterpret_cast<size_t>(&(inputZReg[24].ud_dt[0])) + 4;
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[25].ud_dt[0])) + 8;
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[26].ud_dt[0])) + 12;
+    mov(rax, addr);
+    vpextrb(ptr[rax], Xmm(31), 0);
+    vmovdqu8(Xmm(20), ptr[rax]);
+    mov(rax, addr1);
+    vpextrb(ptr[rax], Xmm(31), 15);
+    vmovdqu8(Xmm(21), ptr[rax]);
+    mov(rax, addr2);
+    vpextrb(ptr[rax], Xmm(31), 16);
+    vmovdqu8(Xmm(22), ptr[rax]);
+#endif
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
     mov(rbx,
