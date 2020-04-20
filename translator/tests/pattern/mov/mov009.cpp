@@ -27,23 +27,15 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
+    mov(rax, ~uint64_t(0));
+    mov(rbx, ~uint64_t(0));
+    mov(rcx, ~uint64_t(0));
+    mov(rdx, ~uint64_t(0));
 
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
-    std::cout << "Address is " << std::hex << addr << std::endl;
-    mov(rcx, addr);
-
-    mov(r9, ~uint64_t(0));
-    mov(ptr[rcx], r9);
-
-    mov(rbx, uint64_t(0xbbbbbbbbbbbbbbbb));
-    mov(rax, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(bl, ptr[rcx]);
-    mov(al, ptr[rcx]);
-
-    mov(rcx,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(ax, uint64_t(0xaaaa));
+    mov(bx, uint64_t(0xbbbb));
+    mov(cx, uint64_t(0xcccc));
+    mov(dx, uint64_t(0xdddd));
   }
 };
 

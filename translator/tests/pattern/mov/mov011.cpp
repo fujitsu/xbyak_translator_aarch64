@@ -34,13 +34,13 @@ public:
     std::cout << "Address is " << std::hex << addr << std::endl;
     mov(rcx, addr);
 
-    mov(r9, ~uint64_t(0));
+    mov(r9, uint64_t(0xbbbbbbbbbbbbbbbb));
     mov(ptr[rcx], r9);
+    mov(rax, ~uint64_t(0));
+    mov(ax, ptr[rcx]);
 
-    mov(rbx, uint64_t(0xbbbbbbbbbbbbbbbb));
-    mov(rax, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(bl, ptr[rcx]);
-    mov(al, ptr[rcx]);
+    // mov(bl, ptr[rcx]);
+    // mov(al, ptr[rcx]);
 
     mov(rcx,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
