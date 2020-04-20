@@ -10,6 +10,7 @@
 #include "instructions/kmovd.h"
 #include "instructions/kmovq.h"
 #include "instructions/kmovw.h"
+#include "instructions/kortestw.h"
 #include "instructions/lea.h"
 #include "instructions/mov.h"
 #include "instructions/movd.h"
@@ -172,5 +173,4 @@
 #include "instructions/kortestb.h"
 #include "instructions/kortestd.h"
 #include "instructions/kortestq.h"
-#include "instructions/kortestw.h"
 #endif
