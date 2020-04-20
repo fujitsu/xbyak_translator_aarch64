@@ -41,19 +41,28 @@ public:
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
 
+    size_t addr;
+
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[31].ub_dt[0]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rax, addr);
+
     /* VEX encode */
-    vfnmadd231ps(Zmm(0), Zmm(1), Zmm(2));
-    vfnmadd231ps(Zmm(3), Zmm(3), Zmm(4));
-    vfnmadd231ps(Zmm(5), Zmm(6), Zmm(5));
-    vfnmadd231ps(Zmm(7), Zmm(8), Zmm(8));
-    vfnmadd231ps(Zmm(9), Zmm(9), Zmm(9));
+    vfnmadd231ps(Zmm(0), Zmm(1), ptr[rax]);
+    vfnmadd231ps(Zmm(3), Zmm(3), ptr[rax]);
+    vfnmadd231ps(Zmm(5), Zmm(6), ptr[rax]);
+    vfnmadd231ps(Zmm(7), Zmm(8), ptr[rax]);
+    vfnmadd231ps(Zmm(9), Zmm(9), ptr[rax]);
 
     /* EVEX encode */
-    vfnmadd231ps(Zmm(10), Zmm(11), Zmm(12));
-    vfnmadd231ps(Zmm(13), Zmm(13), Zmm(14));
-    vfnmadd231ps(Zmm(15), Zmm(16), Zmm(15));
-    vfnmadd231ps(Zmm(17), Zmm(18), Zmm(18));
-    vfnmadd231ps(Zmm(19), Zmm(19), Zmm(19));
+    vfnmadd231ps(Zmm(10), Zmm(11), ptr[rax]);
+    vfnmadd231ps(Zmm(13), Zmm(13), ptr[rax]);
+    vfnmadd231ps(Zmm(15), Zmm(16), ptr[rax]);
+    vfnmadd231ps(Zmm(17), Zmm(18), ptr[rax]);
+    vfnmadd231ps(Zmm(19), Zmm(19), ptr[rax]);
+
+    mov(rax, 0x5);
   }
 };
 
