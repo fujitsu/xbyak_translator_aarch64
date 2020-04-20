@@ -3045,7 +3045,6 @@ public:
 #endif
   }
   void xchg(const Operand &op1, const Operand &op2) {
-#ifndef XBYAK_TRANSLATE_AARCH64
     const Operand *p1 = &op1, *p2 = &op2;
     if (p1->isMEM() || (p2->isREG(16 | i32e) && p2->getIdx() == 0)) {
       p1 = &op2;
@@ -3060,12 +3059,13 @@ public:
     ) {
       rex(*p2, *p1);
       db(0x90 | (p2->getIdx() & 7));
+      decodeAndTransToAArch64();
       return;
     }
     opModRM(*p1, *p2,
             (p1->isREG() && p2->isREG() && (p1->getBit() == p2->getBit())),
             p2->isMEM(), 0x86 | (p1->isBit(8) ? 0 : 1));
-#endif //#ifndef XBYAK_TRANSLATE_AARCH64
+    decodeAndTransToAArch64();
   }
 
 #ifndef XBYAK_DISABLE_SEGMENT
@@ -3353,6 +3353,9 @@ public:
           use single byte nop if useMultiByteNop = false
   */
   void align(size_t x = 16, bool useMultiByteNop = true) {
+#ifdef XBYAK_TRANSLATE_AARCH64
+    CodeGeneratorAArch64::align(x);
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
     if (x == 1)
       return;
     if (x < 1 || (x & (x - 1)))
@@ -3364,6 +3367,7 @@ public:
     if (remain) {
       nop(x - remain, useMultiByteNop);
     }
+#endif //#ifdef XBYAK_TRANSLATE_AARCH64
   }
 #endif
 }; // namespace Xbyak
