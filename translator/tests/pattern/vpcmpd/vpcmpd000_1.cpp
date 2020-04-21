@@ -19,6 +19,47 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    setInputZregAllRandomHex();
+
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    /*
+    inputZReg[0].ud_dt[0] = 10; //a
+    inputZReg[0].ud_dt[1] = 10; //a
+    inputZReg[0].ud_dt[2] = 11; //b
+    inputZReg[0].ud_dt[3] = 11; //b
+
+    inputZReg[1].ud_dt[0] = 12; //c
+    inputZReg[1].ud_dt[1] = 12; //c
+    inputZReg[1].ud_dt[2] = 13; //d
+    inputZReg[1].ud_dt[3] = 13; //d
+    */
+    /*
+    for (int i = 0; i < 64; i++) {
+      inputZReg[1].ud_dt[i] = i;
+    }
+
+    for (int i = 0; i < 64; i++) {
+      inputZReg[8].sb_dt[i] = i;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[9].sb_dt[i] = 3;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[10].sb_dt[i] = 0x80;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[11].sb_dt[i] = 0xff;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[12].sb_dt[i] = 0x7f;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[13].sb_dt[i] = 0x74;
+    }
+    for (int i = 0; i < 64; i++) {
+      inputZReg[14].sb_dt[i] = 0x40 | (i % 8);
+    }
+    */
   }
 
   void setCheckRegFlagAll() {
@@ -27,23 +68,19 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
-    std::cout << "Address is " << std::hex << addr << std::endl;
-    mov(rcx, addr);
-
-    mov(r9, ~uint64_t(0));
-    mov(ptr[rcx], r9);
-
-    mov(rbx, uint64_t(0xbbbbbbbbbbbbbbbb));
-    mov(rax, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(bl, ptr[rcx]);
-    mov(al, ptr[rcx]);
-
-    mov(rcx,
-        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
+    /*
+    for(int i = 0; i < 7; i++){
+      vpcmpb(k(i), Zmm(i), Zmm(i+1), i);
+    }
+    */
+    vpcmpd(k1, Zmm(1), Zmm(0), 0);
+    vpcmpd(k2, Zmm(3), Zmm(2), 1);
+    vpcmpd(k3, Zmm(5), Zmm(4), 2);
+    vpcmpd(k4, Zmm(6), Zmm(6), 0);
+    vpcmpd(k5, Zmm(7), Zmm(7), 1);
+    vpcmpd(k6, Zmm(8), Zmm(8), 2);
+    // vpcmpb(k4, Zmm(7), Zmm(6), 3); //not exist "false" pattern
   }
 };
 
