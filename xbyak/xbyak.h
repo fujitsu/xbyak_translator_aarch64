@@ -1163,7 +1163,7 @@ class CodeArray {
 protected:
   size_t maxSize_;
 #ifdef XBYAK_TRANSLATE_AARCH64
-  constexpr static unsigned int tmpBufSize_ = 512;
+  constexpr static unsigned int tmpBufSize_ = 4096;
   uint8 top_[tmpBufSize_];
   size_t size_;
   size_t decode_size_;
@@ -1267,7 +1267,7 @@ public:
 
   void db(int code) {
 #ifdef XBYAK_TRANSLATE_AARCH64
-    if (size_ >= tmpBufSize_) {
+    if (CodeArray::size_ >= tmpBufSize_) {
       throw Error(ERR_CODE_IS_TOO_BIG);
     }
 #else //#ifndef XBYAK_TRANSLATE_AARCH64
