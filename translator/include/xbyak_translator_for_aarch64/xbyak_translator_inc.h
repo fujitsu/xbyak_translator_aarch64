@@ -140,6 +140,7 @@
 #include "instructions/vpxor.h"
 #include "instructions/vpxord.h"
 #include "instructions/vpxorq.h"
+#include "instructions/vrndscaleps.h"
 #include "instructions/vshuff32x4.h"
 #include "instructions/vshuff64x2.h"
 #include "instructions/vshufi32x4.h"
