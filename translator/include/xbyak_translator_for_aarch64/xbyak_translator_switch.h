@@ -3176,6 +3176,7 @@ case XED_ICLASS_VREDUCESS:
 case XED_ICLASS_VRNDSCALEPD:
   break;
 case XED_ICLASS_VRNDSCALEPS:
+  translateVRNDSCALEPS(&xedd);
   break;
 case XED_ICLASS_VRNDSCALESD:
   break;

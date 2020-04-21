@@ -4,11 +4,11 @@ void translateVSHUFI32X4(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
   /* 2020/03/24 17:16 */
-  bool isValid = false;
 #define CG64 CodeGeneratorAArch64
   /* Col=S103*/
-  if (false || (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
@@ -42,15 +42,17 @@ void translateVSHUFI32X4(xed_decoded_inst_t *p) {
     XT_UNIMPLEMENTED;
   }
   /* Col=T103*/
-  if (false || (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true)) {
     a64.zTmpIdx = xt_push_zreg(&a64);
   }
   /* Col=U103*/
-  if (false || (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true)) {
     a64.pTmpIdx = xt_push_preg(&a64);
@@ -313,15 +315,17 @@ void translateVSHUFI32X4(xed_decoded_inst_t *p) {
   }
 
   /* Col=BB103*/
-  if (false || (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true)) {
     xt_pop_preg();
   }
   /* Col=BC103*/
-  if (false || (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true)) {
     xt_pop_zreg();

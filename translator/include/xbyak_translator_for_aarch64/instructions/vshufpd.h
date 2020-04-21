@@ -4,11 +4,11 @@ void translateVSHUFPD(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
   /* 2020/03/25 14:28 */
-  bool isValid = false;
 #define CG64 CodeGeneratorAArch64
   /* Col=S103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
