@@ -2365,6 +2365,7 @@ case XED_ICLASS_VMOVNTPS:
   translateVMOVNTPS(&xedd);
   break;
 case XED_ICLASS_VMOVQ:
+  translateVMOVQ(&xedd);
   break;
 case XED_ICLASS_VMOVSD:
   translateVMOVSD(&xedd);

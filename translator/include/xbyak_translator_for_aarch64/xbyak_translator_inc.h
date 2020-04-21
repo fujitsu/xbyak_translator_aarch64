@@ -97,6 +97,7 @@
 #include "instructions/vmovhps.h"
 #include "instructions/vmovlps.h"
 #include "instructions/vmovntps.h"
+#include "instructions/vmovq.h"
 #include "instructions/vmovsd.h"
 #include "instructions/vmovss.h"
 #include "instructions/vmovups.h"
