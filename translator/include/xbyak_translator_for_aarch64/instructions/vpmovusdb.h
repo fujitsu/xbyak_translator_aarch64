@@ -8,8 +8,6 @@ void translateVPMOVUSDB(xed_decoded_inst_t *p) {
   bool isValid = false;
   xt_reg_idx_t dstIdx;
   xt_reg_idx_t srcIdx;
-  xt_reg_idx_t src2Idx;
-  xt_reg_idx_t src3Idx;
   xt_reg_idx_t maskIdx;
   xt_reg_idx_t zTmpIdx;
   xt_reg_idx_t pTmpIdx;

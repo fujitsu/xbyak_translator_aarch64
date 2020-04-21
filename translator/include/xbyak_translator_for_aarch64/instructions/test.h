@@ -5,11 +5,6 @@ void translateTEST(xed_decoded_inst_t *p) {
 
 /* 2020/02/27 22:33 */
 #define CG64 CodeGeneratorAArch64
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t src2Idx;
-  xt_reg_idx_t maskIdx;
-  xt_reg_idx_t zTmpIdx;
   /* Col=T103*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
