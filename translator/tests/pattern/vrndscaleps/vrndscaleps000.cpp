@@ -83,10 +83,11 @@ public:
   }
 
   void genJitTestCode() {
-    /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
-     * r15 */
+/* Here write JIT code with x86_64 mnemonic function to be tested. */
+/* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
+ * r15 */
 
+#if 0 // rounding_direction=0 round_to_nearest_even_interger
     /* Register index is VEX range. */
     vrndscaleps(Zmm(2), Zmm(0), 0x04);
     vrndscaleps(Zmm(3), Zmm(1), 0x04);
@@ -120,6 +121,41 @@ public:
     vrndscaleps(Zmm(29), Zmm(29), 0xd4); /* dstIdx = srcIdx */
     vrndscaleps(Zmm(30), Zmm(30), 0xe4); /* dstIdx = srcIdx */
     vrndscaleps(Zmm(31), Zmm(31), 0xf4); /* dstIdx = srcIdx */
+#else // rounding_direction=3 round_to_nearest_smallest_magnitude_integer
+    /* Register index is VEX range. */
+    vrndscaleps(Zmm(2), Zmm(0), 0x03);
+    vrndscaleps(Zmm(3), Zmm(1), 0x03);
+    vrndscaleps(Zmm(4), Zmm(0), 0x13);
+    vrndscaleps(Zmm(5), Zmm(1), 0x13);
+    vrndscaleps(Zmm(6), Zmm(0), 0x23);
+    vrndscaleps(Zmm(7), Zmm(1), 0x23);
+    vrndscaleps(Zmm(8), Zmm(0), 0x53);
+    vrndscaleps(Zmm(9), Zmm(1), 0x53);
+    vrndscaleps(Zmm(10), Zmm(0), 0xa3);
+    vrndscaleps(Zmm(11), Zmm(1), 0xa3);
+    vrndscaleps(Zmm(12), Zmm(0), 0xc3);
+    vrndscaleps(Zmm(13), Zmm(1), 0xc3);
+    vrndscaleps(Zmm(14), Zmm(0), 0xf3);
+    vrndscaleps(Zmm(15), Zmm(1), 0xf3);
+
+    /* Register index is EVEX range. */
+    vrndscaleps(Zmm(16), Zmm(16), 0x03); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(17), Zmm(17), 0x13); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(18), Zmm(18), 0x23); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(19), Zmm(19), 0x33); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(20), Zmm(20), 0x43); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(21), Zmm(21), 0x53); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(22), Zmm(22), 0x63); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(23), Zmm(23), 0x73); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(24), Zmm(24), 0x83); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(25), Zmm(25), 0x93); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(26), Zmm(26), 0xa3); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(27), Zmm(27), 0xb3); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(28), Zmm(28), 0xc3); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(29), Zmm(29), 0xd3); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(30), Zmm(30), 0xe3); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(31), Zmm(31), 0xf3); /* dstIdx = srcIdx */
+#endif
   }
 };
 
