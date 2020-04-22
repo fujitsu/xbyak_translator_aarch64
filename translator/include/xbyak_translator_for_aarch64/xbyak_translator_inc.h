@@ -6,6 +6,7 @@
 #include "instructions/cmovnle.h"
 #include "instructions/cmp.h"
 #include "instructions/dec.h"
+#include "instructions/imul.h"
 #include "instructions/inc.h"
 #include "instructions/kmovd.h"
 #include "instructions/kmovq.h"

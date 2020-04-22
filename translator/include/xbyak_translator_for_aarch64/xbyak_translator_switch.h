@@ -309,6 +309,8 @@ case XED_ICLASS_HSUBPD:
 case XED_ICLASS_HSUBPS:
 case XED_ICLASS_IDIV:
 case XED_ICLASS_IMUL:
+  translateIMUL(&xedd);
+  break;
 case XED_ICLASS_IN:
 case XED_ICLASS_INC:
   translateINC(&xedd);
