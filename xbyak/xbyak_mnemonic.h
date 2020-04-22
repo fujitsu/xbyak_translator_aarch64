@@ -369,7 +369,7 @@ void haddps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x7C, 0xF2, isXM
 void hsubpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x7D, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void hsubps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x7D, 0xF2, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void idiv(const Operand& op) { opR_ModM(op, 0, 7, 0xF6); UNIMPLEMENTED; }
-void imul(const Operand& op) { opR_ModM(op, 0, 5, 0xF6); UNIMPLEMENTED; }
+void imul(const Operand& op) { opR_ModM(op, 0, 5, 0xF6); decodeAndTransToAArch64(); }
 void in_(const Reg& a, const Reg& d) { opInOut(a, d, 0xEC); UNIMPLEMENTED; }
 void in_(const Reg& a, uint8 v) { opInOut(a, 0xE4, v); UNIMPLEMENTED; }
 void inc(const Operand& op) { opIncDec(op, 0x40, 0); decodeAndTransToAArch64(); }

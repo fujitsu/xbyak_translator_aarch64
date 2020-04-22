@@ -2900,15 +2900,15 @@ public:
   void imul(const Reg &reg, const Operand &op) {
     opModRM(reg, op, op.isREG() && (reg.getKind() == op.getKind()), op.isMEM(),
             0x0F, 0xAF);
+    decodeAndTransToAArch64();
   }
   void imul(const Reg &reg, const Operand &op, int imm) {
-#ifndef XBYAK_TRANSLATE_AARCH64
     int s = inner::IsInDisp8(imm) ? 1 : 0;
     int immSize = s ? 1 : reg.isREG(16) ? 2 : 4;
     opModRM(reg, op, op.isREG() && (reg.getKind() == op.getKind()), op.isMEM(),
             0x69 | (s << 1), NONE, NONE, immSize);
     db(imm, immSize);
-#endif //#ifndef XBYAK_TRANSLATE_AARCH64
+    decodeAndTransToAArch64();
   }
   void push(const Operand &op) {
 
