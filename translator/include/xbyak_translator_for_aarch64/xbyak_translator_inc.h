@@ -3,6 +3,7 @@
 #include "instructions/addps.h"
 #include "instructions/addss.h"
 #include "instructions/and.h"
+#include "instructions/blendvps.h"
 #include "instructions/cmovnle.h"
 #include "instructions/cmp.h"
 #include "instructions/dec.h"
