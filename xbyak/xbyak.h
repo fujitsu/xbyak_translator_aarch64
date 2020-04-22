@@ -1163,7 +1163,7 @@ class CodeArray {
 protected:
   size_t maxSize_;
 #ifdef XBYAK_TRANSLATE_AARCH64
-  constexpr static unsigned int tmpBufSize_ = 512;
+  constexpr static unsigned int tmpBufSize_ = 4096;
   uint8 top_[tmpBufSize_];
   size_t size_;
   size_t decode_size_;
@@ -1267,7 +1267,7 @@ public:
 
   void db(int code) {
 #ifdef XBYAK_TRANSLATE_AARCH64
-    if (size_ >= tmpBufSize_) {
+    if (CodeArray::size_ >= tmpBufSize_) {
       throw Error(ERR_CODE_IS_TOO_BIG);
     }
 #else //#ifndef XBYAK_TRANSLATE_AARCH64
@@ -2900,15 +2900,15 @@ public:
   void imul(const Reg &reg, const Operand &op) {
     opModRM(reg, op, op.isREG() && (reg.getKind() == op.getKind()), op.isMEM(),
             0x0F, 0xAF);
+    decodeAndTransToAArch64();
   }
   void imul(const Reg &reg, const Operand &op, int imm) {
-#ifndef XBYAK_TRANSLATE_AARCH64
     int s = inner::IsInDisp8(imm) ? 1 : 0;
     int immSize = s ? 1 : reg.isREG(16) ? 2 : 4;
     opModRM(reg, op, op.isREG() && (reg.getKind() == op.getKind()), op.isMEM(),
             0x69 | (s << 1), NONE, NONE, immSize);
     db(imm, immSize);
-#endif //#ifndef XBYAK_TRANSLATE_AARCH64
+    decodeAndTransToAArch64();
   }
   void push(const Operand &op) {
 
