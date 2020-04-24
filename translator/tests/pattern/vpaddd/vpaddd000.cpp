@@ -46,6 +46,8 @@ public:
     vpaddd(Ymm(3), Ymm(3), Ymm(4));
     vpaddd(Zmm(5), Zmm(6), Zmm(5));
     vpaddd(Zmm(7), Zmm(8), Zmm(8));
+    vpaddd(Xmm(9), Xmm(10), Xmm(11));
+    vpaddd(Xmm(12), Xmm(12), Xmm(13));
   }
 };
 

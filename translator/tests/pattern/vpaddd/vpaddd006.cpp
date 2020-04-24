@@ -20,17 +20,23 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+    inputPredReg[1] = (1 << 0) | (1 << 7); /* Both x86_64 and aarch64 */
+    inputPredReg[2] = (1 << 1) | (1 << 10); /* Both x86_64 and aarch64 */
+    inputPredReg[3] = (1 << 2) | (1 << 7); /* Both x86_64 and aarch64 */
+    inputPredReg[4] = (1 << 3) | (1 << 15); /* Both x86_64 and aarch64 */
+    inputPredReg[5] = (1 << 0) | (1 << 3); /* Both x86_64 and aarch64 */
+    inputPredReg[6] = (1 << 1) | (1 << 7); /* Both x86_64 and aarch64 */
 #if 0
     /*
-    for (int i = 0; i < 16; i++) {
-      inputZReg[0].us_dt[i] = ~uint64_t(0);
-      inputZReg[3].us_dt[i] = ~uint64_t(0);
-      inputZReg[6].us_dt[i] = ~uint64_t(0);
+    for (int i = 0; i < 8; i++) {
+      inputZReg[0].ud_dt[i] = ~uint64_t(0);
+      inputZReg[3].ud_dt[i] = ~uint64_t(0);
+      inputZReg[6].ud_dt[i] = ~uint64_t(0);
     }
-    for (int i = 0; i < 16; i++) {
-      inputZReg[1].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-      inputZReg[4].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-      inputZReg[7].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+    for (int i = 0; i < 8; i++) {
+      inputZReg[1].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[4].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[7].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
     }
     */
 #endif
@@ -42,26 +48,23 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vpaddd(Ymm(1), Ymm(30), Ymm(31));
-    vpaddd(Ymm(2), Ymm(30), Ymm(31));
-    vpaddd(Ymm(3), Ymm(3), Ymm(31));
-    vpaddd(Ymm(4), Ymm(30), Ymm(4));
-    vpaddd(Ymm(5), Ymm(30), Ymm(30));
-    vpaddd(Ymm(6), Ymm(6), Ymm(6));
+    size_t addr;
 
-    vpaddd(Zmm(21), Zmm(30), Zmm(31));
-    vpaddd(Zmm(22), Zmm(30), Zmm(31));
-    vpaddd(Zmm(23), Zmm(23), Zmm(31));
-    vpaddd(Zmm(24), Zmm(30), Zmm(24));
-    vpaddd(Zmm(25), Zmm(30), Zmm(30));
-    vpaddd(Zmm(26), Zmm(26), Zmm(26));
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rax, addr);
 
-    vpaddd(Xmm(9), Xmm(16), Xmm(17));
-    vpaddd(Xmm(10), Xmm(16), Xmm(17));
-    vpaddd(Xmm(11), Xmm(11), Xmm(17));
-    vpaddd(Xmm(12), Xmm(16), Xmm(12));
-    vpaddd(Xmm(13), Xmm(16), Xmm(16));
-    vpaddd(Xmm(14), Xmm(14), Xmm(14));
+    vpaddd(Ymm(0) | k1, Ymm(1), ptr[rax]);
+    vpaddd(Ymm(2) | k2, Ymm(2), ptr[rax]);
+
+    vpaddd(Zmm(3) | k3, Zmm(4), ptr[rax]);
+    vpaddd(Zmm(5) | k4, Zmm(5), ptr[rax]);
+
+    vpaddd(Xmm(6) | k5, Xmm(7), ptr[rax]);
+    vpaddd(Xmm(8) | k6, Xmm(8), ptr[rax]);
+
+    mov(rax, 5);
   }
 };
 
