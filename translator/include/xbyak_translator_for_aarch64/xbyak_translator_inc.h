@@ -43,6 +43,7 @@
 #include "instructions/prefetcht0.h"
 #include "instructions/prefetcht1.h"
 #include "instructions/prefetcht2.h"
+#include "instructions/prefetchw.h"
 #include "instructions/pshufd.h"
 #include "instructions/punpckhbw.h"
 #include "instructions/punpckhdq.h"
