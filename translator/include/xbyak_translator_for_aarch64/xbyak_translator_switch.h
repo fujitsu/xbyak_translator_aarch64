@@ -106,6 +106,7 @@ case XED_ICLASS_BLENDPS:
 case XED_ICLASS_BLENDVPD:
   break;
 case XED_ICLASS_BLENDVPS:
+  translateBLENDVPS(&xedd);
   break;
 case XED_ICLASS_BLSFILL:
   break;
@@ -3093,6 +3094,7 @@ case XED_ICLASS_VPTEST:
 case XED_ICLASS_VPTESTMB:
   break;
 case XED_ICLASS_VPTESTMD:
+  translateVPTESTMD(&xedd);
   break;
 case XED_ICLASS_VPTESTMQ:
   break;
@@ -3286,6 +3288,7 @@ case XED_ICLASS_VTESTPS:
 case XED_ICLASS_VUCOMISD:
   break;
 case XED_ICLASS_VUCOMISS:
+  translateVUCOMISS(&xedd);
   break;
 case XED_ICLASS_VUNPCKHPD:
   translateVUNPCKHPD(&xedd);
