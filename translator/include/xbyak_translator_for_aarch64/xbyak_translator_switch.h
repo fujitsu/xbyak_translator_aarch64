@@ -1291,6 +1291,7 @@ case XED_ICLASS_PREFETCHT2:
   translatePREFETCHT2(&xedd);
   break;
 case XED_ICLASS_PREFETCHW:
+  translatePREFETCHW(&xedd);
   break;
 case XED_ICLASS_PREFETCHWT1:
   break;
