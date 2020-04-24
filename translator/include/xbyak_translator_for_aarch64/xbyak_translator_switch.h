@@ -3094,6 +3094,7 @@ case XED_ICLASS_VPTEST:
 case XED_ICLASS_VPTESTMB:
   break;
 case XED_ICLASS_VPTESTMD:
+  translateVPTESTMD(&xedd);
   break;
 case XED_ICLASS_VPTESTMQ:
   break;
