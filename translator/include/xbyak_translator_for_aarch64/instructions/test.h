@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/04/25 20:45 */
+/* 2020/04/25 21:07 */
 #define CG64 CodeGeneratorAArch64
 void translateTEST(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
   xt_reg_idx_t srcIdx;
   xt_reg_idx_t src2Idx;
 
@@ -205,7 +204,7 @@ void translateTEST(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 32 && true)) {
-    CG64::and_(W_TMP_2, xa::WReg(dstIdx), xa::WReg(src2Idx));
+    CG64::and_(W_TMP_2, xa::WReg(srcIdx), xa::WReg(src2Idx));
   }
   /* Col=AL119*/
   if (false ||
@@ -221,7 +220,7 @@ void translateTEST(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::and_(X_TMP_2, xa::XReg(dstIdx), xa::XReg(src2Idx));
+    CG64::and_(X_TMP_2, xa::XReg(srcIdx), xa::XReg(src2Idx));
   }
   /* Col=AO119*/
   if (false ||
