@@ -19,6 +19,22 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    // setInputZregAllRandomHex();
+    inputGenReg[0] = 0x0001020304050607;
+    // inputGenReg[1] = 0; // rcx
+    inputGenReg[2] = 0x08090A0B0C0D0E0F;
+    inputGenReg[3] = 0x0001020304050607;
+    // inputGenReg[4] = 0; // rsp
+    inputGenReg[5] = 0x08090A0B0C0D0E0F;
+    inputGenReg[6] = 0x1;
+    inputGenReg[7] = 0x0001020304050607;
+
+    inputGenReg[8] = 0x0001020304050607;
+    inputGenReg[9] = 0x08090A0B0C0D0E0F;
+    inputGenReg[10] = 0x0001020304050607;
+    inputGenReg[11] = 0x08090A0B0C0D0E0F;
+    inputGenReg[12] = 0x1;
+    inputGenReg[13] = 0x0001020304050607;
   }
 
   void setCheckRegFlagAll() {
@@ -29,37 +45,41 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
-    mov(rax, 1);
-    mov(rcx, 2);
+    mov(rcx, 1);
     shl(rax, cl);
 
-    mov(rdx, 2);
-    mov(rcx, 4);
+    mov(rcx, 13);
     shl(rdx, cl);
 
-    mov(rbx, 4);
-    mov(rcx, 1);
+    mov(rcx, 31);
     shl(rbx, cl);
 
-    mov(r8, 6);
-    mov(rcx, 3);
-    shl(r8d, cl);
+    mov(rcx, 4);
+    shl(rbp, cl);
 
-    mov(r9, 2);
-    mov(rcx, 15);
-    shl(r9d, cl);
+    mov(rcx, 63);
+    shl(rsi, cl);
 
-    mov(r9, 31);
-    mov(rcx, 15);
-    shl(r9d, cl);
+    mov(rcx, 4 + 64);
+    shl(rdi, cl);
 
-    mov(r10, 63);
-    mov(rcx, 15);
-    shl(r10d, cl);
+    mov(rcx, 1);
+    sal(r8, cl);
 
-    mov(r10, 127);
-    mov(rcx, 15);
-    shl(r10d, cl);
+    mov(rcx, 13);
+    sal(r9, cl);
+
+    mov(rcx, 31);
+    sal(r10, cl);
+
+    mov(rcx, 4);
+    sal(r11, cl);
+
+    mov(rcx, 63);
+    sal(r12, cl);
+
+    mov(rcx, 4 + 64);
+    sal(r13, cl);
   }
 };
 

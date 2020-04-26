@@ -42,17 +42,17 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
-    shl(rax, 1);
-    shl(rcx, 13);
-    shl(rdx, 31);
-    shl(rbx, 41);
-    shl(rbp, 63);
+    shl(eax, 1);
+    shl(ecx, 13);
+    shl(edx, 31);
+    shl(ebx, 41);
+    shl(ebp, 31);
 
-    sal(r8, 1);
-    sal(r9, 13);
-    sal(r10, 31);
-    sal(r11, 41);
-    sal(r12, 63);
+    sal(r8d, 1);
+    sal(r9d, 13);
+    sal(r10d, 31);
+    sal(r11d, 41);
+    sal(r12d, 31);
   }
 };
 

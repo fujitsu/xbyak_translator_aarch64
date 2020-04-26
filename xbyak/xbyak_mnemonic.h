@@ -915,7 +915,7 @@ void roundss(const Xmm& xmm, const Operand& op, int imm) { opGen(xmm, op, 0x0A, 
 void rsqrtps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x52, 0x100, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void rsqrtss(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x52, 0xF3, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void sahf() { db(0x9E); UNIMPLEMENTED; }
-void sal(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 4); UNIMPLEMENTED; }
+void sal(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 4); decodeAndTransToAArch64(); }
 void sal(const Operand& op, int imm) { opShift(op, imm, 4); decodeAndTransToAArch64(); }
 void sar(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 7); decodeAndTransToAArch64(); }
 void sar(const Operand& op, int imm) { opShift(op, imm, 7); decodeAndTransToAArch64(); }
