@@ -37,9 +37,11 @@ public:
     lea(r9, ptr[rax + rcx]);
     lea(r10, ptr[rax + rcx * 4]);
     lea(r11, ptr[rax + rcx * 4 + 0x3]);
+    lea(r12, ptr[rax * 4]);
+    lea(r13, ptr[rax * 4 + 0x3]);
 
-    lea(r12d, ptr[rax]);
-    lea(r13w, ptr[rax]);
+    lea(r15d, ptr[rax]);
+    //    lea(r13w, ptr[rax]);
   }
 };
 

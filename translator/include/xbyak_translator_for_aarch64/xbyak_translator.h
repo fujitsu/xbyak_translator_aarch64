@@ -405,6 +405,14 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
       CodeGeneratorAArch64::add_imm(retReg, retReg, disp, tmp1, tmp2);
       return retReg; /* disp + index*scale */
     }
+  } else if (base == XT_REG_INVALID /* index (*scale) */
+             && index != XT_REG_INVALID && disp == 0) {
+    if (shift == 0) {
+      return Xbyak_aarch64::XReg(index); /* index */
+    } else {
+      CodeGeneratorAArch64::lsl(retReg, Xbyak_aarch64::XReg(index), shift);
+      return retReg; /* index*scale */
+    }
   }
 
   /* If xbyak_translator comes here, something wrong. */
@@ -777,6 +785,9 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
 
       tmpReg = xed_decoded_inst_get_seg_reg(p, 0);
       if (tmpReg != XED_REG_INVALID) {
+        xt_msg_err(__FILE__, __LINE__,
+                   "Unsupported address mode. Please contact to system "
+                   "administrator!");
       }
 
       tmpReg = xed_decoded_inst_get_base_reg(p, 0);
