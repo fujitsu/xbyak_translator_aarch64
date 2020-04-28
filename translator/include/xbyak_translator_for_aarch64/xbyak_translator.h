@@ -43,13 +43,13 @@
 private:
 const xt_reg_idx_t xtDefaultAddrIdx = 28;
 constexpr static unsigned int xtNumOperands = 5;
+
+public:
 #ifdef XT_TEST
 constexpr static unsigned int xt_sp_reg_idx = 31;
 #else
 constexpr static unsigned int xt_sp_reg_idx = 4;
 #endif
-
-public:
 Xbyak_aarch64::WReg W_TMP_0 = w23;
 Xbyak_aarch64::WReg W_TMP_1 = w24;
 Xbyak_aarch64::WReg W_TMP_2 = w25;
