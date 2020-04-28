@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/04/25 21:07 */
+/* 2020/04/28 12:11 */
 #define CG64 CodeGeneratorAArch64
 void translateTEST(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -55,17 +55,11 @@ void translateTEST(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
+      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 8 && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 8 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 8 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 8 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
@@ -107,6 +101,9 @@ void translateTEST(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 64 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 8 && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[0].opWidth == 32 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
@@ -141,6 +138,9 @@ void translateTEST(xed_decoded_inst_t *p) {
   }
   /* Col=AD119*/
   if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 8 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[0].opWidth == 32 && true) ||
@@ -190,6 +190,18 @@ void translateTEST(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 64 && true)) {
     CG64::mov_imm(xa::XReg(src2Idx), a64.operands[1].uimm, X_TMP_2);
   }
+  /* Col=AI119*/
+  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
+                a64.operands[1].opName == XED_OPERAND_REG1 &&
+                a64.operands[0].opWidth == 8 && true)) {
+    CG64::and_(W_TMP_0, xa::WReg(srcIdx), 255);
+  }
+  /* Col=AJ119*/
+  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
+                a64.operands[1].opName == XED_OPERAND_REG1 &&
+                a64.operands[0].opWidth == 8 && true)) {
+    CG64::and_(W_TMP_1, xa::WReg(src2Idx), 255);
+  }
   /* Col=AK119*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -222,39 +234,13 @@ void translateTEST(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 64 && true)) {
     CG64::and_(X_TMP_2, xa::XReg(srcIdx), xa::XReg(src2Idx));
   }
-  /* Col=AO119*/
-  if (false ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 32 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 32 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[0].opWidth == 32 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[0].opWidth == 32 && true)) {
-    CG64::tst(xa::WReg(srcIdx), xa::WReg(src2Idx));
-  }
-  /* Col=AP119*/
-  if (false ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 64 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 64 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[0].opWidth == 64 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[0].opWidth == 64 && true)) {
-    CG64::tst(xa::XReg(srcIdx), xa::XReg(src2Idx));
-  }
 
+  /* Col=AR119*/
+  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
+                a64.operands[1].opName == XED_OPERAND_REG1 &&
+                a64.operands[0].opWidth == 8 && true)) {
+    CG64::ands(W_TMP_2, W_TMP_0, W_TMP_1);
+  }
   /* Col=AS119*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -286,6 +272,12 @@ void translateTEST(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 32 && true)) {
     CG64::lsr(W_TMP_2, W_TMP_2, 31);
+  }
+  /* Col=AU119*/
+  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
+                a64.operands[1].opName == XED_OPERAND_REG1 &&
+                a64.operands[0].opWidth == 8 && true)) {
+    CG64::lsr(W_TMP_2, W_TMP_2, 7);
   }
   /* Col=AW119*/
   if (false ||
@@ -335,6 +327,9 @@ void translateTEST(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 64 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 8 && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[0].opWidth == 32 && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
@@ -345,7 +340,7 @@ void translateTEST(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::lsl(X_TMP_2, X_TMP_2, 63);
+    CG64::lsl(X_TMP_2, X_TMP_2, 31);
   }
 
   /* Col=BG119*/
@@ -362,6 +357,9 @@ void translateTEST(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 8 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[0].opWidth == 32 && true) ||
@@ -392,6 +390,9 @@ void translateTEST(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 64 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 8 && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[0].opWidth == 32 && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
@@ -418,6 +419,9 @@ void translateTEST(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 8 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[0].opWidth == 32 && true) ||
@@ -472,16 +476,13 @@ void translateTEST(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[0].opWidth == 8 && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 8 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 8 && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 8 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&

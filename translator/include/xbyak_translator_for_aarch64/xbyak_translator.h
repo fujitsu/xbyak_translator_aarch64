@@ -93,6 +93,7 @@ private:
   if (!isValid) {                                                              \
     std::cerr << __FILE__ << ":" << __LINE__                                   \
               << ":Unsupported operand variation" << std::endl;                \
+    assert(NULL);                                                              \
   }
 
 enum x64_inst_t {

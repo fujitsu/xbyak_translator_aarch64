@@ -20,15 +20,13 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    inputGenReg[15] = std::numeric_limits<uint64_t>::max();
+    inputGenReg[15] = std::numeric_limits<uint8_t>::max();
     inputGenReg[14] = 0;
-    inputGenReg[13] = std::numeric_limits<int64_t>::max();
-    inputGenReg[12] = std::numeric_limits<int64_t>::min();
-    inputGenReg[11] = std::numeric_limits<uint32_t>::max();
-
-    inputGenReg[10] = std::numeric_limits<int32_t>::max();
-    inputGenReg[9] =
-        uint64_t(0xFFFFffff80000000); // sign extended min of int_32_t
+    inputGenReg[13] = std::numeric_limits<int8_t>::max();
+    inputGenReg[12] = std::numeric_limits<int8_t>::min();
+    inputGenReg[11] = (1 << 8);
+    inputGenReg[10] = (1 << 8) | uint32_t(0x7f);
+    inputGenReg[9] = (1 << 8) | uint32_t(0xff);
   }
 
   void setCheckRegFlagAll() {
@@ -46,7 +44,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
     std::cout << "Address is " << std::hex << addr << std::endl;
 
-    std::vector<Reg32> regs = {r15d, r14d, r13d, r12d, r11d, r10d, r9d};
+    std::vector<Reg8> regs = {r15b, r14b, r13b, r12b, r11b, r10b, r9b};
     std::vector<uint32_t> imms = {uint32_t(0x7FFFFFFF), uint32_t(0x80000000),
                                   uint32_t(0), uint32_t(0x80), uint32_t(0x7f)};
 #ifdef XBYAK_TRANSLATE_AARCH64
@@ -92,7 +90,7 @@ public:
       mov(r_addr, addr);
       mov(r_tmpAddr, r_addr);
 
-      for (const auto &i : imms) {
+      for (const auto &i : regs) {
         xor_(rax, rax); // clear rax
         test(regs[j], i);
 #ifdef XBYAK_TRANSLATE_AARCH64

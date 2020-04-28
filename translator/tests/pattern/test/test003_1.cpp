@@ -20,7 +20,7 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    inputGenReg[15] = std::numeric_limits<uint64_t>::max();
+    inputGenReg[15] = uint64_t(0x80000000);
     inputGenReg[14] = 0;
     inputGenReg[13] = std::numeric_limits<int64_t>::max();
     inputGenReg[12] = std::numeric_limits<int64_t>::min();

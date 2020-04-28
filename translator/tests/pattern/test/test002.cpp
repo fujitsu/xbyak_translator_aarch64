@@ -20,6 +20,15 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+    inputGenReg[15] = std::numeric_limits<uint64_t>::max();
+    inputGenReg[14] = 0;
+    inputGenReg[13] = std::numeric_limits<int64_t>::max();
+    inputGenReg[12] = std::numeric_limits<int64_t>::min();
+    inputGenReg[11] = std::numeric_limits<uint32_t>::max();
+
+    inputGenReg[10] = std::numeric_limits<int32_t>::max();
+    inputGenReg[9] =
+        uint64_t(0xFFFFffff80000000); // sign extended min of int_32_t
   }
 
   void setCheckRegFlagAll() {
@@ -37,14 +46,9 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
     std::cout << "Address is " << std::hex << addr << std::endl;
 
-    mov(r15d, std::numeric_limits<int32_t>::max());
-    mov(r14d, std::numeric_limits<int32_t>::min());
-    xor_(r13d, r13d);
-    mov(r12d, std::numeric_limits<uint32_t>::max());
-    mov(r11d, std::numeric_limits<uint32_t>::min());
-
-    std::vector<Reg32> regs = {r15d, r14d, r13d, r12d, r11d};
-    //    std::vector<Reg64> regs = {r15};
+    std::vector<Reg32> regs = {r15d, r14d, r13d, r12d, r11d, r10d, r9d};
+    std::vector<uint32_t> imms = {uint32_t(0x7FFFFFFF), uint32_t(0x80000000),
+                                  uint32_t(0), uint32_t(0x80), uint32_t(0x7f)};
 #ifdef XBYAK_TRANSLATE_AARCH64
     Xbyak_aarch64::XReg x_of{x7};
     Xbyak_aarch64::XReg x_sf{x6};
@@ -53,7 +57,7 @@ public:
     Xbyak_aarch64::XReg x_addr{x2};
     Xbyak_aarch64::XReg x_tmpAddr{x1};
     Xbyak_aarch64::XReg x_tmpFlag{x0};
-    Xbyak_aarch64::XReg x_dummyFlag{x10};
+    Xbyak_aarch64::XReg x_dummyFlag{x16};
 
     CodeGeneratorAArch64::mov_imm(x_of, 1 << 11, X_TMP_0);
     CodeGeneratorAArch64::mov_imm(x_sf, 1 << 7, X_TMP_0);
@@ -163,10 +167,6 @@ public:
     mov(rbp, 5);
     mov(rsi, 5);
     mov(r8, 5);
-    mov(r9, 5);
-    mov(r10, 5);
-    mov(r11, 5);
-    mov(r12, 5);
   }
 };
 
