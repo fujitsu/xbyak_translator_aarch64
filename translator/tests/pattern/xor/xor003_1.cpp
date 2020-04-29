@@ -36,28 +36,20 @@ public:
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
        r13, r14, r15 */
 
-    /* 64-bit -> 64-bit */
-    mov(rax, ~uint64_t(0));
-    mov(rcx, 1);
-    xor_(rax, rcx);
-    mov(rbp, ~uint64_t(0));
-    mov(rsi, ~uint64_t(0));
-    xor_(rbp, rsi);
+    size_t addr;
 
-    /* 64-bit -> 32-bit */
-    mov(r9, ~uint64_t(0));
-    mov(r10, uint64_t(0xaaaaaaaaaaaaaaaa));
-    xor_(r9d, r10d);
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[8].ud_dt[0]));
+    mov(rax, addr);
+    xor_(ptr[rax + 64], r8);
+    mov(r10, ptr[rax + 64]);
 
-    /* 32-bit -> 64-bit */
-    mov(r11d, ~uint32_t(0));
-    mov(r12d, uint32_t(0xaaaaaaaa));
-    xor_(r11, r12);
+    addr = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0]));
+    mov(rax, addr);
+    xor_(ptr[rax + 64], r11d);
+    mov(r13, ptr[rax + 64]);
 
-    /* 32-bit -> 32-bit */
-    mov(r13d, ~uint32_t(0));
-    mov(r14d, uint32_t(0x55555555));
-    xor_(r13d, r14d);
+    mov(rax, 0x5);
   }
 };
 

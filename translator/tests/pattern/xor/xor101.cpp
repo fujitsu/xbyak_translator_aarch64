@@ -20,6 +20,7 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
     for (int i = 0; i < 16; i++) {
       if (i != rsp.getIdx()) {
         inputGenReg[i] = inputZReg[i].ud_dt[0];
@@ -36,28 +37,8 @@ public:
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
        r13, r14, r15 */
 
-    /* 64-bit -> 64-bit */
-    mov(rax, ~uint64_t(0));
-    mov(rcx, 1);
-    xor_(rax, rcx);
-    mov(rbp, ~uint64_t(0));
-    mov(rsi, ~uint64_t(0));
-    xor_(rbp, rsi);
-
-    /* 64-bit -> 32-bit */
-    mov(r9, ~uint64_t(0));
-    mov(r10, uint64_t(0xaaaaaaaaaaaaaaaa));
-    xor_(r9d, r10d);
-
-    /* 32-bit -> 64-bit */
-    mov(r11d, ~uint32_t(0));
-    mov(r12d, uint32_t(0xaaaaaaaa));
-    xor_(r11, r12);
-
-    /* 32-bit -> 32-bit */
-    mov(r13d, ~uint32_t(0));
-    mov(r14d, uint32_t(0x55555555));
-    xor_(r13d, r14d);
+    xor_(r8w, int16_t(0xaaaa));
+    xor_(r8w, int16_t(0x5555));
   }
 };
 
