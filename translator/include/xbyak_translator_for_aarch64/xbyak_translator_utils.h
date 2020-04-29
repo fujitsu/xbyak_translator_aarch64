@@ -178,6 +178,9 @@ inline const std::string xt_to_string(const xed_reg_class_enum_t num) {
   case XED_REG_CLASS_MASK:
     msg = "XED_REG_CLASS_MASK";
     break;
+  case XED_REG_CLASS_SR:
+    msg = "XED_REG_CLASS_SR";
+    break;
   default:
     msg = "Undefined xt_operand_type_t=" +
           std::to_string(static_cast<uint64_t>(num));

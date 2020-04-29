@@ -19,6 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    setInputZregAllRandomHex();
     for (int i = 0; i < 16; i++) {
       if (i != rsp.getIdx()) {
         inputGenReg[i] = ~uint64_t(0);
@@ -32,31 +33,34 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    /* RAX, RCX, RDX, RBX, RSP, RBP, RSI, RDI,
-       R8,  R9,  R10, R11, R12, R13, R14, R15 */
-    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7])));
-    mov(dword[rax], ~uint32_t(0));
-    mov(rcx, dword[rax]);
-    mov(edx, dword[rax]);
+    size_t addr;
 
-    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[6])));
-    mov(dword[rax], ~uint32_t(0));
-    mov(rbx, qword[rax]);
-    mov(ebp, qword[rax]);
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
 
-#if 0
-    /* xbyak does not support mov immediate value to memory */
-    mov(dword[rax], ~uint32_t(0));
-    mov(rsi, dword[rax]);
-    mov(edi, dword[rax]);
-#endif
+    mov(rax, addr);
 
-    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[6])));
-    mov(dword[rax], ~uint32_t(0));
-    mov(r8, qword[rax]);
-    mov(r9d, qword[rax]);
+    /* mov m8, imm8 */
+    mov(byte[rax + 64 * 0], uint8_t(0xaa));
+    mov(r8, ptr[rax + 64 * 0]);
 
-    mov(rax, uint32_t(5));
+    mov(byte[rax + 64 * 1], uint8_t(0xbb));
+    mov(r9, ptr[rax + 64 * 1]);
+
+    /* mov m16, imm16 */
+    mov(word[rax + 64 * 2], uint16_t(0x1234));
+    mov(r10, ptr[rax + 64 * 2]);
+
+    mov(word[rax + 64 * 3], uint16_t(0x5678));
+    mov(r11, ptr[rax + 64 * 3]);
+
+    mov(word[rax + 64 * 4], uint8_t(0xab));
+    mov(r12, ptr[rax + 64 * 4]);
+
+    mov(word[rax + 64 * 5], uint8_t(0xcd));
+    mov(r13, ptr[rax + 64 * 5]);
+
+    mov(rax, 0x5);
   }
 };
 

@@ -19,11 +19,11 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    for (int i = 0; i < 16; i++) {
-      if (i != rsp.getIdx()) {
-        inputGenReg[i] = ~uint64_t(0);
-      }
-    }
+    setInputZregAllRandomHex();
+    inputGenReg[9] = ~uint64_t(0);
+    inputGenReg[10] = ~uint64_t(0);
+    inputGenReg[11] = ~uint64_t(0);
+    inputGenReg[12] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -34,29 +34,21 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* RAX, RCX, RDX, RBX, RSP, RBP, RSI, RDI,
        R8,  R9,  R10, R11, R12, R13, R14, R15 */
-    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7])));
-    mov(dword[rax], ~uint32_t(0));
-    mov(rcx, dword[rax]);
-    mov(edx, dword[rax]);
 
-    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[6])));
-    mov(dword[rax], ~uint32_t(0));
-    mov(rbx, qword[rax]);
-    mov(ebp, qword[rax]);
+    size_t addr;
 
-#if 0
-    /* xbyak does not support mov immediate value to memory */
-    mov(dword[rax], ~uint32_t(0));
-    mov(rsi, dword[rax]);
-    mov(edi, dword[rax]);
-#endif
+    /* mov m32, r32 */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
+    mov(rax, addr);
+    mov(r8, uint64_t(0x1234567887654321));
+    mov(ptr[rax], r8d);
+    mov(r9, ptr[rax]);
 
-    mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[6])));
-    mov(dword[rax], ~uint32_t(0));
-    mov(r8, qword[rax]);
-    mov(r9d, qword[rax]);
+    /* mov r32, m32 */
+    mov(r10d, ptr[rax]);
 
-    mov(rax, uint32_t(5));
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 

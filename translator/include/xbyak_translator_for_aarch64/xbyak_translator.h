@@ -295,6 +295,8 @@ xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
     return r - XED_REG_ZMM0;
   } else if (XED_REG_EAX <= r && r <= XED_REG_R15D) {
     return r - XED_REG_EAX;
+  } else if (XED_REG_AL <= r && r <= XED_REG_BPL) {
+    return r - XED_REG_AL;
   } else if (XED_REG_AX <= r && r <= XED_REG_R15W) {
     return r - XED_REG_AX;
   } else if (XED_REG_AL <= r && r <= XED_REG_R15B) {
@@ -306,6 +308,8 @@ xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
     return XT_REG_INVALID;
   } else if (r == XED_REG_RIP) {
     return XT_REG_INVALID;
+  } else if (XED_REG_ES <= r && r <= XED_REG_GS) {
+    return r - XED_REG_ES;
   } else {
     xt_msg_err(__FILE__, __LINE__, ":Under construction!");
     assert(NULL);
@@ -1058,7 +1062,7 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
             a64->operands[l].uimm = xed_decoded_inst_get_unsigned_immediate(p);
           }
 
-          a64->operands[l].opWidth = xed_decoded_inst_get_immediate_width(p);
+          a64->operands[l].opWidth = ibits;
           isSet = true;
         }
       }
