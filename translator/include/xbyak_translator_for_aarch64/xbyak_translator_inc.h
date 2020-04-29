@@ -175,6 +175,7 @@
 #include "instructions/xadd_lock.h"
 #include "instructions/xchg.h"
 #include "instructions/xor.h"
+#include "instructions/xorps.h"
 
 #if 0
 #include "instructions/kmovb.h"

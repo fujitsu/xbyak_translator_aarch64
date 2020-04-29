@@ -3357,6 +3357,7 @@ case XED_ICLASS_XOR:
 case XED_ICLASS_XORPD:
   break;
 case XED_ICLASS_XORPS:
+  translateXORPS(&xedd);
   break;
 case XED_ICLASS_XOR_LOCK:
   break;

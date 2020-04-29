@@ -1525,7 +1525,7 @@ void xlatb() { db(0xD7); UNIMPLEMENTED; }
 void xor_(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x30, 6); decodeAndTransToAArch64(); }
 void xor_(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x30); decodeAndTransToAArch64(); }
 void xorpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x57, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
-void xorps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x57, 0x100, isXMM_XMMorMEM); UNIMPLEMENTED; }
+void xorps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x57, 0x100, isXMM_XMMorMEM); decodeAndTransToAArch64(); }
 #ifdef XBYAK_ENABLE_OMITTED_OPERAND
 void vblendpd(const Xmm& x, const Operand& op, uint8 imm) { vblendpd(x, x, op, imm); UNIMPLEMENTED; }
 void vblendps(const Xmm& x, const Operand& op, uint8 imm) { vblendps(x, x, op, imm); UNIMPLEMENTED; }
