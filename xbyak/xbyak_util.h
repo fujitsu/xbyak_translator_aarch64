@@ -266,7 +266,7 @@ public:
 	unsigned int getNumCores(IntelCpuTopologyLevel level) {
 #ifndef XBYAK_TRANSLATE_AARCH64
 		if (!x2APIC_supported_) throw Error(ERR_X2APIC_IS_NOT_SUPPORTED);
-#else
+#endif
 		switch (level) {
 		case SmtLevel: return numCores_[level - 1];
 		case CoreLevel: return numCores_[level - 1] / numCores_[SmtLevel - 1];
