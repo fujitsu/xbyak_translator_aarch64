@@ -60,7 +60,7 @@ Xbyak_aarch64::XReg X_TMP_1 = x24;
 Xbyak_aarch64::XReg X_TMP_2 = x25;
 Xbyak_aarch64::XReg X_TMP_3 = x26;
 Xbyak_aarch64::XReg X_TMP_4 = x27;
-Xbyak_aarch64::XReg X_TMP_ADDR{28};
+Xbyak_aarch64::XReg X_TMP_ADDR = x28;
 Xbyak_aarch64::PReg P_TMP_0 = p11;
 Xbyak_aarch64::PReg P_TMP_1 = p12;
 Xbyak_aarch64::PReg P_MSB_256 = p13;
@@ -466,7 +466,7 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
       continue;
     }
 
-    for (int idx = 0; idx < xtNumOperands; idx++) {
+    for (unsigned int idx = 0; idx < xtNumOperands; idx++) {
       if (a64->operands[idx].regIdx == i) {
         conflict = true;
       }
@@ -533,7 +533,7 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
       continue;
     }
 
-    for (int idx = 0; idx < xtNumOperands; idx++) {
+    for (unsigned int idx = 0; idx < xtNumOperands; idx++) {
       if (a64->operands[idx].regIdx == i) {
         conflict = true;
       }
@@ -693,7 +693,7 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
   /* Get # of operands */
   num_operands = xed_inst_noperands(xi);
 
-  for (int i = 0; i < num_operands; i++) {
+  for (unsigned int i = 0; i < num_operands; i++) {
     const xed_operand_t *op = xed_inst_operand(xi, i);
     xed_operand_enum_t opName = xed_operand_name(op);
 
@@ -917,7 +917,7 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
   /* Get # of operands */
   num_operands = xed_inst_noperands(xi);
 
-  for (int i = 0; i < num_operands; i++) {
+  for (unsigned int i = 0; i < num_operands; i++) {
     const xed_operand_t *op = xed_inst_operand(xi, i);
     xed_operand_enum_t opName = xed_operand_name(op);
 
@@ -1047,7 +1047,7 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
     if (opName == XED_OPERAND_IMM0) {
       bool isSet = false;
 
-      for (int l = 0; l < xtNumOperands && isSet == false; l++) {
+      for (unsigned int l = 0; l < xtNumOperands && isSet == false; l++) {
         if (a64->operands[l].opName == XED_OPERAND_INVALID) {
           a64->operands[l].opName = opName;
 
@@ -1107,7 +1107,9 @@ void decodeAndTransToAArch64() {
 void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
   switch (cmp_mode) {
   case X86_64_A:
+#if 0
   X86_64_AE:
+#endif
     xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
     break;
   case X86_64_B: {
@@ -1167,6 +1169,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
   } break;
+#if 0
   X86_64_C:
   X86_64_CXZ:
   X86_64_ECXZ:
@@ -1214,7 +1217,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
   X86_64_Z:
     xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
     break;
-
+#endif
   default:
     xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
     break;
