@@ -696,6 +696,11 @@ public:
       checkGenRegMode[30][i] = CMP_INIT_VAL;
     }
 
+    /* p0: temporary use */
+    for (size_t i = 0; i < NUM_BYTES_PRED_REG; i++) {
+      checkPredRegMode[0][i] = NO_CHECK;
+    }
+
     /* p8 - p12: temporary use */
     for (int j = 8; j <= 12; j++) {
       for (size_t i = 0; i < NUM_BYTES_PRED_REG; i++) {

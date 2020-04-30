@@ -2634,6 +2634,7 @@ case XED_ICLASS_VPERMIL2PS:
 case XED_ICLASS_VPERMILPD:
   break;
 case XED_ICLASS_VPERMILPS:
+  translateVPERMILPS(&xedd);
   break;
 case XED_ICLASS_VPERMPD:
   break;
