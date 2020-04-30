@@ -1522,7 +1522,6 @@ case XED_ICLASS_REP_XSTORE:
 case XED_ICLASS_RET_FAR:
   translateRET(&xedd);
   break;
-
 case XED_ICLASS_RET_NEAR:
   translateRET(&xedd);
   break;

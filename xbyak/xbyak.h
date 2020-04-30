@@ -3029,13 +3029,13 @@ public:
   }
   void mov(const NativeReg &reg, const char *label) // can't use std::string
   {
-#ifdef XBYAK_TRANSLATE_AARCH64
-    UNIMPLEMENTED;
-#else
     if (label == 0) {
       mov(static_cast<const Operand &>(reg), 0); // call imm
       return;
     }
+#ifdef XBYAK_TRANSLATE_AARCH64
+    UNIMPLEMENTED;
+#else
     mov_imm(reg, dummyAddr);
     putL(label);
 #endif
