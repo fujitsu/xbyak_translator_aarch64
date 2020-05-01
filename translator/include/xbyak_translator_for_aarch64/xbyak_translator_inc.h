@@ -13,6 +13,7 @@
 #include "instructions/kmovq.h"
 #include "instructions/kmovw.h"
 #include "instructions/kortestw.h"
+#include "instructions/ktestq.h"
 #include "instructions/lea.h"
 #include "instructions/mov.h"
 #include "instructions/movd.h"

@@ -746,6 +746,7 @@ case XED_ICLASS_KTESTB:
 case XED_ICLASS_KTESTD:
   break;
 case XED_ICLASS_KTESTQ:
+  translateKTESTQ(&xedd);
   break;
 case XED_ICLASS_KTESTW:
   break;
