@@ -635,7 +635,8 @@ private:
   }
 
 public:
-  TestGenerator() {
+  TestGenerator(void *code_ptr = nullptr, size_t code_size = 1024 * 64)
+      : CodeGenerator(code_size, code_ptr) {
     clearInputDataAll();
     clearOutputDataAll();
     initExpectModeAll();

@@ -169,6 +169,7 @@
 #include "instructions/vshufps.h"
 #include "instructions/vsqrtps.h"
 #include "instructions/vsubps.h"
+#include "instructions/vtestps.h"
 #include "instructions/vucomiss.h"
 #include "instructions/vunpckhpd.h"
 #include "instructions/vunpckhps.h"

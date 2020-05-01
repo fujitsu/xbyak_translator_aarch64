@@ -3287,6 +3287,7 @@ case XED_ICLASS_VSUBSS:
 case XED_ICLASS_VTESTPD:
   break;
 case XED_ICLASS_VTESTPS:
+  translateVTESTPS(&xedd);
   break;
 case XED_ICLASS_VUCOMISD:
   break;
