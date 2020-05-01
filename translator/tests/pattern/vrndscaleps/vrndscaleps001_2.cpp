@@ -92,7 +92,7 @@ public:
     mov(rax, addr1);
     mov(rcx, addr2);
 
-    unsigned int rounding_direction = 0;
+    unsigned int rounding_direction = 2;
 
     /* Register index is VEX range. */
     vrndscaleps(Zmm(2), ptr[rax], 0x04 + rounding_direction);

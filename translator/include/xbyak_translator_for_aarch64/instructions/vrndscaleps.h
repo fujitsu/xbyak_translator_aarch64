@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/04/21 09:50 */
+/* 2020/05/01 19:05 */
 #define CG64 CodeGeneratorAArch64
 void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
+  unsigned int rounding_direction = 0;
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;
   xt_reg_idx_t dstIdx;
@@ -1620,16 +1621,35 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
-    CG64::sub(X_TMP_1, xa::XReg(xt_sp_reg_idx), 64);
-    CG64::sub(X_TMP_0, xa::XReg(xt_sp_reg_idx), 64);
-    CG64::str(xa::ZReg(zTmp2Idx), xa::ptr(X_TMP_1));
-    for (int i = 0; i < 4; i++) {
-      CG64::ld1(xa::VReg4S(zTmp2Idx), xa::ptr(X_TMP_1));
-      CG64::frintn(xa::VReg4S(zTmp2Idx), xa::VReg4S(zTmp2Idx));
-      CG64::fcvtzs(xa::VReg4S(zTmp2Idx), xa::VReg4S(zTmp2Idx));
-      CG64::st1(xa::VReg4S(zTmp2Idx), xa::post_ptr(X_TMP_1, 16));
+    switch (rounding_direction) {
+    case 0:
+    case 1:
+    case 2:
+      CG64::sub(X_TMP_1, xa::XReg(xt_sp_reg_idx), 64);
+      CG64::sub(X_TMP_0, xa::XReg(xt_sp_reg_idx), 64);
+      CG64::str(xa::ZReg(zTmp2Idx), xa::ptr(X_TMP_1));
+      for (int i = 0; i < 4; i++) {
+        CG64::ld1(xa::VReg4S(zTmp2Idx), xa::ptr(X_TMP_1));
+        if (rounding_direction == 0) {
+          CG64::frintn(xa::VReg4S(zTmp2Idx), xa::VReg4S(zTmp2Idx));
+        } else if (rounding_direction == 1) {
+          CG64::frintm(xa::VReg4S(zTmp2Idx), xa::VReg4S(zTmp2Idx));
+        } else if (rounding_direction == 2) {
+          CG64::frinta(xa::VReg4S(zTmp2Idx), xa::VReg4S(zTmp2Idx));
+        }
+        CG64::fcvtzs(xa::VReg4S(zTmp2Idx), xa::VReg4S(zTmp2Idx));
+        CG64::st1(xa::VReg4S(zTmp2Idx), xa::post_ptr(X_TMP_1, 16));
+      }
+      CG64::ldr(xa::ZReg(zTmp2Idx), xa::ptr(X_TMP_0));
+      break;
+    case 3:
+      CG64::fcvtzs(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
+                   xa::ZRegS(zTmp2Idx));
+      break;
+    default:
+      XT_UNIMPLEMENTED;
+      break;
     }
-    CG64::ldr(xa::ZReg(zTmp2Idx), xa::ptr(X_TMP_0));
   }
   /* Col=AQ119*/
   if (false ||

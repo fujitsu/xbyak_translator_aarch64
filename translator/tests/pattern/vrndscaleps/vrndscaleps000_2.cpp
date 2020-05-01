@@ -86,97 +86,57 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
-    size_t addr1, addr2;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[0]));
-    addr2 = reinterpret_cast<size_t>(&(inputZReg[1].sp_dt[0]));
-    mov(rax, addr1);
-    mov(rcx, addr2);
-
-    unsigned int rounding_direction = 0;
+    unsigned int rounding_direction = 2;
 
     /* Register index is VEX range. */
-    vrndscaleps(Zmm(2), ptr[rax], 0x04 + rounding_direction);
-    vrndscaleps(Zmm(3), ptr[rcx], 0x04 + rounding_direction);
-    vrndscaleps(Zmm(4), ptr[rax], 0x14 + rounding_direction);
-    vrndscaleps(Zmm(5), ptr[rcx], 0x14 + rounding_direction);
-    vrndscaleps(Zmm(6), ptr[rax], 0x24 + rounding_direction);
-    vrndscaleps(Zmm(7), ptr[rcx], 0x24 + rounding_direction);
-    vrndscaleps(Zmm(8), ptr[rax], 0x54 + rounding_direction);
-    vrndscaleps(Zmm(9), ptr[rcx], 0x54 + rounding_direction);
-    vrndscaleps(Zmm(10), ptr[rax], 0xa4 + rounding_direction);
-    vrndscaleps(Zmm(11), ptr[rcx], 0xa4 + rounding_direction);
-    vrndscaleps(Zmm(12), ptr[rax], 0xc4 + rounding_direction);
-    vrndscaleps(Zmm(13), ptr[rcx], 0xc4 + rounding_direction);
-    vrndscaleps(Zmm(14), ptr[rax], 0xf4 + rounding_direction);
-    vrndscaleps(Zmm(15), ptr[rcx], 0xf4 + rounding_direction);
+    vrndscaleps(Zmm(2), Zmm(0), 0x04 + rounding_direction);
+    vrndscaleps(Zmm(3), Zmm(1), 0x04 + rounding_direction);
+    vrndscaleps(Zmm(4), Zmm(0), 0x14 + rounding_direction);
+    vrndscaleps(Zmm(5), Zmm(1), 0x14 + rounding_direction);
+    vrndscaleps(Zmm(6), Zmm(0), 0x24 + rounding_direction);
+    vrndscaleps(Zmm(7), Zmm(1), 0x24 + rounding_direction);
+    vrndscaleps(Zmm(8), Zmm(0), 0x54 + rounding_direction);
+    vrndscaleps(Zmm(9), Zmm(1), 0x54 + rounding_direction);
+    vrndscaleps(Zmm(10), Zmm(0), 0xa4 + rounding_direction);
+    vrndscaleps(Zmm(11), Zmm(1), 0xa4 + rounding_direction);
+    vrndscaleps(Zmm(12), Zmm(0), 0xc4 + rounding_direction);
+    vrndscaleps(Zmm(13), Zmm(1), 0xc4 + rounding_direction);
+    vrndscaleps(Zmm(14), Zmm(0), 0xf4 + rounding_direction);
+    vrndscaleps(Zmm(15), Zmm(1), 0xf4 + rounding_direction);
 
     /* Register index is EVEX range. */
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[16].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(16), ptr[rax], 0x04 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[17].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(17), ptr[rax], 0x14 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[18].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(18), ptr[rax], 0x24 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[19].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(19), ptr[rax], 0x34 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[20].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(20), ptr[rax], 0x44 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[21].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(21), ptr[rax], 0x54 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[22].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(22), ptr[rax], 0x64 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[23].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(23), ptr[rax], 0x74 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[24].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(24), ptr[rax], 0x84 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[25].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(25), ptr[rax], 0x94 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[26].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(26), ptr[rax], 0xa4 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[27].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(27), ptr[rax], 0xb4 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[28].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(28), ptr[rax], 0xc4 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[29].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(29), ptr[rax], 0xd4 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[30].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(30), ptr[rax], 0xe4 + rounding_direction);
-
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[31].sp_dt[0]));
-    mov(rax, addr1);
-    vrndscaleps(Zmm(31), ptr[rax], 0xf4 + rounding_direction);
-
-    mov(rax, 5);
-    mov(rcx, 7);
+    vrndscaleps(Zmm(16), Zmm(16),
+                0x04 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(17), Zmm(17),
+                0x14 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(18), Zmm(18),
+                0x24 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(19), Zmm(19),
+                0x34 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(20), Zmm(20),
+                0x44 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(21), Zmm(21),
+                0x54 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(22), Zmm(22),
+                0x64 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(23), Zmm(23),
+                0x74 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(24), Zmm(24),
+                0x84 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(25), Zmm(25),
+                0x94 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(26), Zmm(26),
+                0xa4 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(27), Zmm(27),
+                0xb4 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(28), Zmm(28),
+                0xc4 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(29), Zmm(29),
+                0xd4 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(30), Zmm(30),
+                0xe4 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(31), Zmm(31),
+                0xf4 + rounding_direction); /* dstIdx = srcIdx */
   }
 };
 

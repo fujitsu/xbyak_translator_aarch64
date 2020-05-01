@@ -86,40 +86,57 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
+    unsigned int rounding_direction = 0;
 
     /* Register index is VEX range. */
-    vrndscaleps(Zmm(2), Zmm(0), 0x04);
-    vrndscaleps(Zmm(3), Zmm(1), 0x04);
-    vrndscaleps(Zmm(4), Zmm(0), 0x14);
-    vrndscaleps(Zmm(5), Zmm(1), 0x14);
-    vrndscaleps(Zmm(6), Zmm(0), 0x24);
-    vrndscaleps(Zmm(7), Zmm(1), 0x24);
-    vrndscaleps(Zmm(8), Zmm(0), 0x54);
-    vrndscaleps(Zmm(9), Zmm(1), 0x54);
-    vrndscaleps(Zmm(10), Zmm(0), 0xa4);
-    vrndscaleps(Zmm(11), Zmm(1), 0xa4);
-    vrndscaleps(Zmm(12), Zmm(0), 0xc4);
-    vrndscaleps(Zmm(13), Zmm(1), 0xc4);
-    vrndscaleps(Zmm(14), Zmm(0), 0xf4);
-    vrndscaleps(Zmm(15), Zmm(1), 0xf4);
+    vrndscaleps(Zmm(2), Zmm(0), 0x04 + rounding_direction);
+    vrndscaleps(Zmm(3), Zmm(1), 0x04 + rounding_direction);
+    vrndscaleps(Zmm(4), Zmm(0), 0x14 + rounding_direction);
+    vrndscaleps(Zmm(5), Zmm(1), 0x14 + rounding_direction);
+    vrndscaleps(Zmm(6), Zmm(0), 0x24 + rounding_direction);
+    vrndscaleps(Zmm(7), Zmm(1), 0x24 + rounding_direction);
+    vrndscaleps(Zmm(8), Zmm(0), 0x54 + rounding_direction);
+    vrndscaleps(Zmm(9), Zmm(1), 0x54 + rounding_direction);
+    vrndscaleps(Zmm(10), Zmm(0), 0xa4 + rounding_direction);
+    vrndscaleps(Zmm(11), Zmm(1), 0xa4 + rounding_direction);
+    vrndscaleps(Zmm(12), Zmm(0), 0xc4 + rounding_direction);
+    vrndscaleps(Zmm(13), Zmm(1), 0xc4 + rounding_direction);
+    vrndscaleps(Zmm(14), Zmm(0), 0xf4 + rounding_direction);
+    vrndscaleps(Zmm(15), Zmm(1), 0xf4 + rounding_direction);
 
     /* Register index is EVEX range. */
-    vrndscaleps(Zmm(16), Zmm(16), 0x04); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(17), Zmm(17), 0x14); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(18), Zmm(18), 0x24); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(19), Zmm(19), 0x34); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(20), Zmm(20), 0x44); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(21), Zmm(21), 0x54); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(22), Zmm(22), 0x64); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(23), Zmm(23), 0x74); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(24), Zmm(24), 0x84); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(25), Zmm(25), 0x94); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(26), Zmm(26), 0xa4); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(27), Zmm(27), 0xb4); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(28), Zmm(28), 0xc4); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(29), Zmm(29), 0xd4); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(30), Zmm(30), 0xe4); /* dstIdx = srcIdx */
-    vrndscaleps(Zmm(31), Zmm(31), 0xf4); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(16), Zmm(16),
+                0x04 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(17), Zmm(17),
+                0x14 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(18), Zmm(18),
+                0x24 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(19), Zmm(19),
+                0x34 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(20), Zmm(20),
+                0x44 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(21), Zmm(21),
+                0x54 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(22), Zmm(22),
+                0x64 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(23), Zmm(23),
+                0x74 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(24), Zmm(24),
+                0x84 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(25), Zmm(25),
+                0x94 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(26), Zmm(26),
+                0xa4 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(27), Zmm(27),
+                0xb4 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(28), Zmm(28),
+                0xc4 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(29), Zmm(29),
+                0xd4 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(30), Zmm(30),
+                0xe4 + rounding_direction); /* dstIdx = srcIdx */
+    vrndscaleps(Zmm(31), Zmm(31),
+                0xf4 + rounding_direction); /* dstIdx = srcIdx */
   }
 };
 
