@@ -974,7 +974,7 @@ void shl(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 4); decodeAndTra
 void shl(const Operand& op, int imm) { opShift(op, imm, 4); decodeAndTransToAArch64(); }
 void shld(const Operand& op, const Reg& reg, const Reg8& _cl) { opShxd(op, reg, 0, 0xA4, &_cl); UNIMPLEMENTED; }
 void shld(const Operand& op, const Reg& reg, uint8 imm) { opShxd(op, reg, imm, 0xA4); UNIMPLEMENTED; }
-void shlx(const Reg32e& r1, const Operand& op, const Reg32e& r2) { opGpr(r1, op, r2, T_66 | T_0F38, 0xf7, false); UNIMPLEMENTED; }
+void shlx(const Reg32e& r1, const Operand& op, const Reg32e& r2) { opGpr(r1, op, r2, T_66 | T_0F38, 0xf7, false); decodeAndTransToAArch64(); }
 void shr(const Operand& op, const Reg8& _cl) { opShift(op, _cl, 5); UNIMPLEMENTED; }
 void shr(const Operand& op, int imm) { opShift(op, imm, 5); UNIMPLEMENTED; }
 void shrd(const Operand& op, const Reg& reg, const Reg8& _cl) { opShxd(op, reg, 0, 0xAC, &_cl); UNIMPLEMENTED; }

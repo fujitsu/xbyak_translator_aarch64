@@ -1628,6 +1628,7 @@ case XED_ICLASS_SHL:
 case XED_ICLASS_SHLD:
   break;
 case XED_ICLASS_SHLX:
+  translateSHLX(&xedd);
   break;
 case XED_ICLASS_SHR:
   break;

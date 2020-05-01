@@ -57,6 +57,7 @@
 #include "instructions/ret.h"
 #include "instructions/sar.h"
 #include "instructions/shl.h"
+#include "instructions/shlx.h"
 #include "instructions/shufps.h"
 #include "instructions/sub.h"
 #include "instructions/test.h"
