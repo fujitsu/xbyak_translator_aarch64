@@ -3192,6 +3192,7 @@ case XED_ICLASS_VRNDSCALESS:
 case XED_ICLASS_VROUNDPD:
   break;
 case XED_ICLASS_VROUNDPS:
+  translateVROUNDPS(&xedd);
   break;
 case XED_ICLASS_VROUNDSD:
   break;
