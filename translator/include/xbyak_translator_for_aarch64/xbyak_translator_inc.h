@@ -147,6 +147,7 @@
 #include "instructions/vpord.h"
 #include "instructions/vpshufb.h"
 #include "instructions/vpshufd.h"
+#include "instructions/vpsignd.h"
 #include "instructions/vpslld.h"
 #include "instructions/vpsrad.h"
 #include "instructions/vpsrld.h"

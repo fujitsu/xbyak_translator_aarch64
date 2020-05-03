@@ -3027,6 +3027,7 @@ case XED_ICLASS_VPSHUFLW:
 case XED_ICLASS_VPSIGNB:
   break;
 case XED_ICLASS_VPSIGND:
+  translateVPSIGND(&xedd);
   break;
 case XED_ICLASS_VPSIGNW:
   break;
