@@ -95,85 +95,85 @@ public:
     unsigned int rounding_direction = 1;
 
     /* Register index is VEX range. */
-    vrndscaleps(Zmm(2), ptr[rax], 0x04 + rounding_direction);
-    vrndscaleps(Zmm(3), ptr[rcx], 0x04 + rounding_direction);
-    vrndscaleps(Zmm(4), ptr[rax], 0x14 + rounding_direction);
-    vrndscaleps(Zmm(5), ptr[rcx], 0x14 + rounding_direction);
-    vrndscaleps(Zmm(6), ptr[rax], 0x24 + rounding_direction);
-    vrndscaleps(Zmm(7), ptr[rcx], 0x24 + rounding_direction);
-    vrndscaleps(Zmm(8), ptr[rax], 0x54 + rounding_direction);
-    vrndscaleps(Zmm(9), ptr[rcx], 0x54 + rounding_direction);
-    vrndscaleps(Zmm(10), ptr[rax], 0xa4 + rounding_direction);
-    vrndscaleps(Zmm(11), ptr[rcx], 0xa4 + rounding_direction);
-    vrndscaleps(Zmm(12), ptr[rax], 0xc4 + rounding_direction);
-    vrndscaleps(Zmm(13), ptr[rcx], 0xc4 + rounding_direction);
-    vrndscaleps(Zmm(14), ptr[rax], 0xf4 + rounding_direction);
-    vrndscaleps(Zmm(15), ptr[rcx], 0xf4 + rounding_direction);
+    vrndscaleps(Zmm(2), ptr[rax], 0x00 + rounding_direction);
+    vrndscaleps(Zmm(3), ptr[rcx], 0x00 + rounding_direction);
+    vrndscaleps(Zmm(4), ptr[rax], 0x10 + rounding_direction);
+    vrndscaleps(Zmm(5), ptr[rcx], 0x10 + rounding_direction);
+    vrndscaleps(Zmm(6), ptr[rax], 0x20 + rounding_direction);
+    vrndscaleps(Zmm(7), ptr[rcx], 0x20 + rounding_direction);
+    vrndscaleps(Zmm(8), ptr[rax], 0x50 + rounding_direction);
+    vrndscaleps(Zmm(9), ptr[rcx], 0x50 + rounding_direction);
+    vrndscaleps(Zmm(10), ptr[rax], 0xa0 + rounding_direction);
+    vrndscaleps(Zmm(11), ptr[rcx], 0xa0 + rounding_direction);
+    vrndscaleps(Zmm(12), ptr[rax], 0xc0 + rounding_direction);
+    vrndscaleps(Zmm(13), ptr[rcx], 0xc0 + rounding_direction);
+    vrndscaleps(Zmm(14), ptr[rax], 0xf0 + rounding_direction);
+    vrndscaleps(Zmm(15), ptr[rcx], 0xf0 + rounding_direction);
 
     /* Register index is EVEX range. */
     addr1 = reinterpret_cast<size_t>(&(inputZReg[16].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(16), ptr[rax], 0x04 + rounding_direction);
+    vrndscaleps(Zmm(16), ptr[rax], 0x00 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[17].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(17), ptr[rax], 0x14 + rounding_direction);
+    vrndscaleps(Zmm(17), ptr[rax], 0x10 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[18].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(18), ptr[rax], 0x24 + rounding_direction);
+    vrndscaleps(Zmm(18), ptr[rax], 0x20 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[19].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(19), ptr[rax], 0x34 + rounding_direction);
+    vrndscaleps(Zmm(19), ptr[rax], 0x30 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[20].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(20), ptr[rax], 0x44 + rounding_direction);
+    vrndscaleps(Zmm(20), ptr[rax], 0x40 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[21].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(21), ptr[rax], 0x54 + rounding_direction);
+    vrndscaleps(Zmm(21), ptr[rax], 0x50 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[22].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(22), ptr[rax], 0x64 + rounding_direction);
+    vrndscaleps(Zmm(22), ptr[rax], 0x60 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[23].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(23), ptr[rax], 0x74 + rounding_direction);
+    vrndscaleps(Zmm(23), ptr[rax], 0x70 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[24].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(24), ptr[rax], 0x84 + rounding_direction);
+    vrndscaleps(Zmm(24), ptr[rax], 0x80 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[25].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(25), ptr[rax], 0x94 + rounding_direction);
+    vrndscaleps(Zmm(25), ptr[rax], 0x90 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[26].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(26), ptr[rax], 0xa4 + rounding_direction);
+    vrndscaleps(Zmm(26), ptr[rax], 0xa0 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[27].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(27), ptr[rax], 0xb4 + rounding_direction);
+    vrndscaleps(Zmm(27), ptr[rax], 0xb0 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[28].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(28), ptr[rax], 0xc4 + rounding_direction);
+    vrndscaleps(Zmm(28), ptr[rax], 0xc0 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[29].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(29), ptr[rax], 0xd4 + rounding_direction);
+    vrndscaleps(Zmm(29), ptr[rax], 0xd0 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[30].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(30), ptr[rax], 0xe4 + rounding_direction);
+    vrndscaleps(Zmm(30), ptr[rax], 0xe0 + rounding_direction);
 
     addr1 = reinterpret_cast<size_t>(&(inputZReg[31].sp_dt[0]));
     mov(rax, addr1);
-    vrndscaleps(Zmm(31), ptr[rax], 0xf4 + rounding_direction);
+    vrndscaleps(Zmm(31), ptr[rax], 0xf0 + rounding_direction);
 
     mov(rax, 5);
     mov(rcx, 7);
