@@ -52,7 +52,8 @@ constexpr static unsigned int xt_sp_reg_idx = 4;
 #endif
 // Stack size for translator >= (SVE reg. size) * 5 + (predicate reg. size) * 2
 constexpr static unsigned int xt_stack_size = 512 * 8;
-// If xt_stack_offset >= 4096, then use sub_imm() in preamble() in jit_generator.hpp
+// If xt_stack_offset >= 4096, then use sub_imm() in preamble() in
+// jit_generator.hpp
 constexpr static unsigned int xt_stack_offset = 2048;
 
 Xbyak_aarch64::WReg W_TMP_0 = w23;
@@ -66,7 +67,11 @@ Xbyak_aarch64::XReg X_TMP_2 = x25;
 Xbyak_aarch64::XReg X_TMP_3 = x26;
 Xbyak_aarch64::XReg X_TMP_4 = x27;
 Xbyak_aarch64::XReg X_TMP_ADDR = x28;
-Xbyak_aarch64::XReg X_TRANSLATER_STACK = x22;
+#ifdef XT_TEST
+Xbyak_aarch64::XReg X_TRANSLATOR_STACK{xt_sp_reg_idx};
+#else
+Xbyak_aarch64::XReg X_TRANSLATOR_STACK = x22;
+#endif
 Xbyak_aarch64::PReg P_TMP = p0;
 Xbyak_aarch64::PReg P_TMP_0 = p11;
 Xbyak_aarch64::PReg P_TMP_1 = p12;
@@ -450,7 +455,8 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
         CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
                                   Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-        CodeGeneratorAArch64::sub(X_TRANSLATER_STACK, X_TRANSLATER_STACK, NUM_BYTES_Z_REG);
+        CodeGeneratorAArch64::sub(X_TRANSLATER_STACK, X_TRANSLATER_STACK,
+                                  NUM_BYTES_Z_REG);
         CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
                                   Xbyak_aarch64::ptr(X_TRANSLATER_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
@@ -489,8 +495,10 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
       CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
                                 Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::sub(X_TRANSLATER_STACK, X_TRANSLATER_STACK, NUM_BYTES_Z_REG);
-      CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(X_TRANSLATER_STACK));
+      CodeGeneratorAArch64::sub(X_TRANSLATER_STACK, X_TRANSLATER_STACK,
+                                NUM_BYTES_Z_REG);
+      CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
+                                Xbyak_aarch64::ptr(X_TRANSLATER_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
       return i;
     }
@@ -517,7 +525,8 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
         CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
                                   Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-        CodeGeneratorAArch64::sub(X_TRANSLATER_STACK, X_TRANSLATER_STACK, NUM_BYTES_PRED_REG);
+        CodeGeneratorAArch64::sub(X_TRANSLATER_STACK, X_TRANSLATER_STACK,
+                                  NUM_BYTES_PRED_REG);
         CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
                                   Xbyak_aarch64::ptr(X_TRANSLATER_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
@@ -556,8 +565,10 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
       CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
                                 Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::sub(X_TRANSLATER_STACK, X_TRANSLATER_STACK, NUM_BYTES_PRED_REG);
-      CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(X_TRANSLATER_STACK));
+      CodeGeneratorAArch64::sub(X_TRANSLATER_STACK, X_TRANSLATER_STACK,
+                                NUM_BYTES_PRED_REG);
+      CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
+                                Xbyak_aarch64::ptr(X_TRANSLATER_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
       return i;
     }
@@ -582,8 +593,10 @@ void xt_pop_zreg() {
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
 #else  //#ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(X_TRANSLATER_STACK));
-      CodeGeneratorAArch64::add(X_TRANSLATER_STACK, X_TRANSLATER_STACK, NUM_BYTES_Z_REG);
+      CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i),
+                                Xbyak_aarch64::ptr(X_TRANSLATER_STACK));
+      CodeGeneratorAArch64::add(X_TRANSLATER_STACK, X_TRANSLATER_STACK,
+                                NUM_BYTES_Z_REG);
 #endif //#ifdef XT_AARCH64_STACK_REG
       zreg_tmp_used[i] = false;
       return;
@@ -606,7 +619,8 @@ void xt_pop_preg() {
                                 CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
 #else  //#ifdef XT_AARCH64_STACK_REG
       CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x4));
-      CodeGeneratorAArch64::add(X_TRANSLATER_STACK, X_TRANSLATER_STACK, NUM_BYTES_PRED_REG);
+      CodeGeneratorAArch64::add(X_TRANSLATER_STACK, X_TRANSLATER_STACK,
+                                NUM_BYTES_PRED_REG);
 #endif //#ifdef XT_AARCH64_STACK_REG
       preg_tmp_used[i] = false;
       return;
