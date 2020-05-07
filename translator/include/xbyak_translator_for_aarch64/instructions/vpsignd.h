@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/05/03 17:53 */
+/* 2020/05/07 09:08 */
 #define CG64 CodeGeneratorAArch64
 void translateVPSIGND(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   xa::LabelAArch64 L_zflag, L_cflag;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
-  unsigned int rounding_direction = a64.operands[2].uimm & 0x3;
   bool isValid = false;
   xt_reg_idx_t dstIdx;
   xt_reg_idx_t srcIdx;
