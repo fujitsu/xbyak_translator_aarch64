@@ -54,7 +54,7 @@ constexpr static unsigned int xt_sp_reg_idx = 4;
 constexpr static unsigned int xt_stack_size = 512 * 8;
 // If xt_stack_offset >= 4096, then use sub_imm() in preamble() in
 // jit_generator.hpp
-constexpr static unsigned int xt_stack_offset = 1024 * 1024;
+constexpr static unsigned int xt_stack_offset = 1024 * 128;
 
 Xbyak_aarch64::WReg W_TMP_0 = w23;
 Xbyak_aarch64::WReg W_TMP_1 = w24;
@@ -71,6 +71,7 @@ Xbyak_aarch64::XReg X_TMP_ADDR = x28;
 Xbyak_aarch64::XReg X_TRANSLATOR_STACK{xt_sp_reg_idx};
 #else
 Xbyak_aarch64::XReg X_TRANSLATOR_STACK = x22;
+//Xbyak_aarch64::XReg X_TRANSLATOR_STACK = x4;
 #endif
 Xbyak_aarch64::PReg P_TMP = p0;
 Xbyak_aarch64::PReg P_TMP_0 = p11;
@@ -618,7 +619,7 @@ void xt_pop_preg() {
       CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
                                 CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
 #else  //#ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x4));
+      CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
       CodeGeneratorAArch64::add(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
                                 NUM_BYTES_PRED_REG);
 #endif //#ifdef XT_AARCH64_STACK_REG
