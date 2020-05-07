@@ -30,8 +30,6 @@
 #define NUM_BYTES_GEN_REG 8
 #define NUM_BYTES_PRED_REG 8
 #define NUM_BYTES_Z_REG 64
-// NUM_BYTES_TRANSLATER_STACK_SIZE >= ZReg * 5 + PReg * 2
-#define NUM_BYTES_TRANSLATER_STACK_SIZE 512 * 8
 
 #define TMP_PREG_START 7
 #define TMP_PREG_END 0
@@ -52,6 +50,11 @@ constexpr static unsigned int xt_sp_reg_idx = 31;
 #else
 constexpr static unsigned int xt_sp_reg_idx = 4;
 #endif
+// Stack size for translator >= (SVE reg. size) * 5 + (predicate reg. size) * 2
+constexpr static unsigned int xt_stack_size = 512 * 8;
+// If xt_stack_offset >= 4096, then use sub_imm() in preamble() in jit_generator.hpp
+constexpr static unsigned int xt_stack_offset = 2048;
+
 Xbyak_aarch64::WReg W_TMP_0 = w23;
 Xbyak_aarch64::WReg W_TMP_1 = w24;
 Xbyak_aarch64::WReg W_TMP_2 = w25;
