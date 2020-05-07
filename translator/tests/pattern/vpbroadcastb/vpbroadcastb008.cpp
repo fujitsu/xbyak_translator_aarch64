@@ -20,6 +20,11 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
+    inputPredReg[1] = uint64_t(0); /* Both x86_64 and aarch64 */
+    inputPredReg[2] = 0x100010001; /* Both x86_64 and aarch64 */
+    inputPredReg[3] = 0x400040004; /* Both x86_64 and aarch64 */
+    inputPredReg[4] = 0x1000100010; /* Both x86_64 and aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -27,18 +32,25 @@ public:
   }
 
   void genJitTestCode() {
+    size_t addr;
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(r8, 0xabcd);    
-    mov(r9, 0x1234);    
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[7]));
+    mov(rax, addr);
 
-    vpbroadcastb(Zmm(0), Xmm(31));
-    vpbroadcastb(Zmm(1), Xmm(31));
-    vpbroadcastb(Zmm(2), Xmm(30));
-    vpbroadcastb(Zmm(3), Xmm(30));
-    vpbroadcastb(Zmm(4), Xmm(4));
-    vpbroadcastb(Zmm(5), Xmm(5));
-    vpbroadcastb(Zmm(6), r8b);
-    vpbroadcastb(Zmm(7), r9b);
+    vpbroadcastb(Xmm(0) | k1 | T_z, ptr[rax]);
+    vpbroadcastb(Ymm(1) | k1 | T_z, ptr[rax]);
+    vpbroadcastb(Zmm(2) | k1 | T_z, ptr[rax]);
+    vpbroadcastb(Xmm(3) | k2 | T_z, ptr[rax]);
+    vpbroadcastb(Ymm(4) | k3 | T_z, ptr[rax]);
+    vpbroadcastb(Zmm(5) | k4 | T_z, ptr[rax]);
+    vpbroadcastb(Xmm(6) | k3 | T_z, ptr[rax]);
+    vpbroadcastb(Ymm(7) | k4 | T_z, ptr[rax]);
+    vpbroadcastb(Zmm(8) | k2 | T_z, ptr[rax]);
+    vpbroadcastb(Xmm(9) | k4 | T_z, ptr[rax]);
+    vpbroadcastb(Ymm(10) | k2 | T_z, ptr[rax]);
+    vpbroadcastb(Zmm(11) | k3 | T_z, ptr[rax]);
+
+    mov(rax, 8);
   }
 };
 

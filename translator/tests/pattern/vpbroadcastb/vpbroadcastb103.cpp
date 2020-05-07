@@ -19,6 +19,8 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    setDumpZRegMode(SP_DT); // set float mode
+    inputZReg[0].sp_dt[7] = float(500.3);
     setInputZregAllRandomHex();
   }
 
@@ -28,17 +30,22 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(r8, 0xabcd);    
-    mov(r9, 0x1234);    
+    size_t addr;
 
-    vpbroadcastb(Zmm(0), Xmm(31));
-    vpbroadcastb(Zmm(1), Xmm(31));
-    vpbroadcastb(Zmm(2), Xmm(30));
-    vpbroadcastb(Zmm(3), Xmm(30));
-    vpbroadcastb(Zmm(4), Xmm(4));
-    vpbroadcastb(Zmm(5), Xmm(5));
-    vpbroadcastb(Zmm(6), r8b);
-    vpbroadcastb(Zmm(7), r9b);
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[7]));
+    mov(rax, addr);
+
+    for (int i = 0; i < 4; i++) {
+      vpbroadcastb(Xmm(i), ptr[rax]);
+      vpbroadcastb(Ymm(i + 4), ptr[rax]);
+      vpbroadcastb(Zmm(i + 8), ptr[rax]);
+
+      vpbroadcastb(Xmm(i + 16), ptr[rax]);
+      vpbroadcastb(Ymm(i + 20), ptr[rax]);
+    }
+
+    mov(rax, 8);
   }
 };
 
