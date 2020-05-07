@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/04/30 16:20 */
+/* 2020/05/07 17:52 */
 #define CG64 CodeGeneratorAArch64
 void translateVPERMILPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -569,7 +569,7 @@ void translateVPERMILPS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true)) {
-    CG64::sub(X_TMP_ADDR, xa::XReg(xt_sp_reg_idx), 128);
+    CG64::sub(X_TMP_ADDR, xa::XReg(X_TRANSLATOR_STACK), 128);
   }
   /* Col=AL163*/
   if (false ||
@@ -585,7 +585,7 @@ void translateVPERMILPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true)) {
     CG64::str(xa::ZReg(srcIdx),
-              xa::ptr(xa::XReg(xt_sp_reg_idx), -1, xa::MUL_VL));
+              xa::ptr(xa::XReg(X_TRANSLATOR_STACK), -1, xa::MUL_VL));
   }
   /* Col=AM163*/
   if (false ||
@@ -601,7 +601,7 @@ void translateVPERMILPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true)) {
     CG64::str(xa::ZReg(srcIdx),
-              xa::ptr(xa::XReg(xt_sp_reg_idx), -2, xa::MUL_VL));
+              xa::ptr(xa::XReg(X_TRANSLATOR_STACK), -2, xa::MUL_VL));
   }
   /* Col=AO163*/
   if (false ||
