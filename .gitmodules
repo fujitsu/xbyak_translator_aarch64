@@ -6,4 +6,4 @@
 	url = ../../postk_dl/mbuild.git
 [submodule "translator/third_party/xbyak_aarch64"]
 	path = translator/third_party/xbyak_aarch64
-	url = ../../xbyak_aarch64.git
+	url = ../../postk_dl/xbyak_aarch64.git
