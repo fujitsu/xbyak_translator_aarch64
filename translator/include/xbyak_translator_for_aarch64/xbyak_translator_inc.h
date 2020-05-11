@@ -71,6 +71,7 @@
 #include "instructions/vpbroadcastb.h"
 #include "instructions/vpbroadcastd.h"
 #include "instructions/vpbroadcastq.h"
+#include "instructions/vpbroadcastw.h"
 #include "instructions/vpcmpb.h"
 #include "instructions/vpcmpd.h"
 #include "instructions/vpcmpub.h"
