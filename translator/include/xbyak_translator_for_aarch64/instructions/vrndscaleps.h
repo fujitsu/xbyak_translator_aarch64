@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/04/21 09:50 */
+/* 2020/05/04 09:27 */
 #define CG64 CodeGeneratorAArch64
 void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
+  unsigned int rounding_direction = a64.operands[3].uimm & 0x3;
   bool isValid = false;
   xt_reg_idx_t dstIdx;
   xt_reg_idx_t srcIdx;
@@ -1282,6 +1283,10 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
+    /* get the scaling factor
+  M <- imm8[7:4]
+  scale = 2^M
+  ZRegS(zTmpIdx) = (float)scale */
     CG64::dup(xa::ZRegS(zTmpIdx), ((uimm >> 4) & 0xf));
     CG64::dup(xa::ZRegS(zTmp2Idx), 1);
     CG64::lsl(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
@@ -1394,6 +1399,9 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
+    /* scale up
+  2^M * SRC[31:0]
+  ZRegS(zTmpIdx) = (float)scale * ZRegS(srcIdx) */
     CG64::mov(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
               xa::ZRegS(srcIdx));
     CG64::fmul(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
@@ -1468,41 +1476,11 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_MEM0 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_MEM0 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_MEM0 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
+    /* calc. pos/neg max values after scale up
+  P_TMP_0:flag of negative max value after scale up
+  P_TMP_1:flag of positive max value after scale up
+  PRegB(pTmpIdx) = flag of pos/neg max value after scale up */
     CG64::mov(W_TMP_0, 0xcf000000);
     CG64::sub(W_TMP_0, W_TMP_0, 1);
     CG64::dup(xa::ZRegS(zTmp3Idx), W_TMP_0);
@@ -1620,16 +1598,30 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
-    CG64::sub(X_TMP_1, xa::XReg(xt_sp_reg_idx), 64);
-    CG64::sub(X_TMP_0, xa::XReg(xt_sp_reg_idx), 64);
-    CG64::str(xa::ZReg(zTmp2Idx), xa::ptr(X_TMP_1));
-    for (int i = 0; i < 4; i++) {
-      CG64::ld1(xa::VReg4S(zTmp2Idx), xa::ptr(X_TMP_1));
-      CG64::frintn(xa::VReg4S(zTmp2Idx), xa::VReg4S(zTmp2Idx));
-      CG64::fcvtzs(xa::VReg4S(zTmp2Idx), xa::VReg4S(zTmp2Idx));
-      CG64::st1(xa::VReg4S(zTmp2Idx), xa::post_ptr(X_TMP_1, 16));
+    /* round_to_nearest_smallest_magnitude_integer
+  ZRegS(zTmp2Idx) = round_to_nearest_smallest_magnitude_integer(2^M * SRC[31:0])
+*/
+    switch (rounding_direction) {
+    case 0:
+      CG64::frintn(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
+                   xa::ZRegS(zTmp2Idx));
+      break;
+    case 1:
+      CG64::frintm(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
+                   xa::ZRegS(zTmp2Idx));
+      break;
+    case 2:
+      CG64::frintp(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
+                   xa::ZRegS(zTmp2Idx));
+      break;
+    case 3:
+      CG64::frintz(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
+                   xa::ZRegS(zTmp2Idx));
+      break;
+    default:
+      XT_UNIMPLEMENTED;
+      break;
     }
-    CG64::ldr(xa::ZReg(zTmp2Idx), xa::ptr(X_TMP_0));
   }
   /* Col=AQ119*/
   if (false ||
@@ -1735,8 +1727,8 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
-    CG64::scvtf(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
-                xa::ZRegS(zTmp2Idx));
+    /* scale down
+  ZRegS(zTmp2Idx) = (float)2^-M * (float)ZRegS(zTmp2Idx) */
     CG64::fdiv(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
                xa::ZRegS(zTmpIdx));
   }
@@ -1809,50 +1801,26 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_MEM0 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_MEM0 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_MEM0 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
+    /* -0.0 handling. Adjust Intel's behaviour.
+  if SRC[31:0]<0 and calc result == 0.0, then make result to -0.0(0xbf800000).
+*/
     CG64::eor(xa::ZRegD(zTmpIdx), xa::ZRegD(zTmpIdx), xa::ZRegD(zTmpIdx));
+    if (rounding_direction != 0) {
+      CG64::mov_imm(W_TMP_0, 0xbf800000, W_TMP_1);
+    }
     CG64::fcmeq(P_TMP_0.s, xa::PReg(maskIdx) / xa::T_z, xa::ZRegS(zTmp2Idx),
                 xa::ZRegS(zTmpIdx));
     CG64::fcmlt(P_TMP_1.s, xa::PReg(maskIdx) / xa::T_z, xa::ZRegS(srcIdx),
                 xa::ZRegS(zTmpIdx));
     CG64::and_(xa::PRegB(pTmp2Idx), xa::PReg(maskIdx) / xa::T_z, P_TMP_0.b,
                P_TMP_1.b);
-    CG64::fneg(xa::ZRegS(zTmp2Idx), xa::PReg(pTmp2Idx) / xa::T_m,
-               xa::ZRegS(zTmp2Idx));
+    if (rounding_direction == 0) {
+      CG64::fneg(xa::ZRegS(zTmp2Idx), xa::PReg(pTmp2Idx) / xa::T_m,
+                 xa::ZRegS(zTmp2Idx));
+    } else {
+      CG64::cpy(xa::ZRegS(zTmp2Idx), xa::PReg(pTmp2Idx) / xa::T_m, W_TMP_0);
+    }
   }
   /* Col=AS119*/
   if (false ||
@@ -1923,44 +1891,13 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_MEM0 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_MEM0 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_MEM0 &&
-       a64.operands[3].opName == XED_OPERAND_IMM0 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
+    /* If values after scale up is over flow, set result to SRC[31:0].
+  (Adjust to Intel's behaviour) */
     CG64::mov(xa::ZRegS(zTmp2Idx), xa::PReg(pTmpIdx) / xa::T_m,
               xa::ZRegS(srcIdx));
   }
+
   /* Col=AT119*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -2068,7 +2005,6 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
     CG64::mov(xa::ZRegS(dstIdx), xa::PReg(maskIdx) / xa::T_m,
               xa::ZRegS(zTmp2Idx));
   }
-
   /* Col=AV119*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -2117,6 +2053,7 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
        true)) {
     CG64::orn(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_MSB_384.b, xa::PRegB(maskIdx));
   }
+
   /* Col=AZ119*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&

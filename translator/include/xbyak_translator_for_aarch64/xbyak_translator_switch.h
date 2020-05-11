@@ -746,6 +746,7 @@ case XED_ICLASS_KTESTB:
 case XED_ICLASS_KTESTD:
   break;
 case XED_ICLASS_KTESTQ:
+  translateKTESTQ(&xedd);
   break;
 case XED_ICLASS_KTESTW:
   break;
@@ -1522,7 +1523,6 @@ case XED_ICLASS_REP_XSTORE:
 case XED_ICLASS_RET_FAR:
   translateRET(&xedd);
   break;
-
 case XED_ICLASS_RET_NEAR:
   translateRET(&xedd);
   break;
@@ -1629,6 +1629,7 @@ case XED_ICLASS_SHL:
 case XED_ICLASS_SHLD:
   break;
 case XED_ICLASS_SHLX:
+  translateSHLX(&xedd);
   break;
 case XED_ICLASS_SHR:
   break;
@@ -2632,8 +2633,10 @@ case XED_ICLASS_VPERMIL2PD:
 case XED_ICLASS_VPERMIL2PS:
   break;
 case XED_ICLASS_VPERMILPD:
+  translateVPERMILPD(&xedd);
   break;
 case XED_ICLASS_VPERMILPS:
+  translateVPERMILPS(&xedd);
   break;
 case XED_ICLASS_VPERMPD:
   break;
@@ -3024,6 +3027,7 @@ case XED_ICLASS_VPSHUFLW:
 case XED_ICLASS_VPSIGNB:
   break;
 case XED_ICLASS_VPSIGND:
+  translateVPSIGND(&xedd);
   break;
 case XED_ICLASS_VPSIGNW:
   break;
@@ -3189,6 +3193,7 @@ case XED_ICLASS_VRNDSCALESS:
 case XED_ICLASS_VROUNDPD:
   break;
 case XED_ICLASS_VROUNDPS:
+  translateVROUNDPS(&xedd);
   break;
 case XED_ICLASS_VROUNDSD:
   break;
@@ -3285,6 +3290,7 @@ case XED_ICLASS_VSUBSS:
 case XED_ICLASS_VTESTPD:
   break;
 case XED_ICLASS_VTESTPS:
+  translateVTESTPS(&xedd);
   break;
 case XED_ICLASS_VUCOMISD:
   break;
@@ -3357,6 +3363,7 @@ case XED_ICLASS_XOR:
 case XED_ICLASS_XORPD:
   break;
 case XED_ICLASS_XORPS:
+  translateXORPS(&xedd);
   break;
 case XED_ICLASS_XOR_LOCK:
   break;
