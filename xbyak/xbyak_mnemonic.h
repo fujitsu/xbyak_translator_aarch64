@@ -1467,7 +1467,7 @@ void vpsrlvd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1,
 void vpsrlvq(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F38 | T_W1 | T_EW1 | T_YMM | T_EVEX | T_B64, 0x45); UNIMPLEMENTED; }
 void vpsrlw(const Xmm& x, const Operand& op, uint8 imm) { opAVX_X_X_XM(Xmm(x.getKind(), 2), x, op, T_66 | T_0F | T_YMM | T_EVEX | T_MEM_EVEX, 0x71, imm); UNIMPLEMENTED; }
 void vpsrlw(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_N16 | T_66 | T_0F | T_YMM | T_EVEX, 0xD1); UNIMPLEMENTED; }
-void vpsubb(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0xF8); UNIMPLEMENTED; }
+void vpsubb(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0xF8); decodeAndTransToAArch64(); }
 void vpsubd(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW0 | T_YMM | T_EVEX | T_B32, 0xFA); UNIMPLEMENTED; }
 void vpsubq(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_EW1 | T_YMM | T_EVEX | T_B64, 0xFB); UNIMPLEMENTED; }
 void vpsubsb(const Xmm& x1, const Xmm& x2, const Operand& op) { opAVX_X_X_XM(x1, x2, op, T_66 | T_0F | T_YMM | T_EVEX, 0xE8); UNIMPLEMENTED; }
@@ -1754,7 +1754,7 @@ void vpsrlq(const Xmm& x, const Operand& op) { vpsrlq(x, x, op); UNIMPLEMENTED; 
 void vpsrlq(const Xmm& x, uint8 imm) { vpsrlq(x, x, imm); UNIMPLEMENTED; }
 void vpsrlw(const Xmm& x, const Operand& op) { vpsrlw(x, x, op); UNIMPLEMENTED; }
 void vpsrlw(const Xmm& x, uint8 imm) { vpsrlw(x, x, imm); UNIMPLEMENTED; }
-void vpsubb(const Xmm& x, const Operand& op) { vpsubb(x, x, op); UNIMPLEMENTED; }
+void vpsubb(const Xmm& x, const Operand& op) { vpsubb(x, x, op); decodeAndTransToAArch64(); }
 void vpsubd(const Xmm& x, const Operand& op) { vpsubd(x, x, op); UNIMPLEMENTED; }
 void vpsubq(const Xmm& x, const Operand& op) { vpsubq(x, x, op); UNIMPLEMENTED; }
 void vpsubsb(const Xmm& x, const Operand& op) { vpsubsb(x, x, op); UNIMPLEMENTED; }

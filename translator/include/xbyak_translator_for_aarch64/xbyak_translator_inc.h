@@ -130,6 +130,7 @@
 #include "instructions/vpslld.h"
 #include "instructions/vpsrad.h"
 #include "instructions/vpsrld.h"
+#include "instructions/vpsubb.h"
 #include "instructions/vpunpckhbw.h"
 #include "instructions/vpunpckhqdq.h"
 #include "instructions/vpunpckhwd.h"
