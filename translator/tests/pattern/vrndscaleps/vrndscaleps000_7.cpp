@@ -86,7 +86,7 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
-    unsigned int rounding_direction = 0;
+    unsigned int rounding_direction = 3;
 
     /* Register index is VEX range. */
     vrndscaleps(Zmm(2), Zmm(0), 0x00 + rounding_direction);
