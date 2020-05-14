@@ -12,7 +12,6 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
   xt_reg_idx_t maskIdx;
   xt_reg_idx_t zTmpIdx;
   xt_reg_idx_t pTmpIdx;
-  xed_uint64_t uimm;
 
   /* Col=U103*/
   if (false ||

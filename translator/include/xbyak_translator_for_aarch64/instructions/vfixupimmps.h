@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/04/20 20:55 */
+/* 2020/05/14 16:15 */
 #define CG64 CodeGeneratorAArch64
 void translateVFIXUPIMMPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -182,7 +182,6 @@ void translateVFIXUPIMMPS(xed_decoded_inst_t *p) {
     dw_aarch64(0x3FC90FDB); // PI/2
     dw_aarch64(0x7F7FFFFF); // MAX_FLOAT
     dw_aarch64(0xFF7FFFFF); // -MIN_FLOAT
-    dw_aarch64(std::numeric_limits<float>::lowest());
     L_aarch64(l_exec);
   }
   /* Col=AL120*/
