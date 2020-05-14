@@ -32,7 +32,7 @@
 # aarch64  , aarch64 , x86_64   , NG
 # aarch64  , aarch64 , aarch64  , OK (Executable on native environment)
 #*******************************************************************************
-#QEMU_AARCH64_KAWAKAMI=/home/kawakami/local_xbyak/bin/qemu-aarch64
+QEMU_AARCH64_KAWAKAMI=/home/kawakami/local_xbyak/bin/qemu-aarch64
 
 CXX=g++
 OBJDUMP=objdump
@@ -247,8 +247,7 @@ dump_disassemble() {
 }
 
 extract_log() {
-    PWD=`pwd`
-    tmpfile=${PWD}/expected_value/${LOG_NAME}.check.log
+    tmpfile=/tmp/${LOG_NAME}.`whoami`.check.log
     grep -w Check ${LOG_NAME}.log > ${tmpfile}
 }
 
