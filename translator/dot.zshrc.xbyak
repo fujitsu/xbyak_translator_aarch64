@@ -138,3 +138,32 @@ TA() {
     ./test2.sh -a -A -E pattern/${TP_BASE}/${1}.cpp
 }
 
+REMOVE_UNUSED_VARIABLE() {
+    if [ $# -eq 0 ] ; then
+       echo "please set target files..."
+       return 0
+    fi
+    NUM_FILES=$#
+    WARNING_MSG=`TA add000 |& grep 'unused'`
+    for i in `seq 1 $NUM_FILES`
+    do
+       WARNING_FILE=`echo $@ | cut -d' ' -f${i}`
+       WARNING_LINES=`echo $WARNING_MSG | grep $WARNING_FILE | cut -d':' -f2`
+       WARNING_FILE_PATH=`echo $WARNING_MSG | grep $WARNING_FILE | cut -d':' -f1`
+       if [ "$WARNING_FILE_PATH" = "" ] ; then
+           NUM_WARNING_LINES=0
+       else
+           NUM_WARNING_LINES=`echo $WARNING_LINES | wc -l`
+       fi
+       for j in `seq 1 $NUM_WARNING_LINES`
+        do
+           WARNING_LINE=`echo $WARNING_LINES | sed -n ${j}p | sed -e s/\\n//g`
+           DELETE_LINE=`expr $WARNING_LINE - $j + 1`
+           cat $WARNING_FILE_PATH | sed ${DELETE_LINE}d > tmpfile
+           mv tmpfile $WARNING_FILE_PATH
+       done
+       if [ $NUM_WARNING_LINES -ne 0 ] ; then
+          echo $WARNING_FILE_PATH
+       fi
+    done
+}
