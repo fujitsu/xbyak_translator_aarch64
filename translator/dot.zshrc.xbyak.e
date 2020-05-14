@@ -106,10 +106,10 @@ TALL() {
   
   PWD=`pwd`
 
-      INSTRUCTIONS=`ls pattern/ | sed -e 's/\n/ /g'` 
+      INSTRUCTIONS=`ls pattern/ | sed -e 's/\n/ /g' | grep -v sandbox`
       NUM_INSTRUCTIONS=`ls pattern/ | wc -l`
 
-    INSTRUCTIONS_X86=`ls expected_value/ | sed -e 's/\n/ /g'`
+    INSTRUCTIONS_X86=`ls expected_value/ | sed -e 's/\n/ /g' | grep -v sandbox`
     NUM_INSTRUCTIONS_X86=`ls expected_value/ | wc -l`
 
 #    if [ $NUM_INSTRUCTIONS -ne $NUM_INSTRUCTIONS_X86 ];then
