@@ -1,0 +1,97 @@
+variables:
+    GIT_STRATEGY: clone
+
+stages:
+    - test
+
+before_script:
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
+
+job_1:
+  stage: test
+  image: test_ci
+  script:
+    - pwd
+    - ls
+    - cd translator/third_party/
+    - mkdir build_xed_aarch64
+    - cd build_xed_aarch64/
+    - ../xed/mfile.py --host-cpu=aarch64 --shared examples install
+    - cd kits/
+    - XED=`ls | grep install`
+    - ln -sf $XED xed
+    - cd xed/bin/
+    - CI_XED_PATH=`pwd`
+    - cd ../../../../../
+    - source dot.zshrc.xbyak.ci
+    - cd tests/
+    - TALL 1 90
+#  tags: 
+#    - instruction_unit 
+
+job_2:
+  stage: test
+  image: test_ci
+  script:
+    - pwd
+    - ls
+    - cd translator/third_party/
+    - mkdir build_xed_aarch64
+    - cd build_xed_aarch64/
+    - ../xed/mfile.py --host-cpu=aarch64 --shared examples install
+    - cd kits/
+    - XED=`ls | grep install`
+    - ln -sf $XED xed
+    - cd xed/bin/
+    - CI_XED_PATH=`pwd`
+    - cd ../../../../../
+    - source dot.zshrc.xbyak.ci
+    - cd tests/
+    - TALL 91 115
+#  tags: 
+#    - instruction_unit 
+
+job_3:
+  stage: test
+  image: test_ci
+  script:
+    - pwd
+    - ls
+    - cd translator/third_party/
+    - mkdir build_xed_aarch64
+    - cd build_xed_aarch64/
+    - ../xed/mfile.py --host-cpu=aarch64 --shared examples install
+    - cd kits/
+    - XED=`ls | grep install`
+    - ln -sf $XED xed
+    - cd xed/bin/
+    - CI_XED_PATH=`pwd`
+    - cd ../../../../../
+    - source dot.zshrc.xbyak.ci
+    - cd tests/
+    - TALL 116 155
+#  tags: 
+#    - instruction_unit
+
+job_4:
+  stage: test
+  image: test_ci
+  script:
+    - pwd
+    - ls
+    - cd translator/third_party/
+    - mkdir build_xed_aarch64
+    - cd build_xed_aarch64/
+    - ../xed/mfile.py --host-cpu=aarch64 --shared examples install
+    - cd kits/
+    - XED=`ls | grep install`
+    - ln -sf $XED xed
+    - cd xed/bin/
+    - CI_XED_PATH=`pwd`
+    - cd ../../../../../
+    - source dot.zshrc.xbyak.ci
+    - cd tests/
+    - TALL 156 NUM_INSTRUCTIONS
+#  tags: 
+#    - instruction_unit

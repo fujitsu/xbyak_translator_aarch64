@@ -96,7 +96,8 @@ TEST() {
     PWD=`pwd`
 
     X86_LOG=${PWD}/expected_value/${1}.jit_x86_64.exec_x86_64.check.log
-    AARCH64_LOG=${PWD}/expected_value/${1}.jit_aarch64.exec_aarch64.check.log
+    AARCH64_LOG=/tmp/${1}.jit_aarch64.exec_aarch64.`whoami`.check.log
+
     if [ ! -e $X86_LOG ];then
       msg_expected
     else
