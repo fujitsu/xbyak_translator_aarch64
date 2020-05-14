@@ -101,7 +101,7 @@ TEST() {
     if [ ! -e $X86_LOG ];then
       msg_expected
     else
-      if ./test2.sh -a -A -E pattern/${TP_BASE}/${1}.cpp ; then
+      if ./test3.sh -a -A -E pattern/${TP_BASE}/${1}.cpp ; then
       
       if diff -y -W 300 ${X86_LOG} ${AARCH64_LOG} ; then
         msg_ok
