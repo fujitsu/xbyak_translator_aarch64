@@ -10,7 +10,7 @@ before_script:
 
 job_1:
   stage: test
-  image: ci
+  image: 779e2bd88ba7
   script:
     - pwd
     - ls
@@ -32,7 +32,7 @@ job_1:
 
 job_2:
   stage: test
-  image: ci
+  image: 779e2bd88ba7
   script:
     - pwd
     - ls
@@ -54,7 +54,7 @@ job_2:
 
 job_3:
   stage: test
-  image: ci
+  image: 779e2bd88ba7
   script:
     - pwd
     - ls
@@ -76,7 +76,7 @@ job_3:
 
 job_4:
   stage: test
-  image: ci
+  image: 779e2bd88ba7
   script:
     - pwd
     - ls
