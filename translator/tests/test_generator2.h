@@ -954,15 +954,18 @@ public:
 
       char fillSaved = std::cout.fill('0');
 
+      if (sizeof(T) % sizeof(uint64_t)) {
+        msg_err(__FILE__, __LINE__, "Unsupported data size");
+      }
+
       const size_t num64 = sizeof(T) / sizeof(uint64_t);
       for (int sub_r = num64 - 1; sub_r >= 0; sub_r--) {
         uint64_t dut;
         uint64_t initData;
-        void *addrOut = &(output[r]);
-        void *addrIn = &(input[r]);
-        std::memcpy(&dut, addrOut + sizeof(uint64_t) * sub_r, sizeof(uint64_t));
-        std::memcpy(&initData, addrIn + sizeof(uint64_t) * sub_r,
-                    sizeof(uint64_t));
+        uint64_t *addrOut = reinterpret_cast<uint64_t *>(&(output[r]));
+        uint64_t *addrIn = reinterpret_cast<uint64_t *>(&(input[r]));
+        std::memcpy(&dut, addrOut + sub_r, sizeof(uint64_t));
+        std::memcpy(&initData, addrIn + sub_r, sizeof(uint64_t));
 
         _dumpCheckRegCore(dut, initData,
                           expPtr + sizeof(T) * r + sizeof(uint64_t) * sub_r,
