@@ -24,7 +24,7 @@ job_1:
     - cd xed/bin/
     - CI_XED_PATH=`pwd`
     - cd ../../../../../
-    - source dot.zshrc.xbyak.ci
+    - source dot.zshrc.xbyak
     - cd tests/
     - QEMU_AARCH64=/usr/local/bin/qemu-aarch64 TALL 1 90
   tags: 
@@ -46,7 +46,7 @@ job_2:
     - cd xed/bin/
     - CI_XED_PATH=`pwd`
     - cd ../../../../../
-    - source dot.zshrc.xbyak.ci
+    - source dot.zshrc.xbyak
     - cd tests/
     - QEMU_AARCH64=/usr/local/bin/qemu-aarch64 TALL 91 115
   tags: 
@@ -68,7 +68,7 @@ job_3:
     - cd xed/bin/
     - CI_XED_PATH=`pwd`
     - cd ../../../../../
-    - source dot.zshrc.xbyak.ci
+    - source dot.zshrc.xbyak
     - cd tests/
     - QEMU_AARCH64=/usr/local/bin/qemu-aarch64 TALL 116 155
   tags: 
@@ -90,7 +90,7 @@ job_4:
     - cd xed/bin/
     - CI_XED_PATH=`pwd`
     - cd ../../../../../
-    - source dot.zshrc.xbyak.ci
+    - source dot.zshrc.xbyak
     - cd tests/
     - QEMU_AARCH64=/usr/local/bin/qemu-aarch64 TALL 156 NUM_INSTRUCTIONS
   tags: 
