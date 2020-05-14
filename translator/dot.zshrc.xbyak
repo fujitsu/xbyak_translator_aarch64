@@ -104,7 +104,7 @@ TEST() {
 }
 
 TALL() {
-    INSTRUCTIONS=`ls pattern/ | sed -z 's/\n/ /g' | grep -v sandbox`
+    INSTRUCTIONS=`ls pattern/  | grep -v sandbox | sed -z 's/\n/ /g'`
     NUM_INSTRUCTIONS=`echo $INSTRUCTIONS | awk '{count += (split($0, a, "\/") - 1)} END{print count}'`
     for j in `seq 1 $NUM_INSTRUCTIONS`
     do
