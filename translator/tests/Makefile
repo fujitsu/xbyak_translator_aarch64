@@ -21,7 +21,7 @@ all:all_result
 	$(eval TP_TMP_NAME := $(basename $(notdir $<)))
 	$(eval LINE_NUM := $(shell wc -l $< | cut -f 1 -d " "))
 	$(eval DIFF_LINE_NUM := $(shell grep "|" $< | wc -l | cut -f 1 -d " "))
-	if [ "$(LINE_NUM)" = 80 -a "$(DIFF_LINE_NUM)" = 0 ] ; then echo "$(TP_TMP_NAME):OK" > $@ ; else echo "$TP_TMP_NAME):NG" > $@ ; fi
+	if [ "$(LINE_NUM)" = 80 -a "$(DIFF_LINE_NUM)" = 0 ] ; then echo "$(TP_TMP_NAME):OK" > $@ ; else echo "$(TP_TMP_NAME):NG" > $@ ; fi
 
 all_result:$(TP_RESULTS)
 	grep OK $(TP_RESULTS) > $(FILE_REGRESSION)
