@@ -140,42 +140,42 @@ void cmovz(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i
 void cmp(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x38, 7); decodeAndTransToAArch64(); }
 void cmp(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x38); decodeAndTransToAArch64(); }
 void cmpeqpd(const Xmm& x, const Operand& op) { cmppd(x, op, 0); UNIMPLEMENTED; }
-void cmpeqps(const Xmm& x, const Operand& op) { cmpps(x, op, 0); UNIMPLEMENTED; }
+void cmpeqps(const Xmm& x, const Operand& op) { cmpps(x, op, 0); /*UNIMPLEMENTED;*/ }
 void cmpeqsd(const Xmm& x, const Operand& op) { cmpsd(x, op, 0); UNIMPLEMENTED; }
 void cmpeqss(const Xmm& x, const Operand& op) { cmpss(x, op, 0); UNIMPLEMENTED; }
 void cmplepd(const Xmm& x, const Operand& op) { cmppd(x, op, 2); UNIMPLEMENTED; }
-void cmpleps(const Xmm& x, const Operand& op) { cmpps(x, op, 2); UNIMPLEMENTED; }
+void cmpleps(const Xmm& x, const Operand& op) { cmpps(x, op, 2); /*UNIMPLEMENTED;*/ }
 void cmplesd(const Xmm& x, const Operand& op) { cmpsd(x, op, 2); UNIMPLEMENTED; }
 void cmpless(const Xmm& x, const Operand& op) { cmpss(x, op, 2); UNIMPLEMENTED; }
 void cmpltpd(const Xmm& x, const Operand& op) { cmppd(x, op, 1); UNIMPLEMENTED; }
-void cmpltps(const Xmm& x, const Operand& op) { cmpps(x, op, 1); UNIMPLEMENTED; }
+void cmpltps(const Xmm& x, const Operand& op) { cmpps(x, op, 1); /*UNIMPLEMENTED;*/ }
 void cmpltsd(const Xmm& x, const Operand& op) { cmpsd(x, op, 1); UNIMPLEMENTED; }
 void cmpltss(const Xmm& x, const Operand& op) { cmpss(x, op, 1); UNIMPLEMENTED; }
 void cmpneqpd(const Xmm& x, const Operand& op) { cmppd(x, op, 4); UNIMPLEMENTED; }
-void cmpneqps(const Xmm& x, const Operand& op) { cmpps(x, op, 4); UNIMPLEMENTED; }
+void cmpneqps(const Xmm& x, const Operand& op) { cmpps(x, op, 4); /*UNIMPLEMENTED;*/ }
 void cmpneqsd(const Xmm& x, const Operand& op) { cmpsd(x, op, 4); UNIMPLEMENTED; }
 void cmpneqss(const Xmm& x, const Operand& op) { cmpss(x, op, 4); UNIMPLEMENTED; }
 void cmpnlepd(const Xmm& x, const Operand& op) { cmppd(x, op, 6); UNIMPLEMENTED; }
-void cmpnleps(const Xmm& x, const Operand& op) { cmpps(x, op, 6); UNIMPLEMENTED; }
+void cmpnleps(const Xmm& x, const Operand& op) { cmpps(x, op, 6); /*UNIMPLEMENTED;*/ }
 void cmpnlesd(const Xmm& x, const Operand& op) { cmpsd(x, op, 6); UNIMPLEMENTED; }
 void cmpnless(const Xmm& x, const Operand& op) { cmpss(x, op, 6); UNIMPLEMENTED; }
 void cmpnltpd(const Xmm& x, const Operand& op) { cmppd(x, op, 5); UNIMPLEMENTED; }
-void cmpnltps(const Xmm& x, const Operand& op) { cmpps(x, op, 5); UNIMPLEMENTED; }
+void cmpnltps(const Xmm& x, const Operand& op) { cmpps(x, op, 5); /*UNIMPLEMENTED;*/ }
 void cmpnltsd(const Xmm& x, const Operand& op) { cmpsd(x, op, 5); UNIMPLEMENTED; }
 void cmpnltss(const Xmm& x, const Operand& op) { cmpss(x, op, 5); UNIMPLEMENTED; }
 void cmpordpd(const Xmm& x, const Operand& op) { cmppd(x, op, 7); UNIMPLEMENTED; }
-void cmpordps(const Xmm& x, const Operand& op) { cmpps(x, op, 7); UNIMPLEMENTED; }
+void cmpordps(const Xmm& x, const Operand& op) { cmpps(x, op, 7); /*UNIMPLEMENTED;*/ }
 void cmpordsd(const Xmm& x, const Operand& op) { cmpsd(x, op, 7); UNIMPLEMENTED; }
 void cmpordss(const Xmm& x, const Operand& op) { cmpss(x, op, 7); UNIMPLEMENTED; }
 void cmppd(const Xmm& xmm, const Operand& op, uint8 imm8) { opGen(xmm, op, 0xC2, 0x66, isXMM_XMMorMEM, imm8); UNIMPLEMENTED; }
-void cmpps(const Xmm& xmm, const Operand& op, uint8 imm8) { opGen(xmm, op, 0xC2, 0x100, isXMM_XMMorMEM, imm8); UNIMPLEMENTED; }
+void cmpps(const Xmm& xmm, const Operand& op, uint8 imm8) { opGen(xmm, op, 0xC2, 0x100, isXMM_XMMorMEM, imm8); decodeAndTransToAArch64(); }
 void cmpsb() { db(0xA6); UNIMPLEMENTED; }
 void cmpsd() { db(0xA7); UNIMPLEMENTED; }
 void cmpsd(const Xmm& xmm, const Operand& op, uint8 imm8) { opGen(xmm, op, 0xC2, 0xF2, isXMM_XMMorMEM, imm8); UNIMPLEMENTED; }
 void cmpss(const Xmm& xmm, const Operand& op, uint8 imm8) { opGen(xmm, op, 0xC2, 0xF3, isXMM_XMMorMEM, imm8); UNIMPLEMENTED; }
 void cmpsw() { db(0x66); db(0xA7); UNIMPLEMENTED; }
 void cmpunordpd(const Xmm& x, const Operand& op) { cmppd(x, op, 3); UNIMPLEMENTED; }
-void cmpunordps(const Xmm& x, const Operand& op) { cmpps(x, op, 3); UNIMPLEMENTED; }
+void cmpunordps(const Xmm& x, const Operand& op) { cmpps(x, op, 3); /*UNIMPLEMENTED;*/ }
 void cmpunordsd(const Xmm& x, const Operand& op) { cmpsd(x, op, 3); UNIMPLEMENTED; }
 void cmpunordss(const Xmm& x, const Operand& op) { cmpss(x, op, 3); UNIMPLEMENTED; }
 void cmpxchg(const Operand& op, const Reg& reg) { opModRM(reg, op, (op.isREG() && reg.isREG() && op.getBit() == reg.getBit()), op.isMEM(), 0x0F, 0xB0 | (reg.isBit(8) ? 0 : 1)); UNIMPLEMENTED; }

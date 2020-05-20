@@ -231,6 +231,7 @@ case XED_ICLASS_CMP:
 case XED_ICLASS_CMPPD:
   break;
 case XED_ICLASS_CMPPS:
+  translateCMPPS(&xedd);
   break;
 case XED_ICLASS_CMPSB:
   break;

@@ -21,6 +21,7 @@
 #include "instructions/blendvps.h"
 #include "instructions/cmovnle.h"
 #include "instructions/cmp.h"
+#include "instructions/cmpps.h"
 #include "instructions/dec.h"
 #include "instructions/imul.h"
 #include "instructions/inc.h"
