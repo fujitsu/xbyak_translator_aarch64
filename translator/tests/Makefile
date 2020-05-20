@@ -1,5 +1,6 @@
 #TP_PATTERNS=$(shell find pattern -name "*.cpp")
-TP_PATTERNS=pattern/mov/mov000.cpp
+TP_PATTERNS=$(shell find pattern/mov -name "*.cpp")
+#TP_PATTERNS=pattern/mov/mov000.cpp
 TP_RESULTS=$(TP_PATTERNS:.cpp=.result)
 USER_NAME=$(shell whoami)
 FILE_REGRESSION="regression_result.txt"
