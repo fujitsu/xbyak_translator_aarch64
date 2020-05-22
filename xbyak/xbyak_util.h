@@ -1,4 +1,20 @@
 /*******************************************************************************
+* Copyright 2020 FUJITSU LIMITED
+*
+* Licensed under the Apache License, Version 2.0 (the ""License"");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an ""AS IS"" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*******************************************************************************/
+
+/*******************************************************************************
 * Copyright 2016-2019 Intel Corporation
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -192,7 +208,7 @@ class Cpu {
 				}
 			}
 			/*
-			   Everybody lies, so we need some sane values to fall back on
+                           Everybody lies, so we need some sane values to fall back on
 			*/
 			numCores_[SmtLevel - 1] = std::max(1u, numCores_[SmtLevel - 1]);
 			numCores_[CoreLevel - 1] = std::max(numCores_[SmtLevel - 1], numCores_[CoreLevel - 1]);
@@ -405,7 +421,7 @@ public:
 	static const Type tSIMD = uint64(1) << 60;
 	static const Type tSVE = uint64(1) << 61;
 #endif
-
+	
 	Cpu()
 		: type_(NONE)
 		, x2APIC_supported_(false)
@@ -510,12 +526,11 @@ public:
 			if (EBX & (1U << 29)) type_ |= tSHA;
 			if (ECX & (1U << 0)) type_ |= tPREFETCHWT1;
 		}
-
 		setFamily();
 		setNumCores();
 		setCacheHierarchy();
 #else //#ifndef XBYAK_TRANSLATE_AARCH64
-		/* model name	: Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz */
+		/* model name   : Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz */
 		type_ |= 0x2871ffdf8f7ff;
 		type_ |= tA64FX;
 		type_ |= tSIMD;
