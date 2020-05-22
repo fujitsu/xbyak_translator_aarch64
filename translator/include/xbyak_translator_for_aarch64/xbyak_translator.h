@@ -440,7 +440,7 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
 }
 
 unsigned int xt_push_vreg(xt_a64fx_operands_struct_t *a64) {
-  xt_push_zreg(a64);
+  return xt_push_zreg(a64);
 }
 
 unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
