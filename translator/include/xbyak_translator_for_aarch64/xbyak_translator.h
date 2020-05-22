@@ -219,6 +219,12 @@ struct xt_a64fx_operands_structV3_core_t {
   /* For operand of vm64(x|y|z) */
   xt_reg_idx_t vmIndexRegIdx = XT_REG_INVALID;
   xed_uint_t vmIndexRegWidth = 0;
+
+  /* For memory operand */
+  xt_reg_idx_t memBaseIdx = XT_REG_INVALID;
+  xt_reg_idx_t memScaleIdx = XT_REG_INVALID;
+  xed_uint_t memScale = 0;
+  xed_int_t memDisp = 0;
 };
 
 struct xt_a64fx_operands_structV3_t {
@@ -921,6 +927,12 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
 #endif
 }
 
+void xt_construct_a64fx_operandsV3_rawMemOp(xed_decoded_inst_t *p,
+                                   xt_a64fx_operands_structV3_t *a64,
+                                   bool vm64 = false, rawMemOp = false) {
+  xt_construct_a64fx_operandsV3(p, a64, vm64, rawMemOp);
+}
+
 void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
                                    xt_a64fx_operands_structV3_t *a64,
                                    bool vm64 = false) {
@@ -1058,8 +1070,15 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
 
       disp = xed_decoded_inst_get_memory_displacement(p, memOpIdx);
 
-      X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
-                                   X_TMP_1, X_TMP_2, vm64);
+      if(rawMemOp) {
+	a64->operands[tmpOpIdx].memBaseIdx = baseIdx;
+	a64->operands[tmpOpIdx].memIndexIdx = indexIdx;
+	a64->operands[tmpOpIdx].memScale = scale;
+	a64->operands[tmpOpIdx].memDisp = disp;
+      } else {
+	X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
+				     X_TMP_1, X_TMP_2, vm64);
+      }	
 
       memOpIdx++;
       continue;
