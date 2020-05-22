@@ -222,7 +222,7 @@ struct xt_a64fx_operands_structV3_core_t {
 
   /* For memory operand */
   xt_reg_idx_t memBaseIdx = XT_REG_INVALID;
-  xt_reg_idx_t memScaleIdx = XT_REG_INVALID;
+  xt_reg_idx_t memIndexIdx = XT_REG_INVALID;
   xed_uint_t memScale = 0;
   xed_int_t memDisp = 0;
 };
@@ -446,7 +446,7 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
 }
 
 unsigned int xt_push_vreg(xt_a64fx_operands_struct_t *a64) {
-  xt_push_zreg(a64);
+  return xt_push_zreg(a64);
 }
 
 unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
@@ -927,15 +927,9 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
 #endif
 }
 
-void xt_construct_a64fx_operandsV3_rawMemOp(xed_decoded_inst_t *p,
-                                   xt_a64fx_operands_structV3_t *a64,
-                                   bool vm64 = false, rawMemOp = false) {
-  xt_construct_a64fx_operandsV3(p, a64, vm64, rawMemOp);
-}
-
 void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
                                    xt_a64fx_operands_structV3_t *a64,
-                                   bool vm64 = false) {
+                                   bool vm64 = false, bool rawMemOp = false) {
   unsigned int num_operands;
 
   unsigned int baseIdx = XT_REG_INVALID;
@@ -1070,15 +1064,15 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
 
       disp = xed_decoded_inst_get_memory_displacement(p, memOpIdx);
 
-      if(rawMemOp) {
-	a64->operands[tmpOpIdx].memBaseIdx = baseIdx;
-	a64->operands[tmpOpIdx].memIndexIdx = indexIdx;
-	a64->operands[tmpOpIdx].memScale = scale;
-	a64->operands[tmpOpIdx].memDisp = disp;
+      if (rawMemOp) {
+        a64->operands[tmpOpIdx].memBaseIdx = baseIdx;
+        a64->operands[tmpOpIdx].memIndexIdx = indexIdx;
+        a64->operands[tmpOpIdx].memScale = scale;
+        a64->operands[tmpOpIdx].memDisp = disp;
       } else {
-	X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
-				     X_TMP_1, X_TMP_2, vm64);
-      }	
+        X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
+                                     X_TMP_1, X_TMP_2, vm64);
+      }
 
       memOpIdx++;
       continue;
@@ -1136,8 +1130,19 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
   } // for (int i = 0; i < num_operands; i++) {
 
 #ifdef XT_DEBUG
-  xt_dump_a64fx_operandsV3(a64);
+  if (!rawMemOp) {
+    xt_dump_a64fx_operandsV3(a64);
+  }
 #endif
+}
+
+void xt_construct_a64fx_operandsV3_rawMemOp(xed_decoded_inst_t *p,
+                                            xt_a64fx_operands_structV3_t *a64,
+                                            bool vm64, bool rawMemOp) {
+  xt_construct_a64fx_operandsV3(p, a64, vm64, rawMemOp);
+  if (rawMemOp) {
+    xt_dump_a64fx_operandsV3(a64);
+  }
 }
 
 void decodeAndTransToAArch64() {
