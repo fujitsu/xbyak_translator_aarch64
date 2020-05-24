@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 #*******************************************************************************
 # Copyright 2019-2020 FUJITSU LIMITED
 #
@@ -32,6 +32,8 @@
 # aarch64  , aarch64 , x86_64   , NG
 # aarch64  , aarch64 , aarch64  , OK (Executable on native environment)
 #*******************************************************************************
+QEMU_AARCH64_KAWAKAMI=/home/kawakami/local_xbyak/bin/qemu-aarch64
+
 CXX=g++
 OBJDUMP=objdump
 
@@ -72,105 +74,8 @@ bad_combination_exit() {
 
 
 check_option() {
-    case ${HOST_ARCH:-"unknown"} in
-	"x86_64")
-	    case ${JIT_ARCH:-"unknown"} in
-		"x86_64")
-		    case ${EXEC_ARCH:-"unknown"} in
-			"x86_64")
-			    QEMU_ON=0
-			    TOOL_PREFIX=""
-			    DUMP_OPT="-m i386:x86-64 -M intel"
-			    DUMP_PREFIX=""
-			    ;;
-			"aarch64")
-			    QEMU_ON=1
-			    TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
-			    DUMP_OPT="-m i386:x86-64 -M intel"
-			    DUMP_PREFIX=""
-			    ;;
-			*)
-			    bad_combination_exit
-			    ;;
-		    esac
-		    ;;
-		"aarch64")
-		    case ${EXEC_ARCH:-"unknown"} in
-			"x86_64")
-			    QEMU_ON=0
-			    TOOL_PREFIX=""
-			    DUMP_OPT="-m AArch64"
-			    DUMP_PREFIX=${DUMP_PREFIX:="/usr/bin/aarch64-linux-gnu-"}
-			;;
-			"aarch64")
-			    QEMU_ON=1
-			    TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
-			    DUMP_OPT="-m AArch64"
-			    DUMP_PREFIX=${DUMP_PREFIX:="/usr/bin/aarch64-linux-gnu-"}
-			    ;;
-			*)
-			    bad_combination_exit
-			    ;;
-		    esac
-		    ;;
-		*)
-		    bad_combination_exit
-		    ;;
-		esac
-	    ;;
-	"aarch64")
-	    case ${JIT_ARCH:-"unknown"} in
-		"x86_64")
-		    case ${EXEC_ARCH:-"unknown"} in
-			"x86_64")
-			    bad_combination_exit
-			    ;;
-			"aarch64")
-			    bad_combination_exit
-			    ;;
-			*)
-			    bad_combination_exit
-			    ;;
-		    esac
-		    ;;
-		"aarch64")
-		    case ${EXEC_ARCH:-"unknown"} in
-			"x86_64")
-			    bad_combination_exit
-			    ;;
-			"aarch64")
-			    QEMU_ON=0
-			    TOOL_PREFIX=""
-			    DUMP_OPT="-m AArch64"
-			    DUMP_PREFIX=""
-			    ;;
-			*)
-			    bad_combination_exit
-			    ;;
-		    esac
-		    ;;
-		*)
-		    bad_combination_exit
-		    ;;
-		esac
-	    ;;
-	*)
-	    bad_combination_exit
-	    ;;
-    esac
+    DUMP_OPT="-m AArch64"
 }		
-
-check_qemu_aarch64() {
-    if [ ${QEMU_AARCH64:-0} = 0 ] ; then
-	echo "set QEMU_AARCH64 environment variable"
-	usage_exit
-    fi
-
-    if [ ! -f ${QEMU_AARCH64} ] ; then
-	echo "qemu-aarch64=${QEMU_AARCH64} not found"
-	usage_exit
-    fi
-}
 
 gen_compile_option() {
     LIBXED_PATH="../third_party/build_xed_${EXEC_ARCH}/kits/xed/lib"
@@ -179,6 +84,9 @@ gen_compile_option() {
 	CFLAGS="${CFLAGS} -DDNNL_AARCH64_JIT_AARCH64"
 	CFLAGS="${CFLAGS} -DXBYAK_AARCH64_FOR_DNNL"
 	CFLAGS="${CFLAGS} -DXBYAK_TRANSLATE_AARCH64"
+	CFLAGS="${CFLAGS} -DXT_AARCH64_STACK_REG"
+	CFLAGS="${CFLAGS} -DXT_DEBUG"
+	CFLAGS="${CFLAGS} -DXT_TEST"
 	CFLAGS="${CFLAGS} -I../include/xbyak_translator_for_aarch64"
 	CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64/xbyak_aarch64"
 	CFLAGS="${CFLAGS} -I../third_party/build_xed_${EXEC_ARCH}/kits/xed/include"
@@ -196,7 +104,7 @@ compile_test_file() {
     ${TOOL_PREFIX:-""}${CXX} ${CFLAGS} -o ${TP_NAME_ARCH} ${TP_NAME}.cpp ${LIB_OPT}
     if [ ! $? -eq 0 ] ; then
 	echo "compile error!"
-	exit
+	exit 1
     fi
 }
 
@@ -219,9 +127,10 @@ exec_test() {
 	./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON} 2>&1 | tee ${LOG_NAME}.log
     fi
 
-    if [ ! $? -eq 0 ] ; then
+    RC=${PIPESTATUS[0]}
+    if [ ${RC} -ne 0 ] ; then
 	echo "exec error!"
-	exit
+	exit 1
     fi
 }
 
@@ -237,7 +146,12 @@ dump_disassemble() {
 	echo "JIT code dump file not found!"
     fi
 
-    ${DUMP_PREFIX}${OBJDUMP} -D -b binary ${DUMP_OPT} ${BIN_FILE} > ${ASM_FILE}
+    ${OBJDUMP} -D -b binary ${DUMP_OPT} ${BIN_FILE} > ${ASM_FILE}
+}
+
+extract_log() {
+    tmpfile=/tmp/${LOG_NAME}.`whoami`.check.log
+    grep -w Check ${LOG_NAME}.log > ${tmpfile}
 }
 
 debug_dump_option() {
@@ -300,13 +214,13 @@ if [ ! $# = 1 ] ; then
 fi
 get_host_arch
 check_option
-check_qemu_aarch64
-debug_dump_option
+#debug_dump_option
 gen_compile_option $@
 compile_test_file
 if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
     exec_test
 fi
-if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
-    dump_disassemble
-fi
+#if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
+#    dump_disassemble
+#fi
+extract_log
