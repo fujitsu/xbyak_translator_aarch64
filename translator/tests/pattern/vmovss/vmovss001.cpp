@@ -36,7 +36,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[6].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[7].ud_dt[0]));
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovss(ptr[rbx], Xmm(0));
     vmovdqu8(Zmm(1), ptr[rax]);
     vmovss(ptr[rbx], Xmm(2));
@@ -52,7 +52,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[8].ud_dt[0])) + 3;
     addr1 = reinterpret_cast<size_t>(&(inputZReg[9].ud_dt[0])) + 5;
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovss(ptr[rbx], Xmm(4));
     vmovdqu8(Zmm(5), ptr[rbx]);
     vmovss(ptr[rbx], Xmm(6));

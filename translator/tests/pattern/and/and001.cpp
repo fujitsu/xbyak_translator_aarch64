@@ -41,7 +41,7 @@ public:
 
     and_(r8, 1);
     and_(r9, -1);
-    and_(r10, std::numeric_limits<uint64_t>::max());
+    and_(r10, std::numeric_limits<uint32_t>::max());
     and_(r11, -std::numeric_limits<uint64_t>::max());
   }
 };

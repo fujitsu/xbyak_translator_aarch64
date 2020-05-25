@@ -84,7 +84,7 @@ public:
 
     std::vector<Ymm> regs = {ymm0, ymm1, ymm2, ymm3, ymm4,
                              ymm5, ymm6, ymm7, ymm8, ymm9};
-    //    std::vector<Ymm> regs = {ymm8};
+//    std::vector<Ymm> regs = {ymm8};
 #ifdef XBYAK_TRANSLATE_AARCH64
     Xbyak_aarch64::XReg x_of{x7};
     Xbyak_aarch64::XReg x_sf{x6};
@@ -130,7 +130,8 @@ public:
 
       for (const auto &i : regs) {
         static unsigned idx = 0;
-        size_t src2Addr = reinterpret_cast<size_t>(&(inputZReg[idx].ud_dt[0]));
+        // size_t src2Addr =
+        // reinterpret_cast<size_t>(&(inputZReg[idx].ud_dt[0]));
         xor_(rax, rax); // clear rax
         vtestps(regs[j], i);
 #ifdef XBYAK_TRANSLATE_AARCH64

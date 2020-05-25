@@ -22,14 +22,8 @@ void translateMOVDQU(xed_decoded_inst_t *p) {
 #define CG64 CodeGeneratorAArch64
   xt_reg_idx_t dstIdx;
   xt_reg_idx_t srcIdx;
-  xt_reg_idx_t src2Idx;
-  xt_reg_idx_t src3Idx;
-  xt_reg_idx_t maskIdx;
   xt_reg_idx_t zTmpIdx;
-  xt_reg_idx_t zTmp2Idx;
   xt_reg_idx_t pTmpIdx;
-  xt_reg_idx_t pTmp2Idx;
-  xed_uint64_t uimm;
 
   /* Col=U103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&

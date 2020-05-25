@@ -29,9 +29,6 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
 
     mov(r8, uint64_t(0xffff));
     mov(r9, uint64_t(0xffff8888));
