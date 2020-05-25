@@ -19,7 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    //    setInputZregAllRandomHex();
+    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -30,24 +30,19 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
        r13, r14, r15 */
-    mov(r8, std::numeric_limits<int64_t>::max());
-    mov(r9, std::numeric_limits<int64_t>::max());
-    mov(r10, std::numeric_limits<int64_t>::max());
-    mov(r11, std::numeric_limits<int64_t>::max());
-    mov(r12, std::numeric_limits<int64_t>::max());
-    mov(r13, std::numeric_limits<int64_t>::max());
-    mov(r14, std::numeric_limits<int64_t>::max());
-    mov(r15, std::numeric_limits<int64_t>::max());
 
-    add(r8, 1);
-    add(r9, -1);
-    add(r10, std::numeric_limits<uint32_t>::max());
-    add(r11, -std::numeric_limits<uint32_t>::max());
+    size_t addr;
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
+    mov(rax, addr);
+    mov(r8, uint64_t(0xabcd));
+    mov(r9, uint64_t(0xabcd));
 
-    add(r12d, 1);
-    add(r13d, -1);
-    add(r14d, std::numeric_limits<uint32_t>::max());
-    add(r15d, -std::numeric_limits<uint32_t>::max());
+    add(r8d, ptr[rax]);
+    add(r9d, ptr[rax]);
+
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 

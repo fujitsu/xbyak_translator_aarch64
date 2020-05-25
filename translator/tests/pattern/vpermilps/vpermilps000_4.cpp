@@ -32,10 +32,10 @@ public:
        R8,  R9,  R10, R11, R12, R13, R14, R15 */
 
     /* VEX range */
-    vpermilps(ymm0, ymm15, 0 + 256);
-    vpermilps(ymm1, ymm15, 1 + 256);
-    vpermilps(ymm2, ymm15, 2 + 256);
-    vpermilps(ymm3, ymm15, 3 + 256);
+    vpermilps(ymm0, ymm15, uint8(0 + 256));
+    vpermilps(ymm1, ymm15, uint8(1 + 256));
+    vpermilps(ymm2, ymm15, uint8(2 + 256));
+    vpermilps(ymm3, ymm15, uint8(3 + 256));
 
     vpermilps(ymm4, ymm15, uint8(0 + 256) << 2);
     vpermilps(ymm5, ymm15, uint8(1 + 256) << 2);
