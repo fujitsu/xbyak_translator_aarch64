@@ -24,10 +24,11 @@ void translateKMOVQ(xed_decoded_inst_t *p) {
   xt_reg_idx_t srcIdx;
 
   /* Col=AD119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[0].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].regClass == XED_REG_CLASS_MASK &&
@@ -43,10 +44,11 @@ void translateKMOVQ(xed_decoded_inst_t *p) {
     dstIdx = a64.operands[0].regIdx;
   }
   /* Col=AG119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[0].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].regClass == XED_REG_CLASS_INVALID &&
@@ -101,10 +103,11 @@ void translateKMOVQ(xed_decoded_inst_t *p) {
   }
 
   /* Col=AN119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_MEM0 &&
-                a64.operands[0].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[1].regClass == XED_REG_CLASS_INVALID && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[1].regClass == XED_REG_CLASS_INVALID && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[0].regClass == XED_REG_CLASS_MASK &&
@@ -120,10 +123,11 @@ void translateKMOVQ(xed_decoded_inst_t *p) {
   }
 
   /* Col=BK119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[0].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].regClass == XED_REG_CLASS_MASK &&

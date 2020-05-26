@@ -22,8 +22,9 @@ void translateVPANDD(xed_decoded_inst_t *p) {
   bool isValid = false;
 #define CG64 CodeGeneratorAArch64
   /* Col=S103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
@@ -76,8 +77,9 @@ void translateVPANDD(xed_decoded_inst_t *p) {
   }
 
   /* Col=U103*/
-  if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.src2Type == A64_OP_MEM && true)) {
     a64.zTmpIdx = xt_push_zreg(&a64);
@@ -121,8 +123,9 @@ void translateVPANDD(xed_decoded_inst_t *p) {
   }
 
   /* Col=AQ103*/
-  if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.src2Type == A64_OP_MEM && true)) {
     CG64::and_(xa::ZReg(a64.dstIdx).d, xa::ZReg(a64.srcIdx).d,
@@ -136,15 +139,17 @@ void translateVPANDD(xed_decoded_inst_t *p) {
   }
 
   /* Col=BB103*/
-  if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.src2Type == A64_OP_MEM && true)) {
     xt_pop_zreg();
   }
   /* Col=BC103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&

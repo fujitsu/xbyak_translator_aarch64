@@ -23,8 +23,9 @@ void translateMOVSD(xed_decoded_inst_t *p) {
 #define CG64 CodeGeneratorAArch64
 
   /* Col=T103*/
-  if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
-                a64.srcType == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
+       a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 128 && a64.dstType == A64_OP_REG &&
        a64.srcType == A64_OP_MEM && true)) {
     a64.pTmpIdx = xt_push_preg(&a64);
@@ -75,15 +76,17 @@ void translateMOVSD(xed_decoded_inst_t *p) {
     xt_pop_zreg();
   }
   /* Col=AX103*/
-  if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
-                a64.srcType == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
+       a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 128 && a64.dstType == A64_OP_REG &&
        a64.srcType == A64_OP_MEM && true)) {
     xt_pop_preg();
   }
   /* Col=AY103*/
-  if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
-                a64.srcType == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
+       a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 128 && a64.dstType == A64_OP_REG &&
        a64.srcType == A64_OP_MEM && true) ||
       (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&

@@ -20,8 +20,9 @@ void translateVXORPS(xed_decoded_inst_t *p) {
 
   /* 2020/02/20 10:21 */
   /* Col=S103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
@@ -73,8 +74,9 @@ void translateVXORPS(xed_decoded_inst_t *p) {
     XT_UNIMPLEMENTED;
   }
   /* Col=T103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
@@ -93,8 +95,9 @@ void translateVXORPS(xed_decoded_inst_t *p) {
   }
 
   /* Col=Y103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
@@ -115,8 +118,9 @@ void translateVXORPS(xed_decoded_inst_t *p) {
   }
 
   /* Col=AE103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
@@ -125,8 +129,9 @@ void translateVXORPS(xed_decoded_inst_t *p) {
                               xa::VReg16B(a64.src2Idx));
   }
   /* Col=AF103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
@@ -152,8 +157,9 @@ void translateVXORPS(xed_decoded_inst_t *p) {
   }
 
   /* Col=AT103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 1 && a64.src2Type == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true)) {
     CodeGeneratorAArch64::mov(xa::ZReg(a64.dstIdx).s,
@@ -161,23 +167,26 @@ void translateVXORPS(xed_decoded_inst_t *p) {
   }
 
   /* Col=AV103*/
-  if (false || (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_MEM && true)) {
     CodeGeneratorAArch64::mov(xa::ZReg(a64.dstIdx).s, P_MSB_256 / xa::T_m, 0);
   }
 
   /* Col=BA103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 1 && a64.src2Type == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true)) {
     xt_pop_preg();
   }
   /* Col=BB103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.src2Type == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_MEM && true)) {
     xt_pop_vreg();

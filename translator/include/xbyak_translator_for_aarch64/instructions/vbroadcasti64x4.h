@@ -20,8 +20,9 @@ void translateVBROADCASTI64X4(xed_decoded_inst_t *p) {
 
   /* 2020/03/09 14:10 */
   /* Col=S103*/
-  if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO &&
-                a64.EVEXb == 1 && a64.srcType == A64_OP_MEM && true) ||
+  if (false ||
+      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
+       a64.srcType == A64_OP_MEM && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
        a64.srcType == A64_OP_MEM && true)) {
     XT_UNIMPLEMENTED;

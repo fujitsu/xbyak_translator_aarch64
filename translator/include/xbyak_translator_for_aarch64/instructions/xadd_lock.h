@@ -21,9 +21,10 @@ void translateXADD_LOCK(xed_decoded_inst_t *p) {
 /* 2020/02/26 22:49 */
 #define CG64 CodeGeneratorAArch64
   /* Col=S103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[0].opWidth == 8 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 8 && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 8 && true) ||

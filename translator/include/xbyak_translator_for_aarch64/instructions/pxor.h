@@ -20,8 +20,9 @@ void translatePXOR(xed_decoded_inst_t *p) {
 
   /* 2020/03/16 11:43 */
   /* Col=S103*/
-  if (false || (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_MEM && true)) {
     XT_UNIMPLEMENTED;
@@ -33,8 +34,9 @@ void translatePXOR(xed_decoded_inst_t *p) {
     a64.zTmpIdx = xt_push_zreg(&a64);
   }
   /* Col=V103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_MEM && true)) {
     a64.pTmpIdx = xt_push_preg(&a64);
@@ -46,8 +48,9 @@ void translatePXOR(xed_decoded_inst_t *p) {
     CodeGeneratorAArch64::ldr(xa::ZReg(a64.zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=Y103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_MEM && true)) {
     CodeGeneratorAArch64::not_(xa::PRegB(a64.pTmpIdx), xa::PReg(15),
@@ -69,8 +72,9 @@ void translatePXOR(xed_decoded_inst_t *p) {
   }
 
   /* Col=BB103*/
-  if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
-                a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true) ||
+  if (false ||
+      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_MEM && true)) {
     xt_pop_preg();

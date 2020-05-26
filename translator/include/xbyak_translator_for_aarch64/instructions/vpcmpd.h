@@ -159,13 +159,14 @@ void translateVPCMPD(xed_decoded_inst_t *p) {
     pTmpIdx = xt_push_preg(&a64);
   }
   /* Col=AA119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_MEM0 &&
-                a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-                a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
-                a64.EVEXb == 0 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -292,13 +293,14 @@ void translateVPCMPD(xed_decoded_inst_t *p) {
     CG64::ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AJ119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_MEM0 &&
-                a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-                a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
-                a64.EVEXb == 0 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -309,13 +311,14 @@ void translateVPCMPD(xed_decoded_inst_t *p) {
     CG64::dup(xa::ZRegS(zTmpIdx), xa::ZReg(zTmpIdx).s[0]);
   }
   /* Col=AK119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_MEM0 &&
-                a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-                a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
-                a64.EVEXb == 0 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -381,13 +384,14 @@ void translateVPCMPD(xed_decoded_inst_t *p) {
     }
   }
   /* Col=BM119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_MEM0 &&
-                a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-                a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
-                a64.EVEXb == 0 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
