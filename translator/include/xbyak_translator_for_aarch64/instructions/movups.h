@@ -31,15 +31,17 @@ void translateMOVUPS(xed_decoded_inst_t *p) {
   }
 
   /* Col=AD103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     dstIdx = a64.operands[0].regIdx;
   }
   /* Col=AE103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 && true)) {
     srcIdx = a64.operands[1].regIdx;
@@ -51,8 +53,9 @@ void translateMOVUPS(xed_decoded_inst_t *p) {
   }
 
   /* Col=AK103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     CG64::not_(P_TMP_0.b, P_ALL_ONE, P_MSB_384.b);
@@ -69,8 +72,9 @@ void translateMOVUPS(xed_decoded_inst_t *p) {
     CG64::ldr(xa::QReg(srcIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AO103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     CG64::mov(xa::ZRegD(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegD(srcIdx));

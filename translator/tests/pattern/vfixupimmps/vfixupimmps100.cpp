@@ -69,7 +69,6 @@ public:
 
     while (flag != uint16_t(0xffff)) {
       uint16_t tmp0, tmp1, tmp2;
-      uint32_t uimm;
 
       /* Each register is used as destination only once. */
       do {

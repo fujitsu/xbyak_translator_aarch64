@@ -37,12 +37,12 @@ public:
        r13, r14, r15 */
 
     /* 64-bit -> 64-bit */
-    xor_(r8b, uint64_t(0xaaaaaaaaaaaaaaaa));
+    xor_(r8b, uint32_t(0xaaaaaaaaaaaaaaaa));
     xor_(r9b, uint32_t(0xaaaaaaaa));
     xor_(r10b, uint16_t(0xaaaa));
     xor_(r11b, uint8_t(0xaa));
 
-    xor_(r12b, int64_t(0xaaaaaaaaaaaaaaaa));
+    xor_(r12b, int32_t(0xaaaaaaaaaaaaaaaa));
     xor_(r13b, int32_t(0xaaaaaaaa));
     xor_(r14b, int16_t(0xaaaa));
     xor_(r15b, int8_t(0xaa));

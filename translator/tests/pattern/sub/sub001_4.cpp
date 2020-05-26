@@ -41,7 +41,7 @@ public:
 
     sub(r8, 1);
     sub(r9, -1);
-    sub(r10, std::numeric_limits<uint64_t>::max());
+    sub(r10, std::numeric_limits<uint32_t>::max());
     sub(r11, -std::numeric_limits<uint64_t>::max());
 
     sub(r12d, 1);

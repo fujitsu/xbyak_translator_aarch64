@@ -30,7 +30,6 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr0;
     size_t addr1;
-    size_t addr2;
 
     /* Address is unaligned */
     addr0 = reinterpret_cast<size_t>(&(inputZReg[10].ud_dt[0]));

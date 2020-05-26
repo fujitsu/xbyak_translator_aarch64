@@ -34,11 +34,6 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    size_t addr1;
-    size_t addr2;
-    size_t addr3;
-    size_t addr4;
     size_t addr5;
     size_t addr6;
     size_t addr7;

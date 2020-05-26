@@ -48,12 +48,23 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
     std::cout << "Address is " << std::hex << addr << std::endl;
     mov(rax, addr);
-
     vpaddd(Ymm(0), Ymm(1), ptr[rax]);
     vpaddd(Ymm(2), Ymm(2), ptr[rax]);
 
     vpaddd(Zmm(3), Zmm(4), ptr[rax]);
     vpaddd(Zmm(5), Zmm(5), ptr[rax]);
+
+    vpaddd(Xmm(6), Xmm(7), ptr[rax]);
+    vpaddd(Xmm(8), Xmm(8), ptr[rax]);
+
+    vpaddd(Ymm(16), Ymm(1), ptr[rax]);
+    vpaddd(Ymm(17), Ymm(17), ptr[rax]);
+
+    vpaddd(Zmm(18), Zmm(4), ptr[rax]);
+    vpaddd(Zmm(19), Zmm(19), ptr[rax]);
+
+    vpaddd(Xmm(20), Xmm(7), ptr[rax]);
+    vpaddd(Xmm(21), Xmm(21), ptr[rax]);
 
     mov(rax, 5);
   }

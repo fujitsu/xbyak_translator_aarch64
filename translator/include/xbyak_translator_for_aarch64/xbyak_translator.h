@@ -287,7 +287,7 @@ struct xt_a64fx_operands_struct_t {
   /* Immediate value opoerand */
   xed_uint_t ibits = 0;
   xed_uint64_t uimm = 0; /* unsigned */
-  xed_int64_t simm = 0;  /* signedな */
+  xed_int64_t simm = 0;  /* signed */
   xed_uint_t immWidth;   /* IMM value width. 8, 16, 32, 64 */
 
   xed_uint64_t uimm2 = 0; /* 2nd immediate and its type is unsigned */
@@ -447,6 +447,10 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
 
 unsigned int xt_push_vreg(xt_a64fx_operands_struct_t *a64) {
   return xt_push_zreg(a64);
+}
+
+unsigned int xt_push_vreg(xt_a64fx_operands_structV3_t *a64) {
+  xt_push_zreg(a64);
 }
 
 unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {

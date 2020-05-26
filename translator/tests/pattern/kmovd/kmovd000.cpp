@@ -30,20 +30,23 @@ public:
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
 
-    mov(r8, 1);
-    kmovd(k1, r8);
+    mov(r8d, 1);
+    kmovd(k1, r8d);
 
-    mov(r9, 1 << 2);
-    kmovd(k2, r9);
+    mov(r9d, 1 << 2);
+    kmovd(k2, r9d);
 
-    mov(r10, 1 << 3);
-    kmovd(k3, r10);
+    mov(r10d, 1 << 3);
+    kmovd(k3, r10d);
 
-    mov(r11, 1 << 4);
-    kmovd(k4, r11);
+    mov(r11d, 1 << 4);
+    kmovd(k4, r11d);
 
-    mov(r12, 0xFFFF);
-    kmovd(k5, r12);
+    mov(r12d, 0xFFFF);
+    kmovd(k5, r12d);
+
+    mov(r13d, 0xFFFFFFFF);
+    kmovd(k6, r13d);
   }
 };
 
@@ -73,10 +76,10 @@ int main(int argc, char *argv[]) {
     f(); /* Execute JIT code */
 
 #ifndef XBYAK_TRANSLATE_AARCH64
-    /* Bit order of mask registers are different from x86_64 and aarch64.
-       In order to compare output values of mask registers by test script,
-       Bit order of x86_64 mask register values is modified here. */
-    gen.modifyPredReg(SP_DT);
+/* Bit order of mask registers are different from x86_64 and aarch64.
+   In order to compare output values of mask registers by test script,
+   Bit order of x86_64 mask register values is modified here. */
+// gen.modifyPredReg(SP_DT);
 #endif
 
     gen.dumpOutputReg(); /* Dump all register values */

@@ -23,8 +23,8 @@ public:
     inputZReg[31].sp_dt[0] = float(1111.1);
 
     inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) |             /* x86_64 */
-                      (1 << 0) | (1 << 4) | (1 << 16) | (1 << 64); /* aarch64 */
+    inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) | /* x86_64 */
+                      (1 << 0) | (1 << 4) | (1 << 16); /* aarch64 */
     inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) |
                       (1 << 8) | /* x86_64 */
                       (1 << 0) | (1 << 4) | (1 << 8) | (1 << 16) |
@@ -54,7 +54,6 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
 
     /* Address is aligned */
     vbroadcastss(Zmm(1), Xmm(31) | k1);

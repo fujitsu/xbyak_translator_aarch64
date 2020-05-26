@@ -29,14 +29,10 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr;
-    size_t addr1;
-    size_t addr2;
 
 /* Address is aligned */
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
-    addr2 = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0]));
     mov(rax, addr);
     /*
     vpextrb(ptr[rax], Xmm(3), 10);
@@ -60,8 +56,6 @@ public:
 /* Address is unaligned */
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[10].ud_dt[0])) + 4;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0])) + 8;
-    addr2 = reinterpret_cast<size_t>(&(inputZReg[12].ud_dt[0])) + 12;
     mov(rax, addr);
     /*
     vpextrb(ptr[rax], Xmm(3), 0);

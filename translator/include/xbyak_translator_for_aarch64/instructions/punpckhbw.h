@@ -26,27 +26,30 @@ void translatePUNPCKHBW(xed_decoded_inst_t *p) {
   xt_reg_idx_t zTmp2Idx;
 
   /* Col=T119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[0].opWidth == 64 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 64 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 64 && true)) {
     XT_UNIMPLEMENTED;
   }
   /* Col=V119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[0].opWidth == 128 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 128 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
     zTmpIdx = xt_push_zreg(&a64);
   }
   /* Col=W119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[0].opWidth == 128 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 128 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
@@ -104,9 +107,10 @@ void translatePUNPCKHBW(xed_decoded_inst_t *p) {
     }
   }
   /* Col=AF119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[0].opWidth == 128 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 128 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
@@ -132,18 +136,20 @@ void translatePUNPCKHBW(xed_decoded_inst_t *p) {
     xt_pop_zreg();
   }
   /* Col=BI119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[0].opWidth == 128 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 128 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
     xt_pop_zreg();
   }
   /* Col=BK119*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[0].opWidth == 64 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 64 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 64 && true) ||

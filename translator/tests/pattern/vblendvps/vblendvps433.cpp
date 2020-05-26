@@ -29,7 +29,6 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
-    uint16_t tmp;
     uint16_t flag = 0;
 
 #define MOVE_SEED 300

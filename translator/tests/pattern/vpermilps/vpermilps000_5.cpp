@@ -32,25 +32,25 @@ public:
        R8,  R9,  R10, R11, R12, R13, R14, R15 */
 
     /* EVEX range */
-    vpermilps(ymm16, ymm15, (0 + 256) << 4);
-    vpermilps(ymm17, ymm15, (1 + 256) << 4);
-    vpermilps(ymm18, ymm15, (2 + 256) << 4);
-    vpermilps(ymm19, ymm15, (3 + 256) << 4);
+    vpermilps(ymm16, ymm15, uint8(0 + 256) << 4);
+    vpermilps(ymm17, ymm15, uint8(1 + 256) << 4);
+    vpermilps(ymm18, ymm15, uint8(2 + 256) << 4);
+    vpermilps(ymm19, ymm15, uint8(3 + 256) << 4);
 
-    vpermilps(ymm20, ymm15, (0 + 256) << 6);
-    vpermilps(ymm21, ymm15, (1 + 256) << 6);
-    vpermilps(ymm22, ymm15, (2 + 256) << 6);
-    vpermilps(ymm23, ymm15, (3 + 256) << 6);
+    vpermilps(ymm20, ymm15, uint8(0 + 256) << 6);
+    vpermilps(ymm21, ymm15, uint8(1 + 256) << 6);
+    vpermilps(ymm22, ymm15, uint8(2 + 256) << 6);
+    vpermilps(ymm23, ymm15, uint8(3 + 256) << 6);
 
-    vpermilps(ymm24, ymm24, (0 + 256) << 4);
-    vpermilps(ymm25, ymm25, (1 + 256) << 4);
-    vpermilps(ymm26, ymm26, (2 + 256) << 4);
-    vpermilps(ymm27, ymm27, (3 + 256) << 4);
+    vpermilps(ymm24, ymm24, uint8(0 + 256) << 4);
+    vpermilps(ymm25, ymm25, uint8(1 + 256) << 4);
+    vpermilps(ymm26, ymm26, uint8(2 + 256) << 4);
+    vpermilps(ymm27, ymm27, uint8(3 + 256) << 4);
 
-    vpermilps(ymm28, ymm28, (0 + 256) << 6);
-    vpermilps(ymm29, ymm29, (1 + 256) << 6);
-    vpermilps(ymm30, ymm30, (2 + 256) << 6);
-    vpermilps(ymm31, ymm31, (3 + 256) << 6);
+    vpermilps(ymm28, ymm28, uint8(0 + 256) << 6);
+    vpermilps(ymm29, ymm29, uint8(1 + 256) << 6);
+    vpermilps(ymm30, ymm30, uint8(2 + 256) << 6);
+    vpermilps(ymm31, ymm31, uint8(3 + 256) << 6);
   }
 };
 

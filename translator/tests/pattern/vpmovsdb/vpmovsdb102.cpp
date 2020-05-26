@@ -81,6 +81,52 @@ public:
     vpmovsdb(ptr[rax], Zmm(31) | k4);
     vmovups(Zmm(4), ptr[rax]);
 
+<<<<<<< HEAD
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Zmm(31) | k7);
+    vmovups(Zmm(5), ptr[rax]);
+
+    /* Dst=Mem, src=Ymm */
+    vpmovsdb(ptr[rax], Ymm(31) | k1);
+    vmovups(Zmm(6), ptr[rax]);
+
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Ymm(31) | k2);
+    vmovups(Zmm(7), ptr[rax]);
+
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Ymm(31) | k3);
+    vmovups(Zmm(8), ptr[rax]);
+
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Ymm(31) | k4);
+    vmovups(Zmm(9), ptr[rax]);
+
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Ymm(31) | k7);
+    vmovups(Zmm(10), ptr[rax]);
+
+    /* Dst=Mem, src=Xmm */
+    vpmovsdb(ptr[rax], Xmm(31) | k1);
+    vmovups(Zmm(11), ptr[rax]);
+
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Xmm(31) | k2);
+    vmovups(Zmm(12), ptr[rax]);
+
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Xmm(31) | k3);
+    vmovups(Zmm(13), ptr[rax]);
+
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Xmm(31) | k4);
+    vmovups(Zmm(14), ptr[rax]);
+
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Xmm(31) | k7);
+    vmovups(Zmm(15), ptr[rax]);
+
+=======
     /*
     add(rax, 64);
     vpmovsdb(ptr[rax], Zmm(31)|k5);
@@ -95,6 +141,7 @@ public:
     vpmovsdb(ptr[rax], Zmm(31) | k7);
     vmovups(Zmm(7), ptr[rax]);
 
+>>>>>>> 3_implement_translation
     mov(rax, 0x5);
   }
 };

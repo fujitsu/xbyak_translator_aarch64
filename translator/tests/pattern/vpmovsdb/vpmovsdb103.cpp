@@ -42,6 +42,20 @@ public:
       inputZReg[i].us_dt[14] = uint32_t(0x1);
       inputZReg[i].us_dt[15] = ~uint32_t(0);
     }
+<<<<<<< HEAD
+
+    inputPredReg[1] = (1 << 0) | (1 << 7) |            /* x86_64 */
+                      (1 << 0) | (1 << 28);            /* aarch64 */
+    inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) | /* x86_64 */
+                      (1 << 0) | (1 << 28) |
+                      (uint64_t(1) << 32); /* Both x86_64 and aarch64 */
+    inputPredReg[3] = 0;
+    inputPredReg[4] = (1 << 0) | (1 << 7) | (1 << 8) | (1 << 15) | /* x86_64 */
+                      (1 << 0) | (1 << 28) | (uint64_t(1) << 32) |
+                      (uint64_t(1) << 60); /* Both x86_64 and aarch64 */
+    inputPredReg[7] = ~uint64_t(0);
+=======
+>>>>>>> 3_implement_translation
   }
 
   void setCheckRegFlagAll() {
@@ -50,10 +64,32 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
+<<<<<<< HEAD
+
+    /* Dst=Mem, src=Zmm */
+    vpmovsdb(Xmm(1) | k1 | T_z, Zmm(31));
+    vpmovsdb(Xmm(2) | k2 | T_z, Zmm(31));
+    vpmovsdb(Xmm(3) | k3 | T_z, Zmm(31));
+    vpmovsdb(Xmm(4) | k4 | T_z, Zmm(31));
+    vpmovsdb(Xmm(5) | k7 | T_z, Zmm(31));
+    /* Dst=Mem, src=Ymm */
+    vpmovsdb(Xmm(6) | k1 | T_z, Ymm(31));
+    vpmovsdb(Xmm(7) | k2 | T_z, Ymm(31));
+    vpmovsdb(Xmm(8) | k3 | T_z, Ymm(31));
+    vpmovsdb(Xmm(9) | k4 | T_z, Ymm(31));
+    vpmovsdb(Xmm(10) | k7 | T_z, Ymm(31));
+    /* Dst=Mem, src=Xmm */
+    vpmovsdb(Xmm(11) | k1 | T_z, Xmm(31));
+    vpmovsdb(Xmm(12) | k2 | T_z, Xmm(31));
+    vpmovsdb(Xmm(13) | k3 | T_z, Xmm(31));
+    vpmovsdb(Xmm(14) | k4 | T_z, Xmm(31));
+    vpmovsdb(Xmm(15) | k7 | T_z, Xmm(31));
+=======
     /* Dst=Xmm, src=Xmm */
     vpmovsdb(Xmm(0), Xmm(31));
     vpmovsdb(Xmm(1), Xmm(31));
     vpmovsdb(Xmm(30), Xmm(30));
+>>>>>>> 3_implement_translation
   }
 };
 

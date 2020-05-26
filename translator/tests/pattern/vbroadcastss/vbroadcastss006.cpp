@@ -54,7 +54,6 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
 
     /* Address is aligned */
     vbroadcastss(Zmm(1), Xmm(31) | k1 | T_z);

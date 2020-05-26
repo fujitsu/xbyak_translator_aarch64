@@ -21,8 +21,9 @@ void translateNOT(xed_decoded_inst_t *p) {
 /* 2020/02/26 23:20 */
 #define CG64 CodeGeneratorAArch64
   /* Col=S103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[0].opWidth == 8 && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[0].opWidth == 8 && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 8 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&

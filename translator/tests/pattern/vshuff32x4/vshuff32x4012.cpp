@@ -41,20 +41,20 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
-    vshuff32x4(Ymm(0), Ymm(30), Ymm(31), 0 + 256);
-    vshuff32x4(Ymm(1), Ymm(30), Ymm(31), 1 + 256);
-    vshuff32x4(Ymm(2), Ymm(30), Ymm(31), 2 + 256);
-    vshuff32x4(Ymm(3), Ymm(30), Ymm(31), 4 + 256);
-    vshuff32x4(Ymm(4), Ymm(30), Ymm(31), 8 + 256);
-    vshuff32x4(Ymm(5), Ymm(30), Ymm(31), 16 + 256);
-    vshuff32x4(Ymm(6), Ymm(30), Ymm(31), 32 + 256);
-    vshuff32x4(Ymm(7), Ymm(30), Ymm(31), 64 + 256);
-    vshuff32x4(Ymm(8), Ymm(30), Ymm(31), 128 + 256);
+    vshuff32x4(Ymm(0), Ymm(30), Ymm(31), uint8(0 + 256));
+    vshuff32x4(Ymm(1), Ymm(30), Ymm(31), uint8(1 + 256));
+    vshuff32x4(Ymm(2), Ymm(30), Ymm(31), uint8(2 + 256));
+    vshuff32x4(Ymm(3), Ymm(30), Ymm(31), uint8(4 + 256));
+    vshuff32x4(Ymm(4), Ymm(30), Ymm(31), uint8(8 + 256));
+    vshuff32x4(Ymm(5), Ymm(30), Ymm(31), uint8(16 + 256));
+    vshuff32x4(Ymm(6), Ymm(30), Ymm(31), uint8(32 + 256));
+    vshuff32x4(Ymm(7), Ymm(30), Ymm(31), uint8(64 + 256));
+    vshuff32x4(Ymm(8), Ymm(30), Ymm(31), uint8(128 + 256));
 
-    vshuff32x4(Ymm(9), Ymm(9), Ymm(31), 8 + 256);
-    vshuff32x4(Ymm(10), Ymm(30), Ymm(10), 16 + 256);
-    vshuff32x4(Ymm(11), Ymm(30), Ymm(30), 16 + 256);
-    vshuff32x4(Ymm(12), Ymm(12), Ymm(12), 16 + 256);
+    vshuff32x4(Ymm(9), Ymm(9), Ymm(31), uint8(8 + 256));
+    vshuff32x4(Ymm(10), Ymm(30), Ymm(10), uint8(16 + 256));
+    vshuff32x4(Ymm(11), Ymm(30), Ymm(30), uint8(16 + 256));
+    vshuff32x4(Ymm(12), Ymm(12), Ymm(12), uint8(16 + 256));
   }
 };
 

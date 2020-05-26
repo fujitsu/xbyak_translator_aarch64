@@ -52,7 +52,7 @@ public:
     mov(rax, ~uint64_t(0));
     mov(rcx, 1);
     add(rax, rcx); // initialize carry bit(set carry bit for x86)
-    adc(r10, std::numeric_limits<uint64_t>::max());
+    adc(r10, std::numeric_limits<uint32_t>::max());
 
     mov(rax, ~uint64_t(0));
     mov(rcx, 1);

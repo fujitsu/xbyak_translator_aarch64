@@ -36,7 +36,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[6].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[7].ud_dt[0]));
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovdqu32(Xmm(0), ptr[rax]);
     vmovdqu32(ptr[rbx], Xmm(0));
     vmovdqu32(Zmm(1), ptr[rbx]);
@@ -46,7 +46,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[8].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[9].ud_dt[0]));
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovdqu32(Ymm(2), ptr[rax]);
     vmovdqu32(ptr[rbx], Ymm(2));
     vmovdqu32(Zmm(3), ptr[rbx]);
@@ -56,7 +56,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[10].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0]));
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovdqu32(Zmm(4), ptr[rax]);
     vmovdqu32(ptr[rbx], Zmm(4));
     vmovdqu32(Zmm(5), ptr[rbx]);
@@ -67,7 +67,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[18].ud_dt[0])) + 3;
     addr1 = reinterpret_cast<size_t>(&(inputZReg[19].ud_dt[0])) + 5;
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovdqu32(Xmm(12), ptr[rax]);
     vmovdqu32(ptr[rbx], Xmm(12));
     vmovdqu32(Zmm(13), ptr[rbx]);
@@ -77,7 +77,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[20].ud_dt[0])) + 1;
     addr1 = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[0])) + 7;
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovdqu32(Ymm(14), ptr[rax]);
     vmovdqu32(ptr[rbx], Ymm(14));
     vmovdqu32(Zmm(15), ptr[rbx]);
@@ -87,7 +87,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[22].ud_dt[0])) + 1;
     addr1 = reinterpret_cast<size_t>(&(inputZReg[23].ud_dt[0])) + 7;
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovdqu32(Zmm(16), ptr[rax]);
     vmovdqu32(ptr[rbx], Zmm(16));
     vmovdqu32(Zmm(17), ptr[rbx]);
