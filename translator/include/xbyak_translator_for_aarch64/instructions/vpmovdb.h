@@ -29,20 +29,92 @@ void translateVPMOVDB(xed_decoded_inst_t *p) {
 
   /* Col=T119*/
   if (false ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_ZERO &&
        true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       true) ||
+      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_MERG &&
+       true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
+       a64.operands[2].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_ZERO &&
        true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       true) ||
+      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
+       a64.operands[2].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
+       true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+<<<<<<< HEAD
+=======
+       true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+>>>>>>> 3_implement_translation
        true)) {
     XT_UNIMPLEMENTED;
   }

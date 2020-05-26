@@ -30,7 +30,10 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vpmovsdb(Xmm(0), Xmm(1));
     vpmovsdb(Xmm(2), Zmm(3));
+<<<<<<< HEAD
     vpmovsdb(Xmm(4), Ymm(5));
+=======
+>>>>>>> 3_implement_translation
   }
 };
 

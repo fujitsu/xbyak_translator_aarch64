@@ -28,20 +28,23 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(r8, uint64_t(0xaaaaaaaaaaaaaaaa));
-    mov(r9, uint32_t(0xaaaaaaaa));
-    mov(r10, uint16_t(0xaaaa));
-    mov(r11, uint8_t(0xaa));
+    /* RAX, RCX, RDX, RBX, RSP, RBP, RSI, RDI,
+       R8,  R9,  R10, R11, R12, R13, R14, R15 */
 
-    mov(r12, int64_t(0xaaaaaaaaaaaaaaaa));
-    mov(r13, int32_t(0xaaaaaaaa));
-    mov(r14, int16_t(0xaaaa));
-    mov(r15, int8_t(0xaa));
+    mov(rax, uint64_t(0xaaaaaaaaaaaaaaaa));
+    mov(rcx, uint32_t(0xaaaaaaaa));
+    mov(rdx, uint16_t(0xaaaa));
+    mov(rbx, uint8_t(0xaa));
 
-    mov(rax, int64_t(0x5555555555555555));
-    mov(rcx, int32_t(0x55555555));
-    mov(rdx, int16_t(0x5555));
-    mov(rbx, int8_t(0x55));
+    mov(rbp, int64_t(0xaaaaaaaaaaaaaaaa));
+    mov(rsi, int32_t(0xaaaaaaaa));
+    mov(rdi, int16_t(0xaaaa));
+    mov(r8, int8_t(0xaa));
+
+    mov(r9, int64_t(0x5555555555555555));
+    mov(r10, int32_t(0x55555555));
+    mov(r11, int16_t(0x5555));
+    mov(r12, int8_t(0x55));
   }
 };
 

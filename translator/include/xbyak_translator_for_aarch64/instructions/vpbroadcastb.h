@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
+<<<<<<< HEAD
 /* 2020/05/13 11:29 */
 #define CG64 CodeGeneratorAArch64
+=======
+>>>>>>> 3_implement_translation
 void translateVPBROADCASTB(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;

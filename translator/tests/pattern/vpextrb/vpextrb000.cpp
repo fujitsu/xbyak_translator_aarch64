@@ -20,11 +20,15 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+<<<<<<< HEAD
     for(int i=0; i<16; i++){
         inputZReg[3].ub_dt[i] = uint8_t(i);
         inputZReg[31].ub_dt[i] = uint8_t(i);
+=======
+    for (int i = 0; i < 16; i++) {
+      inputZReg[3].ub_dt[i] = uint8_t(i);
+>>>>>>> 3_implement_translation
     }
-    
   }
 
   void setCheckRegFlagAll() {
@@ -42,7 +46,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
     addr2 = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0]));
-    mov(rax, addr);   
+    mov(rax, addr);
     vpextrb(ptr[rax], Xmm(3), 10);
     vmovdqu8(Xmm(4), ptr[rax]);
     mov(rax, addr1);

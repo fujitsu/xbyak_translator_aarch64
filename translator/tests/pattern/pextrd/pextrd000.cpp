@@ -29,6 +29,7 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
 
+    /* Register index is within SSE range. */
     pextrd(r8d, Xmm(0), 0);
     pextrd(r9d, Xmm(1), 1);
     pextrd(r10d, Xmm(2), 2);

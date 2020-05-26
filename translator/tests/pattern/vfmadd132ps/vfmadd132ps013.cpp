@@ -52,20 +52,20 @@ public:
     addr2 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0]));
     addr3 = reinterpret_cast<size_t>(&(inputZReg[8].ud_dt[0]));
     addr4 = reinterpret_cast<size_t>(&(inputZReg[9].ud_dt[0]));
-    
-    mov(rax, addr);  
+
+    mov(rax, addr);
     vfmadd132ps(Xmm(0), Xmm(1), ptr[rax]);
     vmovdqu8(Xmm(10), ptr[rax]);
-    mov(rax, addr1);  
+    mov(rax, addr1);
     vfmadd132ps(Xmm(3), Xmm(3), ptr[rax]);
     vmovdqu8(Xmm(11), ptr[rax]);
-    mov(rax, addr2);  
+    mov(rax, addr2);
     vfmadd132ps(Xmm(5), Xmm(6), ptr[rax]);
     vmovdqu8(Xmm(12), ptr[rax]);
-    mov(rax, addr3);  
+    mov(rax, addr3);
     vfmadd132ps(Xmm(7), Xmm(8), ptr[rax]);
     vmovdqu8(Xmm(13), ptr[rax]);
-    mov(rax, addr4);  
+    mov(rax, addr4);
     vfmadd132ps(Xmm(9), Xmm(9), ptr[rax]);
     vmovdqu8(Xmm(14), ptr[rax]);
 

@@ -41,8 +41,9 @@ public:
     // Zmm range
     inputPredReg[5] = (1 << 0) | (1 << 7) | (1 << 12) |
                       (1 << 31); /* Both x86_64 and aarch64 */
-    inputPredReg[6] = (1 << 0) | (1 << 7) | (1 << 12) | (1 << 31) | (1 << 32) |
-                      (1 << 63); /* Both x86_64 and aarch64 */
+    inputPredReg[6] = (1 << 0) | (1 << 7) | (1 << 12) | (1 << 31) |
+                      (uint64_t(1) << 32) |
+                      (uint64_t(1) << 63); /* Both x86_64 and aarch64 */
 
     inputPredReg[7] = ~uint64_t(0);
   }

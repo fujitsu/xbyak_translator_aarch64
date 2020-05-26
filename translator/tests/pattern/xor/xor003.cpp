@@ -33,7 +33,7 @@ public:
        r13, r14, r15 */
 
     size_t addr;
-    size_t addr1;
+
     /* Address is aligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
     mov(rax, addr);

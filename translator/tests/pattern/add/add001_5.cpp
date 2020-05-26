@@ -41,8 +41,8 @@ public:
 
     add(r8, 1);
     add(r9, -1);
-    add(r10, std::numeric_limits<int64_t>::max());
-    add(r11, -std::numeric_limits<int64_t>::max());
+    add(r10, std::numeric_limits<int32_t>::max());
+    add(r11, -std::numeric_limits<int32_t>::max());
 
     add(r12d, 1);
     add(r13d, -1);

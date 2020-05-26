@@ -165,8 +165,6 @@ public:
     mov(r8, 5);
     mov(r9, 5);
     mov(r10, 5);
-    mov(r11, 5);
-    mov(r12, 5);
   }
 };
 

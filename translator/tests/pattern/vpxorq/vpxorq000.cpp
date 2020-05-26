@@ -20,7 +20,11 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+<<<<<<< HEAD
 #if 1
+=======
+#if 0
+>>>>>>> 3_implement_translation
     for (int i = 0; i < 8; i++) {
       inputZReg[0].ud_dt[i] = ~uint64_t(0);
       inputZReg[3].ud_dt[i] = ~uint64_t(0);

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+CHECK_VER_STR="6.0.0"
+
 formatting_files() {
     file="${1}"
     if [ -f $file ]; then
@@ -14,7 +16,15 @@ formatting_files() {
     fi
 }
 
+
 _main(){
+    echo "Checking version of clang-format."
+    VER_STR=`clang-format --version | sed -e "s/clang-format version //" | sed -e "s/-.*//"`
+    if [ ${VER_STR:-hoge} != ${CHECK_VER_STR} ] ; then
+	echo "Invalid clang-format version"
+	exit 1
+    fi
+
     echo "Running clang-format."
     for file in `git diff-index --cached --name-only HEAD`
     do

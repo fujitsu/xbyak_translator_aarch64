@@ -24,7 +24,11 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
   xt_reg_idx_t srcIdx;
   xt_reg_idx_t zTmpIdx;
   xt_reg_idx_t pTmpIdx;
+<<<<<<< HEAD
   xed_uint64_t uimm;
+=======
+  int uimm; // ここは手で追記
+>>>>>>> 3_implement_translation
 
   /* Col=T119*/
   if (false ||
@@ -32,11 +36,27 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+<<<<<<< HEAD
+=======
+       a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+>>>>>>> 3_implement_translation
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+<<<<<<< HEAD
+=======
+       a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+>>>>>>> 3_implement_translation
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true)) {
     XT_UNIMPLEMENTED;
   }
@@ -51,7 +71,21 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+<<<<<<< HEAD
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true)) {
+=======
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true)) {
+>>>>>>> 3_implement_translation
     dstIdx = a64.operands[0].regIdx;
   }
   /* Col=W119*/
@@ -61,6 +95,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
@@ -71,6 +113,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
@@ -85,6 +135,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
@@ -95,6 +153,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
@@ -109,6 +175,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
@@ -119,6 +193,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
@@ -133,6 +215,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
@@ -143,6 +233,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
@@ -164,7 +262,21 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+<<<<<<< HEAD
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true)) {
+=======
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true)) {
+>>>>>>> 3_implement_translation
     if ((uimm & 0xf) >= 8) {
       CG64::zip2(xa::VReg16B(zTmpIdx), xa::VReg16B(srcIdx),
                  xa::VReg16B(srcIdx));
@@ -222,6 +334,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
@@ -232,6 +352,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
@@ -248,6 +376,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
@@ -258,6 +394,14 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true) ||
+<<<<<<< HEAD
+=======
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_IMM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO && true) ||
+>>>>>>> 3_implement_translation
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&

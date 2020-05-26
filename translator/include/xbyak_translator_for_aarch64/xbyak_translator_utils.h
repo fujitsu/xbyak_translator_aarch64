@@ -43,19 +43,14 @@ typedef xed_uint_t xt_scale_t;
 #define XT_SCALE_INVALID std::numeric_limits<xt_scale_t>::max()
 
 inline void xt_msg_warn(const char *fileName, const int lineNum,
-                        const std::string &msg) {
-  xt_msg_warn(fileName, lineNum, msg.c_str());
-}
-
-inline void xt_msg_warn(const char *fileName, const int lineNum,
                         const char *msg) {
   std::cerr << "[WARN]:" << fileName << ":" << lineNum << ":" << msg
             << std::endl;
 }
 
-inline void xt_msg_err(const char *fileName, const int lineNum,
-                       const std::string &msg) {
-  xt_msg_err(fileName, lineNum, msg.c_str());
+inline void xt_msg_warn(const char *fileName, const int lineNum,
+                        const std::string &msg) {
+  xt_msg_warn(fileName, lineNum, msg.c_str());
 }
 
 inline void xt_msg_err(const char *fileName, const int lineNum,
@@ -64,6 +59,11 @@ inline void xt_msg_err(const char *fileName, const int lineNum,
             << std::endl;
   assert(NULL);
   exit(1);
+}
+
+inline void xt_msg_err(const char *fileName, const int lineNum,
+                       const std::string &msg) {
+  xt_msg_err(fileName, lineNum, msg.c_str());
 }
 
 inline const std::string xt_to_string(const xt_reg_idx_t idx) {
@@ -177,6 +177,9 @@ inline const std::string xt_to_string(const xed_reg_class_enum_t num) {
     break;
   case XED_REG_CLASS_MASK:
     msg = "XED_REG_CLASS_MASK";
+    break;
+  case XED_REG_CLASS_SR:
+    msg = "XED_REG_CLASS_SR";
     break;
   default:
     msg = "Undefined xt_operand_type_t=" +

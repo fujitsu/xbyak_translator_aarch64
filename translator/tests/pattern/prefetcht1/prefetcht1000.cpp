@@ -31,7 +31,7 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
        r13, r14, r15 */
-    size_t addr, addr1;
+    size_t addr;
     addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
 
     mov(rax, addr);

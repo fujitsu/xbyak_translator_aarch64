@@ -34,19 +34,31 @@ public:
 
 /* VEX */
 #define IMM 2
-    vperm2i128(Ymm(0), Ymm(14), Ymm(15), (0x0<<6) + (IMM<<4) + (0x1<<2) + IMM);
-    vperm2i128(Ymm(1), Ymm(14), Ymm(15), (0x0<<6) + (IMM<<4) + (0x2<<2) + IMM);
-    vperm2i128(Ymm(2), Ymm(14), Ymm(15), (0x0<<6) + (IMM<<4) + (0x3<<2) + IMM);
-    vperm2i128(Ymm(3), Ymm(14), Ymm(15), (0x1<<6) + (IMM<<4) + (0x1<<2) + IMM);
-    vperm2i128(Ymm(4), Ymm(14), Ymm(15), (0x1<<6) + (IMM<<4) + (0x2<<2) + IMM);
-    vperm2i128(Ymm(5), Ymm(14), Ymm(15), (0x1<<6) + (IMM<<4) + (0x3<<2) + IMM);
+    vperm2i128(Ymm(0), Ymm(14), Ymm(15),
+               (0x0 << 6) + (IMM << 4) + (0x1 << 2) + IMM);
+    vperm2i128(Ymm(1), Ymm(14), Ymm(15),
+               (0x0 << 6) + (IMM << 4) + (0x2 << 2) + IMM);
+    vperm2i128(Ymm(2), Ymm(14), Ymm(15),
+               (0x0 << 6) + (IMM << 4) + (0x3 << 2) + IMM);
+    vperm2i128(Ymm(3), Ymm(14), Ymm(15),
+               (0x1 << 6) + (IMM << 4) + (0x1 << 2) + IMM);
+    vperm2i128(Ymm(4), Ymm(14), Ymm(15),
+               (0x1 << 6) + (IMM << 4) + (0x2 << 2) + IMM);
+    vperm2i128(Ymm(5), Ymm(14), Ymm(15),
+               (0x1 << 6) + (IMM << 4) + (0x3 << 2) + IMM);
 
-    vperm2i128(Ymm(6), Ymm(14), Ymm(15), (0x2<<6) + (IMM<<4) + (0x1<<2) + IMM);
-    vperm2i128(Ymm(7), Ymm(14), Ymm(15), (0x3<<6) + (IMM<<4) + (0x2<<2) + IMM);
-    vperm2i128(Ymm(8), Ymm(14), Ymm(15), (0x2<<6) + (IMM<<4) + (0x3<<2) + IMM);
-    vperm2i128(Ymm(9), Ymm(14), Ymm(15), (0x3<<6) + (IMM<<4) + (0x1<<2) + IMM);
-    vperm2i128(Ymm(10), Ymm(14), Ymm(15), (0x3<<6) + (IMM<<4) + (0x2<<2) + IMM);
-    vperm2i128(Ymm(11), Ymm(14), Ymm(15), (0x3<<6) + (IMM<<4) + (0x3<<2) + IMM);
+    vperm2i128(Ymm(6), Ymm(14), Ymm(15),
+               (0x2 << 6) + (IMM << 4) + (0x1 << 2) + IMM);
+    vperm2i128(Ymm(7), Ymm(14), Ymm(15),
+               (0x3 << 6) + (IMM << 4) + (0x2 << 2) + IMM);
+    vperm2i128(Ymm(8), Ymm(14), Ymm(15),
+               (0x2 << 6) + (IMM << 4) + (0x3 << 2) + IMM);
+    vperm2i128(Ymm(9), Ymm(14), Ymm(15),
+               (0x3 << 6) + (IMM << 4) + (0x1 << 2) + IMM);
+    vperm2i128(Ymm(10), Ymm(14), Ymm(15),
+               (0x3 << 6) + (IMM << 4) + (0x2 << 2) + IMM);
+    vperm2i128(Ymm(11), Ymm(14), Ymm(15),
+               (0x3 << 6) + (IMM << 4) + (0x3 << 2) + IMM);
   }
 };
 

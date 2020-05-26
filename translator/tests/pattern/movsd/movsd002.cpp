@@ -29,7 +29,6 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr;
-    size_t addr1;
 
 /* Address is aligned */
 #if 1

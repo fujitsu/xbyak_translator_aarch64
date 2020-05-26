@@ -81,6 +81,7 @@ public:
     vpmovsdb(ptr[rax], Zmm(31) | k4);
     vmovups(Zmm(4), ptr[rax]);
 
+<<<<<<< HEAD
     add(rax, 64);
     vpmovsdb(ptr[rax], Zmm(31) | k7);
     vmovups(Zmm(5), ptr[rax]);
@@ -125,6 +126,22 @@ public:
     vpmovsdb(ptr[rax], Xmm(31) | k7);
     vmovups(Zmm(15), ptr[rax]);
 
+=======
+    /*
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Zmm(31)|k5);
+    vmovups(Zmm(5), ptr[rax]);
+
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Zmm(31)|k6);
+    vmovups(Zmm(6), ptr[rax]);
+    */
+
+    add(rax, 64);
+    vpmovsdb(ptr[rax], Zmm(31) | k7);
+    vmovups(Zmm(7), ptr[rax]);
+
+>>>>>>> 3_implement_translation
     mov(rax, 0x5);
   }
 };

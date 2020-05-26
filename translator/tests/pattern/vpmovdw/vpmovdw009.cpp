@@ -20,10 +20,12 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    for(int i=0; i<16; i++){
-        if(i%2 == 0) inputZReg[1].us_dt[i] = uint32_t(286392319);
-        else inputZReg[1].us_dt[i] = uint32_t(286326784);
-        inputZReg[3].us_dt[i] = uint32_t(17);
+    for (int i = 0; i < 16; i++) {
+      if (i % 2 == 0)
+        inputZReg[1].us_dt[i] = uint32_t(286392319);
+      else
+        inputZReg[1].us_dt[i] = uint32_t(286326784);
+      inputZReg[3].us_dt[i] = uint32_t(17);
     }
     inputPredReg[1] = (1 << 0) | (1 << 1); /* Both x86_64 and aarch64 */
     inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) |
@@ -77,8 +79,6 @@ public:
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
     mov(rbx,
         size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
-
-
   }
 };
 

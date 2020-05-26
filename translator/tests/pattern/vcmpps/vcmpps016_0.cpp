@@ -44,8 +44,8 @@ public:
 
     inputPredReg[1] = uint64_t(0x2);
     inputPredReg[2] = uint64_t(0x6);
-    inputPredReg[3] = (1 << 3) | (1 << 15) |           /* x86_64 */
-                      (1 << 12) | (uint64_t(1 << 64)); /* aarch64 */
+    inputPredReg[3] = (1 << 3) | (1 << 15) | /* x86_64 */
+                      (1 << 12);             /* aarch64 */
 
     inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
                       (1 << 6) | (1 << 7) | (1 << 8) | (1 << 12) |

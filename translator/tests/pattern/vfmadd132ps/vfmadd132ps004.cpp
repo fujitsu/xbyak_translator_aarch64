@@ -28,10 +28,11 @@ public:
     }
     inputPredReg[1] = uint64_t(0);
     inputPredReg[2] = ~uint64_t(0);
-    inputPredReg[3] = (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7); /* Both x86_64 and aarch64 */
-    inputPredReg[4] = (1 << 3) | (1 << 6); /* Both x86_64 and aarch64 */
-    inputPredReg[5] = (1 << 0) | (1 << 10) |
-                      (1 << 3) | (1 << 6); /* Both x86_64 and aarch64 */
+    inputPredReg[3] =
+        (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7); /* Both x86_64 and aarch64 */
+    inputPredReg[4] = (1 << 3) | (1 << 6);         /* Both x86_64 and aarch64 */
+    inputPredReg[5] = (1 << 0) | (1 << 10) | (1 << 3) |
+                      (1 << 6); /* Both x86_64 and aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -40,11 +41,6 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    size_t addr;
-    size_t addr1;
-    size_t addr2;
-    size_t addr3;
-    size_t addr4;
     size_t addr5;
     size_t addr6;
     size_t addr7;
@@ -58,20 +54,20 @@ public:
     addr2 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0]));
     addr3 = reinterpret_cast<size_t>(&(inputZReg[8].ud_dt[0]));
     addr4 = reinterpret_cast<size_t>(&(inputZReg[9].ud_dt[0]));
-    
-    mov(rax, addr);  
+
+    mov(rax, addr);
     vfmadd132ps(Zmm(0), Zmm(1), ptr[rax]);
     vmovdqu8(Zmm(10), ptr[rax]);
-    mov(rax, addr1);  
+    mov(rax, addr1);
     vfmadd132ps(Zmm(3), Zmm(3), ptr[rax]);
     vmovdqu8(Zmm(11), ptr[rax]);
-    mov(rax, addr2);  
+    mov(rax, addr2);
     vfmadd132ps(Zmm(5), Zmm(6), ptr[rax]);
     vmovdqu8(Zmm(12), ptr[rax]);
-    mov(rax, addr3);  
+    mov(rax, addr3);
     vfmadd132ps(Zmm(7), Zmm(8), ptr[rax]);
     vmovdqu8(Zmm(13), ptr[rax]);
-    mov(rax, addr4);  
+    mov(rax, addr4);
     vfmadd132ps(Zmm(9), Zmm(9), ptr[rax]);
     vmovdqu8(Zmm(14), ptr[rax]);*/
 

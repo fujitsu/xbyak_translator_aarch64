@@ -32,13 +32,14 @@ public:
     //   inputZReg[1].sp_dt[i] = 0.0f;
     //   inputZReg[2].sp_dt[i] = 0.0f;
     // }
-    
+
     inputPredReg[1] = uint64_t(0);
     inputPredReg[2] = ~uint64_t(0);
-    inputPredReg[3] = (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7); /* Both x86_64 and aarch64 */
-    inputPredReg[4] = (1 << 3) | (1 << 6); /* Both x86_64 and aarch64 */
-    inputPredReg[5] = (1 << 0) | (1 << 10) |
-                      (1 << 3) | (1 << 6); /* Both x86_64 and aarch64 */
+    inputPredReg[3] =
+        (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7); /* Both x86_64 and aarch64 */
+    inputPredReg[4] = (1 << 3) | (1 << 6);         /* Both x86_64 and aarch64 */
+    inputPredReg[5] = (1 << 0) | (1 << 10) | (1 << 3) |
+                      (1 << 6); /* Both x86_64 and aarch64 */
   }
 
   void setCheckRegFlagAll() {

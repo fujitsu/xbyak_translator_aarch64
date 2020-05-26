@@ -20,6 +20,15 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+    inputGenReg[15] = std::numeric_limits<uint64_t>::max();
+    inputGenReg[14] = 0;
+    inputGenReg[13] = std::numeric_limits<int64_t>::max();
+    inputGenReg[12] = std::numeric_limits<int64_t>::min();
+    inputGenReg[11] = std::numeric_limits<uint32_t>::max();
+
+    inputGenReg[10] = std::numeric_limits<int32_t>::max();
+    inputGenReg[9] =
+        uint64_t(0xFFFFffff80000000); // sign extended min of int_32_t
   }
 
   void setCheckRegFlagAll() {
@@ -37,17 +46,10 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
     std::cout << "Address is " << std::hex << addr << std::endl;
 
-    mov(r15, std::numeric_limits<int64_t>::max());
-    mov(r14, std::numeric_limits<int64_t>::min());
-    xor_(r13, r13);
-    mov(r12, std::numeric_limits<uint64_t>::max());
-    mov(r11, std::numeric_limits<uint64_t>::min());
-
-    std::vector<Reg64> regs = {r15, r14, r13, r12, r11};
-    std::vector<uint64_t> imms = {uint64_t(0x7FFFFFFFFFFFFFFF),
-                                  uint64_t(0x8000000000000000), uint64_t(0),
-                                  uint64_t(0xFFFFFFFFFFFFFFFF), uint64_t(0)};
-    //    std::vector<Reg64> regs = {r15};
+    std::vector<Reg64> regs = {r15, r14, r13, r12, r11, r10, r9};
+    //    std::vector<Reg64> regs = {r12};
+    std::vector<uint32_t> imms = {uint32_t(0x7FFFFFFF), uint32_t(0x80000000),
+                                  uint32_t(0), uint32_t(0x80), uint32_t(0x7f)};
 #ifdef XBYAK_TRANSLATE_AARCH64
     Xbyak_aarch64::XReg x_of{x7};
     Xbyak_aarch64::XReg x_sf{x6};
@@ -56,7 +58,7 @@ public:
     Xbyak_aarch64::XReg x_addr{x2};
     Xbyak_aarch64::XReg x_tmpAddr{x1};
     Xbyak_aarch64::XReg x_tmpFlag{x0};
-    Xbyak_aarch64::XReg x_dummyFlag{x10};
+    Xbyak_aarch64::XReg x_dummyFlag{x16};
 
     CodeGeneratorAArch64::mov_imm(x_of, 1 << 11, X_TMP_0);
     CodeGeneratorAArch64::mov_imm(x_sf, 1 << 7, X_TMP_0);
@@ -166,10 +168,6 @@ public:
     mov(rbp, 5);
     mov(rsi, 5);
     mov(r8, 5);
-    mov(r9, 5);
-    mov(r10, 5);
-    mov(r11, 5);
-    mov(r12, 5);
   }
 };
 

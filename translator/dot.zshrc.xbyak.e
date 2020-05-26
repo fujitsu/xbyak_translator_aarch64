@@ -1,0 +1,178 @@
+#!/bin/bash
+export PATH=${CI_XED_PATH}:${PATH}
+export QEMU_LD_PREFIX=/usr/aarch64-linux-gnu
+export DUMP_PREFIX=/usr/bin/aarch64-linux-gnu-
+
+DIFF() {
+    # example:DIFF vmulps000
+    X86=$1.jit_x86_64.exec_x86_64.log
+    AARCH64=$1.jit_aarch64.exec_aarch64.log
+
+    if [ ! -f ${X86} ] ; then
+	echo "${X86} not found"
+	return 1
+    fi
+
+    if [ ! -f ${aarch64} ] ; then
+	echo "${aarch64} not found"
+	return 1
+    fi
+
+    diff -y -W 150 $1.jit_x86_64.exec_x86_64.log $1.jit_aarch64.exec_aarch64.log | less
+}
+
+DI() {
+# example:DI vmulps000
+    DIFF $@
+}
+
+ASM() {
+# example:ASM vmulps000
+    X86=$1.jit_x86_64.exec_x86_64.asm
+    AARCH64=$1.jit_aarch64.exec_aarch64.asm
+
+    if [ ! -f ${X86} ] ; then
+	echo "${X86} not found"
+	return 1
+    fi
+
+    if [ ! -f ${aarch64} ] ; then
+	echo "${aarch64} not found"
+	return 1
+    fi
+
+    diff -y -W 150 $1.jit_x86_64.exec_x86_64.asm $1.jit_aarch64.exec_aarch64.asm | less
+}
+
+AS() {
+# example:AS vmulps000
+    ASM $@
+}
+
+
+ tmp=/tmp/$$
+
+  echo 0 > $tmp-countOK
+  echo 0 > $tmp-countNG
+  echo 0 > $tmp-countEX
+
+msg_ok() {
+    NUM_MSG_OK=`cat $tmp-countOK`
+    NUM_MSG_OK=$((++NUM_MSG_OK))
+    echo $NUM_MSG_OK > $tmp-countOK
+    echo "###################################"
+    echo "[Continuous Integration] OK, Congratulation! ${INSTRUCTION}${PATTERN}"
+    echo "###################################"
+}
+
+msg_ng() {
+    NUM_MSG_NG=`cat $tmp-countNG`
+    NUM_MSG_NG=$((++NUM_MSG_NG))
+    echo $NUM_MSG_NG > $tmp-countNG
+    ESC=$(printf '\033')
+    echo "###################################"
+    echo "[Continuous Integration]""${ESC}[31m NG${ESC}[m"", It seems a little different. ${INSTRUCTION}${PATTERN}"
+    echo "###################################"
+}
+
+msg_expected(){
+    NUM_MSG_EXPECTED=`cat $tmp-countEX`
+    NUM_MSG_EXPECTED=$((++NUM_MSG_EXPECTED))
+    echo $NUM_MSG_EXPECTED > $tmp-countEX
+    ESC=$(printf '\033')
+    echo "###################################"
+    echo "[Continuous Integration]""${ESC}[33m WARNING${ESC}[m"", Expected value (X86) does not exit. ${INSTRUCTION}${PATTERN}"
+    echo "###################################"
+}
+
+
+TEST() {
+# example:TEST vmulps000
+# example:TEST vmulps000 -x
+# example:TEST vmulps000 -a
+    
+    TP_BASE=`echo ${1} | sed -e "s/_[0-9]\+//" | sed -e "s/[0-9]\{3\}$//"`
+
+    echo ${1}"__Continuous__"
+
+    ./test2.sh -x -X -E pattern/${TP_BASE}/${1}.cpp
+    
+
+}
+
+TALL() {
+
+  set +e
+  
+  PWD=`pwd`
+
+      INSTRUCTIONS=`ls pattern/ | sed -e 's/\n/ /g' | grep -v sandbox`
+      NUM_INSTRUCTIONS=`ls pattern/ | wc -l`
+
+    INSTRUCTIONS_X86=`ls expected_value/ | sed -e 's/\n/ /g' | grep -v sandbox`
+    NUM_INSTRUCTIONS_X86=`ls expected_value/ | wc -l`
+
+#    if [ $NUM_INSTRUCTIONS -ne $NUM_INSTRUCTIONS_X86 ];then
+#      echo "The number of a64 test patterns and x86 test patterns doesn't match."
+#      exit
+#    fi
+
+    NUM_INSTRUCTIONS_F=$1
+    NUM_INSTRUCTIONS_L=$2
+
+    if [ $2 = "NUM_INSTRUCTIONS" ];then
+      NUM_INSTRUCTIONS_L=$NUM_INSTRUCTIONS
+    fi
+
+    for j in `seq $NUM_INSTRUCTIONS`  
+      do  
+        echo $((j-NUM_INSTRUCTIONS_F+1))"/"$((NUM_INSTRUCTIONS_L-NUM_INSTRUCTIONS_F+1))
+        INSTRUCTION=`echo $INSTRUCTIONS | sed -z 's/\n/ /g' | cut -d' ' -f${j} | sed -e 's/\///'`
+        TEST_PATTERNS=($(ls pattern/${INSTRUCTION}))
+        NUM_PATTERNS=`echo ${#TEST_PATTERNS[@]}`
+        
+
+        for i in `seq 1 $NUM_PATTERNS`
+          do
+            PATTERN=`echo ${TEST_PATTERNS[i-1]} | sed -e "s/${INSTRUCTION}//g" | sed -e "s/\.cpp//g"`
+            TE ${INSTRUCTION}${PATTERN} all 2>/dev/null | grep Continuous
+          done  
+       done  
+    
+      echo "OK:$(cat $tmp-countOK)"
+      echo "NG:$(cat $tmp-countNG)"
+      echo "WARNING:$(cat $tmp-countEX)"
+
+    set -e
+
+   if [ $(cat $tmp-countNG) -eq 0 -a $(cat $tmp-countEX) -eq 0 ] ; then
+     return 0
+   else
+     return 1
+   fi
+
+}
+
+
+TE() {
+# example:TE vmulps000
+# example:TE vmulps000 -x
+# example:TE vmulps000 -a
+
+    TEST $@
+}
+
+TX() {
+# example:TX vmulps000
+    TP_BASE=`echo ${1} | sed -e "s/[0-9]\+//"`
+
+    ./test2.sh -x -X -E pattern/${TP_BASE}/${1}.cpp
+}
+
+TA() {
+# example:TA vmulps000
+    TP_BASE=`echo ${1} | sed -e "s/[0-9]\+//"`
+
+    ./test2.sh -a -A -E pattern/${TP_BASE}/${1}.cpp
+}
+

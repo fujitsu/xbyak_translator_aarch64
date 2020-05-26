@@ -19,6 +19,11 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    for (int i = 0; i < 16; i++) {
+      if (i != rsp.getIdx()) {
+        inputGenReg[i] = ~uint64_t(0);
+      }
+    }
   }
 
   void setCheckRegFlagAll() {
@@ -27,6 +32,9 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
+    /* RAX, RCX, RDX, RBX, RSP, RBP, RSI, RDI,
+       R8,  R9,  R10, R11, R12, R13, R14, R15 */
+
     mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7])));
     mov(dword[rax], ~uint64_t(0));
     mov(rcx, dword[rax]);
@@ -34,6 +42,7 @@ public:
 
     mov(rax, reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[6])));
     mov(qword[rax], ~uint64_t(0));
+
     mov(rbx, qword[rax]);
     mov(ebp, qword[rax]);
 

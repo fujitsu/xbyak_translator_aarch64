@@ -24,6 +24,14 @@ public:
     inputGenReg[1] = 0x08090A0B0C0D0E0F;
     inputGenReg[2] = 0x0001020304050607;
     inputGenReg[3] = 0x08090A0B0C0D0E0F;
+    // inputGenReg[4] = 0; // rsp
+    inputGenReg[5] = 0x1;
+
+    inputGenReg[8] = 0x0001020304050607;
+    inputGenReg[9] = 0x08090A0B0C0D0E0F;
+    inputGenReg[10] = 0x0001020304050607;
+    inputGenReg[11] = 0x08090A0B0C0D0E0F;
+    inputGenReg[12] = 0x1;
   }
 
   void setCheckRegFlagAll() {
@@ -34,29 +42,17 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
-    mov(rax, 1);
     shl(rax, 1);
+    shl(rcx, 13);
+    shl(rdx, 31);
+    shl(rbx, 41);
+    shl(rbp, 63);
 
-    mov(rcx, 1);
-    shl(rcx, 31);
-
-    mov(rdx, 1);
-    shl(rdx, 32);
-
-    mov(rbx, 1);
-    shl(rbx, 63);
-
-    mov(r8, 1);
-    shl(r8d, 1);
-
-    mov(r9, 1);
-    shl(r9d, 31);
-
-    mov(r10, 1);
-    shl(r10d, 32);
-
-    mov(r11, 1);
-    shl(r11d, 63);
+    sal(r8, 1);
+    sal(r9, 13);
+    sal(r10, 31);
+    sal(r11, 41);
+    sal(r12, 63);
   }
 };
 

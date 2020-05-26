@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-#include <typeinfo>
 #include "test_generator2.h"
+#include <typeinfo>
 #define CG64 CodeGeneratorAArch64
 //#define CG64 Xbyak_aarch64
 
@@ -31,16 +31,20 @@ public:
 
   void genJitTestCode() {
     std::cout << "hoge:" << typeid((CG64::z0, CG64::z3)).name() << std::endl;
-    
+
     //    CG64::ld4((CG64::v0, CG64::v3).s4, Xbyak_aarch64::ptr(CG64::x8));
-    //    CG64::ld4w((CG64::z0, CG64::z3, CG64::z5).s, CG64::p0, Xbyak_aarch64::ptr(CG64::x8));
-    CG64::ld4((CG64::z0.b - CG64::z3.b), CG64::p0, Xbyak_aarch64::ptr(CG64::x8));
+    //    CG64::ld4w((CG64::z0, CG64::z3, CG64::z5).s, CG64::p0,
+    //    Xbyak_aarch64::ptr(CG64::x8));
+    CG64::ld4((CG64::z0.b - CG64::z3.b), CG64::p0,
+              Xbyak_aarch64::ptr(CG64::x8));
 
-
-    //    CG64::ld4w((CG64::z0.s - CG64::z3.s), CG64::p0, Xbyak_aarch64::ptr(CG64::x8));
-    //    CG64::ld4w((CG64::z0 - CG64::z3).s, CG64::p0, Xbyak_aarch64::ptr(CG64::x8));
+    //    CG64::ld4w((CG64::z0.s - CG64::z3.s), CG64::p0,
+    //    Xbyak_aarch64::ptr(CG64::x8));
+    //    CG64::ld4w((CG64::z0 - CG64::z3).s, CG64::p0,
+    //    Xbyak_aarch64::ptr(CG64::x8));
     //    CG64::ld4w(CG64::z0.s, CG64::p0, Xbyak_aarch64::ptr(CG64::x8));
-    //    CG64::ld4w((CG64::z0.s , CG64::z3.s), CG64::p0, Xbyak_aarch64::ptr(CG64::x8));
+    //    CG64::ld4w((CG64::z0.s , CG64::z3.s), CG64::p0,
+    //    Xbyak_aarch64::ptr(CG64::x8));
   }
 };
 

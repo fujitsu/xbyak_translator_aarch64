@@ -1,2 +1,5 @@
 translator/third_party/build_xed_aarch64
 translator/third_party/build_xed_x86_64
+translator/tests/pattern/*/*.check
+translator/tests/pattern/*/*.result
+translator/tests/pattern/sandbox/
