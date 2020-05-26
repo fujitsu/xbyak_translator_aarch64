@@ -23,21 +23,24 @@ public:
 
     inputPredReg[1] = (1 << 0);
     inputPredReg[2] = (1 << 0) | (1 << 1) | (1 << 4) |            /* x86_64 */
-      (1 << 0) | (1 << 8) | (uint64_t(1) << 32);            /* aarch64 */
+                      (1 << 0) | (1 << 8) | (uint64_t(1) << 32);  /* aarch64 */
     inputPredReg[3] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 4) | /* x86_64 */
-      (1 << 0) | (1 << 8) | (1 << 16) | (uint64_t(1) << 32); /* aarch64 */
-    inputPredReg[4] =
-        (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |  /* x86_64 */
-      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32); /* aarch64 */
+                      (1 << 0) | (1 << 8) | (1 << 16) |
+                      (uint64_t(1) << 32); /* aarch64 */
+    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) |
+                      (1 << 4) | /* x86_64 */
+                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+                      (uint64_t(1) << 32); /* aarch64 */
 
     inputPredReg[5] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
                       (1 << 6) | /* x86_64 */
-      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32) |
-						     (uint64_t(1) << 48); /* aarch64 */
+                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+                      (uint64_t(1) << 32) | (uint64_t(1) << 48); /* aarch64 */
     inputPredReg[6] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) |
                       (1 << 6) | (1 << 7) | /* x86_64 */
-						     (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32) |
-						     (uint64_t(1) << 48) | (uint64_t(1) << 56); /* aarch64 */
+                      (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+                      (uint64_t(1) << 32) | (uint64_t(1) << 48) |
+                      (uint64_t(1) << 56); /* aarch64 */
     inputPredReg[7] = ~uint64_t(0);
   }
 
@@ -53,14 +56,14 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
     mov(rax, addr);
 
-    vunpckhpd(Xmm(0)|k1|T_z, Xmm(1), ptr[rax]);
-    vunpckhpd(Xmm(2)|k2|T_z, Xmm(2), ptr[rax]);
+    vunpckhpd(Xmm(0) | k1 | T_z, Xmm(1), ptr[rax]);
+    vunpckhpd(Xmm(2) | k2 | T_z, Xmm(2), ptr[rax]);
 
-    vunpckhpd(Ymm(3)|k3|T_z, Ymm(4), ptr[rax]);
-    vunpckhpd(Ymm(5)|k4|T_z, Ymm(5), ptr[rax]);
+    vunpckhpd(Ymm(3) | k3 | T_z, Ymm(4), ptr[rax]);
+    vunpckhpd(Ymm(5) | k4 | T_z, Ymm(5), ptr[rax]);
 
-    vunpckhpd(Zmm(6)|k5|T_z, Zmm(7), ptr[rax]);
-    vunpckhpd(Zmm(8)|k6|T_z, Zmm(8), ptr[rax]);
+    vunpckhpd(Zmm(6) | k5 | T_z, Zmm(7), ptr[rax]);
+    vunpckhpd(Zmm(8) | k6 | T_z, Zmm(8), ptr[rax]);
 
     mov(rax, 5);
   }

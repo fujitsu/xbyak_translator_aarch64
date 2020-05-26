@@ -31,7 +31,7 @@ public:
     size_t addr;
     size_t addr1;
 
-    /* Address is aligned */
+/* Address is aligned */
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));

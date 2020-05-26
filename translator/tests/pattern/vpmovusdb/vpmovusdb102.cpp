@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-#include <vector>
 #include "test_generator2.h"
+#include <vector>
 
 class TestPtnGenerator : public TestGenerator {
 public:
@@ -24,7 +24,7 @@ public:
 
     std::vector<int> pattern = {30, 31};
 
-    for(auto i : pattern) {
+    for (auto i : pattern) {
       inputZReg[i].us_dt[0] = ~uint32_t(0);
       inputZReg[i].us_dt[1] = uint32_t(0x7FFFFFFF);
       inputZReg[i].us_dt[2] = uint32_t(0xFF);
@@ -43,13 +43,15 @@ public:
       inputZReg[i].us_dt[15] = ~uint32_t(0);
     }
 
-    inputPredReg[1] = (1 << 0) | (1 << 7) | /* x86_64 */
-      (1<<0) |(1<<28); /* aarch64 */
+    inputPredReg[1] = (1 << 0) | (1 << 7) |            /* x86_64 */
+                      (1 << 0) | (1 << 28);            /* aarch64 */
     inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) | /* x86_64 */
-      (1 << 0) | (1<<28) | (uint64_t(1)<<32); /* Both x86_64 and aarch64 */
+                      (1 << 0) | (1 << 28) |
+                      (uint64_t(1) << 32); /* Both x86_64 and aarch64 */
     inputPredReg[3] = 0;
-    inputPredReg[4] = (1 << 0) | (1 << 7) | (1 << 8) |(1<<15)| /* x86_64 */
-      (1 << 0) | (1<<28) | (uint64_t(1)<<32)|(uint64_t(1)<<60); /* Both x86_64 and aarch64 */
+    inputPredReg[4] = (1 << 0) | (1 << 7) | (1 << 8) | (1 << 15) | /* x86_64 */
+                      (1 << 0) | (1 << 28) | (uint64_t(1) << 32) |
+                      (uint64_t(1) << 60); /* Both x86_64 and aarch64 */
     inputPredReg[7] = ~uint64_t(0);
   }
 
@@ -64,19 +66,19 @@ public:
     mov(rax, addr);
 
     /* Dst=Mem, src=Zmm */
-    vpmovusdb(ptr[rax], Zmm(31)|k1);
+    vpmovusdb(ptr[rax], Zmm(31) | k1);
     vmovups(Zmm(1), ptr[rax]);
-    
+
     add(rax, 64);
-    vpmovusdb(ptr[rax], Zmm(31)|k2);
+    vpmovusdb(ptr[rax], Zmm(31) | k2);
     vmovups(Zmm(2), ptr[rax]);
 
     add(rax, 64);
-    vpmovusdb(ptr[rax], Zmm(31)|k3);
+    vpmovusdb(ptr[rax], Zmm(31) | k3);
     vmovups(Zmm(3), ptr[rax]);
 
     add(rax, 64);
-    vpmovusdb(ptr[rax], Zmm(31)|k4);
+    vpmovusdb(ptr[rax], Zmm(31) | k4);
     vmovups(Zmm(4), ptr[rax]);
 
     /*
@@ -88,9 +90,9 @@ public:
     vpmovusdb(ptr[rax], Zmm(31)|k6);
     vmovups(Zmm(6), ptr[rax]);
     */
-    
+
     add(rax, 64);
-    vpmovusdb(ptr[rax], Zmm(31)|k7);
+    vpmovusdb(ptr[rax], Zmm(31) | k7);
     vmovups(Zmm(7), ptr[rax]);
 
     mov(rax, 0x5);

@@ -53,22 +53,25 @@ AS() {
 }
 
 msg_ok() {
-    echo "###################################"
-    echo " OK, Congratulation! "
-    echo "###################################"
+    echo "#######################################################"
+    echo " $ALLTEST OK, Congratulation! ${INSTRUCTION}${PATTERN}"
+    echo "#######################################################"
 }
 
 msg_ng() {
-    echo "###################################"
-    echo " NG, It seems a little different. "
-    echo "###################################"
+    echo "#######################################################"
+    echo " $ALLTEST NG, It seems a little different. ${INSTRUCTION}${PATTERN}"
+    echo "#######################################################"
 }
 
 TEST() {
-# example:TEST vmulps000
-# example:TEST vmulps000 -x
-# example:TEST vmulps000 -a
+    # example:TEST vmulps000
+    # example:TEST vmulps000 -x
+    # example:TEST vmulps000 -a
     TP_BASE=`echo ${1} | sed -e "s/_[0-9]\+//" | sed -e "s/[0-9]\{3\}$//"`
+    ALLTEST=""
+    INSTRUCTION=""
+    PATTERN=""
 
     if [ ${2:-"-x"} = "-x" ] ; then
 	./test2.sh -x -X -E pattern/${TP_BASE}/${1}.cpp
@@ -97,10 +100,55 @@ TEST() {
     fi
 }
 
+TALL_CORE() {
+# example:TEST vmulps000
+    TP_BASE=`echo ${1} | sed -e "s/_[0-9]\+//" | sed -e "s/[0-9]\{3\}$//"`
+
+    ./test2.sh -x -X -E pattern/${TP_BASE}/${1}.cpp
+    if [ $? -ne 0 ] ; then
+	echo "x86_64 failed"
+	if [ -z "$2" ] ; then
+	    return 1
+	fi
+    fi
+
+    ./test2.sh -a -A -E pattern/${TP_BASE}/${1}.cpp
+    if [ $? -ne 0 ] ; then
+	echo "aarch64 failed"
+	if [ -z "$2" ] ; then
+	    return 1
+	fi
+    fi
+
+    X86_LOG=/tmp/${1}.jit_x86_64.exec_x86_64.`whoami`.check.log
+    AARCH64_LOG=/tmp/${1}.jit_aarch64.exec_aarch64.`whoami`.check.log
+
+    diff -y -W 300 ${X86_LOG} ${AARCH64_LOG}
+    if [ $? = 0 ] ; then
+	msg_ok
+    else
+	msg_ng
+    fi
+}
+
+TALL() {
+    INSTRUCTIONS=`ls pattern/  | grep -v sandbox | sed -z 's/\n/ /g'`
+    NUM_INSTRUCTIONS=`echo $INSTRUCTIONS | awk '{count += (split($0, a, "\/") - 1)} END{print count}'`
+    for j in `seq 1 $NUM_INSTRUCTIONS`
+    do
+	INSTRUCTION=`echo $INSTRUCTIONS | sed -z 's/\n/ /g' | cut -d' ' -f${j} | sed -e 's/\///'`
+	TEST_PATTERNS=`ls pattern/${INSTRUCTION}/ | grep cpp | sed -e "s/${INSTRUCTION}//g" | sed -e "s/\.cpp//g"`
+	NUM_PATTERNS=`echo $TEST_PATTERNS | wc | awk '{ print $1 }'`
+	for i in `seq 1 $NUM_PATTERNS`
+	do
+	    PATTERN=`echo $TEST_PATTERNS | sed -n "${i}p"`
+	    TALL_CORE ${INSTRUCTION}${PATTERN} 2>/dev/null | grep ALLTEST
+	done
+    done
+}
+
 TE() {
 # example:TE vmulps000
-# example:TE vmulps000 -x
-# example:TE vmulps000 -a
     TEST $@
 }
 
@@ -118,3 +166,32 @@ TA() {
     ./test2.sh -a -A -E pattern/${TP_BASE}/${1}.cpp
 }
 
+REMOVE_UNUSED_VARIABLE() {
+    if [ $# -eq 0 ] ; then
+       echo "please set target files..."
+       return 0
+    fi
+    NUM_FILES=$#
+    WARNING_MSG=`TA add000 |& grep 'unused'`
+    for i in `seq 1 $NUM_FILES`
+    do
+       WARNING_FILE=`echo $@ | cut -d' ' -f${i}`
+       WARNING_LINES=`echo $WARNING_MSG | grep $WARNING_FILE | cut -d':' -f2`
+       WARNING_FILE_PATH=`echo $WARNING_MSG | grep $WARNING_FILE | cut -d':' -f1`
+       if [ "$WARNING_FILE_PATH" = "" ] ; then
+           NUM_WARNING_LINES=0
+       else
+           NUM_WARNING_LINES=`echo $WARNING_LINES | wc -l`
+       fi
+       for j in `seq 1 $NUM_WARNING_LINES`
+        do
+           WARNING_LINE=`echo $WARNING_LINES | sed -n ${j}p | sed -e s/\\n//g`
+           DELETE_LINE=`expr $WARNING_LINE - $j + 1`
+           cat $WARNING_FILE_PATH | sed ${DELETE_LINE}d > tmpfile
+           mv tmpfile $WARNING_FILE_PATH
+       done
+       if [ $NUM_WARNING_LINES -ne 0 ] ; then
+          echo $WARNING_FILE_PATH
+       fi
+    done
+}

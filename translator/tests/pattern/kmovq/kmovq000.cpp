@@ -44,6 +44,9 @@ public:
 
     mov(r12, 0xFFFF);
     kmovq(k5, r12);
+
+    mov(r13, uint64_t(0xaaaabbbbccccdddd));
+    kmovq(k6, r13);
   }
 };
 
@@ -72,11 +75,14 @@ int main(int argc, char *argv[]) {
     gen.dumpInputReg();
     f(); /* Execute JIT code */
 
+#if 0
 #ifndef XBYAK_TRANSLATE_AARCH64
     /* Bit order of mask registers are different from x86_64 and aarch64.
        In order to compare output values of mask registers by test script,
        Bit order of x86_64 mask register values is modified here. */
-    gen.modifyPredReg(SP_DT);
+    //    gen.modifyPredReg(UB_DT);
+    gen.modifyPredReg(UD_DT);
+#endif
 #endif
 
     gen.dumpOutputReg(); /* Dump all register values */

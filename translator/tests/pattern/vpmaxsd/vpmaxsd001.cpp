@@ -21,12 +21,16 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-    for(int i=0; i<8; i++) {
-      inputZReg[14].us_dt[2*i+0] =       inputZReg[30].us_dt[2*i+0] = 0x8aaabbbb;
-      inputZReg[14].us_dt[2*i+1] =       inputZReg[30].us_dt[2*i+1] = 0x7cccdddd;
+    for (int i = 0; i < 8; i++) {
+      inputZReg[14].us_dt[2 * i + 0] = inputZReg[30].us_dt[2 * i + 0] =
+          0x8aaabbbb;
+      inputZReg[14].us_dt[2 * i + 1] = inputZReg[30].us_dt[2 * i + 1] =
+          0x7cccdddd;
 
-      inputZReg[15].us_dt[2*i+1] = inputZReg[31].us_dt[2*i+1] =0x85554444;
-      inputZReg[15].us_dt[2*i+0] = inputZReg[31].us_dt[2*i+0] =0x72221111;
+      inputZReg[15].us_dt[2 * i + 1] = inputZReg[31].us_dt[2 * i + 1] =
+          0x85554444;
+      inputZReg[15].us_dt[2 * i + 0] = inputZReg[31].us_dt[2 * i + 0] =
+          0x72221111;
     }
   }
 

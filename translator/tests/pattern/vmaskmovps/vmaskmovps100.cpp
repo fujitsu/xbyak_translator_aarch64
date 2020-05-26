@@ -20,14 +20,13 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    for(int i=0; i<4; i++) {
+    for (int i = 0; i < 4; i++) {
       inputZReg[11].us_dt[i] = inputZReg[8].us_dt[i] = 1 << 31;
       inputZReg[12].us_dt[i] = inputZReg[9].us_dt[i] = uint32_t(0x7FFFFFFF);
     }
 
-    for(int i=4; i<16; i++) {
+    for (int i = 4; i < 16; i++) {
       inputZReg[13].us_dt[i] = inputZReg[10].us_dt[i] = ~uint32_t(0);
-
     }
   }
 
@@ -47,13 +46,11 @@ public:
     vmaskmovps(Xmm(1), Xmm(11), ptr[rax]);
     vmaskmovps(Xmm(2), Xmm(12), ptr[rax]);
     vmaskmovps(Xmm(3), Xmm(13), ptr[rax]);
-    
+
     vmaskmovps(Xmm(8), Xmm(8), ptr[rax]);
     vmaskmovps(Xmm(9), Xmm(9), ptr[rax]);
     vmaskmovps(Xmm(10), Xmm(10), ptr[rax]);
 
-
-    
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
     mov(rbx,

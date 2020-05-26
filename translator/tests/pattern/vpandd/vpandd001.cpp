@@ -50,7 +50,6 @@ public:
 
     vpandd(Zmm(21), Zmm(22), ptr[rax]);
 
-
     mov(rax, 5);
   }
 };

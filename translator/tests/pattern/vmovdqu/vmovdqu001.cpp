@@ -31,12 +31,12 @@ public:
     size_t addr;
     size_t addr1;
 
-    /* Address is aligned */
+/* Address is aligned */
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovdqu(Xmm(0), ptr[rax]);
     vmovdqu(ptr[rbx], Xmm(0));
     vmovdqu8(Zmm(1), ptr[rbx]);
@@ -46,18 +46,18 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[12].ud_dt[0]));
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovdqu(Ymm(2), ptr[rax]);
     vmovdqu(ptr[rbx], Ymm(2));
     vmovdqu8(Zmm(3), ptr[rbx]);
 #endif
 
-    /* Address is unaligned */
+/* Address is unaligned */
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
     addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 5;
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovdqu(Xmm(4), ptr[rax]);
     vmovdqu(ptr[rbx], Xmm(4));
     vmovdqu8(Zmm(5), ptr[rbx]);
@@ -67,7 +67,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[7].ud_dt[0])) + 1;
     addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 7;
     mov(rax, addr);
-    mov(rbx, addr);
+    mov(rbx, addr1);
     vmovdqu(Ymm(6), ptr[rax]);
     vmovdqu(ptr[rbx], Ymm(6));
     vmovdqu8(Zmm(7), ptr[rbx]);

@@ -1,0 +1,31 @@
+variables:
+    GIT_STRATEGY: clone
+
+stages:
+    - test
+
+before_script:
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
+
+job_1:
+  stage: test
+  image: 779e2bd88ba7
+  script:
+    - pwd
+    - ls
+    - cd translator/third_party/
+    - mkdir build_xed_aarch64
+    - cd build_xed_aarch64/
+    - ../xed/mfile.py --host-cpu=aarch64 --shared examples install
+    - cd kits/
+    - XED=`ls | grep install`
+    - ln -sf $XED xed
+    - cd xed/bin/
+    - CI_XED_PATH=`pwd`
+    - cd ../../../../../
+    - source dot.zshrc.xbyak.ci
+    - cd tests/
+    - make -j48
+#  tags: 
+#    - instruction_unit 

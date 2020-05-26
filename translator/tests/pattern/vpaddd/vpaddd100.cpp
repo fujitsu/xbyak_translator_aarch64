@@ -48,13 +48,20 @@ public:
     vpaddd(Ymm(4), Ymm(30), Ymm(4));
     vpaddd(Ymm(5), Ymm(30), Ymm(30));
     vpaddd(Ymm(6), Ymm(6), Ymm(6));
-    
+
     vpaddd(Zmm(21), Zmm(30), Zmm(31));
     vpaddd(Zmm(22), Zmm(30), Zmm(31));
     vpaddd(Zmm(23), Zmm(23), Zmm(31));
     vpaddd(Zmm(24), Zmm(30), Zmm(24));
     vpaddd(Zmm(25), Zmm(30), Zmm(30));
     vpaddd(Zmm(26), Zmm(26), Zmm(26));
+
+    vpaddd(Xmm(9), Xmm(16), Xmm(17));
+    vpaddd(Xmm(10), Xmm(16), Xmm(17));
+    vpaddd(Xmm(11), Xmm(11), Xmm(17));
+    vpaddd(Xmm(12), Xmm(16), Xmm(12));
+    vpaddd(Xmm(13), Xmm(16), Xmm(16));
+    vpaddd(Xmm(14), Xmm(14), Xmm(14));
   }
 };
 

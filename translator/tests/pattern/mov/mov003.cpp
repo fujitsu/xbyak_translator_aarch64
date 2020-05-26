@@ -19,6 +19,11 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    for (int i = 0; i < 16; i++) {
+      if (i != rsp.getIdx()) {
+        inputGenReg[i] = ~uint64_t(0);
+      }
+    }
   }
 
   void setCheckRegFlagAll() {

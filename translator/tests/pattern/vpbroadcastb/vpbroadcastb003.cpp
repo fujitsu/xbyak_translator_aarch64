@@ -21,6 +21,7 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setDumpZRegMode(SP_DT); // set float mode
     inputZReg[0].sp_dt[7] = float(500.3);
+    setInputZregAllRandomHex();
   }
 
   void setCheckRegFlagAll() {
@@ -36,9 +37,12 @@ public:
     mov(rax, addr);
 
     for (int i = 0; i < 4; i++) {
-      // vbroadcastss(Xmm(i), ptr[rax]);
-      // vbroadcastss(Ymm(i + 4), ptr[rax]);
+      // vpbroadcastb(Xmm(i), ptr[rax]);
+      // vpbroadcastb(Ymm(i + 4), ptr[rax]);
       vpbroadcastb(Zmm(i + 8), ptr[rax]);
+
+      // vpbroadcastb(Xmm(i + 16), ptr[rax]);
+      // vpbroadcastb(Ymm(i + 20), ptr[rax]);
     }
 
     mov(rax, 8);

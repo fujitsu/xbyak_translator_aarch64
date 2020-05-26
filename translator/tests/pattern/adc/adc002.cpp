@@ -42,23 +42,22 @@ public:
 
     mov(r11, ~uint64_t(0));
     mov(r12, 1);
-    add(r11, r12); //initialize carry flag(set carry flag for x86)
+    add(r11, r12); // initialize carry flag(set carry flag for x86)
     adc(r8, ptr[rax]);
 
     mov(r11, ~uint64_t(0));
     mov(r12, 1);
-    add(r11, r12); //initialize carry flag(set carry flag for x86)
+    add(r11, r12); // initialize carry flag(set carry flag for x86)
     adc(r14, ptr[rax]);
-
 
     mov(r11, ~uint64_t(0));
     mov(r12, 1);
-    add(r11, r12); //initialize carry flag(set carry flag for x86)
+    add(r11, r12); // initialize carry flag(set carry flag for x86)
     adc(r9d, ptr[rax]);
 
     mov(r11, ~uint64_t(0));
     mov(r12, 1);
-    add(r11, r12); //initialize carry flag(set carry flag for x86)
+    add(r11, r12); // initialize carry flag(set carry flag for x86)
     adc(r15d, ptr[rax]);
 
     mov(rax,

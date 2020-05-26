@@ -77,8 +77,7 @@ public:
     vpcmpd(k1, Zmm(1), Zmm(0), 0);
     vpcmpd(k2, Zmm(3), Zmm(2), 1);
     vpcmpd(k3, Zmm(5), Zmm(4), 2);
-    //vpcmpb(k4, Zmm(7), Zmm(6), 3); //not exist "false" pattern
-
+    // vpcmpb(k4, Zmm(7), Zmm(6), 3); //not exist "false" pattern
   }
 };
 
