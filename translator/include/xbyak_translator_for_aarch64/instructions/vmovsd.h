@@ -1,3 +1,18 @@
+/*******************************************************************************
+ * Copyright 2020 FUJITSU LIMITED
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 void translateVMOVSD(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -9,24 +24,21 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
   xt_reg_idx_t dstIdx;
   xt_reg_idx_t srcIdx;
   xt_reg_idx_t src2Idx;
-  xt_reg_idx_t src3Idx;
   xt_reg_idx_t maskIdx;
   xt_reg_idx_t zTmpIdx;
-  xt_reg_idx_t zTmp2Idx;
   xt_reg_idx_t pTmpIdx;
-  xt_reg_idx_t pTmp2Idx;
-  xed_uint64_t uimm;
 
   /* Col=U103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_MEM0 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_ZERO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_ZERO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -70,15 +82,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     zTmpIdx = xt_push_zreg(&a64);
   }
   /* Col=X103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[2].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[2].opName == XED_OPERAND_INVALID &&
@@ -145,15 +158,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     dstIdx = a64.operands[0].regIdx;
   }
   /* Col=Y103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[2].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_INVALID &&
@@ -166,15 +180,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     srcIdx = a64.operands[1].regIdx;
   }
   /* Col=Z103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_REG3 &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[2].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[3].regClass == XED_REG_CLASS_XMM &&
-                a64.predType == A64_PRED_ZERO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[3].regClass == XED_REG_CLASS_XMM &&
+       a64.predType == A64_PRED_ZERO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -214,15 +229,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     srcIdx = a64.operands[2].regIdx;
   }
   /* Col=AA103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_REG3 &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[2].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[3].regClass == XED_REG_CLASS_XMM &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[3].regClass == XED_REG_CLASS_XMM &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -244,15 +260,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     src2Idx = a64.operands[3].regIdx;
   }
   /* Col=AB103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[2].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -278,15 +295,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
   }
 
   /* Col=AE103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_MEM0 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_ZERO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_ZERO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -335,15 +353,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     maskIdx = a64.operands[1].regIdx;
   }
   /* Col=AF103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_MEM0 &&
-                a64.operands[2].opName == XED_OPERAND_INVALID &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -374,15 +393,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     CG64::ptrue(P_TMP_0.d, xa::VL1);
   }
   /* Col=AG103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_MEM0 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_ZERO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_ZERO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -425,15 +445,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     CG64::not_(P_TMP_0.b, P_ALL_ONE, xa::PRegB(pTmpIdx));
   }
   /* Col=AI103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_MEM0 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_ZERO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_ZERO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -447,15 +468,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
                xa::PRegB(pTmpIdx));
   }
   /* Col=AJ103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-                a64.operands[1].opName == XED_OPERAND_REG0 &&
-                a64.operands[2].opName == XED_OPERAND_REG1 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[2].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_ZERO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
+       a64.operands[2].opName == XED_OPERAND_REG1 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_ZERO && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_REG1 &&
@@ -482,15 +504,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
   }
 
   /* Col=AM103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_MEM0 &&
-                a64.operands[2].opName == XED_OPERAND_INVALID &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -540,15 +563,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     CG64::ld1d(xa::ZRegD(zTmpIdx), xa::PReg(pTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AR103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_MEM0 &&
-                a64.operands[2].opName == XED_OPERAND_INVALID &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -561,15 +585,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     CG64::ld1(xa::VReg2D(dstIdx)[0], xa::ptr(X_TMP_ADDR));
   }
   /* Col=AS103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-                a64.operands[1].opName == XED_OPERAND_REG0 &&
-                a64.operands[2].opName == XED_OPERAND_INVALID &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[1].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_REG1 &&
@@ -582,15 +607,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     CG64::st1(xa::VReg2D(srcIdx)[0], xa::ptr(X_TMP_ADDR));
   }
   /* Col=AT103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-                a64.operands[1].opName == XED_OPERAND_REG0 &&
-                a64.operands[2].opName == XED_OPERAND_REG1 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[2].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_ZERO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
+       a64.operands[2].opName == XED_OPERAND_REG1 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_ZERO && true) ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].opName == XED_OPERAND_REG1 &&
@@ -628,15 +654,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     CG64::mov(xa::VReg2D(dstIdx)[1], xa::VReg2D(srcIdx)[1]);
   }
   /* Col=AW103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[2].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -662,15 +689,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     CG64::mov(xa::ZRegD(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegD(src2Idx));
   }
   /* Col=AY103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_MEM0 &&
-                a64.operands[2].opName == XED_OPERAND_INVALID &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -692,15 +720,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     CG64::mov(xa::ZRegD(dstIdx), P_TMP_0 / xa::T_m, 0);
   }
   /* Col=AZ103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[2].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -747,15 +776,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
               xa::ZRegD(zTmpIdx));
   }
   /* Col=BC103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_REG3 &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[2].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[3].regClass == XED_REG_CLASS_XMM &&
-                a64.predType == A64_PRED_ZERO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[3].regClass == XED_REG_CLASS_XMM &&
+       a64.predType == A64_PRED_ZERO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -780,15 +810,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     xt_pop_zreg();
   }
   /* Col=BE103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_MEM0 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
-                a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_ZERO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[2].regClass == XED_REG_CLASS_INVALID &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_ZERO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -819,15 +850,16 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
     xt_pop_preg();
   }
   /* Col=BF103*/
-  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
-                a64.operands[1].opName == XED_OPERAND_REG1 &&
-                a64.operands[2].opName == XED_OPERAND_REG2 &&
-                a64.operands[3].opName == XED_OPERAND_INVALID &&
-                a64.operands[0].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[1].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[2].regClass == XED_REG_CLASS_XMM &&
-                a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
-                a64.predType == A64_PRED_NO && true) ||
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_INVALID &&
+       a64.operands[0].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[2].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
+       a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[2].opName == XED_OPERAND_INVALID &&

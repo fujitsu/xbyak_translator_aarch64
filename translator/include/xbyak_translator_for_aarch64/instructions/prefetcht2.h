@@ -1,4 +1,4 @@
- /*******************************************************************************
+/*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
  * Licensed under the Apache License, Version 2.0 (the ""License"");
@@ -19,21 +19,17 @@ void translatePREFETCHT2(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
-bool isValid = false;
+  bool isValid = false;
 
-/* Col=X119*/
-if(false ||(a64.operands[0].opName==XED_OPERAND_MEM0&&true)) {
-  CG64::prfm(xa::PLDL3KEEP, xa::ptr(X_TMP_ADDR));
-}
+  /* Col=X119*/
+  if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 && true)) {
+    CG64::prfm(xa::PLDL3KEEP, xa::ptr(X_TMP_ADDR));
+  }
 
-
-
-
-/* Col=BK119*/
-if(false ||(a64.operands[0].opName==XED_OPERAND_MEM0&&true)) {
-  XT_VALID_CHECK;
-}
-XT_VALID_CHECK_IF;
+  /* Col=BK119*/
+  if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 && true)) {
+    XT_VALID_CHECK;
+  }
+  XT_VALID_CHECK_IF;
 }
 #undef CG64
-
