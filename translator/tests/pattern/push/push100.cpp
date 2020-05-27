@@ -20,46 +20,25 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
-    for (int j = 0; j < 32; j++) {
-      for (int i = 0; i < 16; i++) {
-        inputZReg[j].us_dt[i] = (j << 16) + i;
-      }
-    }
-
-    for (int i = 0; i < 16; i++) {
-      inputZReg[31].us_dt[i] = 0x11111111 * i;
-    }
   }
 
   void setCheckRegFlagAll() {
     /* Here modify arrays of checkGenRegMode, checkPredRegMode, checkZRegMode */
   }
 
-  Xbyak_aarch64::VReg4S generateTransposeJitCode(uint32_t *matrixAddr) {
-    size_t addr;
-    addr = reinterpret_cast<size_t>(matrixAddr);
-    CodeGeneratorAArch64::mov_imm(x0, addr, x1);
-
-    for (int row = 0; row < 8; row++) {
-      CodeGeneratorAArch64::ld1(Xbyak_aarch64::VReg4S(row),
-                                Xbyak_aarch64::ptr(x0));
-    }
-
-    for (int row = 0; row < 4; row++) {
-      for (int col = 0; col < 4; col++) {
-        CodeGeneratorAArch64::mov(Xbyak_aarch64::VReg4S(col + 8)[row],
-                                  Xbyak_aarch64::VReg4S(row)[col]);
-      }
-    }
-
-    return Xbyak_aarch64::VReg4S(0);
-  }
-
   void genJitTestCode() {
-    uint32_t *matArray = (uint32_t *)std::malloc(8 * 8 * sizeof(uint32_t));
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    generateTransposeJitCode(matArray);
+    size_t addr;
+
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
+    mov(rax, addr);
+    mov(rbx, ptr[rax]);
+
+    push(rbx);
+    pop(rcx);
+
+    mov(rax, 5);
   }
 };
 

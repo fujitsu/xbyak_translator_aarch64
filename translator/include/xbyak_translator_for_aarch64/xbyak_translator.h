@@ -71,7 +71,6 @@ Xbyak_aarch64::XReg X_TMP_ADDR = x28;
 Xbyak_aarch64::XReg X_TRANSLATOR_STACK{xt_sp_reg_idx};
 #else
 Xbyak_aarch64::XReg X_TRANSLATOR_STACK = x22;
-// Xbyak_aarch64::XReg X_TRANSLATOR_STACK = x4;
 #endif
 Xbyak_aarch64::PReg P_TMP = p0;
 Xbyak_aarch64::PReg P_TMP_0 = p11;
@@ -444,7 +443,7 @@ unsigned int xt_push_vreg(xt_a64fx_operands_struct_t *a64) {
 }
 
 unsigned int xt_push_vreg(xt_a64fx_operands_structV3_t *a64) {
-  xt_push_zreg(a64);
+  return xt_push_zreg(a64);
 }
 
 unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {

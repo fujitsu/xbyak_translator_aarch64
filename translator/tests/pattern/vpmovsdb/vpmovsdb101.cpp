@@ -22,11 +22,7 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-<<<<<<< HEAD
     std::vector<int> pattern = {26, 27, 28, 29, 30, 31};
-=======
-    std::vector<int> pattern = {30, 31};
->>>>>>> 3_implement_translation
 
     for (auto i : pattern) {
       inputZReg[i].us_dt[0] = ~uint32_t(0);
@@ -70,7 +66,6 @@ public:
     vpmovsdb(ptr[rax], Zmm(30));
     vmovups(Zmm(3), ptr[rax]);
 
-<<<<<<< HEAD
     /* Dst=Mem, src=Ymm */
     vpmovsdb(ptr[rax], Ymm(29));
     vmovups(Zmm(4), ptr[rax]);
@@ -95,8 +90,6 @@ public:
     vpmovsdb(ptr[rax], Xmm(26));
     vmovups(Zmm(9), ptr[rax]);
 
-=======
->>>>>>> 3_implement_translation
     mov(rax, 0x5);
   }
 };

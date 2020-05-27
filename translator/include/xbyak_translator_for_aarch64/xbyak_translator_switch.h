@@ -2246,6 +2246,7 @@ case XED_ICLASS_VHSUBPD:
 case XED_ICLASS_VHSUBPS:
   break;
 case XED_ICLASS_VINSERTF128:
+  translateVINSERTF128(&xedd);
   break;
 case XED_ICLASS_VINSERTF32X4:
   break;
@@ -2742,7 +2743,7 @@ case XED_ICLASS_VPINSRQ:
   translateVPINSRQ(&xedd);
   break;
 case XED_ICLASS_VPINSRW:
-  //  translateVPINSRW(&xedd);
+  translateVPINSRW(&xedd);
   break;
 case XED_ICLASS_VPLZCNTD:
   break;

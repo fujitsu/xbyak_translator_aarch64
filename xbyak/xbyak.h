@@ -2601,11 +2601,14 @@ public:
 	        opPushPop(op, 0xFF, 6, 0x50);
 #ifdef XBYAK_TRANSLATE_AARCH64
 		decode_size_ = 0;
-	#ifdef XT_AARCH64_STACK_REG
-		CodeGeneratorAArch64::str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -8));
-        #else //#ifdef XT_AARCH64_STACK_REG
-		CodeGeneratorAArch64::str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::pre_ptr(x4, -8));
-        #endif //#ifdef XT_AARCH64_STACK_REG
+#ifdef XT_AARCH64_STACK_REG
+		CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
+					  CodeGeneratorAArch64::sp, NUM_BYTES_GEN_REG);
+		CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
+		CodeGeneratorAArch64::str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::ptr(X_TMP_0));
+#else //#ifdef XT_AARCH64_STACK_REG
+		CodeGeneratorAArch64::str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::pre_ptr(X_TRANSLATOR_STACK, -8));
+#endif //#ifdef XT_AARCH64_STACK_REG
 		db_clear();
 #endif//#ifndef XBYAK_TRANSLATE_AARCH64
 	}
@@ -2615,11 +2618,14 @@ public:
 	        opPushPop(op, 0x8F, 0, 0x58);
 #ifdef XBYAK_TRANSLATE_AARCH64
 		decode_size_ = 0;
-	#ifdef XT_AARCH64_STACK_REG
-		CodeGeneratorAArch64::ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp, 8));
-        #else //#ifdef XT_AARCH64_STACK_REG
-		CodeGeneratorAArch64::ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::post_ptr(x4, 8));
-        #endif //#ifdef XT_AARCH64_STACK_REG
+#ifdef XT_AARCH64_STACK_REG
+		CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
+		CodeGeneratorAArch64::ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::ptr(X_TMP_0));
+		CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
+					  CodeGeneratorAArch64::sp, NUM_BYTES_GEN_REG);
+#else //#ifdef XT_AARCH64_STACK_REG
+		CodeGeneratorAArch64::ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::post_ptr(X_TRANSLATOR_STACK, 8));
+#endif //#ifdef XT_AARCH64_STACK_REG
 		db_clear();
 #endif//#ifndef XBYAK_TRANSLATE_AARCH64
 	}

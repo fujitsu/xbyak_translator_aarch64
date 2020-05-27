@@ -32,16 +32,12 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     size_t addr;
     size_t addr1;
-<<<<<<< HEAD
     size_t addr2;
-=======
->>>>>>> 3_implement_translation
 
 /* Address is aligned */
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
-<<<<<<< HEAD
     addr2 = reinterpret_cast<size_t>(&(inputZReg[11].ud_dt[0]));
     mov(rax, addr);
     mov(rbx, addr1);
@@ -52,17 +48,10 @@ public:
     vmovdqu8(Zmm(3), ptr[rbx]);
     vpmovsdb(ptr[rcx], Xmm(4));
     vmovdqu8(Zmm(5), ptr[rcx]);
-=======
-    mov(rax, addr);
-    mov(rbx, addr1);
-    vpmovsdb(ptr[rbx], Zmm(0));
-    vmovdqu8(Zmm(1), ptr[rbx]);
->>>>>>> 3_implement_translation
 #endif
 
 /* Address is unaligned */
 #if 1
-<<<<<<< HEAD
     addr = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[0])) + 3;
     addr1 = reinterpret_cast<size_t>(&(inputZReg[19].ud_dt[0])) + 5;
     addr2 = reinterpret_cast<size_t>(&(inputZReg[17].ud_dt[0])) + 5;
@@ -75,26 +64,15 @@ public:
     vmovdqu8(Zmm(9), ptr[rbx]);
     vpmovsdb(ptr[rcx], Xmm(10));
     vmovdqu8(Zmm(11), ptr[rcx]);
-=======
-    addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 5;
-    mov(rax, addr);
-    mov(rbx, addr1);
-    vpmovsdb(ptr[rbx], Zmm(2));
-    vmovdqu8(Zmm(3), ptr[rbx]);
->>>>>>> 3_implement_translation
 #endif
 
     mov(rax,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
     mov(rbx,
-<<<<<<< HEAD
         size_t(0xf)); // Clear RBX for diff check between x86_64 and aarch64
     mov(rcx,
         size_t(0x5)); // Clear RCX for diff check between x86_64 and aarch64
-=======
-        size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
->>>>>>> 3_implement_translation
+    
   }
 };
 

@@ -42,7 +42,6 @@ public:
       inputZReg[i].us_dt[14] = uint32_t(0x1);
       inputZReg[i].us_dt[15] = ~uint32_t(0);
     }
-<<<<<<< HEAD
 
     inputPredReg[1] = (1 << 0) | (1 << 7) |            /* x86_64 */
                       (1 << 0) | (1 << 28);            /* aarch64 */
@@ -54,8 +53,7 @@ public:
                       (1 << 0) | (1 << 28) | (uint64_t(1) << 32) |
                       (uint64_t(1) << 60); /* Both x86_64 and aarch64 */
     inputPredReg[7] = ~uint64_t(0);
-=======
->>>>>>> 3_implement_translation
+
   }
 
   void setCheckRegFlagAll() {
@@ -64,7 +62,6 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-<<<<<<< HEAD
 
     /* Dst=Mem, src=Zmm */
     vpmovsdb(Xmm(1) | k1 | T_z, Zmm(31));
@@ -84,12 +81,7 @@ public:
     vpmovsdb(Xmm(13) | k3 | T_z, Xmm(31));
     vpmovsdb(Xmm(14) | k4 | T_z, Xmm(31));
     vpmovsdb(Xmm(15) | k7 | T_z, Xmm(31));
-=======
-    /* Dst=Xmm, src=Xmm */
-    vpmovsdb(Xmm(0), Xmm(31));
-    vpmovsdb(Xmm(1), Xmm(31));
-    vpmovsdb(Xmm(30), Xmm(30));
->>>>>>> 3_implement_translation
+
   }
 };
 

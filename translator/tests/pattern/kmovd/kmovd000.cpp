@@ -76,10 +76,10 @@ int main(int argc, char *argv[]) {
     f(); /* Execute JIT code */
 
 #ifndef XBYAK_TRANSLATE_AARCH64
-/* Bit order of mask registers are different from x86_64 and aarch64.
-   In order to compare output values of mask registers by test script,
-   Bit order of x86_64 mask register values is modified here. */
-// gen.modifyPredReg(SP_DT);
+    /* Bit order of mask registers are different from x86_64 and aarch64.
+       In order to compare output values of mask registers by test script,
+       Bit order of x86_64 mask register values is modified here. */
+    gen.modifyPredReg(SP_DT);
 #endif
 
     gen.dumpOutputReg(); /* Dump all register values */
