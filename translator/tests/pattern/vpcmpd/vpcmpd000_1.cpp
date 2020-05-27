@@ -107,7 +107,13 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f();                 /* Execute JIT code */
+    f(); /* Execute JIT code */
+#ifndef XBYAK_TRANSLATE_AARCH64
+    /* Bit order of mask registers are different from x86_64 and aarch64.
+       In order to compare output values of mask registers by test script,
+       Bit order of x86_64 mask register values is modified here. */
+    gen.modifyPredReg(SP_DT);
+#endif
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */
   }

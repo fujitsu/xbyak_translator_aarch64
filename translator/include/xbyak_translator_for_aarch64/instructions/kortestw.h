@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/04/20 10:17 */
+/* 2020/05/27 10:55 */
 #define CG64 CodeGeneratorAArch64
 void translateKORTESTW(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -49,7 +49,7 @@ void translateKORTESTW(xed_decoded_inst_t *p) {
   }
   /* Col=AU119*/
   if (false || (true)) {
-    CG64::b(xa::NE, 32);
+    CG64::b(xa::NE, 20);
   }
   /* Col=AV119*/
   if (false || (true)) {

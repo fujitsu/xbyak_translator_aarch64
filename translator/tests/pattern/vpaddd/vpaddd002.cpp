@@ -54,8 +54,8 @@ public:
     vpaddd(Zmm(3), Zmm(4), ptr[rax]);
     vpaddd(Zmm(5), Zmm(5), ptr[rax]);
 
-    vpaddd(Xmm(6), Xmm(7), ptr[rax]);
-    vpaddd(Xmm(8), Xmm(8), ptr[rax]);
+    // vpaddd(Xmm(6), Xmm(7), ptr[rax]);
+    // vpaddd(Xmm(8), Xmm(8), ptr[rax]);
 
     vpaddd(Ymm(16), Ymm(1), ptr[rax]);
     vpaddd(Ymm(17), Ymm(17), ptr[rax]);

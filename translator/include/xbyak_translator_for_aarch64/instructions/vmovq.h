@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/04/21 09:29 */
+/* 2020/05/27 09:20 */
 #define CG64 CodeGeneratorAArch64
 void translateVMOVQ(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -33,9 +33,6 @@ void translateVMOVQ(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 128 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[0].opWidth == 64 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 64 && true)) {
     dstIdx = a64.operands[0].regIdx;
   }
@@ -46,6 +43,9 @@ void translateVMOVQ(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 128 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[0].opWidth == 64 && true) ||
+      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 64 && true)) {
     srcIdx = a64.operands[1].regIdx;
   }

@@ -58,15 +58,12 @@ public:
     vpaddq(Ymm(20), Ymm(21), ptr[rax]);
     vpaddq(Ymm(22), Ymm(22), ptr[rax]);
 
-<<<<<<< HEAD
     vpaddq(Xmm(6), Xmm(7), ptr[rax]);
     vpaddq(Xmm(8), Xmm(8), ptr[rax]);
 
     vpaddq(Xmm(23), Xmm(24), ptr[rax]);
     vpaddq(Xmm(25), Xmm(25), ptr[rax]);
 
-=======
->>>>>>> 3_implement_translation
     mov(rax, 5);
   }
 };

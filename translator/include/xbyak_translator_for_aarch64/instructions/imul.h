@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/05/24 21:34 */
+/* 2020/05/27 10:16 */
 #define CG64 CodeGeneratorAArch64
 void translateIMUL(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -500,7 +500,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::b(xa::EQ, 48);
+    CG64::b(xa::EQ, 28);
   }
   /* Col=BH119*/
   if (false ||

@@ -8,8 +8,8 @@ Check :G[ 6]:00000000_00000000
 Check :G[ 7]:00000000_00000000
 Check :G[ 8]:80000000_00000001
 Check :G[ 9]:7fffffff_ffffffff
-Check :G[10]:7fffffff_ffffffff
-Check :G[11]:80000000_00000001
+Check :G[10]:80000000_7fffffff
+Check :G[11]:7fffffff_80000001
 Check :G[12]:00000000_00000001
 Check :G[13]:00000000_ffffffff
 Check :G[14]:00000000_7fffffff

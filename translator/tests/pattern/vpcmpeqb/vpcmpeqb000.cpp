@@ -62,11 +62,11 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vpcmpeqb(k1, Zmm(0), Zmm(1));
-    vpcmpeqb(k2, Zmm(2), Zmm(3));
-    vpcmpeqb(k3, Zmm(4), Zmm(5));
-    vpcmpeqb(k4, Zmm(6), Zmm(7));
-    vpcmpeqb(k7, Zmm(31), Zmm(31));
+    vpcmpeqb(Xmm(0), Xmm(1), Xmm(2));
+    vpcmpeqb(Xmm(3), Xmm(4), Xmm(4));
+    vpcmpeqb(Xmm(5), Xmm(6), Xmm(5));
+    vpcmpeqb(Xmm(7), Xmm(7), Xmm(8));
+    vpcmpeqb(Xmm(9), Xmm(9), Xmm(9));
   }
 };
 

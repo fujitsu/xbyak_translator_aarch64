@@ -18,7 +18,7 @@ void translateVMOVDQU8(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/02/26 10:05 */
+/* 2020/05/26 23:26 */
 #define CG64 CodeGeneratorAArch64
 
   /* Col=T103*/
@@ -269,7 +269,7 @@ void translateVMOVDQU8(xed_decoded_inst_t *p) {
   if (false ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
        a64.dstType == A64_OP_MEM && a64.srcType == A64_OP_REG && true)) {
-    CG64::ldr(xa::ZReg(a64.srcIdx), xa::ptr(X_TMP_ADDR));
+    CG64::str(xa::ZReg(a64.srcIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=BB103*/
   if (false ||
