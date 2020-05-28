@@ -225,6 +225,9 @@ struct xt_a64fx_operands_structV3_t {
   xed_uint_t EVEXb = 0;
   xt_predicate_type_t predType = A64_PRED_NO;
 
+  /* Rounding control (EVEX.RC) */
+  xed_uint_t EVEXrc = 0;
+
   xt_a64fx_operands_structV3_core_t operands[xtNumOperands];
 };
 
@@ -939,6 +942,9 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
 
   /* Get EVEX.b bits */
   a64->EVEXb = xed_decoded_inst_is_broadcast(p);
+
+  /* Get EVEX.rc bits */
+  a64->EVEXrc = xed3_operand_get_roundc(p);
 
   /* Get # of operands */
   num_operands = xed_inst_noperands(xi);

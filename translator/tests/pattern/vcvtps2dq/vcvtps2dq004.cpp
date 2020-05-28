@@ -79,31 +79,31 @@ public:
      * r15 */
 
     /* Register index is VEX range. */
-    vcvtps2dq(Zmm(2), Zmm(0));
-    vcvtps2dq(Zmm(3), Zmm(1));
+    vcvtps2dq(Zmm(2) | T_rz_sae, Zmm(0));
+    vcvtps2dq(Zmm(3) | T_rz_sae, Zmm(1));
 
-    vcvtps2dq(Xmm(0), Xmm(10));
-    vcvtps2dq(Ymm(1), Ymm(10));
-    vcvtps2dq(Zmm(2), Zmm(10));
-    vcvtps2dq(Xmm(3), Xmm(11));
-    vcvtps2dq(Ymm(4), Ymm(11));
-    vcvtps2dq(Zmm(5), Zmm(11));
+    // vcvtps2dq(Xmm(0) | T_rz_sae, Xmm(10));
+    // vcvtps2dq(Ymm(1) | T_rz_sae, Ymm(10));
+    vcvtps2dq(Zmm(2) | T_rz_sae, Zmm(10));
+    // vcvtps2dq(Xmm(3) | T_rz_sae, Xmm(11));
+    // vcvtps2dq(Ymm(4) | T_rz_sae, Ymm(11));
+    vcvtps2dq(Zmm(5) | T_rz_sae, Zmm(11));
 
-    vcvtps2dq(Xmm(6), Xmm(6)); /* dstIdx = srcIdx */
-    vcvtps2dq(Ymm(7), Ymm(7)); /* dstIdx = srcIdx */
-    vcvtps2dq(Zmm(8), Zmm(8)); /* dstIdx = srcIdx */
+    // vcvtps2dq(Xmm(6) | T_rz_sae, Xmm(6)); /* dstIdx = srcIdx */
+    // vcvtps2dq(Ymm(7) | T_rz_sae, Ymm(7)); /* dstIdx = srcIdx */
+    vcvtps2dq(Zmm(8) | T_rz_sae, Zmm(8)); /* dstIdx = srcIdx */
 
     /* Register index is EVEX range. */
-    vcvtps2dq(Xmm(20), Xmm(10));
-    vcvtps2dq(Ymm(21), Ymm(10));
-    vcvtps2dq(Zmm(22), Zmm(10));
-    vcvtps2dq(Xmm(23), Xmm(11));
-    vcvtps2dq(Ymm(24), Ymm(11));
-    vcvtps2dq(Zmm(25), Zmm(11));
+    // vcvtps2dq(Xmm(20) | T_rz_sae, Xmm(10));
+    // vcvtps2dq(Ymm(21) | T_rz_sae, Ymm(10));
+    vcvtps2dq(Zmm(22) | T_rz_sae, Zmm(10));
+    // vcvtps2dq(Xmm(23) | T_rz_sae, Xmm(11));
+    // vcvtps2dq(Ymm(24) | T_rz_sae, Ymm(11));
+    vcvtps2dq(Zmm(25) | T_rz_sae, Zmm(11));
 
-    vcvtps2dq(Xmm(26), Xmm(26)); /* dstIdx = srcIdx */
-    vcvtps2dq(Ymm(27), Ymm(27)); /* dstIdx = srcIdx */
-    vcvtps2dq(Zmm(28), Zmm(28)); /* dstIdx = srcIdx */
+    // vcvtps2dq(Xmm(26) | T_rz_sae, Xmm(26)); /* dstIdx = srcIdx */
+    // vcvtps2dq(Ymm(27) | T_rz_sae, Ymm(27)); /* dstIdx = srcIdx */
+    vcvtps2dq(Zmm(28) | T_rz_sae, Zmm(28)); /* dstIdx = srcIdx */
   }
 };
 
