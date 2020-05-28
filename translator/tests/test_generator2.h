@@ -93,6 +93,7 @@ class TestGenerator : public CodeGenerator {
 private:
   bool output_jit_on_ = 0;
   bool exec_jit_on_ = 0;
+  std::string binFileName;
   const std::string checkOK = "@@";
   const std::string checkNG = "!!";
   const std::string checkIgnore = "##";
@@ -766,6 +767,9 @@ public:
       exec_jit_on_ = 1;
       break;
     }
+
+    binFileName = argv[0];
+    binFileName += ".bin";
   }
 
   void clearInputReg() {
@@ -1191,7 +1195,7 @@ public:
   }
 
   void dumpJitCode() {
-    FILE *fp = fopen("hoge", "w");
+    FILE *fp = fopen(binFileName.c_str(), "w");
 
 #ifdef XBYAK_TRANSLATE_AARCH64
     fwrite(CodeArrayAArch64::top_, CodeArrayAArch64::size_, 4, fp);
