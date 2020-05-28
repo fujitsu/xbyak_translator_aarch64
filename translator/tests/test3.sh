@@ -149,16 +149,8 @@ exec_test() {
 }
 
 dump_disassemble() {
-#    local BIN_FILE=${TP_NAME_ARCH}.bin
-#    local ASM_FILE=${TP_NAME_ARCH}.asm
-    local BIN_FILE=${LOG_NAME}.bin
+    local BIN_FILE=${TP_NAME_ARCH}.bin
     local ASM_FILE=${LOG_NAME}.asm
-    
-    if [ -f hoge ] ; then
-	mv hoge ${BIN_FILE}
-    else
-	echo "JIT code dump file not found!"
-    fi
 
     ${DUMP_PREFIX}${OBJDUMP} -D -b binary ${DUMP_OPT} ${BIN_FILE} > ${ASM_FILE}
 }

@@ -17,12 +17,8 @@ all:all_result
 all_result:$(TP_CHECK)
 	@./summarize.sh | tee regression.log
 
-clean_check:
-	find pattern -name "*.check" -exec rm {} \;
-	find pattern -name "*.check.ng" -exec rm {} \;
-
-clean_result:
-	find pattern -name "*.result" -exec rm {} \;
-
 clean:
 	rm *.log *.bin *.asm
+	find pattern -name "*.check" -exec rm {} \;
+	find pattern -name "*.check.ng" -exec rm {} \;
+	find pattern -name "*.result" -exec rm {} \;
