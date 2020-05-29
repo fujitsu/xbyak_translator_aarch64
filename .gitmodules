@@ -1,9 +1,0 @@
-[submodule "translator/third_party/xed"]
-	path = translator/third_party/xed
-	url = ../../postk_dl/xed.git
-[submodule "translator/third_party/mbuild"]
-	path = translator/third_party/mbuild
-	url = ../../postk_dl/mbuild.git
-[submodule "translator/third_party/xbyak_aarch64"]
-	path = translator/third_party/xbyak_aarch64
-	url = ../../postk_dl/xbyak_aarch64.git
