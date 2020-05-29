@@ -1,0 +1,9 @@
+[submodule "translator/third_party/xed"]
+	path = translator/third_party/xed
+	url = git@github.com:fujitsu/xed
+[submodule "translator/third_party/mbuild"]
+	path = translator/third_party/mbuild
+	url = git@github.com:fujitsu/mbuild
+[submodule "translator/third_party/xbyak_aarch64"]
+	path = translator/third_party/xbyak_aarch64
+	url = git@github.com:fujitsu/xbyak_aarch64
