@@ -20,10 +20,10 @@ void translateIMUL(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  int64_t simm;
-  uint64_t uimm;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  int64_t simm = 0;
+  uint64_t uimm = 0;
 
   /* Col=X119*/
   if (false ||

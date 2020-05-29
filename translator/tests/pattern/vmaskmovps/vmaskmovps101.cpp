@@ -41,6 +41,7 @@ public:
 
     /* Address is aligned */
     addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
     mov(rax, addr);
     mov(rbx, addr1);
     vmaskmovps(Ymm(1), Ymm(11), ptr[rax]);

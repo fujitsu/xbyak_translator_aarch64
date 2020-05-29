@@ -19,8 +19,8 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    for (int j = 0; j < NUM_Z_REG; j++) {
-      for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
+    for (unsigned int j = 0; j < NUM_Z_REG; j++) {
+      for (unsigned int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
         inputZReg[j].sp_dt[i] = 2345.678;
       }
     }

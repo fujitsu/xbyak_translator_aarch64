@@ -20,10 +20,10 @@ void translatePEXTRD(xed_decoded_inst_t *p) {
 
 /* 2020/03/11 15:39 */
 #define CG64 CodeGeneratorAArch64
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xed_uint64_t uimm;
-  uint32_t sel;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xed_uint64_t uimm = 0;
+  uint32_t sel = 0;
 
   /* Col=W103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&

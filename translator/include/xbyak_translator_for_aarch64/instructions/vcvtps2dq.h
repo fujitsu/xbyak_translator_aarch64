@@ -20,9 +20,9 @@ void translateVCVTPS2DQ(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t pTmpIdx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t pTmpIdx = XT_REG_INVALID;
 
   /* Col=T119*/
   if (false ||

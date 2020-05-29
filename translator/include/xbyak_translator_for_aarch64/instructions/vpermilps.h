@@ -23,8 +23,8 @@ void translateVPERMILPS(xed_decoded_inst_t *p) {
   unsigned int lane[4];
   unsigned int imm = 0;
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
 
   /* Col=X163*/
   if (false ||

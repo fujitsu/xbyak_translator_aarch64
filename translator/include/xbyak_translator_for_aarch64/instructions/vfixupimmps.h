@@ -21,14 +21,14 @@ void translateVFIXUPIMMPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64);
   xa::LabelAArch64 l_exec, l_table;
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t src2Idx;
-  xt_reg_idx_t zTmpIdx;
-  xt_reg_idx_t zTmp2Idx;
-  xt_reg_idx_t zTmp3Idx;
-  xt_reg_idx_t pTmpIdx;
-  xt_reg_idx_t pTmp2Idx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t src2Idx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmp2Idx = XT_REG_INVALID;
+  xt_reg_idx_t zTmp3Idx = XT_REG_INVALID;
+  xt_reg_idx_t pTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t pTmp2Idx = XT_REG_INVALID;
 
   /* Col=X120*/
   if (false ||

@@ -20,10 +20,10 @@ void translateVPINSRW(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t src2Idx;
-  xed_uint64_t uimm;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t src2Idx = XT_REG_INVALID;
+  xed_uint64_t uimm = 0;
 
   /* Col=AH119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_REG2 && true) ||

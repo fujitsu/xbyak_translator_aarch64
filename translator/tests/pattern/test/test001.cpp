@@ -88,7 +88,7 @@ public:
     mov(r_cf, 1 << 0);
 #endif //#ifdef XBYAK_TRANSLATE_AARCH64
 
-    for (int j = 0; j < regs.size(); j++) {
+    for (unsigned int j = 0; j < regs.size(); j++) {
       addr = reinterpret_cast<size_t>(&(inputZReg[j].ud_dt[0]));
       mov(r_addr, addr);
       mov(r_tmpAddr, r_addr);

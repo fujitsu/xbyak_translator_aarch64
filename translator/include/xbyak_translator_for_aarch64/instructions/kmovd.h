@@ -20,11 +20,11 @@ void translateKMOVD(xed_decoded_inst_t *p) {
 
 /* 2020/03/10 09:06 */
 #define CG64 CodeGeneratorAArch64
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t maskIdx;
-  xt_reg_idx_t zTmpIdx;
-  xt_reg_idx_t zTmp2Idx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t maskIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmp2Idx = XT_REG_INVALID;
   /* Col=T103*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&

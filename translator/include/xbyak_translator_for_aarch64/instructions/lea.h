@@ -20,7 +20,7 @@ void translateLEA(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
 
   /* Col=X119*/
   if (false || (a64.operands[0].opWidth == 16 && true)) {

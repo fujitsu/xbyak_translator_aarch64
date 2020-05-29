@@ -20,10 +20,10 @@ void translatePUNPCKLBW(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t zTmpIdx;
-  xt_reg_idx_t zTmp2Idx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmp2Idx = XT_REG_INVALID;
 
   /* Col=T119*/
   if (false ||
