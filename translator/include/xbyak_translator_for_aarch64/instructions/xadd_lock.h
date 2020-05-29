@@ -47,14 +47,14 @@ void translateXADD_LOCK(xed_decoded_inst_t *p) {
   if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
                 a64.operands[1].opName == XED_OPERAND_REG0 &&
                 a64.operands[0].opWidth == 32 && true)) {
-    CG64::ldadd(xa::WReg(a64.operands[1].regIdx),
+    CG64::ldaddal(xa::WReg(a64.operands[1].regIdx),
                 xa::WReg(a64.operands[1].regIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AA103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
                 a64.operands[1].opName == XED_OPERAND_REG0 &&
                 a64.operands[0].opWidth == 64 && true)) {
-    CG64::ldadd(xa::XReg(a64.operands[1].regIdx),
+    CG64::ldaddal(xa::XReg(a64.operands[1].regIdx),
                 xa::XReg(a64.operands[1].regIdx), xa::ptr(X_TMP_ADDR));
   }
 
