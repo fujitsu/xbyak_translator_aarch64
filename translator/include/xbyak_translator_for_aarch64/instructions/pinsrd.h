@@ -20,12 +20,12 @@ void translatePINSRD(xed_decoded_inst_t *p) {
 
 /* 2020/05/22 20:42 */
 #define CG64 CodeGeneratorAArch64
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t pTmpIdx;
-  xt_reg_idx_t zTmpIdx;
-  xed_uint64_t uimm;
-  uint32_t sel;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t pTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
+  xed_uint64_t uimm = 0;
+  uint32_t sel = 0;
 
   /* Col=U103*/
   if (false ||

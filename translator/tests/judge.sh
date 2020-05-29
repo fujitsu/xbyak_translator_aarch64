@@ -14,17 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #*******************************************************************************/
-LIST=`find pattern -name "*.cpp"`
-#LIST=`find pattern/mov -name "*.cpp"`
+NUM_TP=`find pattern -name "*.cpp" | wc -l | cut -f 1 -d " "`
+#NUM_TP=`find pattern/mov -name "*.cpp" | wc -l | cut -f 1 -d " "`
+NUM_OK=`grep OK regression.log | wc -l | cut -f 1 -d " "`
 
-for i in ${LIST} ; do
-    TP_BASE=`echo ${i} | sed -e "s/\.cpp//"`
+echo "TP pattern count:${NUM_TP}"
+echo "OK pattern count:${NUM_OK}"
 
-    if [ -f ${TP_BASE}.check.ng ] ; then
-	grep NG ${TP_BASE}.check.ng
-    elif [ -f ${TP_BASE}.check ] ; then
-	grep OK ${TP_BASE}.check
-    else
-	echo "NO:${TP_BASE}"
-    fi
-done
+if [ ${NUM_TP:-5} = ${NUM_OK:-9} ] ; then
+    echo "Congratulation!"
+    exit 0
+else
+    echo "Something wrong!"
+    exit 1
+fi

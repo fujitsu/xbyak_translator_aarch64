@@ -12,8 +12,8 @@ job_1:
   stage: test
   image: 779e2bd88ba7
   script:
-    - pwd
-    - ls
+#    - pwd
+#    - ls
     - cd translator/third_party/
     - mkdir build_xed_aarch64
     - cd build_xed_aarch64/

@@ -16,10 +16,11 @@ all:all_result
 	@-grep -e OK -e NG $@*
 
 all_result:$(TP_CHECK)
-	@./summarize.sh | tee regression.log
-	
+	-./summarize.sh | tee regression.log
+	@./judge.sh
+
 clean:
-	rm *.log *.bin *.asm
-	find pattern -name "*.check" -exec rm {} \;
-	find pattern -name "*.check.ng" -exec rm {} \;
-	find pattern -name "*.result" -exec rm {} \;
+	-rm *.log *.bin *.asm
+	-find pattern -name "*.check" -exec rm {} \;
+	-find pattern -name "*.check.ng" -exec rm {} \;
+	-find pattern -name "*.result" -exec rm {} \;

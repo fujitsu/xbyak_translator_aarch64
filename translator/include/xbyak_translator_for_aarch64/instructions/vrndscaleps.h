@@ -21,15 +21,15 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64);
   unsigned int rounding_direction = a64.operands[3].uimm & 0x3;
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t maskIdx;
-  xt_reg_idx_t zTmpIdx;
-  xt_reg_idx_t zTmp2Idx;
-  xt_reg_idx_t pTmpIdx;
-  xt_reg_idx_t pTmp2Idx;
-  xt_reg_idx_t zTmp3Idx;
-  int uimm;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t maskIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmp2Idx = XT_REG_INVALID;
+  xt_reg_idx_t pTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t pTmp2Idx = XT_REG_INVALID;
+  xt_reg_idx_t zTmp3Idx = XT_REG_INVALID;
+  int uimm = 0;
 
   /* Col=T119*/
   if (false ||

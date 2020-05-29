@@ -328,7 +328,9 @@ xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
   } else {
     xt_msg_err(__FILE__, __LINE__, ":Under construction!");
     assert(NULL);
+    return XT_REG_INVALID;
   }
+  return XT_REG_INVALID;
 }
 
 xt_reg_idx_t xt_get_register_index(const xed_decoded_inst_t *p,

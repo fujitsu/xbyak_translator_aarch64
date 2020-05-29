@@ -22,9 +22,9 @@ void translateVROUNDPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64);
   unsigned int rounding_direction = a64.operands[2].uimm & 0x3;
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t zTmpIdx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
 
   /* Col=AA119*/
   if (false ||

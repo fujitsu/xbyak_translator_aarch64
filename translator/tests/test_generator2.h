@@ -161,7 +161,7 @@ private:
                                 Xbyak_aarch64::post_ptr(x29, xreg_bytes * 2));
     }
 #else
-    for (int i = 0; i < num_callee_saved_gregs; i++) {
+    for (size_t i = 0; i < num_callee_saved_gregs; i++) {
       push(Reg64(callee_saved_gregs[i]));
     }
 #endif
@@ -886,13 +886,13 @@ public:
 
     for (int c = sizeof(uint64_t) - 1; c >= 0; c--) {
       const uint64_t dut_mskd_shftd = (dut >> (8 * c)) & 0xFF;
-      const uint64_t init_mskd_shftd = (initData >> (8 * c)) & 0xFF;
       CheckMode mode = checkMode[c];
 
       if (mode == CMP_INTEL) { /* Compare to x86_64's result */
         std::cout << std::hex << std::setw(2) << dut_mskd_shftd;
       } else if (mode == CMP_INIT_VAL) { /* Compare to own initial value */
 #ifdef XBYAK_TRANSLATE_AARCH64
+	const uint64_t init_mskd_shftd = (initData >> (8 * c)) & 0xFF;
         if (dut_mskd_shftd == init_mskd_shftd) {
           std::cout << checkOK;
         } else {
@@ -920,7 +920,7 @@ public:
   }
 
   void _dumpCheckRegOK(size_t num) {
-    for (int i = 0; i < num; i++) {
+    for (unsigned int i = 0; i < num; i++) {
       std::cout << checkOK;
 
       /* Every 32 bits, except last */
@@ -1025,7 +1025,7 @@ public:
 
   void setInputZregRandomFloat(int idx) {
 
-    for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
+    for (unsigned int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
       do {
         inputZReg[idx].uh_dt[i * 2 + 0] = getLfsr();
         inputZReg[idx].uh_dt[i * 2 + 1] = getLfsr();
@@ -1037,7 +1037,7 @@ public:
   }
 
   void setInputZregRandomDouble(int idx) {
-    for (int i = 0; i < NUM_BYTES_Z_REG / sizeof(double); i++) {
+    for (unsigned int i = 0; i < NUM_BYTES_Z_REG / sizeof(double); i++) {
       do {
         inputZReg[idx].uh_dt[i * 2 + 0] = getLfsr();
         inputZReg[idx].uh_dt[i * 2 + 1] = getLfsr();

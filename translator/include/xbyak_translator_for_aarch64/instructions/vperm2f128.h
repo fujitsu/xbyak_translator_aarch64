@@ -21,15 +21,15 @@ void translateVPERM2F128(xed_decoded_inst_t *p) {
 /* 2020/03/16 11:26 */
 #define CG64 CodeGeneratorAArch64
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t src2Idx;
-  xt_reg_idx_t zTmpIdx;
-  xt_reg_idx_t zTmp2Idx;
-  xt_reg_idx_t pTmpIdx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t src2Idx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmp2Idx = XT_REG_INVALID;
+  xt_reg_idx_t pTmpIdx = XT_REG_INVALID;
   xed_uint64_t uimm = a64.operands[3].uimm;
-  int lsbElem;
-  int msbElem;
+  int lsbElem = 0;
+  int msbElem = 0;
   dstIdx = a64.operands[0].regIdx;
 
   switch (uimm & 0xbb) {

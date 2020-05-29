@@ -20,7 +20,7 @@ void translateVMOVNTPS(xed_decoded_inst_t *p) {
 
 /* 2020/02/27 17:47 */
 #define CG64 CodeGeneratorAArch64
-  xt_reg_idx_t maskIdx;
+  xt_reg_idx_t maskIdx = XT_REG_INVALID;
 
   /* Col=U103*/
   if (false || (a64.operands[0].opWidth == 128 && true) ||

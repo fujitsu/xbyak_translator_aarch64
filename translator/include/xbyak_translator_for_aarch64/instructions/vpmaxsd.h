@@ -21,12 +21,12 @@ void translateVPMAXSD(xed_decoded_inst_t *p) {
   /* 2020/03/11 19:45 */
   bool isValid = false;
 #define CG64 CodeGeneratorAArch64
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t src2Idx;
-  xt_reg_idx_t maskIdx;
-  xt_reg_idx_t zTmpIdx;
-  xt_reg_idx_t pTmpIdx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t src2Idx = XT_REG_INVALID;
+  xt_reg_idx_t maskIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t pTmpIdx = XT_REG_INVALID;
   /* Col=T119*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
