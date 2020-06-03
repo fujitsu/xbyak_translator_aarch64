@@ -20,6 +20,7 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+    inputZReg[31].uh_dt[0] = uint16_t(0xABCD);
   }
 
   void setCheckRegFlagAll() {
@@ -28,10 +29,22 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(eax, 0xABCD);
+    size_t addr, addr1;
+
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[31].uh_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[31].uh_dt[1]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rax, addr);
+    mov(rbx, addr1);
     for (int i = 0; i < 16; i++) {
-      pinsrw(Xmm(i), eax, 3+i);
+      pinsrw(Xmm(i), ptr[rbx], 3+i);
     }
+
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(rbx,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 
