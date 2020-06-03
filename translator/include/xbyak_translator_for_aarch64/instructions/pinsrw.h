@@ -21,9 +21,9 @@ void translatePINSRW(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64);
   uint64_t uimm = 0;
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t zTmpIdx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
 
   /* Col=X119*/
   if (false ||
