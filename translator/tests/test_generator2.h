@@ -41,6 +41,14 @@ typedef uint32_t xbyak_code_ptr_t;
 typedef uint8_t xbyak_code_ptr_t;
 #endif
 
+/** Rounding mode */
+typedef enum {
+  /** Round nearest */
+  mkldnn_round_nearest = 1,
+  /** Round down */
+  mkldnn_round_down = 2,
+} mkldnn_round_mode_t;
+
 using namespace Xbyak;
 
 union __attribute__((aligned(64))) ZReg_t {
@@ -88,6 +96,43 @@ constexpr Xbyak::Operand::Code callee_saved_gregs[] = {
     Xbyak::Operand::R15, Xbyak::Operand::RBX, Xbyak::Operand::RBP,
 };
 #endif //#ifdef XBYAK_TRANSLATE_AARCH64
+
+#if defined(MKLDNN_X86_64)
+unsigned int mxcsr_save;
+#else
+unsigned int fpcr_save;
+#endif
+
+void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
+#if defined(MKLDNN_X86_64)
+    mxcsr_save = _mm_getcsr();
+    unsigned int mxcsr = mxcsr_save & ~(3u << 13);
+    switch (rnd_mode) {
+    case mkldnn_round_nearest: mxcsr |= (0u << 13); break;
+    case mkldnn_round_down: mxcsr |= (1u << 13); break;
+    default: assert(!"unreachable");
+    }
+    if (mxcsr != mxcsr_save) _mm_setcsr(mxcsr);
+#else
+    fpcr_save = __builtin_aarch64_get_fpcr();
+    unsigned int fpcr = fpcr_save & ~(3u << 22);
+    switch (rnd_mode) {
+    case mkldnn_round_nearest: fpcr |= (0u << 22); break;
+    case mkldnn_round_down: fpcr |= (2u << 22); break;
+    default: assert(!"unreachable");
+    }
+    if (fpcr != fpcr_save) __builtin_aarch64_set_fpcr(fpcr);
+#endif
+}
+
+
+void restore_rnd_mode() {
+#if defined(MKLDNN_X86_64)
+    _mm_setcsr(mxcsr_save);
+#else
+    __builtin_aarch64_set_fpcr(fpcr_save);
+#endif
+}
 
 class TestGenerator : public CodeGenerator {
 private:

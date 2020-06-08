@@ -1,19 +1,19 @@
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
- * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * Licensed under the Apache License, Version 2.0 (the License);
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * distributed under the License is distributed on an AS IS BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/05/27 14:04 */
+/* 2020/06/03 19:38 */
 #define CG64 CodeGeneratorAArch64
 void translateVCVTPS2DQ(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -427,7 +427,7 @@ void translateVCVTPS2DQ(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true)) {
-    CG64::frintn(xa::VReg4S(dstIdx), xa::VReg4S(srcIdx));
+    CG64::frinti(xa::VReg4S(dstIdx), xa::VReg4S(srcIdx));
     CG64::fcvtzs(xa::VReg4S(dstIdx), xa::VReg4S(dstIdx));
   }
   /* Col=AQ119*/
@@ -452,7 +452,10 @@ void translateVCVTPS2DQ(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true)) {
-    if (a64.EVEXrc == 2) // Round down(01B)
+    if (a64.EVEXrc == 1) // Round to nearest even (00B)
+      CG64::frintn(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
+                   xa::ZRegS(srcIdx));
+    else if (a64.EVEXrc == 2) // Round down(01B)
       CG64::frintm(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
                    xa::ZRegS(srcIdx));
     else if (a64.EVEXrc == 3) // Round up(10B)
@@ -461,8 +464,8 @@ void translateVCVTPS2DQ(xed_decoded_inst_t *p) {
     else if (a64.EVEXrc == 4) // Round toward zero(11B)
       CG64::frintz(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
                    xa::ZRegS(srcIdx));
-    else // Round to nearest even (00B)
-      CG64::frintn(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
+    else // FPCR
+      CG64::frinti(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
                    xa::ZRegS(srcIdx));
     CG64::fcvtzs(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
                  xa::ZRegS(dstIdx));
