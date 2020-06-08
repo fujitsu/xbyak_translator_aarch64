@@ -86,6 +86,7 @@ check_option() {
 			    TOOL_PREFIX=""
 			    DUMP_OPT="-m i386:x86-64 -M intel"
 			    DUMP_PREFIX=""
+			    CFLAGS="${CFLAGS} -DMKLDNN_X86_64"
 			    ;;
 			"aarch64")
 			    QEMU_ON=1
