@@ -1633,6 +1633,7 @@ case XED_ICLASS_SHLX:
   translateSHLX(&xedd);
   break;
 case XED_ICLASS_SHR:
+  translateSHR(&xedd);
   break;
 case XED_ICLASS_SHRD:
   break;
@@ -2360,6 +2361,7 @@ case XED_ICLASS_VMOVLPS:
 case XED_ICLASS_VMOVMSKPD:
   break;
 case XED_ICLASS_VMOVMSKPS:
+  translateVMOVMSKPS(&xedd);
   break;
 case XED_ICLASS_VMOVNTDQ:
   break;
