@@ -100,7 +100,19 @@ constexpr Xbyak::Operand::Code callee_saved_gregs[] = {
 #if defined(MKLDNN_X86_64)
 unsigned int mxcsr_save;
 #else
+#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+unsigned long fpcr_save;
+#else
 unsigned int fpcr_save;
+#endif
+#endif
+
+#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+# define _FPU_GETCW(fpcr) \
+  __asm__ __volatile__ ("mrs    %0, fpcr" : "=r" (fpcr))
+
+# define _FPU_SETCW(fpcr) \
+  __asm__ __volatile__ ("msr    fpcr, %0" : : "r" (fpcr))
 #endif
 
 void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
@@ -113,24 +125,41 @@ void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
     default: assert(!"unreachable");
     }
     if (mxcsr != mxcsr_save) _mm_setcsr(mxcsr);
-#else
+#elif defined(__ARM_ARCH)
+#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+    /* for FCC */
+    _FPU_GETCW(fpcr_save);
+    unsigned long fpcr = fpcr_save & ~(static_cast<unsigned long>(3u) << 22);
+#else //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+    /* GCC aarch64 */
     fpcr_save = __builtin_aarch64_get_fpcr();
     unsigned int fpcr = fpcr_save & ~(3u << 22);
+#endif //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
     switch (rnd_mode) {
     case mkldnn_round_nearest: fpcr |= (0u << 22); break;
     case mkldnn_round_down: fpcr |= (2u << 22); break;
     default: assert(!"unreachable");
     }
-    if (fpcr != fpcr_save) __builtin_aarch64_set_fpcr(fpcr);
+    if (fpcr != fpcr_save)
+#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+    _FPU_SETCW(fpcr);
+#else //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+    __builtin_aarch64_set_fpcr(fpcr);
+#endif //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+#else
+    UNUSED(rnd_mode);
 #endif
 }
-
 
 void restore_rnd_mode() {
 #if defined(MKLDNN_X86_64)
     _mm_setcsr(mxcsr_save);
+#elif defined(__ARM_ARCH)
+#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+    _FPU_SETCW(fpcr_save);
 #else
     __builtin_aarch64_set_fpcr(fpcr_save);
+#endif
 #endif
 }
 

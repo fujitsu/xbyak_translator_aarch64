@@ -17,7 +17,7 @@
 #define CG64 CodeGeneratorAArch64
 void translateVPBROADCASTD(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
-  struct xt_a64fx_operands_structV3_t a64_opt, a64;
+  struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;
   xt_reg_idx_t dstIdx = XT_REG_INVALID;

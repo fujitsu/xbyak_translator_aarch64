@@ -2778,14 +2778,17 @@ case XED_ICLASS_VPMADD52HUQ:
 case XED_ICLASS_VPMADD52LUQ:
   break;
 case XED_ICLASS_VPMADDUBSW:
+  translateVPMADDUBSW(&xedd);
   break;
 case XED_ICLASS_VPMADDWD:
+  translateVPMADDWD(&xedd);
   break;
 case XED_ICLASS_VPMASKMOVD:
   break;
 case XED_ICLASS_VPMASKMOVQ:
   break;
 case XED_ICLASS_VPMAXSB:
+  translateVPMAXSB(&xedd);
   break;
 case XED_ICLASS_VPMAXSD:
   translateVPMAXSD(&xedd);
@@ -2811,6 +2814,7 @@ case XED_ICLASS_VPMINSQ:
 case XED_ICLASS_VPMINSW:
   break;
 case XED_ICLASS_VPMINUB:
+  translateVPMINUB(&xedd);
   break;
 case XED_ICLASS_VPMINUD:
   break;

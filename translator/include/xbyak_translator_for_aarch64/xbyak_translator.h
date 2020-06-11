@@ -37,8 +37,6 @@
 #ifdef XBYAK_TRANSLATE_AARCH64
 #include "xbyak_translator_debug.h"
 
-#pragma GCC diagnostic warning "-Wunused-but-set-variable"
-#pragma GCC diagnostic warning "-Wunused-variable"
 // namespace xbyak_translator {
 private:
 const xt_reg_idx_t xtDefaultAddrIdx = 28;

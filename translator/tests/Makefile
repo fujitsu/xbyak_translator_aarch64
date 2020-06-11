@@ -23,3 +23,6 @@ clean:
 	-find pattern -name "*.check" -exec rm {} \;
 	-find pattern -name "*.check.ng" -exec rm {} \;
 	-find pattern -name "*.result" -exec rm {} \;
+	-find pattern -name "*.bin" -exec rm {} \;
+	-find pattern -name "*.exec_x86_64" -exec rm {} \;
+	-find pattern -name "*.exec_aarch64" -exec rm {} \;

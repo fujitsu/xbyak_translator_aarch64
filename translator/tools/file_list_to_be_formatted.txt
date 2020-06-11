@@ -151,7 +151,11 @@ vphaddw.h
 vpinsrb.h
 vpinsrq.h
 vpinsrw.h
+vpmaddubsw.h
+vpmaddwd.h
+vpmaxsb.h
 vpmaxsd.h
+vpminub.h
 vpmovdb.h
 vpmovdw.h
 vpmovsdb.h
