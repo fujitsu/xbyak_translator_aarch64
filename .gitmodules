@@ -1,9 +1,9 @@
 [submodule "translator/third_party/xed"]
 	path = translator/third_party/xed
-	url = ../xed.git
+	url = ../xed
 [submodule "translator/third_party/mbuild"]
 	path = translator/third_party/mbuild
-	url = ../mbuild.git
+	url = ../mbuild
 [submodule "translator/third_party/xbyak_aarch64"]
 	path = translator/third_party/xbyak_aarch64
-	url = ../xbyak_aarch64.git
+	url = ../xbyak_aarch64
