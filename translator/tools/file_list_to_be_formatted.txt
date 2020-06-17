@@ -9,6 +9,7 @@ test_generator.h
 test_generator2.h
 test.cpp
 template.cpp
+
 adc.h
 add.h
 addps.h
@@ -75,6 +76,7 @@ ret.h
 sar.h
 shl.h
 shlx.h
+shr.h
 shufps.h
 sub.h
 test.h
@@ -117,6 +119,7 @@ vmovdqu8.h
 vmovhlps.h
 vmovhps.h
 vmovlps.h
+vmovmskps.h
 vmovntps.h
 vmovq.h
 vmovsd.h
