@@ -141,6 +141,7 @@
 #include "instructions/vpcmpeqb.h"
 #include "instructions/vpcmpeqd.h"
 #include "instructions/vpcmpub.h"
+#include "instructions/vpdpbusd.h"
 #include "instructions/vperm2f128.h"
 #include "instructions/vperm2i128.h"
 #include "instructions/vpermd.h"
