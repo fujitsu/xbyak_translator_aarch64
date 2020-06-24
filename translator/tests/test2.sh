@@ -175,6 +175,8 @@ check_qemu_aarch64() {
 	echo "qemu-aarch64=${QEMU_AARCH64} not found"
 	usage_exit
     fi
+
+    QEMU_AARCH64_OPT="-cpu max,sve512=on"
 }
 
 gen_compile_option() {
@@ -222,7 +224,7 @@ exec_test() {
     fi
 
     if [ ${QEMU_ON:-0} = 1 ] ; then
-	env QEMU_LD_PREFIX=/usr/aarch64-linux-gnu ${QEMU_AARCH64} ./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON} 2>&1 | tee ${LOG_NAME}.log
+	env QEMU_LD_PREFIX=/usr/aarch64-linux-gnu ${QEMU_AARCH64} ${QEMU_AARCH64_OPT} ./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON} 2>&1 | tee ${LOG_NAME}.log
     else
 	./${TP_NAME_ARCH} ${OUTPUT_JIT_ON} ${EXEC_JIT_ON} 2>&1 | tee ${LOG_NAME}.log
     fi
