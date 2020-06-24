@@ -2602,6 +2602,7 @@ case XED_ICLASS_VPCONFLICTD:
 case XED_ICLASS_VPCONFLICTQ:
   break;
 case XED_ICLASS_VPDPBUSD:
+  translateVPDPBUSD(&xedd);
   break;
 case XED_ICLASS_VPDPBUSDS:
   break;

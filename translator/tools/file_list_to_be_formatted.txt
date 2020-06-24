@@ -142,6 +142,7 @@ vpcmpd.h
 vpcmpeqb.h
 vpcmpeqd.h
 vpcmpub.h
+vpdpbusd.h
 vperm2f128.h
 vperm2i128.h
 vpermd.h
