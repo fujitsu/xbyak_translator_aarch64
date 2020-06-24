@@ -19,7 +19,14 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    //    setInputZregAllRandomHex();
+    setInputZregAllRandomHex();
+
+#if 0
+    for(int i=0;i<64; i++) {
+      inputZReg[0].ub_dt[i] = 0;
+      inputZReg[2].ub_dt[i] = inputZReg[1].ub_dt[i];
+    }
+#endif
 
     for (int i = 0; i < 4; i++) {
       inputZReg[30].ub_dt[0 + i] = 0x1;
@@ -51,13 +58,13 @@ public:
 
 #ifdef __ARM_ARCH
   template <class T>
-  void vpdpbusd(T vreg_0, T vreg_1, T vreg_2, T vreg_one, T vreg_tmp) {
+  void vpdpbusd_hoge(T vreg_0, T vreg_1, T vreg_2, T vreg_one, T vreg_tmp) {
     CodeGenerator::vpdpbusd(vreg_0, vreg_1, vreg_2);
   }
 #else
   /* Test on no VNNI support CPU */
   template <class T>
-  void vpdpbusd(T vreg_0, T vreg_1, T vreg_2, T vreg_one, T vreg_tmp) {
+  void vpdpbusd_hoge(T vreg_0, T vreg_1, T vreg_2, T vreg_one, T vreg_tmp) {
     vpmaddubsw(vreg_tmp, vreg_1, vreg_2);
     vpmaddwd(vreg_tmp, vreg_tmp, vreg_one);
     vpaddd(vreg_0, vreg_0, vreg_tmp);
@@ -66,13 +73,15 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
+#if 0
     mov(r8, 0x1);
     vpbroadcastw(Zmm(29), r8w);
+#endif
 
     //    vpdpbusd(Xmm(0), Xmm(30), Xmm(31), Xmm(29), Xmm(28));
     //    vpdpbusd(Xmm(1), Xmm(30), Xmm(31), Xmm(29), Xmm(28));
-    vpdpbusd(Ymm(2), Ymm(30), Ymm(31), Ymm(29), Ymm(28));
-    //    vpdpbusd(Ymm(3), Ymm(30), Ymm(31), Ymm(29), Ymm(28));
+    vpdpbusd(Ymm(2), Ymm(30), Ymm(31));
+    vpdpbusd(Ymm(3), Ymm(30), Ymm(31));
     //    vpdpbusd(Zmm(4), Zmm(30), Zmm(31), Zmm(29), Zmm(28));
     //    vpdpbusd(Zmm(5), Zmm(30), Zmm(31), Zmm(29), Zmm(28));
 
@@ -81,17 +90,19 @@ public:
     //    vpdpbusd(Xmm(8), Xmm(30), Xmm(30), Xmm(29), Xmm(28));
     //    vpdpbusd(Xmm(9), Xmm(9), Xmm(9), Xmm(29), Xmm(28));
 
-    //    vpdpbusd(Ymm(10), Ymm(10), Ymm(31), Ymm(29), Ymm(28));
-    //    vpdpbusd(Ymm(11), Ymm(30), Ymm(11), Ymm(29), Ymm(28));
-    //    vpdpbusd(Ymm(12), Ymm(30), Ymm(30), Ymm(29), Ymm(28));
-    //    vpdpbusd(Ymm(13), Ymm(13), Ymm(13), Ymm(29), Ymm(28));
+    vpdpbusd(Ymm(10), Ymm(10), Ymm(31));
+    vpdpbusd(Ymm(11), Ymm(30), Ymm(11));
+    vpdpbusd(Ymm(12), Ymm(30), Ymm(30));
+    vpdpbusd(Ymm(13), Ymm(13), Ymm(13));
 
     //    vpdpbusd(Zmm(14), Zmm(14), Zmm(31), Zmm(29), Zmm(28));
     //    vpdpbusd(Zmm(15), Zmm(30), Zmm(15), Zmm(29), Zmm(28));
     //    vpdpbusd(Zmm(16), Zmm(30), Zmm(30), Zmm(29), Zmm(28));
     //    vpdpbusd(Zmm(17), Zmm(17), Zmm(17), Zmm(29), Zmm(28));
 
+#if 0    
     vpbroadcastw(Zmm(28), r8w);
+#endif
   }
 };
 
