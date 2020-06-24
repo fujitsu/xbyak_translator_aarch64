@@ -21,9 +21,27 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     //    setInputZregAllRandomHex();
 
-    for (int i = 0; i < 64; i++) {
-      inputZReg[30].ub_dt[i] = 1;
-      inputZReg[31].ub_dt[i] = 1;
+    for (int i = 0; i < 4; i++) {
+      inputZReg[30].ub_dt[0 + i] = 0x1;
+      inputZReg[31].ub_dt[0 + i] = 0x1;
+
+      inputZReg[30].ub_dt[4 + i] = 0x1;
+      inputZReg[31].ub_dt[4 + i] = 0xff;
+
+      inputZReg[30].ub_dt[8 + i] = 0xff;
+      inputZReg[31].ub_dt[8 + i] = 0x1;
+
+      inputZReg[30].ub_dt[12 + i] = 0x7f;
+      inputZReg[31].ub_dt[12 + i] = 0x7f;
+
+      inputZReg[30].ub_dt[16 + i] = 0xff;
+      inputZReg[31].ub_dt[16 + i] = 0xff;
+
+      inputZReg[30].ub_dt[20 + i] = 0xff;
+      inputZReg[31].ub_dt[20 + i] = 0x7f;
+
+      inputZReg[30].ub_dt[24 + i] = 0x7f;
+      inputZReg[31].ub_dt[24 + i] = 0xff;
     }
   }
 
