@@ -688,7 +688,7 @@ void monitorx() { db(0x0F); db(0x01); db(0xFA); UNIMPLEMENTED; }
 void movapd(const Address& addr, const Xmm& xmm) { db(0x66); opModM(addr, xmm, 0x0F, 0x29); UNIMPLEMENTED; }
 void movapd(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x28, 0x66); UNIMPLEMENTED; }
 void movaps(const Address& addr, const Xmm& xmm) { opModM(addr, xmm, 0x0F, 0x29); UNIMPLEMENTED; }
-void movaps(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x28, 0x100); UNIMPLEMENTED; }
+void movaps(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x28, 0x100); decodeAndTransToAArch64(); }
 void movbe(const Address& addr, const Reg& reg) { opModM(addr, reg, 0x0F, 0x38, 0xF1); UNIMPLEMENTED; }
 void movbe(const Reg& reg, const Address& addr) { opModM(addr, reg, 0x0F, 0x38, 0xF0); UNIMPLEMENTED; }
 void movd(const Address& addr, const Mmx& mmx) { if (mmx.isXMM()) db(0x66); opModM(addr, mmx, 0x0F, 0x7E); decodeAndTransToAArch64(); }

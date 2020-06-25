@@ -32,6 +32,7 @@
 #include "instructions/ktestq.h"
 #include "instructions/lea.h"
 #include "instructions/mov.h"
+#include "instructions/movaps.h"
 #include "instructions/movd.h"
 #include "instructions/movdqa.h"
 #include "instructions/movdqu.h"
