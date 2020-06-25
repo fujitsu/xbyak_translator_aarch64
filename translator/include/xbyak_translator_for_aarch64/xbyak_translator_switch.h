@@ -861,10 +861,10 @@ case XED_ICLASS_MONITORX:
 case XED_ICLASS_MOV:
   translateMOV(&xedd);
   break;
-
 case XED_ICLASS_MOVAPD:
   break;
 case XED_ICLASS_MOVAPS:
+  translateMOVAPS(&xedd);
   break;
 case XED_ICLASS_MOVBE:
   break;
