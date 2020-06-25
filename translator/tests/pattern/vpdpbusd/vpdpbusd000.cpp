@@ -73,36 +73,27 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-#if 0
-    mov(r8, 0x1);
-    vpbroadcastw(Zmm(29), r8w);
-#endif
-
-    //    vpdpbusd(Xmm(0), Xmm(30), Xmm(31), Xmm(29), Xmm(28));
-    //    vpdpbusd(Xmm(1), Xmm(30), Xmm(31), Xmm(29), Xmm(28));
+    vpdpbusd(Xmm(0), Xmm(30), Xmm(31));
+    vpdpbusd(Xmm(1), Xmm(30), Xmm(31));
     vpdpbusd(Ymm(2), Ymm(30), Ymm(31));
     vpdpbusd(Ymm(3), Ymm(30), Ymm(31));
-    //    vpdpbusd(Zmm(4), Zmm(30), Zmm(31), Zmm(29), Zmm(28));
-    //    vpdpbusd(Zmm(5), Zmm(30), Zmm(31), Zmm(29), Zmm(28));
+    vpdpbusd(Zmm(4), Zmm(30), Zmm(31));
+    vpdpbusd(Zmm(5), Zmm(30), Zmm(31));
 
-    //    vpdpbusd(Xmm(6), Xmm(6), Xmm(31), Xmm(29), Xmm(28));
-    //    vpdpbusd(Xmm(7), Xmm(30), Xmm(7), Xmm(29), Xmm(28));
-    //    vpdpbusd(Xmm(8), Xmm(30), Xmm(30), Xmm(29), Xmm(28));
-    //    vpdpbusd(Xmm(9), Xmm(9), Xmm(9), Xmm(29), Xmm(28));
+    vpdpbusd(Xmm(6), Xmm(6), Xmm(31));
+    vpdpbusd(Xmm(7), Xmm(30), Xmm(7));
+    vpdpbusd(Xmm(8), Xmm(30), Xmm(30));
+    vpdpbusd(Xmm(9), Xmm(9), Xmm(9));
 
     vpdpbusd(Ymm(10), Ymm(10), Ymm(31));
     vpdpbusd(Ymm(11), Ymm(30), Ymm(11));
     vpdpbusd(Ymm(12), Ymm(30), Ymm(30));
     vpdpbusd(Ymm(13), Ymm(13), Ymm(13));
 
-    //    vpdpbusd(Zmm(14), Zmm(14), Zmm(31), Zmm(29), Zmm(28));
-    //    vpdpbusd(Zmm(15), Zmm(30), Zmm(15), Zmm(29), Zmm(28));
-    //    vpdpbusd(Zmm(16), Zmm(30), Zmm(30), Zmm(29), Zmm(28));
-    //    vpdpbusd(Zmm(17), Zmm(17), Zmm(17), Zmm(29), Zmm(28));
-
-#if 0    
-    vpbroadcastw(Zmm(28), r8w);
-#endif
+    vpdpbusd(Zmm(14), Zmm(14), Zmm(31));
+    vpdpbusd(Zmm(15), Zmm(30), Zmm(15));
+    vpdpbusd(Zmm(16), Zmm(30), Zmm(30));
+    vpdpbusd(Zmm(17), Zmm(17), Zmm(17));
   }
 };
 

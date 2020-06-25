@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/06/24 22:47 */
+/* 2020/06/25 10:55 */
 #define CG64 CodeGeneratorAArch64
 void translateVPDPBUSD(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -34,11 +34,6 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -131,11 +126,6 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 1 && true) ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -192,7 +182,17 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     pTmpIdx = xt_push_preg(&a64);
   }
   /* Col=Z119*/
@@ -201,7 +201,17 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     zTmpIdx = xt_push_zreg(&a64);
   }
   /* Col=AA119*/
@@ -210,7 +220,17 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     zTmp2Idx = xt_push_zreg(&a64);
   }
   /* Col=AB119*/
@@ -219,7 +239,17 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     zTmp3Idx = xt_push_zreg(&a64);
   }
   /* Col=AE119*/
@@ -228,7 +258,17 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     dstIdx = a64.operands[0].regIdx;
   }
   /* Col=AG119*/
@@ -237,7 +277,17 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     srcIdx = a64.operands[2].regIdx;
   }
 
@@ -247,7 +297,17 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     src2Idx = a64.operands[3].regIdx;
   }
   /* Col=AJ119*/
@@ -256,7 +316,17 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     CG64::ptrue(xa::PRegB(pTmpIdx));
   }
   /* Col=AM119*/
@@ -265,8 +335,37 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::mov(xa::ZRegS(zTmp3Idx), 0);
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    CG64::uunpklo(xa::ZRegH(zTmpIdx), xa::ZRegB(srcIdx));
+  }
+  /* Col=AN119*/
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    CG64::sunpklo(xa::ZRegH(zTmp2Idx), xa::ZRegB(src2Idx));
   }
   /* Col=AO119*/
   if (false ||
@@ -274,8 +373,13 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::zip1(xa::ZRegB(zTmpIdx), xa::ZRegB(srcIdx), xa::ZRegB(zTmp3Idx));
+    CG64::sunpklo(xa::ZRegD(dstIdx), xa::ZRegS(dstIdx));
   }
   /* Col=AP119*/
   if (false ||
@@ -283,8 +387,8 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::zip1(xa::ZRegB(zTmp2Idx), xa::ZRegB(src2Idx), xa::ZRegB(zTmp3Idx));
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    CG64::sunpklo(xa::ZRegD(zTmp3Idx), xa::ZRegS(dstIdx));
   }
   /* Col=AQ119*/
   if (false ||
@@ -292,8 +396,13 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::zip1(xa::ZRegS(dstIdx), xa::ZRegS(dstIdx), xa::ZRegS(zTmp3Idx));
+    CG64::sdot(xa::ZRegD(dstIdx), xa::ZRegH(zTmpIdx), xa::ZRegH(zTmp2Idx));
   }
 
   /* Col=AR119*/
@@ -302,47 +411,8 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    xt_pop_zreg();
-  }
-  /* Col=AS119*/
-  if (false ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::uxtb(xa::ZRegH(zTmpIdx), xa::PReg(pTmpIdx) / xa::T_m,
-               xa::ZRegH(zTmpIdx));
-  }
-  /* Col=AT119*/
-  if (false ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::sxtb(xa::ZRegH(zTmp2Idx), xa::PReg(pTmpIdx) / xa::T_m,
-               xa::ZRegH(zTmp2Idx));
-  }
-  /* Col=AU119*/
-  if (false ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::sxtw(xa::ZRegD(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-               xa::ZRegD(dstIdx));
-  }
-  /* Col=AW119*/
-  if (false ||
-      (a64.operands[0].opName == XED_OPERAND_REG0 &&
-       a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::sdot(xa::ZRegD(dstIdx), xa::ZRegH(zTmpIdx), xa::ZRegH(zTmp2Idx));
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    CG64::sdot(xa::ZRegD(zTmp3Idx), xa::ZRegH(zTmpIdx), xa::ZRegH(zTmp2Idx));
   }
   /* Col=AX119*/
   if (false ||
@@ -350,18 +420,59 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::uzp1(xa::ZRegS(dstIdx), xa::ZRegS(dstIdx), xa::ZRegS(dstIdx));
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    CG64::uunpkhi(xa::ZRegH(zTmpIdx), xa::ZRegB(srcIdx));
   }
-
-  /* Col=BC119*/
+  /* Col=AY119*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    CG64::sunpkhi(xa::ZRegH(zTmp2Idx), xa::ZRegB(src2Idx));
+  }
+  /* Col=AZ119*/
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    CG64::sunpkhi(xa::ZRegD(dstIdx), xa::ZRegS(dstIdx));
+  }
+  /* Col=BA119*/
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    CG64::sdot(xa::ZRegD(dstIdx), xa::ZRegH(zTmpIdx), xa::ZRegH(zTmp2Idx));
+  }
+
+  /* Col=BG119*/
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::mov(xa::ZRegS(dstIdx), P_MSB_256 / xa::T_m, 0);
+    CG64::uzp1(xa::ZRegS(dstIdx), xa::ZRegS(dstIdx), xa::ZRegS(dstIdx));
+  }
+  /* Col=BH119*/
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    CG64::uzp1(xa::ZRegS(dstIdx), xa::ZRegS(zTmp3Idx), xa::ZRegS(dstIdx));
   }
 
   /* Col=BN119*/
@@ -370,8 +481,8 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    xt_pop_zreg();
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true)) {
+    CG64::mov(xa::ZRegH(dstIdx), P_MSB_384 / xa::T_m, 0);
   }
   /* Col=BO119*/
   if (false ||
@@ -380,6 +491,25 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
+    CG64::mov(xa::ZRegH(dstIdx), P_MSB_256 / xa::T_m, 0);
+  }
+  /* Col=BP119*/
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     xt_pop_zreg();
   }
   /* Col=BQ119*/
@@ -388,10 +518,58 @@ void translateVPDPBUSD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    xt_pop_preg();
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    xt_pop_zreg();
   }
   /* Col=BR119*/
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    xt_pop_zreg();
+  }
+  /* Col=BT119*/
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[0].opName == XED_OPERAND_REG0 &&
+       a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_REG3 &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
+    xt_pop_preg();
+  }
+  /* Col=BU119*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
