@@ -39,7 +39,7 @@ OBJDUMP=objdump
 
 CFLAGS=""
 CFLAGS="${CFLAGS} -std=c++11"
-CFLAGS="${CFLAGS} -g"
+#CFLAGS="${CFLAGS} -g"
 CFLAGS="${CFLAGS} -DDEBUG"
 CFLAGS="${CFLAGS} -Wall"
 CFLAGS="${CFLAGS} -Wmaybe-uninitialized"
@@ -99,6 +99,17 @@ gen_compile_option() {
     TP_NAME=`dirname $1`/`basename $1 .cpp`
     TP_NAME_ARCH=${TP_NAME}.jit_${JIT_ARCH}.exec_${EXEC_ARCH}
     LOG_NAME=`basename ${TP_NAME_ARCH}`
+}
+
+compile_precompiled_header() {
+    if [ ! -f test_generator2.h.gch ] ; then
+	# Compile, execute, dissassemble
+	${TOOL_PREFIX:-""}${CXX} ${CFLAGS} -x c++-header -o test_generator2.h.gch test_generator2.h
+	if [ ! $? -eq 0 ] ; then
+	    echo "pre-compile error!"
+	    exit 1
+	fi
+    fi
 }
 
 compile_test_file() {
@@ -210,6 +221,7 @@ get_host_arch
 check_option
 #debug_dump_option
 gen_compile_option $@
+compile_precompiled_header
 compile_test_file
 if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
     exec_test
