@@ -95,10 +95,10 @@ public:
     Xbyak_aarch64::XReg x_tmpFlag{x0};
     Xbyak_aarch64::XReg x_dummyFlag{x10};
 
-    CodeGeneratorAArch64::mov_imm(x_of, 1 << 11, X_TMP_0);
-    CodeGeneratorAArch64::mov_imm(x_sf, 1 << 7, X_TMP_0);
-    CodeGeneratorAArch64::mov_imm(x_zf, 1 << 6, X_TMP_0);
-    CodeGeneratorAArch64::mov_imm(x_cf, 1 << 0, X_TMP_0);
+    CodeGeneratorAArch64::mov_imm(x_of, 1 << 11);
+    CodeGeneratorAArch64::mov_imm(x_sf, 1 << 7);
+    CodeGeneratorAArch64::mov_imm(x_zf, 1 << 6);
+    CodeGeneratorAArch64::mov_imm(x_cf, 1 << 0);
     Reg64 r_addr{rdx};
     Reg64 r_tmpAddr{rcx};
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64

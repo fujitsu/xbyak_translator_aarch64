@@ -177,7 +177,7 @@ void translateTEST(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 32 && true)) {
-    CG64::mov_imm(xa::WReg(src2Idx), a64.operands[1].uimm, W_TMP_2);
+    CG64::mov_imm(xa::WReg(src2Idx), a64.operands[1].uimm);
   }
 
   /* Col=AH119*/
@@ -188,7 +188,7 @@ void translateTEST(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::mov_imm(xa::XReg(src2Idx), a64.operands[1].uimm, X_TMP_2);
+    CG64::mov_imm(xa::XReg(src2Idx), a64.operands[1].uimm);
   }
   /* Col=AI119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&

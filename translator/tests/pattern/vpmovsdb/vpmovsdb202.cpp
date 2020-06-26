@@ -23,8 +23,8 @@ public:
     // inputZReg[0].us_dt[0] = uint32_t(7);
     // inputZReg[4].us_dt[0] = uint32_t(7);
 
-    inputPredReg[1] = (1 << 0) | (1 << 7) | (1 << 8) |
-                      (1 << 15); /* Both x86_64 and aarch64 */
+    inputPredReg[1] = (1 << 0) | (1 << 2) | (1 << 7) | (1 << 8) |
+                      (1 << 15) | (1 << 28) | (uint64_t(1) << 32) | (uint64_t(1) << 60); /* Both x86_64 and aarch64 */
 
     inputPredReg[7] = ~uint64_t(0);
   }

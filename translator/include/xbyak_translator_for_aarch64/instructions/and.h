@@ -150,7 +150,7 @@ void translateAND(xed_decoded_inst_t *p) {
     xed_uint64_t mask = ~uint64_t(0xffffffff);
     unsigned bits = (mask & uimm) ? 64 : 32;
     xed_int64_t tmp = xed_sign_extend_arbitrary_to_64(uimm, bits);
-    CG64::mov_imm(X_TMP_1, tmp, X_TMP_0);
+    CG64::mov_imm(X_TMP_1, tmp);
     CG64::and_(xa::XReg(dstIdx), xa::XReg(dstIdx), X_TMP_1);
   }
   /* Col=AG119*/
@@ -169,7 +169,7 @@ void translateAND(xed_decoded_inst_t *p) {
       xt_msg_err(__FILE__, __LINE__, "Invalid uimm=" + std::to_string(uimm));
     }
     xed_int64_t tmp = uint64_t(0xFFFFFFFFFFFFFF00);
-    CG64::mov_imm(X_TMP_1, tmp, X_TMP_0);
+    CG64::mov_imm(X_TMP_1, tmp);
     CG64::orr(X_TMP_1, X_TMP_1, static_cast<uint32_t>(uimm));
     CG64::and_(xa::XReg(dstIdx), xa::XReg(dstIdx), X_TMP_1);
   }

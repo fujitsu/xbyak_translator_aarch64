@@ -1807,7 +1807,7 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
 */
     CG64::eor(xa::ZRegD(zTmpIdx), xa::ZRegD(zTmpIdx), xa::ZRegD(zTmpIdx));
     if (rounding_direction != 0) {
-      CG64::mov_imm(W_TMP_0, 0xbf800000, W_TMP_1);
+      CG64::mov_imm(W_TMP_0, 0xbf800000);
     }
     CG64::fcmeq(P_TMP_0.s, xa::PReg(maskIdx) / xa::T_z, xa::ZRegS(zTmp2Idx),
                 xa::ZRegS(zTmpIdx));

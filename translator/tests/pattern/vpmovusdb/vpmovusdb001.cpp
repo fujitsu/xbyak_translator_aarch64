@@ -20,8 +20,13 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    // inputZReg[0].us_dt[0] = uint32_t(7);
-    // inputZReg[4].us_dt[0] = uint32_t(7);
+    for (int i = 0; i < 8; i++) {
+      inputZReg[13].us_dt[2 * i + 0] = 0xffff;
+      inputZReg[13].us_dt[2 * i + 1] = 0x7f;
+
+      inputZReg[5].us_dt[2 * i + 0] = 0xab;
+      inputZReg[5].us_dt[2 * i + 1] = 0xffff;
+    }
   }
 
   void setCheckRegFlagAll() {

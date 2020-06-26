@@ -77,6 +77,7 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
+    set_rnd_mode(mkldnn_round_nearest);
 
     /* Register index is VEX range. */
     vcvtps2dq(Zmm(2) | T_ru_sae, Zmm(0));

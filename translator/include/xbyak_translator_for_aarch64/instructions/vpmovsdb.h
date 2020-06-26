@@ -1,19 +1,19 @@
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
- * Licensed under the Apache License, Version 2.0 (the   License  );
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an   AS IS   BASIS,
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/05/26 12:05 */
+/* 2020/06/25 13:16 */
 #define CG64 CodeGeneratorAArch64
 void translateVPMOVSDB(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -109,11 +109,6 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
@@ -222,17 +217,8 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
@@ -426,24 +412,19 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
     dstIdx = zTmp2Idx;
   }
-  /* Col=AF119*/
+  /* Col=AE119*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true)) {
+    CG64::mov(xa::PRegB(pTmpIdx), P_ALL_ONE.b);
+  }
+  /* Col=AF119*/
+  if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
@@ -451,11 +432,6 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
@@ -558,11 +534,6 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
     CG64::and_(xa::PReg(pTmpIdx).b, P_ALL_ONE / xa::T_z, xa::PReg(pTmpIdx).b,
                xa::PReg(maskIdx).b);
@@ -719,19 +690,10 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
     CG64::dup(xa::ZRegS(dstIdx), 0);
   }
@@ -942,19 +904,10 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
     CG64::uzp1(xa::ZRegH(zTmpIdx), xa::ZRegH(zTmpIdx), xa::ZRegH(dstIdx));
   }
@@ -1000,19 +953,10 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
     CG64::uzp1(xa::ZRegB(dstIdx), xa::ZRegB(zTmpIdx), xa::ZRegB(dstIdx));
   }
@@ -1074,7 +1018,7 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        true)) {
     CG64::mov(xa::ZRegB(dstIdx), P_TMP_0 / xa::T_m, 0);
   }
-  /* Col=BA119*/
+  /* Col=AZ119*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
@@ -1094,7 +1038,7 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
     CG64::mov(xa::ZRegB(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
               xa::ZRegB(zTmp2Idx));
   }
-  /* Col=BB119*/
+  /* Col=BA119*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].opName == XED_OPERAND_REG0 &&
@@ -1113,17 +1057,24 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
     CG64::st1b(xa::ZReg(dstIdx).b, xa::PReg(pTmpIdx), xa::ptr(X_TMP_ADDR));
+  }
+  /* Col=BB119*/
+  if (false ||
+      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].opName == XED_OPERAND_REG0 &&
+       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true)) {
+    CG64::st1b(xa::ZRegS(zTmpIdx), xa::PReg(pTmpIdx), xa::ptr(X_TMP_ADDR));
+  }
+  /* Col=BC119*/
+  if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
+                a64.operands[1].opName == XED_OPERAND_REG0 &&
+                a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
+                a64.operands[0].opWidth == 128 &&
+                a64.predType == A64_PRED_MERG && true)) {
+    CG64::st1b(xa::ZRegS(zTmpIdx), xa::PReg(maskIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=BD119*/
   if (false ||
@@ -1223,10 +1174,6 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
@@ -1234,11 +1181,6 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
@@ -1307,11 +1249,6 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
-       a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
-       true) ||
-      (a64.operands[0].opName == XED_OPERAND_MEM0 &&
-       a64.operands[1].opName == XED_OPERAND_REG0 &&
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
