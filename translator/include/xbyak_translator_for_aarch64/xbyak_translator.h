@@ -83,6 +83,11 @@ Xbyak_aarch64::PReg P_ALL_ONE_0_7{std::numeric_limits<uint32_t>::max()};
 inline bool isAvailAll1Preg0_7() { return availAll1Preg0_7; }
 
 uint32_t setAll1Preg0_7(uint32_t index) {
+  if (index > 7) {
+    xt_msg_err(__FILE__, __LINE__, ":Index of All1Preg0_7 must be 0 to 7!");
+    assert(NULL);
+  }
+
   P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{index};
   CodeGeneratorAArch64::ptrue(P_ALL_ONE_0_7);
   availAll1Preg0_7 = true;
