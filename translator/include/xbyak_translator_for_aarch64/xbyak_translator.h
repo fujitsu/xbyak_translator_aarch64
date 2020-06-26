@@ -78,7 +78,7 @@ Xbyak_aarch64::PReg P_TMP_1 = p12;
 Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
-Xbyak_aarch64::PReg P_ALL_ONE_0_7{std::numeric_limits<uint32_t>::max()};
+Xbyak_aarch64::PReg P_ALL_ONE_0_7{XT_REG_INVALID};
 
 inline bool isAvailAll1Preg0_7() { return availAll1Preg0_7; }
 
@@ -89,14 +89,14 @@ uint32_t setAll1Preg0_7(uint32_t index) {
   }
 
   P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{index};
-  CodeGeneratorAArch64::ptrue(P_ALL_ONE_0_7);
+  CodeGeneratorAArch64::ptrue(P_ALL_ONE_0_7.b);
   availAll1Preg0_7 = true;
 
   return index;
 }
 
 void clearAll1Preg0_7() {
-  P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{std::numeric_limits<uint32_t>::max()};
+  P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{XT_REG_INVALID};
   availAll1Preg0_7 = false;
 }
 
