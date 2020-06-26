@@ -387,8 +387,7 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
     return Xbyak_aarch64::XReg(base);
   } else if (base != XT_REG_INVALID && disp != 0 /* Base + disp */
              && index == XT_REG_INVALID) {
-    CodeGeneratorAArch64::add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1,
-                                  tmp2);
+    CodeGeneratorAArch64::add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
     return retReg;
   } else if (base != XT_REG_INVALID && disp == 0 /* Base + index (*scale) */
              && index != XT_REG_INVALID) {
@@ -403,8 +402,7 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
     }
   } else if (base != XT_REG_INVALID && disp != 0 &&
              index != XT_REG_INVALID) { /* Base + disp + index (*scale) */
-    CodeGeneratorAArch64::add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1,
-                                  tmp2);
+    CodeGeneratorAArch64::add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
 
     if (shift == 0) {
       CodeGeneratorAArch64::add(retReg, retReg, Xbyak_aarch64::XReg(index));
@@ -418,11 +416,11 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
              && index != XT_REG_INVALID && disp != 0) {
     if (shift == 0) {
       CodeGeneratorAArch64::add_imm(retReg, Xbyak_aarch64::XReg(index), disp,
-                                    tmp1, tmp2);
+                                    tmp1);
       return retReg; /* disp + index */
     } else {
       CodeGeneratorAArch64::lsl(retReg, Xbyak_aarch64::XReg(index), shift);
-      CodeGeneratorAArch64::add_imm(retReg, retReg, disp, tmp1, tmp2);
+      CodeGeneratorAArch64::add_imm(retReg, retReg, disp, tmp1);
       return retReg; /* disp + index*scale */
     }
   } else if (base == XT_REG_INVALID /* index (*scale) */

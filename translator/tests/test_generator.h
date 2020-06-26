@@ -214,7 +214,7 @@ private:
 #ifdef XBYAK_TRANSLATE_AARCH64
     /* x0 contains memory address. */
     CodeGeneratorAArch64::mov_imm(
-        x0, reinterpret_cast<uint64_t>(inputGenReg) + 16, x1);
+        x0, reinterpret_cast<uint64_t>(inputGenReg) + 16);
     for (int i = 2; i < NUM_GEN_REG; i++) {
       if (i != SP_REG_IDX_AARCH64) { /* Avoid overwriting stack pointer */
         ldr(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
@@ -223,8 +223,7 @@ private:
             x0, x8, 8); /* Incremente address for next register. */
       }
     }
-    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(inputGenReg),
-                                  x1);
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(inputGenReg));
     ldp(Xbyak_aarch64::XReg(0), Xbyak_aarch64::XReg(1), Xbyak_aarch64::ptr(x0));
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
     mov(rax, reinterpret_cast<uint64_t>(inputGenReg) + 8);
@@ -251,15 +250,14 @@ private:
                                -16)); // push data of x0 and x1
 
     CodeGeneratorAArch64::mov_imm(
-        x0, reinterpret_cast<uint64_t>(outputGenReg) + 16, x1);
+        x0, reinterpret_cast<uint64_t>(outputGenReg) + 16);
     for (int i = 2; i < NUM_GEN_REG; i++) {
       if (i != SP_REG_IDX_AARCH64) {
         str(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
       }
     }
 
-    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputGenReg),
-                                  x1);
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputGenReg));
     ldp(Xbyak_aarch64::XReg(2), Xbyak_aarch64::XReg(3),
         Xbyak_aarch64::post_ptr(CodeGeneratorAArch64::sp,
                                 16)); // pop data of x0, x1
@@ -286,8 +284,7 @@ private:
     stp(x0, x1,
         Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
-    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(inputPredReg),
-                                  x1);
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(inputPredReg));
 
     for (int i = 0; i < NUM_PRED_REG; i++) {
       ldr(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x0, i));
@@ -313,8 +310,7 @@ private:
     stp(x0, x1,
         Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
-    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputPredReg),
-                                  x1);
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputPredReg));
 
     for (int i = 0; i < NUM_PRED_REG; i++) {
       str(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x0, i));
@@ -340,8 +336,7 @@ private:
     stp(x0, x1,
         Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
-    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(inputZReg),
-                                  x1);
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(inputZReg));
 
     for (int i = 0; i < NUM_Z_REG; i++) {
       ldr(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(x0, i));
@@ -367,8 +362,7 @@ private:
     stp(x0, x1,
         Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
-    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputZReg),
-                                  x1);
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputZReg));
 
     for (int i = 0; i < NUM_Z_REG; i++) {
       str(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(x0, i));

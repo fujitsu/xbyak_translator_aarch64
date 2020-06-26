@@ -63,8 +63,7 @@ void translateOR(xed_decoded_inst_t *p) {
       xt_msg_err(__FILE__, __LINE__,
                  "Invalid uimm=" + std::to_string(a64.uimm));
     }
-    CodeGeneratorAArch64::mov_imm(W_TMP_0, static_cast<uint32_t>(a64.uimm),
-                                  W_TMP_1);
+    CodeGeneratorAArch64::mov_imm(W_TMP_0, static_cast<uint32_t>(a64.uimm));
     CodeGeneratorAArch64::orr(Xbyak_aarch64::WReg(a64.dstIdx),
                               Xbyak_aarch64::WReg(a64.dstIdx), W_TMP_0);
   }
@@ -72,13 +71,12 @@ void translateOR(xed_decoded_inst_t *p) {
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_IMM && true)) {
     if (a64.simm != 0) {
-      CodeGeneratorAArch64::mov_imm(X_TMP_1, static_cast<int64_t>(a64.simm),
-                                    X_TMP_0);
+      CodeGeneratorAArch64::mov_imm(X_TMP_1, static_cast<int64_t>(a64.simm));
     } else {
       xed_uint64_t mask = ~uint64_t(0xffffffff);
       unsigned bits = (mask & a64.uimm) ? 64 : 32;
       xed_int64_t tmp = xed_sign_extend_arbitrary_to_64(a64.uimm, bits);
-      CodeGeneratorAArch64::mov_imm(X_TMP_1, tmp, X_TMP_0);
+      CodeGeneratorAArch64::mov_imm(X_TMP_1, tmp);
     }
     CodeGeneratorAArch64::orr(Xbyak_aarch64::XReg(a64.dstIdx),
                               Xbyak_aarch64::XReg(a64.dstIdx), X_TMP_1);

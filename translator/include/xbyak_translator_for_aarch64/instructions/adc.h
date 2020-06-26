@@ -65,13 +65,13 @@ void translateADC(xed_decoded_inst_t *p) {
       xt_msg_err(__FILE__, __LINE__,
                  "Invalid uimm=" + std::to_string(a64.uimm));
     }
-    CG64::mov_imm(W_TMP_0, static_cast<uint32_t>(a64.uimm), W_TMP_1);
+    CG64::mov_imm(W_TMP_0, static_cast<uint32_t>(a64.uimm));
     CG64::adc(xa::WReg(a64.dstIdx), xa::WReg(a64.dstIdx), W_TMP_0);
   }
   /* Col=U103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_IMM && true)) {
-    CG64::mov_imm(X_TMP_0, a64.uimm, X_TMP_1);
+    CG64::mov_imm(X_TMP_0, a64.uimm);
     CG64::adc(xa::XReg(a64.dstIdx), xa::XReg(a64.dstIdx), X_TMP_0);
   }
 
@@ -100,14 +100,14 @@ void translateADC(xed_decoded_inst_t *p) {
       xt_msg_err(__FILE__, __LINE__,
                  "Invalid uimm=" + std::to_string(a64.uimm));
     }
-    CG64::mov_imm(W_TMP_1, static_cast<uint32_t>(a64.uimm), W_TMP_2);
+    CG64::mov_imm(W_TMP_1, static_cast<uint32_t>(a64.uimm));
     CG64::ldr(W_TMP_0, xa::ptr(X_TMP_ADDR));
     CG64::adc(W_TMP_0, W_TMP_0, W_TMP_1);
   }
   /* Col=AC103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&
                 a64.srcType == A64_OP_IMM && true)) {
-    CG64::mov_imm(X_TMP_1, static_cast<uint32_t>(a64.uimm), X_TMP_2);
+    CG64::mov_imm(X_TMP_1, static_cast<uint32_t>(a64.uimm));
     CG64::ldr(X_TMP_0, xa::ptr(X_TMP_ADDR));
     CG64::adc(X_TMP_0, X_TMP_0, X_TMP_1);
   }

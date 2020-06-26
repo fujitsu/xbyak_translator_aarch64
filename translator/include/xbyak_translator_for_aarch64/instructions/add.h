@@ -64,13 +64,13 @@ void translateADD(xed_decoded_inst_t *p) {
                  "Invalid uimm=" + std::to_string(a64.uimm));
     }
     adds_imm(Xbyak_aarch64::WReg(a64.dstIdx), Xbyak_aarch64::WReg(a64.dstIdx),
-             static_cast<uint32_t>(a64.uimm), W_TMP_0, W_TMP_1);
+             static_cast<uint32_t>(a64.uimm), W_TMP_0);
   }
   /* Col=U103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_IMM && true)) {
     adds_imm(Xbyak_aarch64::XReg(a64.dstIdx), Xbyak_aarch64::XReg(a64.dstIdx),
-             a64.uimm, X_TMP_0, X_TMP_1);
+             a64.uimm, X_TMP_0);
   }
 
   /* Col=X103*/
@@ -103,13 +103,12 @@ void translateADD(xed_decoded_inst_t *p) {
                  "Invalid uimm=" + std::to_string(a64.uimm));
     }
     CodeGeneratorAArch64::adds_imm(
-        W_TMP_0, W_TMP_0, static_cast<uint32_t>(a64.uimm), W_TMP_1, W_TMP_2);
+        W_TMP_0, W_TMP_0, static_cast<uint32_t>(a64.uimm), W_TMP_1);
   }
   /* Col=AC103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&
                 a64.srcType == A64_OP_IMM && true)) {
-    CodeGeneratorAArch64::adds_imm(X_TMP_0, X_TMP_0, a64.uimm, X_TMP_1,
-                                   X_TMP_2);
+    CodeGeneratorAArch64::adds_imm(X_TMP_0, X_TMP_0, a64.uimm, X_TMP_1);
   }
 
   /* Col=AF103*/

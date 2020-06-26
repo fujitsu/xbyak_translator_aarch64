@@ -30,13 +30,13 @@ void translateSUB(xed_decoded_inst_t *p) {
     }
     CG64::subs_imm(Xbyak_aarch64::WReg(a64.dstIdx),
                    Xbyak_aarch64::WReg(a64.dstIdx),
-                   static_cast<uint32_t>(a64.uimm), W_TMP_0, W_TMP_1);
+                   static_cast<uint32_t>(a64.uimm), W_TMP_0);
   }
   /* Col=T103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_IMM && true)) {
     CG64::subs_imm(Xbyak_aarch64::XReg(a64.dstIdx),
-                   Xbyak_aarch64::XReg(a64.dstIdx), a64.uimm, X_TMP_0, X_TMP_1);
+                   Xbyak_aarch64::XReg(a64.dstIdx), a64.uimm, X_TMP_0);
   }
 
   /* Col=W103*/
@@ -68,13 +68,12 @@ void translateSUB(xed_decoded_inst_t *p) {
       xt_msg_err(__FILE__, __LINE__,
                  "Invalid uimm=" + std::to_string(a64.uimm));
     }
-    CG64::subs_imm(W_TMP_0, W_TMP_0, static_cast<uint32_t>(a64.uimm), W_TMP_1,
-                   W_TMP_2);
+    CG64::subs_imm(W_TMP_0, W_TMP_0, static_cast<uint32_t>(a64.uimm), W_TMP_1);
   }
   /* Col=AB103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&
                 a64.srcType == A64_OP_IMM && true)) {
-    CG64::subs_imm(X_TMP_0, X_TMP_0, a64.uimm, X_TMP_1, X_TMP_2);
+    CG64::subs_imm(X_TMP_0, X_TMP_0, a64.uimm, X_TMP_1);
   }
 
   /* Col=AE103*/

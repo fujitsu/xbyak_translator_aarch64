@@ -103,14 +103,14 @@ void translateSAR(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 64 && true)) {
     int count = uimm & 63;
     if (count != 0) {
-      CG64::mov_imm(X_TMP_3, ~uint64_t(0), X_TMP_1);
+      CG64::mov_imm(X_TMP_3, ~uint64_t(0));
       CG64::asr(X_TMP_1, xa::XReg(dstIdx), uint32_t(uimm - 1));
       CG64::and_(X_TMP_2, X_TMP_1, 1);
       CG64::asr(xa::XReg(dstIdx), X_TMP_1, 1);
       CG64::adds(X_TMP_3, X_TMP_3, X_TMP_2);
     } else if (count == 1) {
       CG64::mov(X_TMP_0, 1);
-      CG64::mov_imm(X_TMP_3, ~uint64_t(0), X_TMP_1);
+      CG64::mov_imm(X_TMP_3, ~uint64_t(0));
       CG64::and_(X_TMP_2, xa::XReg(dstIdx), 1);
       CG64::asr(xa::XReg(dstIdx), xa::XReg(dstIdx), 1);
       CG64::adds(X_TMP_3, X_TMP_3, X_TMP_2);
