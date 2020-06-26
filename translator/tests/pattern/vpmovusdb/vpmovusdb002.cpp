@@ -19,15 +19,24 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
-    // inputZReg[0].us_dt[0] = uint32_t(7);
-    // inputZReg[4].us_dt[0] = uint32_t(7);
+    //    setInputZregAllRandomHex();
 
-    inputPredReg[1] = (1 << 0) | (1 << 7) | (1 << 28); /* Both x86_64 and aarch64 */
-    inputPredReg[2] = (1 << 0) | (1 << 2) | (1 << 7) | (1 << 8) | (1 << 15)
-                      | (1 << 28) | (uint64_t(1) << 32) | (uint64_t(1) << 60); /* Both x86_64 and aarch64 */
+    for (int j = 0; j < 32; j++) {
+      for (int i = 0; i < 64; i++) {
+        inputZReg[j].ub_dt[i] = 0xab;
+      }
+    }
 
+#ifndef __ARM_ARCH
+    inputPredReg[1] = (1 << 0) | (1 << 7);
+    inputPredReg[2] = (1 << 0) | (1 << 2) | (1 << 7) | (1 << 8) | (1 << 15);
     inputPredReg[7] = ~uint64_t(0);
+#else
+    inputPredReg[1] = (1 << 0) | (1 << 28);
+    inputPredReg[2] = (1 << 0) | (1 << 8) | (1 << 28) | (uint64_t(1) << 32) |
+                      (uint64_t(1) << 60);
+    inputPredReg[7] = ~uint64_t(0);
+#endif
   }
 
   void setCheckRegFlagAll() {
@@ -39,8 +48,6 @@ public:
     size_t addr;
     size_t addr1;
 
-/* Address is aligned */
-#if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[13].ud_dt[0]));
     mov(rax, addr);
@@ -52,20 +59,13 @@ public:
     vpmovusdb(ptr[rbx], Zmm(4) | k7);
     vmovdqu8(Zmm(5), ptr[rbx]);
 
-#endif
-
-/* Address is unaligned */
-#if 1
-    addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0])) + 5;
-    mov(rax, addr);
-    mov(rbx, addr1);
-    vpmovusdb(ptr[rbx], Zmm(6) | k1);
-    vmovdqu8(Zmm(7), ptr[rbx]);
-    vpmovusdb(ptr[rbx], Zmm(8) | k2);
-    vmovdqu8(Zmm(9), ptr[rbx]);
-    vpmovusdb(ptr[rbx], Zmm(10) | k7);
-    vmovdqu8(Zmm(11), ptr[rbx]);
+    mov(rax, 0x1);
+#ifndef __ARM_ARCH
+    kmovq(k1, rax);
+    kmovq(k2, rax);
+#else
+    ptrue(p1.b, Xbyak_aarch64::VL1);
+    ptrue(p2.b, Xbyak_aarch64::VL1);
 #endif
 
     mov(rax,

@@ -20,6 +20,17 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+
+    for (int i = 0; i < 8; i++) {
+      inputZReg[1].us_dt[2 * i + 0] = 0xffff;
+      inputZReg[1].us_dt[2 * i + 1] = 0x7f;
+
+      inputZReg[3].us_dt[2 * i + 0] = 0xab;
+      inputZReg[3].us_dt[2 * i + 1] = 0xffff;
+
+      inputZReg[31].us_dt[2 * i + 0] = 0xab;
+      inputZReg[31].us_dt[2 * i + 1] = 0x8000;
+    }
   }
 
   void setCheckRegFlagAll() {
@@ -30,6 +41,9 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vpmovusdb(Xmm(0), Xmm(1));
     vpmovusdb(Xmm(2), Zmm(3));
+
+    vpmovusdb(Xmm(16), Xmm(31));
+    vpmovusdb(Xmm(17), Zmm(31));
   }
 };
 
