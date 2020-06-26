@@ -62,7 +62,7 @@ void translateCMP(xed_decoded_inst_t *p) {
       (a64.dstWidth == 32 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_IMM && true)) {
     uint32_t uimm32 = static_cast<uint32_t>(a64.uimm & uint64_t(0xFFFFFFFF));
-    CodeGeneratorAArch64::mov_imm(W_TMP_0, uimm32, W_TMP_1);
+    CodeGeneratorAArch64::mov_imm(W_TMP_0, uimm32);
   }
   /* Col=U103*/
   if (false ||
@@ -70,7 +70,7 @@ void translateCMP(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_IMM && true) ||
       (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_IMM && true)) {
-    CodeGeneratorAArch64::mov_imm(X_TMP_0, a64.uimm, X_TMP_1);
+    CodeGeneratorAArch64::mov_imm(X_TMP_0, a64.uimm);
   }
 
   /* Col=Y103*/

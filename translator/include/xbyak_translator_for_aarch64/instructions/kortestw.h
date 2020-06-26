@@ -53,7 +53,7 @@ void translateKORTESTW(xed_decoded_inst_t *p) {
   }
   /* Col=AV119*/
   if (false || (true)) {
-    CG64::mov_imm(X_TMP_1, ~uint64_t(0), X_TMP_2);
+    CG64::mov_imm(X_TMP_1, ~uint64_t(0));
   }
   /* Col=AW119*/
   if (false || (true)) {

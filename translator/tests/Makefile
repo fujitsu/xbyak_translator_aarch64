@@ -1,5 +1,5 @@
 TP_PATTERNS=$(shell find pattern -name "*.cpp")
-#TP_PATTERNS=$(shell find pattern/mov -name "*.cpp")
+#TP_PATTERNS=$(shell find pattern/vpmovsdb -name "*.cpp")
 #TP_PATTERNS=pattern/mov/mov000.cpp
 TP_CHECK=$(TP_PATTERNS:.cpp=.check)
 #TP_RESULTS=$(TP_PATTERNS:.cpp=.result)
