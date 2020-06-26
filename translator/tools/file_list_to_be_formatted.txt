@@ -33,6 +33,7 @@ kortestw.h
 ktestq.h
 lea.h
 mov.h
+movaps.h
 movd.h
 movdqa.h
 movdqu.h
