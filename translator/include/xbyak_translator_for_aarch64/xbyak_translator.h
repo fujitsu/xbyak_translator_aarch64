@@ -42,6 +42,8 @@ private:
 const xt_reg_idx_t xtDefaultAddrIdx = 28;
 constexpr static unsigned int xtNumOperands = 5;
 
+bool availAll1Preg0_7 = false;
+
 public:
 #ifdef XT_TEST
 constexpr static unsigned int xt_sp_reg_idx = 31;
@@ -76,6 +78,22 @@ Xbyak_aarch64::PReg P_TMP_1 = p12;
 Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
+Xbyak_aarch64::PReg P_ALL_ONE_0_7{std::numeric_limits<uint32_t>::max()};
+
+inline bool isAvailAll1Preg0_7() { return availAll1Preg0_7; }
+
+uint32_t setAll1Preg0_7(uint32_t index) {
+  P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{index};
+  CodeGeneratorAArch64::ptrue(P_ALL_ONE_0_7);
+  availAll1Preg0_7 = true;
+
+  return index;
+}
+
+void clearAll1Preg0_7() {
+  P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{std::numeric_limits<uint32_t>::max()};
+  availAll1Preg0_7 = false;
+}
 
 void binCommit() {
   size_t num32bits = CodeArray::size_;
