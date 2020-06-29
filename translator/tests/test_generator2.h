@@ -108,57 +108,66 @@ unsigned int fpcr_save;
 #endif
 
 #if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-# define _FPU_GETCW(fpcr) \
-  __asm__ __volatile__ ("mrs    %0, fpcr" : "=r" (fpcr))
+#define _FPU_GETCW(fpcr) __asm__ __volatile__("mrs    %0, fpcr" : "=r"(fpcr))
 
-# define _FPU_SETCW(fpcr) \
-  __asm__ __volatile__ ("msr    fpcr, %0" : : "r" (fpcr))
+#define _FPU_SETCW(fpcr) __asm__ __volatile__("msr    fpcr, %0" : : "r"(fpcr))
 #endif
 
 void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
 #if defined(MKLDNN_X86_64)
-    mxcsr_save = _mm_getcsr();
-    unsigned int mxcsr = mxcsr_save & ~(3u << 13);
-    switch (rnd_mode) {
-    case mkldnn_round_nearest: mxcsr |= (0u << 13); break;
-    case mkldnn_round_down: mxcsr |= (1u << 13); break;
-    default: assert(!"unreachable");
-    }
-    if (mxcsr != mxcsr_save) _mm_setcsr(mxcsr);
+  mxcsr_save = _mm_getcsr();
+  unsigned int mxcsr = mxcsr_save & ~(3u << 13);
+  switch (rnd_mode) {
+  case mkldnn_round_nearest:
+    mxcsr |= (0u << 13);
+    break;
+  case mkldnn_round_down:
+    mxcsr |= (1u << 13);
+    break;
+  default:
+    assert(!"unreachable");
+  }
+  if (mxcsr != mxcsr_save)
+    _mm_setcsr(mxcsr);
 #elif defined(__ARM_ARCH)
 #if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-    /* for FCC */
-    _FPU_GETCW(fpcr_save);
-    unsigned long fpcr = fpcr_save & ~(static_cast<unsigned long>(3u) << 22);
-#else //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-    /* GCC aarch64 */
-    fpcr_save = __builtin_aarch64_get_fpcr();
-    unsigned int fpcr = fpcr_save & ~(3u << 22);
+  /* for FCC */
+  _FPU_GETCW(fpcr_save);
+  unsigned long fpcr = fpcr_save & ~(static_cast<unsigned long>(3u) << 22);
+#else  //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+  /* GCC aarch64 */
+  fpcr_save = __builtin_aarch64_get_fpcr();
+  unsigned int fpcr = fpcr_save & ~(3u << 22);
 #endif //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-    switch (rnd_mode) {
-    case mkldnn_round_nearest: fpcr |= (0u << 22); break;
-    case mkldnn_round_down: fpcr |= (2u << 22); break;
-    default: assert(!"unreachable");
-    }
-    if (fpcr != fpcr_save)
+  switch (rnd_mode) {
+  case mkldnn_round_nearest:
+    fpcr |= (0u << 22);
+    break;
+  case mkldnn_round_down:
+    fpcr |= (2u << 22);
+    break;
+  default:
+    assert(!"unreachable");
+  }
+  if (fpcr != fpcr_save)
 #if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
     _FPU_SETCW(fpcr);
-#else //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+#else  //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
     __builtin_aarch64_set_fpcr(fpcr);
 #endif //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
 #else
-    UNUSED(rnd_mode);
+  UNUSED(rnd_mode);
 #endif
 }
 
 void restore_rnd_mode() {
 #if defined(MKLDNN_X86_64)
-    _mm_setcsr(mxcsr_save);
+  _mm_setcsr(mxcsr_save);
 #elif defined(__ARM_ARCH)
 #if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-    _FPU_SETCW(fpcr_save);
+  _FPU_SETCW(fpcr_save);
 #else
-    __builtin_aarch64_set_fpcr(fpcr_save);
+  __builtin_aarch64_set_fpcr(fpcr_save);
 #endif
 #endif
 }
@@ -293,8 +302,8 @@ private:
   void _genJitLoadGenReg() {
 #ifdef XBYAK_TRANSLATE_AARCH64
     /* x0 contains memory address. */
-    CodeGeneratorAArch64::mov_imm(
-        x0, reinterpret_cast<uint64_t>(inputGenReg) + 16);
+    CodeGeneratorAArch64::mov_imm(x0,
+                                  reinterpret_cast<uint64_t>(inputGenReg) + 16);
     for (int i = 2; i < NUM_GEN_REG; i++) {
       if (i != SP_REG_IDX_AARCH64) { /* Avoid overwriting stack pointer */
         ldr(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
@@ -329,8 +338,8 @@ private:
         Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp,
                                -16)); // push data of x0 and x1
 
-    CodeGeneratorAArch64::mov_imm(
-        x0, reinterpret_cast<uint64_t>(outputGenReg) + 16);
+    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputGenReg) +
+                                          16);
     for (int i = 2; i < NUM_GEN_REG; i++) {
       if (i != SP_REG_IDX_AARCH64) {
         str(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
@@ -390,7 +399,8 @@ private:
     stp(x0, x1,
         Xbyak_aarch64::pre_ptr(CodeGeneratorAArch64::sp, -16)); // push x0, x1
 
-    CodeGeneratorAArch64::mov_imm(x0, reinterpret_cast<uint64_t>(outputPredReg));
+    CodeGeneratorAArch64::mov_imm(x0,
+                                  reinterpret_cast<uint64_t>(outputPredReg));
 
     for (int i = 0; i < NUM_PRED_REG; i++) {
       str(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x0, i));
@@ -918,6 +928,7 @@ public:
       inputPredReg[i] = 0;
     }
 
+    inputPredReg[10] = 0;
     inputPredReg[13] = ~uint64_t(0xFFFFFFFF);
     inputPredReg[14] = ~uint64_t(0xFFFF);
     inputPredReg[15] = ~uint64_t(0);
@@ -960,7 +971,7 @@ public:
         std::cout << std::hex << std::setw(2) << dut_mskd_shftd;
       } else if (mode == CMP_INIT_VAL) { /* Compare to own initial value */
 #ifdef XBYAK_TRANSLATE_AARCH64
-	const uint64_t init_mskd_shftd = (initData >> (8 * c)) & 0xFF;
+        const uint64_t init_mskd_shftd = (initData >> (8 * c)) & 0xFF;
         if (dut_mskd_shftd == init_mskd_shftd) {
           std::cout << checkOK;
         } else {
