@@ -33,10 +33,17 @@ public:
         inputZReg[6].us_dt[i] = uint32_t(286326784);
       inputZReg[8].us_dt[i] = uint32_t(17);
     }
-    inputPredReg[1] = (1 << 0) | (1 << 1); /* Both x86_64 and aarch64 */
-    inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) |
-                      (1 << 15); /* Both x86_64 and aarch64 */
+
+#ifndef __ARM_ARCH
+    inputPredReg[1] = (1 << 0) | (1 << 1);
+    inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) | (1 << 15);
     inputPredReg[7] = ~uint64_t(0);
+#else
+    inputPredReg[1] = (1 << 0) | (1 << 4);
+    inputPredReg[2] =
+        (1 << 0) | (1 << 28) | (uint64_t(1) << 32) | (uint64_t(1) << 60);
+    inputPredReg[7] = ~uint64_t(0);
+#endif
   }
 
   void setCheckRegFlagAll() {
@@ -79,6 +86,15 @@ public:
     mov(rax, addr2);
     vpmovdb(ptr[rax], Zmm(10) | k7);
     vmovdqu8(Zmm(11), ptr[rax]);
+#endif
+
+    mov(rax, 0x1);
+#ifndef __ARM_ARCH
+    kmovq(k1, rax);
+    kmovq(k2, rax);
+#else
+    ptrue(p1.b, Xbyak_aarch64::VL1);
+    ptrue(p2.b, Xbyak_aarch64::VL1);
 #endif
 
     mov(rax,
