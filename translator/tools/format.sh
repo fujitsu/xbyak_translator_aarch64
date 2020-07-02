@@ -27,9 +27,9 @@ atexit() {
 
 clang_ver_check() {
     # clang-format version check
-    ${CLANG_FORMAT} --version | grep "version 6.0.0" > /dev/null
+    ${CLANG_FORMAT} --version | grep "version 9.0.0" > /dev/null
     if [ $? != 0 ] ; then
-	echo "clang-format version missmatch! Version 6.0.0 is required."
+	echo "clang-format version missmatch! Version 9.0.0 is required."
 	exit
 #    else
 #	echo "clang-format version checko OK!"
