@@ -29,11 +29,15 @@ public:
     }
     inputPredReg[1] = uint64_t(0);
     inputPredReg[2] = ~uint64_t(0);
-    inputPredReg[3] =
-        (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7); /* Both x86_64 and aarch64 */
-    inputPredReg[4] = (1 << 3) | (1 << 6);         /* Both x86_64 and aarch64 */
-    inputPredReg[5] = (1 << 0) | (1 << 10) | (1 << 3) |
-                      (1 << 6); /* Both x86_64 and aarch64 */
+#ifndef __ARM_ARCH
+    inputPredReg[3] = (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7);
+    inputPredReg[4] = (1 << 3) | (1 << 6);
+    inputPredReg[5] = (1 << 0) | (1 << 10) | (1 << 3) | (1 << 6);
+#else
+    inputPredReg[3] = (1 << 16) | (1 << 20) | (1 << 24) | (1 << 28);
+    inputPredReg[4] = (1 << 12) | (1 << 24);
+    inputPredReg[5] = (1 << 0) | (uint64_t(1) << 40) | (1 << 12) | (1 << 24);
+#endif
   }
 
   void setCheckRegFlagAll() {
@@ -70,6 +74,17 @@ public:
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
     mov(rbx,
         size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
+#endif
+
+    mov(rax, 0x1);
+#ifndef __ARM_ARCH
+    kmovq(k3, rax);
+    kmovq(k4, rax);
+    kmovq(k5, rax);
+#else
+    ptrue(p3.b, Xbyak_aarch64::VL1);
+    ptrue(p4.b, Xbyak_aarch64::VL1);
+    ptrue(p5.b, Xbyak_aarch64::VL1);
 #endif
   }
 };
