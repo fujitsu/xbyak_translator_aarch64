@@ -43,6 +43,7 @@ const xt_reg_idx_t xtDefaultAddrIdx = 28;
 constexpr static unsigned int xtNumOperands = 5;
 
 bool availAll1Preg0_7 = false;
+uint64_t translatorVersion = uint64_t(1);
 
 public:
 #ifdef XT_TEST
@@ -98,6 +99,10 @@ uint32_t setAll1Preg0_7(uint32_t index) {
 void clearAll1Preg0_7() {
   P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{XT_REG_INVALID};
   availAll1Preg0_7 = false;
+}
+
+uint64_t getTranslatorVersion(){
+  return translatorVersion;
 }
 
 void binCommit() {
