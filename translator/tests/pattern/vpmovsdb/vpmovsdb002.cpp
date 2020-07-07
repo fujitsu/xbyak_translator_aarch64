@@ -20,13 +20,15 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    // inputZReg[0].us_dt[0] = uint32_t(7);
-    // inputZReg[4].us_dt[0] = uint32_t(7);
 
-    inputPredReg[1] = (1 << 0) | (1 << 7) | (1 << 28); /* Both x86_64 and aarch64 */
-    inputPredReg[2] = (1 << 0) | (1 << 2) | (1 << 7) | (1 << 8) |
-                      (1 << 15) | (1 << 28) | (uint64_t(1) << 32) | (uint64_t(1) << 60); /* Both x86_64 and aarch64 */
-
+#ifndef __ARM_ARCH
+    inputPredReg[1] = (1 << 0) | (1 << 7);
+    inputPredReg[2] = (1 << 0) | (1 << 2) | (1 << 7) | (1 << 8) | (1 << 15);
+#else
+    inputPredReg[1] = (1 << 0) | (1 << 28);
+    inputPredReg[2] = (1 << 0) | (1 << 8) | (1 << 28) | (uint64_t(1) << 32) |
+                      (uint64_t(1) << 60);
+#endif
     inputPredReg[7] = ~uint64_t(0);
   }
 
@@ -112,6 +114,15 @@ public:
     vmovdqu8(Zmm(9), ptr[rbx]);
     vpmovsdb(ptr[rbx], Zmm(10) | k7);
     vmovdqu8(Zmm(11), ptr[rbx]);
+#endif
+
+    mov(rax, 0x1);
+#ifndef __ARM_ARCH
+    kmovq(k1, rax);
+    kmovq(k2, rax);
+#else
+    ptrue(p1.b, Xbyak_aarch64::VL1);
+    ptrue(p2.b, Xbyak_aarch64::VL1);
 #endif
 
     mov(rax,
