@@ -43,7 +43,7 @@ const xt_reg_idx_t xtDefaultAddrIdx = 28;
 constexpr static unsigned int xtNumOperands = 5;
 
 bool availAll1Preg0_7 = false;
-uint64_t translatorVersion = uint64_t(1);
+constexpr static unsigned int translatorVersion = 1;
 
 public:
 #ifdef XT_TEST
