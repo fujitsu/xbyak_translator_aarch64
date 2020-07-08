@@ -42,6 +42,9 @@ private:
 const xt_reg_idx_t xtDefaultAddrIdx = 28;
 constexpr static unsigned int xtNumOperands = 5;
 
+bool availAll1Preg0_7 = false;
+constexpr static unsigned int translatorVersion = 1;
+
 public:
 #ifdef XT_TEST
 constexpr static unsigned int xt_sp_reg_idx = 31;
@@ -77,6 +80,31 @@ Xbyak_aarch64::PReg P_ALL_ZERO = p10;
 Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
+Xbyak_aarch64::PReg P_ALL_ONE_0_7{XT_REG_INVALID};
+
+inline bool isAvailAll1Preg0_7() { return availAll1Preg0_7; }
+
+uint32_t setAll1Preg0_7(uint32_t index) {
+  if (index > 7) {
+    xt_msg_err(__FILE__, __LINE__, ":Index of All1Preg0_7 must be 0 to 7!");
+    assert(NULL);
+  }
+
+  P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{index};
+  CodeGeneratorAArch64::ptrue(P_ALL_ONE_0_7.b);
+  availAll1Preg0_7 = true;
+
+  return index;
+}
+
+void clearAll1Preg0_7() {
+  P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{XT_REG_INVALID};
+  availAll1Preg0_7 = false;
+}
+
+uint64_t getTranslatorVersion(){
+  return translatorVersion;
+}
 
 void binCommit() {
   size_t num32bits = CodeArray::size_;
@@ -217,6 +245,12 @@ struct xt_a64fx_operands_structV3_core_t {
   /* For operand of vm64(x|y|z) */
   xt_reg_idx_t vmIndexRegIdx = XT_REG_INVALID;
   xed_uint_t vmIndexRegWidth = 0;
+
+  /* For memory operand */
+  xt_reg_idx_t memBaseIdx = XT_REG_INVALID;
+  xt_reg_idx_t memIndexIdx = XT_REG_INVALID;
+  xed_uint_t memScale = 0;
+  xed_int_t memDisp = 0;
 };
 
 struct xt_a64fx_operands_structV3_t {
@@ -282,7 +316,7 @@ struct xt_a64fx_operands_struct_t {
   /* Immediate value opoerand */
   xed_uint_t ibits = 0;
   xed_uint64_t uimm = 0; /* unsigned */
-  xed_int64_t simm = 0;  /* signed㝪 */
+  xed_int64_t simm = 0;  /* signed */
   xed_uint_t immWidth;   /* IMM value width. 8, 16, 32, 64 */
 
   xed_uint64_t uimm2 = 0; /* 2nd immediate and its type is unsigned */
@@ -930,7 +964,7 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
 
 void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
                                    xt_a64fx_operands_structV3_t *a64,
-                                   bool vm64 = false) {
+                                   bool vm64 = false, bool rawMemOp = false) {
   unsigned int num_operands;
 
   unsigned int baseIdx = XT_REG_INVALID;
@@ -1068,8 +1102,15 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
 
       disp = xed_decoded_inst_get_memory_displacement(p, memOpIdx);
 
-      X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
-                                   X_TMP_1, X_TMP_2, vm64);
+      if (rawMemOp) {
+        a64->operands[tmpOpIdx].memBaseIdx = baseIdx;
+        a64->operands[tmpOpIdx].memIndexIdx = indexIdx;
+        a64->operands[tmpOpIdx].memScale = scale;
+        a64->operands[tmpOpIdx].memDisp = disp;
+      } else {
+        X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
+                                     X_TMP_1, X_TMP_2, vm64);
+      }
 
       memOpIdx++;
       continue;
@@ -1127,8 +1168,19 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
   } // for (int i = 0; i < num_operands; i++) {
 
 #ifdef XT_DEBUG
-  xt_dump_a64fx_operandsV3(a64);
+  if (!rawMemOp) {
+    xt_dump_a64fx_operandsV3(a64);
+  }
 #endif
+}
+
+void xt_construct_a64fx_operandsV3_rawMemOp(xed_decoded_inst_t *p,
+                                            xt_a64fx_operands_structV3_t *a64,
+                                            bool vm64, bool rawMemOp) {
+  xt_construct_a64fx_operandsV3(p, a64, vm64, rawMemOp);
+  if (rawMemOp) {
+    xt_dump_a64fx_operandsV3(a64);
+  }
 }
 
 void decodeAndTransToAArch64() {

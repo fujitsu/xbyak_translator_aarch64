@@ -102,8 +102,8 @@ void translateADD(xed_decoded_inst_t *p) {
       xt_msg_err(__FILE__, __LINE__,
                  "Invalid uimm=" + std::to_string(a64.uimm));
     }
-    CodeGeneratorAArch64::adds_imm(
-        W_TMP_0, W_TMP_0, static_cast<uint32_t>(a64.uimm), W_TMP_1);
+    CodeGeneratorAArch64::adds_imm(W_TMP_0, W_TMP_0,
+                                   static_cast<uint32_t>(a64.uimm), W_TMP_1);
   }
   /* Col=AC103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&

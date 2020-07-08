@@ -13,468 +13,1685 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
+/* 2020/06/30 08:51 */
+#define CG64 CodeGeneratorAArch64
 void translateVSQRTPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
-  struct xt_a64fx_operands_struct_t a64;
-  xt_construct_a64fx_operands(p, &a64);
+  struct xt_a64fx_operands_structV3_t a64_opt;
+  struct xt_a64fx_operands_structV3_t a64;
+  xt_construct_a64fx_operandsV3(p, &a64_opt, false, true);
+  xt_construct_a64fx_operandsV3(p, &a64);
+  bool isValid = false;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t maskIdx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t pTmpIdx = XT_REG_INVALID;
+  xt_reg_idx_t vTmpIdx = XT_REG_INVALID;
 
-/* 2020/02/27 17:20 */
-#define CG64 CodeGeneratorAArch64
-  /* Col=S103*/
+  /* Col=AC119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
+      (a64_opt.operands[1].opName == XED_OPERAND_REG1 &&
+       a64_opt.operands[2].opName == XED_OPERAND_REG2 &&
+       a64_opt.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64_opt.operands[0].opWidth == 512 && a64_opt.predType == A64_PRED_NO &&
+       a64_opt.EVEXb == 0 && isAvailAll1Preg0_7() == true && true)) {
+    dstIdx = a64.operands[0].regIdx;
+  }
+  /* Col=AE119*/
+  if (false ||
+      (a64_opt.operands[1].opName == XED_OPERAND_REG1 &&
+       a64_opt.operands[2].opName == XED_OPERAND_REG2 &&
+       a64_opt.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64_opt.operands[0].opWidth == 512 && a64_opt.predType == A64_PRED_NO &&
+       a64_opt.EVEXb == 0 && isAvailAll1Preg0_7() == true && true)) {
+    srcIdx = a64.operands[2].regIdx;
+  }
+  /* Col=AX119*/
+  if (false ||
+      (a64_opt.operands[1].opName == XED_OPERAND_REG1 &&
+       a64_opt.operands[2].opName == XED_OPERAND_REG2 &&
+       a64_opt.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64_opt.operands[0].opWidth == 512 && a64_opt.predType == A64_PRED_NO &&
+       a64_opt.EVEXb == 0 && isAvailAll1Preg0_7() == true && true)) {
+    CG64::fsqrt(xa::ZReg(dstIdx).s, P_ALL_ONE_0_7 / xa::T_m,
+                xa::ZReg(srcIdx).s);
+  }
+  /* Col=BY119*/
+  if (false ||
+      (a64_opt.operands[1].opName == XED_OPERAND_REG1 &&
+       a64_opt.operands[2].opName == XED_OPERAND_REG2 &&
+       a64_opt.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64_opt.operands[0].opWidth == 512 && a64_opt.predType == A64_PRED_NO &&
+       a64_opt.EVEXb == 0 && isAvailAll1Preg0_7() == true && true)) {
+    return;
+  }
+  /* Col=T119*/
+  if (false ||
+      (a64.operands[1].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true)) {
     XT_UNIMPLEMENTED;
   }
-  /* Col=T103*/
+  /* Col=U119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    a64.vTmpIdx = xt_push_vreg(&a64);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true)) {
+    dstIdx = a64.operands[0].regIdx;
   }
-  /* Col=U103*/
+  /* Col=V119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    a64.zTmpIdx = xt_push_zreg(&a64);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true)) {
+    srcIdx = a64.operands[1].regIdx;
   }
-  /* Col=V103*/
+  /* Col=W119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::ld1(xa::VReg(a64.vTmpIdx).s4, xa::ptr(X_TMP_ADDR));
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true)) {
+    srcIdx = a64.operands[2].regIdx;
   }
-  /* Col=W103*/
+  /* Col=Z119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::ld1r(xa::VReg(a64.vTmpIdx).s4, xa::ptr(X_TMP_ADDR));
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true)) {
+    maskIdx = a64.operands[1].regIdx;
   }
-  /* Col=X103*/
+  /* Col=AB119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::ldr(xa::ZReg(a64.zTmpIdx), xa::ptr(X_TMP_ADDR));
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true)) {
+    vTmpIdx = xt_push_vreg(&a64);
   }
-  /* Col=Y103*/
+  /* Col=AC119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::ld1rw(xa::ZReg(a64.zTmpIdx).s, xa::PReg(a64.maskIdx) / xa::T_z,
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true)) {
+    zTmpIdx = xt_push_zreg(&a64);
+  }
+  /* Col=AD119*/
+  if (false || (a64.operands[1].opName == XED_OPERAND_REG1 &&
+                a64.operands[2].opName == XED_OPERAND_MEM0 &&
+                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+                a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+                a64.EVEXb == 0 && true)) {
+    CG64::ld1(xa::VReg(vTmpIdx).s4, xa::ptr(X_TMP_ADDR));
+  }
+  /* Col=AE119*/
+  if (false || (a64.operands[1].opName == XED_OPERAND_REG1 &&
+                a64.operands[2].opName == XED_OPERAND_MEM0 &&
+                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+                a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+                a64.EVEXb == 1 && true)) {
+    CG64::ld1r(xa::VReg(vTmpIdx).s4, xa::ptr(X_TMP_ADDR));
+  }
+  /* Col=AF119*/
+  if (false ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true)) {
+    CG64::ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
+  }
+  /* Col=AG119*/
+  if (false ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true)) {
+    CG64::ld1rw(xa::ZReg(zTmpIdx).s, xa::PReg(maskIdx) / xa::T_z,
                 xa::ptr(X_TMP_ADDR));
   }
-  /* Col=Z103*/
+  /* Col=AH119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    a64.pTmpIdx = xt_push_preg(&a64);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true)) {
+    pTmpIdx = xt_push_preg(&a64);
   }
-  /* Col=AA103*/
+  /* Col=AI119*/
   if (false ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE.b, xa::PRegB(a64.maskIdx));
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true)) {
+    CG64::not_(xa::PRegB(pTmpIdx), P_ALL_ONE.b, xa::PRegB(maskIdx));
   }
-  /* Col=AB103*/
+  /* Col=AJ119*/
   if (false ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE / xa::T_z, P_MSB_256.b,
-              xa::PRegB(a64.maskIdx));
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true)) {
+    CG64::orn(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, P_MSB_256.b,
+              xa::PRegB(maskIdx));
   }
-  /* Col=AC103*/
+  /* Col=AK119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE / xa::T_z, P_MSB_384.b,
-              xa::PRegB(a64.maskIdx));
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true)) {
+    CG64::orn(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, P_MSB_384.b,
+              xa::PRegB(maskIdx));
   }
-  /* Col=AD103*/
+  /* Col=AL119*/
   if (false ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true)) {
-    CG64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE.b, P_MSB_256.b);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true)) {
+    CG64::not_(xa::PRegB(pTmpIdx), P_ALL_ONE.b, P_MSB_256.b);
   }
-  /* Col=AE103*/
-  if (false ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true)) {
-    CG64::mov(xa::PRegB(a64.pTmpIdx), P_ALL_ONE.b, P_ALL_ONE.b);
+  /* Col=AM119*/
+  if (false || (a64.operands[1].opName == XED_OPERAND_REG1 &&
+                a64.operands[2].opName == XED_OPERAND_REG2 &&
+                a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+                a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+                a64.EVEXb == 0 && true)) {
+    CG64::mov(xa::PRegB(pTmpIdx), P_ALL_ONE.b, P_ALL_ONE.b);
   }
-  /* Col=AF103*/
+  /* Col=AN119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true)) {
-    CG64::fsqrt(xa::VReg(a64.dstIdx).s4, xa::VReg(a64.srcIdx).s4);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true)) {
+    CG64::fsqrt(xa::VReg(dstIdx).s4, xa::VReg(srcIdx).s4);
   }
-  /* Col=AG103*/
+  /* Col=AO119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::fsqrt(xa::VReg(a64.dstIdx).s4, xa::VReg(a64.vTmpIdx).s4);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true)) {
+    CG64::fsqrt(xa::VReg(dstIdx).s4, xa::VReg(vTmpIdx).s4);
   }
-  /* Col=AH103*/
+  /* Col=AP119*/
   if (false ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true)) {
-    CG64::fsqrt(xa::ZReg(a64.dstIdx).s, xa::PReg(a64.pTmpIdx) / xa::T_m,
-                xa::ZReg(a64.srcIdx).s);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true)) {
+    CG64::fsqrt(xa::ZReg(dstIdx).s, xa::PReg(pTmpIdx) / xa::T_m,
+                xa::ZReg(srcIdx).s);
   }
-  /* Col=AI103*/
+  /* Col=AQ119*/
   if (false ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::fsqrt(xa::ZReg(a64.dstIdx).s, P_MSB_256 / xa::T_m,
-                xa::ZReg(a64.zTmpIdx).s);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true)) {
+    CG64::fsqrt(xa::ZReg(dstIdx).s, P_MSB_256 / xa::T_m, xa::ZReg(zTmpIdx).s);
   }
-
-  /* Col=AL103*/
+  /* Col=AT119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true)) {
-    CG64::fsqrt(xa::ZReg(a64.dstIdx).s, P_ALL_ONE / xa::T_m,
-                xa::ZReg(a64.srcIdx).s);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true)) {
+    CG64::fsqrt(xa::ZReg(dstIdx).s, P_ALL_ONE / xa::T_m, xa::ZReg(srcIdx).s);
   }
-  /* Col=AM103*/
+  /* Col=AU119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::fsqrt(xa::ZReg(a64.dstIdx).s, P_ALL_ONE / xa::T_m,
-                xa::ZReg(a64.zTmpIdx).s);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true)) {
+    CG64::fsqrt(xa::ZReg(dstIdx).s, P_ALL_ONE / xa::T_m, xa::ZReg(zTmpIdx).s);
   }
-  /* Col=AN103*/
+  /* Col=AV119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true)) {
-    CG64::fsqrt(xa::ZReg(a64.dstIdx).s, xa::PReg(a64.maskIdx) / xa::T_m,
-                xa::ZReg(a64.srcIdx).s);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true)) {
+    CG64::fsqrt(xa::ZReg(dstIdx).s, xa::PReg(maskIdx) / xa::T_m,
+                xa::ZReg(srcIdx).s);
   }
-  /* Col=AO103*/
+  /* Col=AW119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::fsqrt(xa::ZReg(a64.dstIdx).s, xa::PReg(a64.maskIdx) / xa::T_m,
-                xa::ZReg(a64.zTmpIdx).s);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true)) {
+    CG64::fsqrt(xa::ZReg(dstIdx).s, xa::PReg(maskIdx) / xa::T_m,
+                xa::ZReg(zTmpIdx).s);
   }
-
-  /* Col=AQ103*/
+  /* Col=AY119*/
   if (false ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::mov(xa::ZReg(a64.dstIdx).b, P_MSB_256 / xa::T_m, 0);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true)) {
+    CG64::mov(xa::ZReg(dstIdx).b, P_MSB_256 / xa::T_m, 0);
   }
-  /* Col=AR103*/
+  /* Col=AZ119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::mov(xa::ZReg(a64.dstIdx).b, P_MSB_384 / xa::T_m, 0);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true)) {
+    CG64::mov(xa::ZReg(dstIdx).b, P_MSB_384 / xa::T_m, 0);
   }
-  /* Col=AS103*/
+  /* Col=BA119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    CG64::mov(xa::ZReg(a64.dstIdx).b, xa::PReg(a64.pTmpIdx) / xa::T_m, 0);
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true)) {
+    CG64::mov(xa::ZReg(dstIdx).b, xa::PReg(pTmpIdx) / xa::T_m, 0);
   }
-  /* Col=AT103*/
+  /* Col=BB119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true)) {
     xt_pop_vreg();
   }
-  /* Col=AU103*/
+  /* Col=BC119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true)) {
     xt_pop_zreg(); // In some cases, xt_pop_zreg() should be called here.
   }
-  /* Col=AV103*/
+  /* Col=BD119*/
   if (false ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 128 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
-       a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true)) {
     xt_pop_preg();
   }
-
-#undef CG64
+  /* Col=BQ119*/
+  if (false ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_XMM &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_MEM0 &&
+       a64.operands[2].opName == XED_OPERAND_INVALID &&
+       a64.operands[1].regClass == XED_REG_CLASS_YMM &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 0 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_REG1 &&
+       a64.operands[2].opName == XED_OPERAND_MEM0 &&
+       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
+       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
+       a64.EVEXb == 1 && true)) {
+    XT_VALID_CHECK;
+  }
+  XT_VALID_CHECK_IF;
 }
+#undef CG64
