@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/07/13 09:55 */
+/* 2020/07/13 10:33 */
 #define CG64 CodeGeneratorAArch64
 void translateVFMADD231PS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -31,10 +31,6 @@ void translateVFMADD231PS(xed_decoded_inst_t *p) {
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
-       a64.EVEXb == 1 && true) ||
-      (a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 1 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -105,6 +101,10 @@ void translateVFMADD231PS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_INVALID &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
@@ -219,6 +219,10 @@ void translateVFMADD231PS(xed_decoded_inst_t *p) {
        a64.EVEXb == 0 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 0 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -273,6 +277,10 @@ void translateVFMADD231PS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_INVALID &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
@@ -378,6 +386,10 @@ void translateVFMADD231PS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
@@ -486,6 +498,10 @@ void translateVFMADD231PS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
@@ -678,6 +694,10 @@ void translateVFMADD231PS(xed_decoded_inst_t *p) {
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 1 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -796,6 +816,10 @@ void translateVFMADD231PS(xed_decoded_inst_t *p) {
        a64.EVEXb == 0 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -889,6 +913,10 @@ void translateVFMADD231PS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true) ||
@@ -940,6 +968,10 @@ void translateVFMADD231PS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
@@ -996,6 +1028,10 @@ void translateVFMADD231PS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_INVALID &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
+       a64.EVEXb == 1 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
