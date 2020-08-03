@@ -45,6 +45,13 @@ constexpr static unsigned int xtNumOperands = 5;
 bool availAll1Preg0_7 = false;
 constexpr static unsigned int translatorVersion = 1;
 
+unsigned int P_ALL_ONE_0_7_IDX = XT_REG_INVALID;
+bool genJitMode = true;
+bool availablePReg[NUM_PRED_REG_INTEL] = {0};
+bool unusedPReg[NUM_PRED_REG_INTEL] = {0};
+bool availableZReg[NUM_Z_REG_INTEL] = {0};
+bool unusedZReg[NUM_Z_REG_INTEL] = {0};
+
 public:
 #ifdef XT_TEST
 constexpr static unsigned int xt_sp_reg_idx = 31;
@@ -93,6 +100,7 @@ uint32_t setAll1Preg0_7(uint32_t index) {
   P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{index};
   CodeGeneratorAArch64::ptrue(P_ALL_ONE_0_7.b);
   availAll1Preg0_7 = true;
+  P_ALL_ONE_0_7_IDX = index;
 
   return index;
 }
@@ -100,10 +108,37 @@ uint32_t setAll1Preg0_7(uint32_t index) {
 void clearAll1Preg0_7() {
   P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{XT_REG_INVALID};
   availAll1Preg0_7 = false;
+  P_ALL_ONE_0_7_IDX = XT_REG_INVALID;
 }
 
 uint64_t getTranslatorVersion(){
   return translatorVersion;
+}
+
+void unSetGenJitMode(){
+  genJitMode = false;
+}
+
+void setGenJitMode(){
+  genJitMode = true;
+}
+
+void initSearchPReg(){
+  for(int i = 0; i < NUM_PRED_REG_INTEL; i++){
+    availablePReg[i] = true;
+    unusedPReg[i] = true;
+  }
+}
+
+void initSearchZReg(){
+  for(int i = 0; i < NUM_Z_REG_INTEL; i++){
+    availableZReg[i] = true;
+    unusedZReg[i] = true;
+  }
+}
+
+bool getGenJitMode(){
+  return genJitMode;
 }
 
 void binCommit() {
@@ -485,6 +520,13 @@ unsigned int xt_push_vreg(xt_a64fx_operands_structV3_t *a64) {
 }
 
 unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
+  for (int i = 0; i < 32; i++){
+    if (availableZReg[i] == true && unusedZReg[i] == true){
+      unusedZReg[i] = false;
+      return i;
+    }
+  }
+  
   for (size_t i = AARCH64_NUM_ZREG - 1; i >= 0; i--) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i) {
       if (zreg_tmp_used[i] == false) {
@@ -515,6 +557,13 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
 }
 
 unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
+  for (int i = 0; i < 32; i++){
+    if (availableZReg[i] == true && unusedZReg[i] == true){
+      unusedZReg[i] = false;
+      return i;
+    }
+  }
+  
   for (size_t i = AARCH64_NUM_ZREG - 1; i >= 0; i--) {
     bool conflict = false;
     if (zreg_tmp_used[i] == true) {
@@ -554,6 +603,13 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
 }
 
 unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
+  for (int i = 0; i < 8; i++){
+    if (availablePReg[i] == true && unusedPReg[i] == true){
+      unusedPReg[i] = false;
+      return i;
+    }
+  }
+  
   for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i &&
         a64->maskIdx != i && a64->mask2Idx != 0) {
@@ -585,6 +641,14 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
 }
 
 unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
+
+  for (int i = 0; i < 8; i++){
+    if (availablePReg[i] == true && unusedPReg[i] == true){
+      unusedPReg[i] = false;
+      return i;
+    }
+  }
+  
   for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
     bool conflict = false;
     if (preg_tmp_used[i] == true) {
@@ -626,6 +690,13 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
 void xt_pop_vreg() { xt_pop_zreg(); }
 
 void xt_pop_zreg() {
+  for (int i = 0; i < 32; i++){
+    if (availableZReg[i] == true && unusedZReg[i] == false){
+      unusedZReg[i] = true;
+      return;
+    }
+  }
+  
   for (size_t i = 0; i < AARCH64_NUM_ZREG; i++) {
     if (zreg_tmp_used[i] == true) {
 #ifdef XT_AARCH64_STACK_REG
@@ -651,6 +722,14 @@ void xt_pop_zreg() {
 }
 
 void xt_pop_preg() {
+
+  for (int i = 0; i < 8; i++){
+    if (availablePReg[i] == true && unusedPReg[i] == false){
+      unusedPReg[i] = true;
+      return;
+    }
+  }
+  
   for (size_t i = TMP_PREG_END; i <= TMP_PREG_START; i++) {
     if (preg_tmp_used[i] == true) {
 #ifdef XT_AARCH64_STACK_REG
@@ -727,9 +806,14 @@ bool decodeOpcode(const Label *label = nullptr) {
 #ifdef XT_DEBUG
   xt_dump_x86_64_decoded_info(&xedd);
 #endif
-
-  xed_iclass_enum_t p = xed_decoded_inst_get_iclass(&xedd);
+  
+  if(genJitMode == true){
+    xed_iclass_enum_t p = xed_decoded_inst_get_iclass(&xedd);
 #include "xbyak_translator_switch.h"
+  }else{
+    searchPReg(&xedd);
+    searchZReg(&xedd);
+  }
 
   return true;
 }
@@ -1181,6 +1265,70 @@ void xt_construct_a64fx_operandsV3_rawMemOp(xed_decoded_inst_t *p,
   if (rawMemOp) {
     xt_dump_a64fx_operandsV3(a64);
   }
+}
+
+void searchPReg(xed_decoded_inst_t *p) {
+  unsigned int num_operands;
+
+  const xed_inst_t *xi = xed_decoded_inst_inst(p);
+
+  /* Get # of operands */
+  num_operands = xed_inst_noperands(xi);
+
+  for (unsigned int i = 0; i < num_operands; i++) {
+    const xed_operand_t *op = xed_inst_operand(xi, i);
+    xed_operand_enum_t opName = xed_operand_name(op);
+
+    /* Begin: parsing register operand */
+    xed_uint_t isReg = xed_operand_is_register(opName);
+    if (isReg == 1) { /* Operand is register */
+      xed_reg_enum_t r = xed_decoded_inst_get_reg(p, opName);
+      unsigned int tmpIdx = xt_get_register_index(r);
+      //bool isSet = false;
+
+      if( xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_MASK) {
+	if( availablePReg[tmpIdx] == true && tmpIdx != P_ALL_ONE_0_7_IDX){
+	  availablePReg[tmpIdx] = false;
+	  unusedPReg[tmpIdx] = false;
+	}
+      }
+      continue; /* End of register operand process */
+    }
+    /* End: parsing register operand */
+  } // for (int i = 0; i < num_operands; i++) {
+}
+
+void searchZReg(xed_decoded_inst_t *p) {
+  unsigned int num_operands;
+
+  const xed_inst_t *xi = xed_decoded_inst_inst(p);
+
+  /* Get # of operands */
+  num_operands = xed_inst_noperands(xi);
+
+  for (unsigned int i = 0; i < num_operands; i++) {
+    const xed_operand_t *op = xed_inst_operand(xi, i);
+    xed_operand_enum_t opName = xed_operand_name(op);
+
+    /* Begin: parsing register operand */
+    xed_uint_t isReg = xed_operand_is_register(opName);
+    if (isReg == 1) { /* Operand is register */
+      xed_reg_enum_t r = xed_decoded_inst_get_reg(p, opName);
+      unsigned int tmpIdx = xt_get_register_index(r);
+      //bool isSet = false;
+
+      if( xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_XMM
+	  || xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_YMM
+	  || xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_ZMM) {
+	if( availableZReg[tmpIdx] == true){
+	  availableZReg[tmpIdx] = false;
+	  unusedZReg[tmpIdx] = false;
+	}
+      }
+      continue; /* End of register operand process */
+    }
+    /* End: parsing register operand */
+  } // for (int i = 0; i < num_operands; i++) {
 }
 
 void decodeAndTransToAArch64() {
