@@ -26,9 +26,16 @@ public:
     inputGenReg[10] = 0x56789abcdef;
 
     inputPredReg[1] = uint64_t(0); /* Both x86_64 and aarch64 */
-    inputPredReg[2] = 0x1111; /* Both x86_64 and aarch64 */
-    inputPredReg[3] = 0x4444; /* Both x86_64 and aarch64 */
-    inputPredReg[4] = 0x8888; /* Both x86_64 and aarch64 */
+#ifndef __ARM_ARCH
+    inputPredReg[2] = (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12);
+    inputPredReg[3] = (1 << 2) | (1 << 6) | (1 << 10) | (1 << 14);
+    inputPredReg[4] = (1 << 3) | (1 << 7) | (1 << 11) | (1 << 15);
+#else
+    inputPredReg[2] = (1 << 0) | (1 << 16) | (uint64_t(1) << 32) | (uint64_t(1) << 48);
+    inputPredReg[3] = (1 << 8) | (1 << 24) | (uint64_t(1) << 40) | (uint64_t(1) << 56);
+    inputPredReg[4] = (1 << 12) | (1 << 28) | (uint64_t(1) << 44) | (uint64_t(1) << 60);
+#endif
+    inputPredReg[7] = ~uint64_t(0); /* Both x86_64 and aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -53,8 +60,21 @@ public:
     vpbroadcastd(Xmm(9) | k4, ptr[rax]);
     vpbroadcastd(Ymm(10) | k2, ptr[rax]);
     vpbroadcastd(Zmm(11) | k3, ptr[rax]);
+    vpbroadcastd(Xmm(12) | k7, ptr[rax]);
+    vpbroadcastd(Ymm(13) | k7, ptr[rax]);
+    vpbroadcastd(Zmm(14) | k7, ptr[rax]);
 
-    mov(rax, 8);
+    mov(rax, 0x1);
+#ifndef __ARM_ARCH
+    kmovq(k2, rax);
+    kmovq(k3, rax);
+    kmovq(k4, rax);
+#else
+    ptrue(p2.b, Xbyak_aarch64::VL1);
+    ptrue(p3.b, Xbyak_aarch64::VL1);
+    ptrue(p4.b, Xbyak_aarch64::VL1);
+#endif
+
   }
 };
 

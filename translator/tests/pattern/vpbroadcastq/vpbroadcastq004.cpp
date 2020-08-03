@@ -26,9 +26,16 @@ public:
     inputGenReg[10] = 0x56789abcdef;
 
     inputPredReg[1] = uint64_t(0); /* Both x86_64 and aarch64 */
-    inputPredReg[2] = 0xff15; /* Both x86_64 and aarch64 */
-    inputPredReg[3] = 0xff2a; /* Both x86_64 and aarch64 */
-    inputPredReg[4] = 0xff87; /* Both x86_64 and aarch64 */
+#ifndef __ARM_ARCH
+    inputPredReg[2] = (1 << 0) | (1 << 2) | (1 << 4);
+    inputPredReg[3] = (1 << 1) | (1 << 3) | (1 << 5);
+    inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 7);
+#else
+    inputPredReg[2] = (1 << 0) | (1 << 16) | (uint64_t(1) << 32);
+    inputPredReg[3] = (1 << 8) | (1 << 24) | (uint64_t(1) << 40);            
+    inputPredReg[4] = (1 << 0) | (1 << 8) | (1 << 16) | (uint64_t(1) << 56);
+#endif
+    inputPredReg[7] = ~uint64_t(0); /* Both x86_64 and aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -43,12 +50,29 @@ public:
     vpbroadcastq(Xmm(3) | k2 | T_z, Xmm(28));
     vpbroadcastq(Ymm(4) | k3 | T_z, Xmm(27));
     vpbroadcastq(Zmm(5) | k4 | T_z, Xmm(26));
-    vpbroadcastq(Xmm(6) | k1 | T_z, r8);
-    vpbroadcastq(Ymm(7) | k1 | T_z, r9);
-    vpbroadcastq(Zmm(8) | k1 | T_z, r10);
-    vpbroadcastq(Xmm(9) | k4 | T_z, r8);
-    vpbroadcastq(Ymm(10) | k2 | T_z, r9);
-    vpbroadcastq(Zmm(11) | k3 | T_z, r10);
+    vpbroadcastq(Xmm(6) | k7 | T_z, Xmm(25));
+    vpbroadcastq(Ymm(7) | k7 | T_z, Xmm(24));
+    vpbroadcastq(Zmm(8) | k7 | T_z, Xmm(23));
+    vpbroadcastq(Xmm(9) | k1 | T_z, r8);
+    vpbroadcastq(Ymm(10) | k1 | T_z, r9);
+    vpbroadcastq(Zmm(11) | k1 | T_z, r10);
+    vpbroadcastq(Xmm(12) | k4 | T_z, r8);
+    vpbroadcastq(Ymm(13) | k2 | T_z, r9);
+    vpbroadcastq(Zmm(14) | k3 | T_z, r10);
+    vpbroadcastq(Xmm(15) | k7 | T_z, r8);
+    vpbroadcastq(Ymm(16) | k7 | T_z, r9);
+    vpbroadcastq(Zmm(17) | k7 | T_z, r10);
+
+    mov(rax, 0x1);
+#ifndef __ARM_ARCH
+    kmovq(k2, rax);
+    kmovq(k3, rax);
+    kmovq(k4, rax);
+#else
+    ptrue(p2.b, Xbyak_aarch64::VL1);
+    ptrue(p3.b, Xbyak_aarch64::VL1);
+    ptrue(p4.b, Xbyak_aarch64::VL1);
+#endif
   }
 };
 
