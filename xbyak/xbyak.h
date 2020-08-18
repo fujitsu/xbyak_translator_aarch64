@@ -1150,8 +1150,20 @@ public:
 	}
 	void db(uint64 code, size_t codeSize)
 	{
-		if (codeSize > 8) throw Error(ERR_BAD_PARAMETER);
-		for (size_t i = 0; i < codeSize; i++) db(static_cast<uint8>(code >> (i * 8)));
+               if (codeSize > 8) throw Error(ERR_BAD_PARAMETER);
+#if XBYAK_GNUC_PREREQ(5, 5)
+               for (size_t i = 0; i < codeSize; i++) db(static_cast<uint8>(code >> (i * 8)));
+#else
+               /* Avoid bug of aarch64-linux-gnu-g++ (Ubuntu/Linaro 5.4.0-6ubuntu1~16.04.9) 5.4.0 20160609 
+                  g++ outputs invalid instruction  'ubfx x19, x19, 64, 8'.
+               */
+               if (codeSize <= 4) {
+		 for (size_t i = 0; i < codeSize; i++) db(static_cast<uint8>(code >> (i * 8)));
+	       } else {
+		 db(code, 4);
+		 db(code >> 32, codeSize - 4);
+	       }
+#endif
 	}
 	void dw(uint32 code) { db(code, 2); }
 	void dd(uint32 code) { db(code, 4); }
