@@ -30,8 +30,8 @@ RUN wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tar.xz && \
 #    sudo make && \
 #    sudo make install && \
     make && \
-    make install
-#    cd /usr/local/bin && ln -sf python3 python
+    make install && \
+    cd /usr/local/bin && ln -sf python3 python
 #RUN which python
 #RUN /usr/local/bin/python --version
 
