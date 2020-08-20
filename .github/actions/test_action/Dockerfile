@@ -20,13 +20,15 @@ RUN apt-get install -y wget
 RUN apt-get install -y libbz2-dev libdb-dev libreadline-dev \
     libffi-dev libgdbm-dev liblzma-dev libncursesw5-dev libsqlite3-dev libssl-dev \
     zlib1g-dev uuid-dev tk-dev
+RUN apt-get install -y sudo
 
 RUN wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tar.xz && \
     tar xJf Python-3.6.12.tar.xz && \
     cd Python-3.6.12 && \
     ./configure && \
     make && \
-    make install
+    sudo make install
+RUN ln -sf python3 python
 
 RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
     tar Jxvf qemu-5.0.0.tar.xz && \
