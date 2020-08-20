@@ -2,7 +2,10 @@ FROM ubuntu:latest
 
 COPY entrypoint.sh /entrypoint.sh
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
+RUN apt-get install -y tzdata
+ENV TZ=Asia/Tokyo
 RUN apt-get install -y binutils-aarch64-linux-gnu
 RUN apt-get install -y cpp-8-aarch64-linux-gnu
 RUN apt-get install -y cpp-aarch64-linux-gnu
