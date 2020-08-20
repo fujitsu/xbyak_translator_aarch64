@@ -34,11 +34,12 @@ RUN wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tar.xz && \
 #RUN which python
 #RUN /usr/local/bin/python --version
     
-#RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
-#    tar Jxvf qemu-5.0.0.tar.xz && \
-#    cd qemu-5.0.0 && \
+RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
+    tar Jxvf qemu-5.0.0.tar.xz && \
+    cd qemu-5.0.0 && \
 #    sudo chmod 777 configure && \
-#    ./configure --target-list=aarch64-linux-user --prefix=/local_qemu_5.0.0 --python=/usr/local/bin && \
+    ./configure --target-list=aarch64-linux-user --prefix=/local_qemu_5.0.0 --python=/usr/local/bin && \
 #    sudo make
+    make
 
 #ENTRYPOINT ["/entrypoint.sh"]
