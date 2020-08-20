@@ -18,10 +18,10 @@ RUN apt-get install -y pkg-config-aarch64-linux-gnu
 RUN apt-get install -y build-essential
 RUN apt-get install -y wget
 
-RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz
-RUN tar Jxvf qemu-5.0.0.tar.xz
-RUN cd qemu-5.0.0
-RUN ./configure --target-list=aarch64-linux-user --prefix=/local_qemu_5.0.0
-RUN make
+RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
+    tar Jxvf qemu-5.0.0.tar.xz && \
+    cd qemu-5.0.0 && \
+    ./configure --target-list=aarch64-linux-user --prefix=/local_qemu_5.0.0 && \
+    make
 
 ENTRYPOINT ["/entrypoint.sh"]
