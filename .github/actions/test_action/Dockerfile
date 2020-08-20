@@ -21,6 +21,7 @@ RUN apt-get install -y libbz2-dev libdb-dev libreadline-dev \
     libffi-dev libgdbm-dev liblzma-dev libncursesw5-dev libsqlite3-dev libssl-dev \
     zlib1g-dev uuid-dev tk-dev
 RUN apt-get install -y sudo
+RUN apt-get install -y libglib2.0-dev
 
 RUN wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tar.xz && \
     tar xJf Python-3.6.12.tar.xz && \
@@ -29,18 +30,17 @@ RUN wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tar.xz && \
 #    sudo make && \
 #    sudo make install && \
     make && \
-    make install && \
-    cd /usr/local/bin && ln -sf python3 python
+    make install
+#    cd /usr/local/bin && ln -sf python3 python
 #RUN which python
 #RUN /usr/local/bin/python --version
 
-RUN /usr/local/bin/python --version && \
-    wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
+#RUN /usr/local/bin/python --version && \
+RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
     tar Jxvf qemu-5.0.0.tar.xz && \
     cd qemu-5.0.0 && \
     sudo chmod 777 /usr/local/bin && \
-#    ./configure --target-list=aarch64-linux-user --prefix=/local_qemu_5.0.0 --python=/usr/local/bin && \
-    ./configure --target-list=aarch64-linux-user --prefix=/tmp/ --python=/usr/local/bin/python && \
+    ./configure --target-list=aarch64-linux-user --prefix=/local_qemu_5.0.0 --python=/usr/local/bin/python && \
 #    sudo make
     make
 
