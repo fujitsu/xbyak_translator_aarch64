@@ -24,7 +24,7 @@ RUN apt-get install -y libbz2-dev libdb-dev libreadline-dev \
 RUN wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tar.xz && \
     tar xJf Python-3.6.12.tar.xz && \
     cd Python-3.6.12 && \
-    .configure && \
+    ./configure && \
     make && \
     sudo make install
 
