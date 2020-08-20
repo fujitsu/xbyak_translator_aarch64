@@ -16,6 +16,7 @@ RUN apt-get install -y gcc-8-aarch64-linux-gnu-base:amd64
 RUN apt-get install -y gcc-aarch64-linux-gnu
 RUN apt-get install -y pkg-config-aarch64-linux-gnu
 RUN apt-get install -y build-essential
+RUN apt-get install -y wget
 
 RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz
 RUN tar Jxvf qemu-5.0.0.tar.xz
