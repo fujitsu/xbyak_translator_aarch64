@@ -33,7 +33,6 @@ RUN wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tar.xz && \
     cd /usr/local/bin && ln -sf python3 python
 #RUN which python
 #RUN /usr/local/bin/python --version
-RUN
     
 RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
     tar Jxvf qemu-5.0.0.tar.xz && \
