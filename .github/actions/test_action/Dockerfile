@@ -26,11 +26,13 @@ RUN wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tar.xz && \
     tar xJf Python-3.6.12.tar.xz && \
     cd Python-3.6.12 && \
     ./configure && \
-    sudo make && \
-    sudo make install && \
+#    sudo make && \
+#    sudo make install && \
+    make && \
+    make install && \
     cd /usr/local/bin && ln -sf python3 python
-RUN which python
-RUN /usr/local/bin/python --version
+#RUN which python
+#RUN /usr/local/bin/python --version
     
 #RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
 #    tar Jxvf qemu-5.0.0.tar.xz && \
