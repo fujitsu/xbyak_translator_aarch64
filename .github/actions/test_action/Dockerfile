@@ -28,7 +28,7 @@ RUN wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tar.xz && \
     ./configure && \
     sudo make && \
     sudo make install
-RUN cd /tmp/bin && ln -sf python3 python
+RUN cd /user/local/bin && ln -sf python3 python
 
 RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
     tar Jxvf qemu-5.0.0.tar.xz && \
