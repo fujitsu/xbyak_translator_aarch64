@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:latest
 
 COPY entrypoint.sh /entrypoint.sh
 
