@@ -17,6 +17,7 @@ RUN apt-get install -y gcc-aarch64-linux-gnu
 RUN apt-get install -y pkg-config-aarch64-linux-gnu
 RUN apt-get install -y build-essential
 RUN apt-get install -y wget
+RUN apt-get install -y python3.6
 
 RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
     tar Jxvf qemu-5.0.0.tar.xz && \
