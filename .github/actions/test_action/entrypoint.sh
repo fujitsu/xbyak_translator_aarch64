@@ -38,5 +38,6 @@ CI_XED_PATH=`pwd`
 #cd ../../../../../
 source dot.zshrc.xbyak.ci
 cd tests/
+export QEMU_AARCH64=/local_qemu_5.0.0/bin/qemu-aarch64
 make -j48
 
