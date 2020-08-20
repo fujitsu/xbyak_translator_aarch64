@@ -25,7 +25,7 @@ RUN apt-get install -y sudo
 RUN wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tar.xz && \
     tar xJf Python-3.6.12.tar.xz && \
     cd Python-3.6.12 && \
-    sudo ./configure --prefix=/tmp/bin && \
+    ./configure && \
     sudo make && \
     sudo make install
 RUN cd /tmp/bin && ln -sf python3 python
@@ -33,7 +33,7 @@ RUN cd /tmp/bin && ln -sf python3 python
 RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
     tar Jxvf qemu-5.0.0.tar.xz && \
     cd qemu-5.0.0 && \
-    sudo ./configure --target-list=aarch64-linux-user --prefix=/local_qemu_5.0.0 --python=/tmp/bin && \
+    ./configure --target-list=aarch64-linux-user --prefix=/local_qemu_5.0.0 --python=/tmp/bin && \
     sudo make
 
 ENTRYPOINT ["/entrypoint.sh"]
