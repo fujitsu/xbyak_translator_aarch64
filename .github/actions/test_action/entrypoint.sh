@@ -40,6 +40,8 @@ CI_XED_PATH=`pwd`
 cd ../../../../../
 source dot.zshrc.xbyak.ci
 cd tests/
+echo "display xed_lib_path"
+ls ../third_party/build_xed_aarch64/kits/xed/lib
 export QEMU_AARCH64=/local_qemu_5.0.0/bin/qemu-aarch64
 make -j2
 
