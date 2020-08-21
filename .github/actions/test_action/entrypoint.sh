@@ -16,6 +16,8 @@
 # *******************************************************************************/
 git submodule sync --recursive
 git submodule update --init --recursive
+pwd
+ls
 cd translator/third_party/
 #source dot.zshrc.xbyak
 mkdir build_xed_aarch64

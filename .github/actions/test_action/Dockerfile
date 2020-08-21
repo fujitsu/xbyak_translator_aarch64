@@ -22,6 +22,7 @@ RUN apt-get install -y libbz2-dev libdb-dev libreadline-dev \
     zlib1g-dev uuid-dev tk-dev
 RUN apt-get install -y sudo
 RUN apt-get install -y libglib2.0-dev
+RUN apt-get install -y git
 
 RUN wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tar.xz && \
     tar xJf Python-3.6.12.tar.xz && \
