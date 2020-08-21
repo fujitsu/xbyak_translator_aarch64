@@ -19,10 +19,9 @@ git submodule update --init --recursive
 pwd
 ls
 cd translator/third_party/
-#source dot.zshrc.xbyak
 mkdir build_xed_aarch64
 cd build_xed_aarch64/
-../xed/mfile.py --host-cpu=aarch64 --shared examples install
+../xed/mfile.py --strip=/usr/bin/aarch64-linux-gnu-strip  --cc=/usr/bin/aarch64-linux-gnu-gcc --cxx=/usr/bin/aarch64-linux-gnu-g++ --host-cpu=aarch64 --shared examples install
 cd kits/
 XED=`ls | grep install`
 ln -sf $XED xed

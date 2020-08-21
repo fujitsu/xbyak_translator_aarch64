@@ -122,8 +122,7 @@ compile_precompiled_header() {
 
 compile_test_file() {
     # Compile, execute, dissassemble
-    #${TOOL_PREFIX:-""}${CXX} ${CFLAGS} -o ${TP_NAME_ARCH} ${TP_NAME}.cpp ${LIB_OPT}
-    ${TOOL_PREFIX:-""}${CXX} -m64 ${CFLAGS} -o ${TP_NAME_ARCH} ${TP_NAME}.cpp ${LIB_OPT}
+    ${TOOL_PREFIX:-""}${CXX} ${CFLAGS} -o ${TP_NAME_ARCH} ${TP_NAME}.cpp ${LIB_OPT}
     if [ ! $? -eq 0 ] ; then
 	echo "compile error!"
 	exit 1
