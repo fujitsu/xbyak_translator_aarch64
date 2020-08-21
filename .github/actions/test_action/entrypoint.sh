@@ -45,6 +45,7 @@ aarch64-linux-gnu-objdump -a ../third_party/build_xed_aarch64/kits/xed/lib/libxe
 aarch64-linux-gnu-objdump -a ../third_party/build_xed_aarch64/kits/xed/lib/libxed-ild.so
 which aarch64-linux-gnu-g++
 aarch64-linux-gnu-g++ --version
+uname -m
 export QEMU_AARCH64=/local_qemu_5.0.0/bin/qemu-aarch64
 make -j2
 
