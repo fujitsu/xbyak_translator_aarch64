@@ -230,12 +230,9 @@ check_option
 #debug_dump_option
 gen_compile_option $@
 #compile_precompiled_header
-echo "start compile_test_file"
 compile_test_file
-echo "start exec_test"
 if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
-    echo "exec_test point"
-    #exec_test
+    exec_test
 fi
 #if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
 #    dump_disassemble
