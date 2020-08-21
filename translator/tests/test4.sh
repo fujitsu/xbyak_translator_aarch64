@@ -79,11 +79,11 @@ check_option() {
     DUMP_OPT="-m AArch64"
     if [ ${HOST_ARCH:-"unknown"} = "x86_64" ] ; then
 	QEMU_ON=1
-	#TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
-	TOOL_PREFIX="aarch64-linux-gnu-"
+	TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
+	#TOOL_PREFIX="aarch64-linux-gnu-"
 	#DUMP_OPT="-m AArch64"
-	#DUMP_PREFIX=${DUMP_PREFIX:="/usr/bin/aarch64-linux-gnu-"}
-	DUMP_PREFIX=${DUMP_PREFIX:="aarch64-linux-gnu-"}
+	DUMP_PREFIX=${DUMP_PREFIX:="/usr/bin/aarch64-linux-gnu-"}
+	#DUMP_PREFIX=${DUMP_PREFIX:="aarch64-linux-gnu-"}
     fi
 }		
 
@@ -234,6 +234,7 @@ echo "start compile_test_file"
 #compile_test_file
 echo "start exec_test"
 if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
+    echo "exec_test point"
     #exec_test
 fi
 #if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
