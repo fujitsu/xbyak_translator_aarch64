@@ -1,7 +1,9 @@
 #!/bin/bash
 export PATH=${CI_XED_PATH}:${PATH}
-export QEMU_LD_PREFIX=/usr/aarch64-linux-gnu
-export DUMP_PREFIX=/usr/bin/aarch64-linux-gnu-
+#export QEMU_LD_PREFIX=/usr/aarch64-linux-gnu
+export QEMU_LD_PREFIX=aarch64-linux-gnu
+#export DUMP_PREFIX=/usr/bin/aarch64-linux-gnu-
+export DUMP_PREFIX=aarch64-linux-gnu-
 
 DIFF() {
     # example:DIFF vmulps000
