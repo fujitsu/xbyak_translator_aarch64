@@ -38,6 +38,7 @@ RUN wget https://download.qemu.org/qemu-5.0.0.tar.xz && \
     cd qemu-5.0.0 && \
     sudo chmod 777 /usr/local/bin && \
     ./configure --target-list=aarch64-linux-user --prefix=/local_qemu_5.0.0 --python=/usr/local/bin/python && \
-    make -j2
+    make -j2 && \
+    make install
 
 ENTRYPOINT ["/entrypoint.sh"]
