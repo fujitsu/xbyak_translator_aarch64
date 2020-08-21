@@ -46,5 +46,6 @@ which aarch64-linux-gnu-g++
 aarch64-linux-gnu-g++ --version
 uname -m
 export QEMU_AARCH64=/local_qemu_5.0.0/bin/qemu-aarch64
+which qemu-aarch64
 make -j2
 
