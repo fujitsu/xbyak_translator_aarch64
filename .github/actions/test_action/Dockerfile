@@ -20,7 +20,6 @@ RUN apt-get install -y wget
 RUN apt-get install -y libbz2-dev libdb-dev libreadline-dev \
     libffi-dev libgdbm-dev liblzma-dev libncursesw5-dev libsqlite3-dev libssl-dev \
     zlib1g-dev uuid-dev tk-dev
-RUN apt-get install -y sudo
 RUN apt-get install -y libglib2.0-dev
 RUN apt-get install -y git
 
