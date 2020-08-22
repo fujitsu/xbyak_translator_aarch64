@@ -27,25 +27,9 @@ XED=`ls | grep install`
 ln -sf $XED xed
 cd xed/bin/
 CI_XED_PATH=`pwd`
-#cd ../../../
-#mkdir build_xed_aarch64
-#cd build_xed_aarch64/
-#../xed/mfile.py --host-cpu=x86_64 --shared examples install
-#cd kits/
-#XED=`ls | grep install`
-#ln -sf $XED xed
-#cd xed/bin/
-#CI_XED_PATH=`pwd`
 cd ../../../../../
 source dot.zshrc.xbyak.ci
 cd tests/
-echo "display xed_lib_path"
-aarch64-linux-gnu-objdump -a ../third_party/build_xed_aarch64/kits/xed/lib/libxed.so
-aarch64-linux-gnu-objdump -a ../third_party/build_xed_aarch64/kits/xed/lib/libxed-ild.so
-which aarch64-linux-gnu-g++
-aarch64-linux-gnu-g++ --version
-uname -m
 export QEMU_AARCH64=/local_qemu_5.0.0/bin/qemu-aarch64
-which qemu-aarch64
 make -j2
 

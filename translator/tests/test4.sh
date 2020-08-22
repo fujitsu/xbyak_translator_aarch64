@@ -80,10 +80,7 @@ check_option() {
     if [ ${HOST_ARCH:-"unknown"} = "x86_64" ] ; then
 	QEMU_ON=1
 	TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
-	#TOOL_PREFIX="aarch64-linux-gnu-"
-	#DUMP_OPT="-m AArch64"
 	DUMP_PREFIX=${DUMP_PREFIX:="/usr/bin/aarch64-linux-gnu-"}
-	#DUMP_PREFIX=${DUMP_PREFIX:="aarch64-linux-gnu-"}
     fi
 }		
 
@@ -229,7 +226,7 @@ get_host_arch
 check_option
 #debug_dump_option
 gen_compile_option $@
-#compile_precompiled_header
+compile_precompiled_header
 compile_test_file
 if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
     exec_test
