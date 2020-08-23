@@ -77,6 +77,11 @@ bad_combination_exit() {
 
 check_option() {
     DUMP_OPT="-m AArch64"
+    if [ ${HOST_ARCH:-"unknown"} = "x86_64" ] ; then
+	QEMU_ON=1
+	TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
+	DUMP_PREFIX=${DUMP_PREFIX:="/usr/bin/aarch64-linux-gnu-"}
+    fi
 }		
 
 gen_compile_option() {
