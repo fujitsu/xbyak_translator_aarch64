@@ -1359,13 +1359,13 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
     xa_->b(label);
-    L_aarch64(L0);
+    L(L0);
     xa_->cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
     xa_->b(Xbyak_aarch64::NE, L1);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
     xa_->b(label);
-    L_aarch64(L1);
+    L(L1);
 
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
@@ -1384,13 +1384,13 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
     xa_->b(label);
-    L_aarch64(L0);
+    L(L0);
     xa_->cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
     xa_->b(Xbyak_aarch64::NE, L1);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
     xa_->b(label);
-    L_aarch64(L1);
+    L(L1);
 
     xa_->and_(X_TMP_1, X_TMP_0, 0x4);
     xa_->cmp(X_TMP_1, 0x4);
@@ -1398,7 +1398,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
     xa_->b(label);
-    L_aarch64(L2);
+    L(L2);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
   } break;

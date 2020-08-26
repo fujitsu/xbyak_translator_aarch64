@@ -243,9 +243,11 @@
 
 namespace Xbyak {
 
+
 #ifdef XBYAK_TRANSLATE_AARCH64
         #include "xbyak_aarch64.h"
         //#include "xbyak_aarch64_util.h"
+namespace xa_ = Xbyak_aarch64;
 #endif
 
 enum {
@@ -2519,8 +2521,8 @@ public:
 //public:
 #ifdef XBYAK_TRANSLATE_AARCH64
 	void L(const std::string &label) {}
-	void L(Label &label) { L_aarch64(label); }
-	Label L() { Label label; L(label); return label; }
+	void L(xa_::Label &label) { xa_->L(label); }
+	xa_::Label L() { xa_::Label label; L(label); return label; }
 #else
 	void L(const std::string& label) { labelMgr_.defineSlabel(label); }
 	void L(Label& label) { labelMgr_.defineClabel(label); }
@@ -2617,7 +2619,7 @@ public:
 #ifdef XT_AARCH64_STACK_REG
 		xa_->sub(xa_->sp, xa_->sp, NUM_BYTES_GEN_REG);
 		xa_->mov(X_TMP_0, xa_->sp);
-		xa_->str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::ptr(X_TMP_0));
+		xa_->str(xa_::XReg(op.getIdx()), Xbyak_aarch64::ptr(X_TMP_0));
 #else //#ifdef XT_AARCH64_STACK_REG
 		xa_->str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::pre_ptr(X_TRANSLATOR_STACK, -8));
 #endif //#ifdef XT_AARCH64_STACK_REG

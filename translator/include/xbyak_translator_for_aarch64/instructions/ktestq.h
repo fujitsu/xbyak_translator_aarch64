@@ -60,7 +60,7 @@ void translateKTESTQ(xed_decoded_inst_t *p) {
   }
   /* Col=AX120*/
   if (false || (true)) {
-    L_aarch64(L_zflag);
+    L(L_zflag);
   }
   /* Col=BA120*/
   if (false || (true)) {
@@ -90,7 +90,7 @@ void translateKTESTQ(xed_decoded_inst_t *p) {
   }
   /* Col=BG120*/
   if (false || (true)) {
-    L_aarch64(L_cflag);
+    L(L_cflag);
   }
   /* Col=BJ120*/
   if (false || (true)) {

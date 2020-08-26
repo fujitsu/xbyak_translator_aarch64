@@ -210,7 +210,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    L_aarch64(L_zflag);
+    L(L_zflag);
   }
   /* Col=AZ120*/
   if (false ||
@@ -307,7 +307,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    L_aarch64(L_cflag);
+    L(L_cflag);
   }
   /* Col=BJ120*/
   if (false ||

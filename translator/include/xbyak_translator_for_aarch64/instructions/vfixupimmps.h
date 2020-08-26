@@ -165,7 +165,7 @@ void translateVFIXUPIMMPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     b(l_exec);
     // gen table
-    L_aarch64(l_table);
+    L(l_table);
     dw_aarch64(0xFFFFFFFF); // dummy for dest[31:0]
     dw_aarch64(0xFFFFFFFF); // dummy for tsrc[31:0]
     dw_aarch64(0x7FC00000); // QNAN(tsrc[31:0])
@@ -182,7 +182,7 @@ void translateVFIXUPIMMPS(xed_decoded_inst_t *p) {
     dw_aarch64(0x3FC90FDB); // PI/2
     dw_aarch64(0x7F7FFFFF); // MAX_FLOAT
     dw_aarch64(0xFF7FFFFF); // -MIN_FLOAT
-    L_aarch64(l_exec);
+    L(l_exec);
   }
   /* Col=AL120*/
   if (false ||
