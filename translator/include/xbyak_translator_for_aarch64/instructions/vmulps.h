@@ -207,14 +207,14 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::ld1(xa::VReg(a64.vTmpIdx).s4, xa::ptr(X_TMP_ADDR));
+    xa_->ld1(xa::VReg(a64.vTmpIdx).s4, xa::ptr(X_TMP_ADDR));
   }
   /* Col=W103*/
   if (false ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::ld1r(xa::VReg(a64.vTmpIdx).s4, xa::ptr(X_TMP_ADDR));
+    xa_->ld1r(xa::VReg(a64.vTmpIdx).s4, xa::ptr(X_TMP_ADDR));
   }
   /* Col=X103*/
   if (false ||
@@ -242,7 +242,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::ldr(xa::ZReg(a64.zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::ZReg(a64.zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=Y103*/
   if (false ||
@@ -270,7 +270,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::ld1rw(xa::ZReg(a64.zTmpIdx).s,
+    xa_->ld1rw(xa::ZReg(a64.zTmpIdx).s,
                                 xa::PReg(a64.maskIdx) / xa::T_z,
                                 xa::ptr(X_TMP_ADDR));
   }
@@ -320,7 +320,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE.b,
+    xa_->not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE.b,
                                xa::PRegB(a64.maskIdx));
   }
   /* Col=AC103*/
@@ -337,7 +337,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE / xa::T_z,
+    xa_->orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE / xa::T_z,
                               P_MSB_256.b, xa::PRegB(a64.maskIdx));
   }
   /* Col=AD103*/
@@ -354,7 +354,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE / xa::T_z,
+    xa_->orn(xa::PRegB(a64.pTmpIdx), P_ALL_ONE / xa::T_z,
                               P_MSB_384.b, xa::PRegB(a64.maskIdx));
   }
   /* Col=AE103*/
@@ -371,7 +371,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::fmul(xa::VReg(a64.dstIdx).s4, xa::VReg(a64.srcIdx).s4,
+    xa_->fmul(xa::VReg(a64.dstIdx).s4, xa::VReg(a64.srcIdx).s4,
                                xa::VReg(a64.src2Idx).s4);
   }
   /* Col=AF103*/
@@ -394,7 +394,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::fmul(xa::VReg(a64.dstIdx).s4, xa::VReg(a64.srcIdx).s4,
+    xa_->fmul(xa::VReg(a64.dstIdx).s4, xa::VReg(a64.srcIdx).s4,
                                xa::VReg(a64.vTmpIdx).s4);
   }
   /* Col=AG103*/
@@ -408,7 +408,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::fmul(xa::ZReg(a64.dstIdx).s, xa::ZReg(a64.srcIdx).s,
+    xa_->fmul(xa::ZReg(a64.dstIdx).s, xa::ZReg(a64.srcIdx).s,
                                xa::ZReg(a64.src2Idx).s);
   }
   /* Col=AH103*/
@@ -443,7 +443,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::fmul(xa::ZReg(a64.dstIdx).s, xa::ZReg(a64.srcIdx).s,
+    xa_->fmul(xa::ZReg(a64.dstIdx).s, xa::ZReg(a64.srcIdx).s,
                                xa::ZReg(a64.zTmpIdx).s);
   }
   /* Col=AI103*/
@@ -454,7 +454,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::fmul(xa::ZReg(a64.zTmpIdx).s, xa::ZReg(a64.srcIdx).s,
+    xa_->fmul(xa::ZReg(a64.zTmpIdx).s, xa::ZReg(a64.srcIdx).s,
                                xa::ZReg(a64.src2Idx).s);
   }
   /* Col=AJ103*/
@@ -474,7 +474,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::fmul(xa::ZReg(a64.zTmpIdx).s, xa::ZReg(a64.srcIdx).s,
+    xa_->fmul(xa::ZReg(a64.zTmpIdx).s, xa::ZReg(a64.srcIdx).s,
                                xa::ZReg(a64.zTmpIdx).s);
   }
   /* Col=AK103*/
@@ -541,7 +541,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::mov(xa::ZReg(a64.dstIdx).s, P_MSB_256 / xa::T_m, 0);
+    xa_->mov(xa::ZReg(a64.dstIdx).s, P_MSB_256 / xa::T_m, 0);
   }
 
   /* Col=AO103*/
@@ -576,7 +576,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::mov(xa::ZReg(a64.dstIdx).s,
+    xa_->mov(xa::ZReg(a64.dstIdx).s,
                               xa::PReg(a64.pTmpIdx) / xa::T_m, 0);
   }
   /* Col=AP103*/
@@ -599,7 +599,7 @@ void translateVMULPS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 1 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::mov(xa::ZRegS(a64.dstIdx),
+    xa_->mov(xa::ZRegS(a64.dstIdx),
                               xa::PReg(a64.maskIdx) / xa::T_m,
                               xa::ZRegS(a64.zTmpIdx));
   }

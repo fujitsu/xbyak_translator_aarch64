@@ -19,7 +19,7 @@ void translateMULPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
   /* 2020/03/19 10:47 */
   bool isValid = false;
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
   /* Col=S103*/
   if (false || (a64.srcType == A64_OP_MEM && true)) {
     XT_UNIMPLEMENTED;

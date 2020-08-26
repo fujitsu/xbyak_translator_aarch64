@@ -20,7 +20,7 @@ void translateMOVSD(xed_decoded_inst_t *p) {
 
   /* 2020/03/12 11:47 */
   bool isValid = false;
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
 
   /* Col=T103*/
   if (false ||

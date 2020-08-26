@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/06/29 21:35 */
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
 void translateVPMOVZXWD(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;

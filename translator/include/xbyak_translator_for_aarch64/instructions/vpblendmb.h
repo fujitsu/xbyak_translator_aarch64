@@ -19,7 +19,7 @@ void translateVPBLENDMB(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
 /* 2020/03/10 17:34 */
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
 
   /* Col=U103*/
   if (false ||

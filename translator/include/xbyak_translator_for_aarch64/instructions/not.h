@@ -19,7 +19,7 @@ void translateNOT(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64);
 
 /* 2020/02/26 23:20 */
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
   /* Col=S103*/
   if (false ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&

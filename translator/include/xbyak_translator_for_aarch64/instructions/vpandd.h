@@ -20,7 +20,7 @@ void translateVPANDD(xed_decoded_inst_t *p) {
 
   /* 2020/03/12 09:07 */
   bool isValid = false;
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
   /* Col=S103*/
   if (false ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&

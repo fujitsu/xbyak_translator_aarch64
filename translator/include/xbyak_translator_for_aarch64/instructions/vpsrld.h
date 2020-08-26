@@ -20,7 +20,7 @@ void translateVPSRLD(xed_decoded_inst_t *p) {
 
   /* 2020/03/18 16:41 */
   bool isValid = false;
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
 
   /* Col=S143*/
   if (false ||
@@ -127,21 +127,21 @@ void translateVPSRLD(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_IMM && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_IMM && true)) {
-    CodeGeneratorAArch64::lsr(xa::ZRegS(a64.dstIdx), xa::ZRegS(a64.srcIdx),
+    xa_->lsr(xa::ZRegS(a64.dstIdx), xa::ZRegS(a64.srcIdx),
                               a64.uimm);
   }
   /* Col=AJ143*/
   if (false ||
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_IMM && true)) {
-    CodeGeneratorAArch64::mov(xa::ZReg(a64.dstIdx).s, P_MSB_256 / xa::T_m, 0);
+    xa_->mov(xa::ZReg(a64.dstIdx).s, P_MSB_256 / xa::T_m, 0);
   }
 
   /* Col=AM143*/
   if (false ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_IMM && true)) {
-    CodeGeneratorAArch64::mov(xa::ZReg(a64.dstIdx).s, P_MSB_384 / xa::T_m, 0);
+    xa_->mov(xa::ZReg(a64.dstIdx).s, P_MSB_384 / xa::T_m, 0);
   }
 
   /* Col=BP143*/

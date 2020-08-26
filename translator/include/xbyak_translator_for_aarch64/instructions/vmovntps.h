@@ -19,7 +19,7 @@ void translateVMOVNTPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64);
 
 /* 2020/02/27 17:47 */
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
   xt_reg_idx_t maskIdx = XT_REG_INVALID;
 
   /* Col=U103*/

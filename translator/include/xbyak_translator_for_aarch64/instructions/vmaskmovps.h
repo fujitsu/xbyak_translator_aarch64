@@ -19,7 +19,7 @@ void translateVMASKMOVPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
 /* 2020/02/28 15:31 */
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
 
   /* Col=T103*/
   if (false ||

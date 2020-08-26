@@ -19,7 +19,7 @@ void translateMOVQ(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
 /* 2020/02/21 21:51 */
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
   /* Col=S103*/
   if (false ||
       (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&

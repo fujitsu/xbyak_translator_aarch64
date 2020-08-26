@@ -19,7 +19,7 @@ void translateVPCMPEQB(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
 /* 2020/04/03 14:00 */
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
   /* Col=N103*/
   if (false ||
       (a64.isDstMask == false && a64.PredType == A64_PRED_NO &&

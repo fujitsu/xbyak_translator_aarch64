@@ -20,7 +20,7 @@ void translateVPADDB(xed_decoded_inst_t *p) {
 
   /* 2020/03/30 15:24 */
   bool isValid = false;
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
   /* Col=O103*/
   if (false ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&

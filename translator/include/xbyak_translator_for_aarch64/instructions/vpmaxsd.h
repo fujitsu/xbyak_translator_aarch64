@@ -20,7 +20,7 @@ void translateVPMAXSD(xed_decoded_inst_t *p) {
 
   /* 2020/03/11 19:45 */
   bool isValid = false;
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
   xt_reg_idx_t src2Idx = XT_REG_INVALID;

@@ -55,10 +55,10 @@ public:
     Xbyak_aarch64::XReg x_tmpFlag{x0};
     Xbyak_aarch64::XReg x_dummyFlag{x10};
 
-    CodeGeneratorAArch64::mov_imm(x_of, 1 << 11);
-    CodeGeneratorAArch64::mov_imm(x_sf, 1 << 7);
-    CodeGeneratorAArch64::mov_imm(x_zf, 1 << 6);
-    CodeGeneratorAArch64::mov_imm(x_cf, 1 << 0);
+    xa_->mov_imm(x_of, 1 << 11);
+    xa_->mov_imm(x_sf, 1 << 7);
+    xa_->mov_imm(x_zf, 1 << 6);
+    xa_->mov_imm(x_cf, 1 << 0);
     Reg64 r_addr{rdx};
     Reg64 r_tmpAddr{rcx};
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
@@ -103,35 +103,35 @@ public:
 
         Xbyak_aarch64::LabelAArch64 L0, L1, L2, L3;
 
-        CodeGeneratorAArch64::mov(x_dummyFlag, 0);
+        xa_->mov(x_dummyFlag, 0);
 
-        CodeGeneratorAArch64::and_(X_TMP_0, x_tmpFlag, 0x1); // extract V
-        CodeGeneratorAArch64::cmp(X_TMP_0, 1);               // Check if V==0
-        CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L0);
-        CodeGeneratorAArch64::orr(x_dummyFlag, x_dummyFlag,
+        xa_->and_(X_TMP_0, x_tmpFlag, 0x1); // extract V
+        xa_->cmp(X_TMP_0, 1);               // Check if V==0
+        xa_->b(Xbyak_aarch64::NE, L0);
+        xa_->orr(x_dummyFlag, x_dummyFlag,
                                   x_of); // Set x86_64's OF flag
         L_aarch64(L0);
-        CodeGeneratorAArch64::and_(X_TMP_0, x_tmpFlag, 0x2); // extract C
-        CodeGeneratorAArch64::cmp(X_TMP_0, 0x2);             // Check if C==0
-        CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L1);
-        CodeGeneratorAArch64::orr(x_dummyFlag, x_dummyFlag,
+        xa_->and_(X_TMP_0, x_tmpFlag, 0x2); // extract C
+        xa_->cmp(X_TMP_0, 0x2);             // Check if C==0
+        xa_->b(Xbyak_aarch64::NE, L1);
+        xa_->orr(x_dummyFlag, x_dummyFlag,
                                   x_cf); // Set x86_64's CF flag
         L_aarch64(L1);
-        CodeGeneratorAArch64::and_(X_TMP_0, x_tmpFlag, 0x4); // extract Z flag
-        CodeGeneratorAArch64::cmp(X_TMP_0, 0x4);             // Check if (Z==1)
-        CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L2);
-        CodeGeneratorAArch64::orr(x_dummyFlag, x_dummyFlag,
+        xa_->and_(X_TMP_0, x_tmpFlag, 0x4); // extract Z flag
+        xa_->cmp(X_TMP_0, 0x4);             // Check if (Z==1)
+        xa_->b(Xbyak_aarch64::NE, L2);
+        xa_->orr(x_dummyFlag, x_dummyFlag,
                                   x_zf); // Set x86_64's ZF flag
         L_aarch64(L2);
-        CodeGeneratorAArch64::and_(X_TMP_0, x_tmpFlag, 0x8); // extract N flag
-        CodeGeneratorAArch64::cmp(X_TMP_0, 0x8);             // Check if (N==1)
-        CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L3);
-        CodeGeneratorAArch64::orr(x_dummyFlag, x_dummyFlag,
+        xa_->and_(X_TMP_0, x_tmpFlag, 0x8); // extract N flag
+        xa_->cmp(X_TMP_0, 0x8);             // Check if (N==1)
+        xa_->b(Xbyak_aarch64::NE, L3);
+        xa_->orr(x_dummyFlag, x_dummyFlag,
                                   x_sf); // Set x86_64's SF flag
         L_aarch64(L3);
 
-        CodeGeneratorAArch64::str(x_dummyFlag, Xbyak_aarch64::ptr(x_tmpAddr));
-        CodeGeneratorAArch64::add(x_tmpAddr, x_tmpAddr, 4);
+        xa_->str(x_dummyFlag, Xbyak_aarch64::ptr(x_tmpAddr));
+        xa_->add(x_tmpAddr, x_tmpAddr, 4);
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
         pushf();        // eflags is stored on statck.
         pop(r_tmpFlag); // eflags is read from stack.

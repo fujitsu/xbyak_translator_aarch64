@@ -19,7 +19,7 @@ void translateVMOVDQU16(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
 /* 2020/03/06 08:40 */
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
 
   /* Col=T103*/
   if (false ||

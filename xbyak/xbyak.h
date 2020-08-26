@@ -1658,7 +1658,7 @@ inline const uint8* Label::getAddress() const
 
 #ifdef XBYAK_TRANSLATE_AARCH64
 class CodeGenerator : public CodeArray,
-                      public Xbyak_aarch64::CodeGeneratorAArch64 {
+                      public Xbyak_aarch64::CodeGenerator {
 #else
 class CodeGenerator : public CodeArray {
 #endif
@@ -2464,6 +2464,7 @@ private:
 	
 public:
 	unsigned int getVersion() const { return VERSION; }
+	Xbyak_aarch64::CodeGenerator *xa_;
 #ifndef XBYAK_TRANSLATE_AARCH64
 	using CodeArray::db;
 #endif
@@ -2550,7 +2551,7 @@ public:
 #endif
 	void jmp(const char *label, LabelType type = T_AUTO) { jmp(std::string(label), type); }
 #ifdef XBYAK_TRANSLATE_AARCH64
-	void jmp(const Label &label, LabelType type = T_AUTO) { CodeGeneratorAArch64::b(label); }
+	void jmp(const Label &label, LabelType type = T_AUTO) { xa_->b(label); }
 #else
 	void jmp(const Label& label, LabelType type = T_AUTO) { opJmp(label, type, 0xEB, 0xE9, 0); }
 #endif
@@ -2614,12 +2615,11 @@ public:
 #ifdef XBYAK_TRANSLATE_AARCH64
 		decode_size_ = 0;
 #ifdef XT_AARCH64_STACK_REG
-		CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
-					  CodeGeneratorAArch64::sp, NUM_BYTES_GEN_REG);
-		CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
-		CodeGeneratorAArch64::str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::ptr(X_TMP_0));
+		xa_->sub(xa_->sp, xa_->sp, NUM_BYTES_GEN_REG);
+		xa_->mov(X_TMP_0, xa_->sp);
+		xa_->str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::ptr(X_TMP_0));
 #else //#ifdef XT_AARCH64_STACK_REG
-		CodeGeneratorAArch64::str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::pre_ptr(X_TRANSLATOR_STACK, -8));
+		xa_->str(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::pre_ptr(X_TRANSLATOR_STACK, -8));
 #endif //#ifdef XT_AARCH64_STACK_REG
 		db_clear();
 #endif//#ifndef XBYAK_TRANSLATE_AARCH64
@@ -2631,12 +2631,12 @@ public:
 #ifdef XBYAK_TRANSLATE_AARCH64
 		decode_size_ = 0;
 #ifdef XT_AARCH64_STACK_REG
-		CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
-		CodeGeneratorAArch64::ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::ptr(X_TMP_0));
-		CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
-					  CodeGeneratorAArch64::sp, NUM_BYTES_GEN_REG);
+		xa_->mov(X_TMP_0, xa_->sp);
+		xa_->ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::ptr(X_TMP_0));
+		xa_->add(xa_->sp,
+					  xa_->sp, NUM_BYTES_GEN_REG);
 #else //#ifdef XT_AARCH64_STACK_REG
-		CodeGeneratorAArch64::ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::post_ptr(X_TRANSLATOR_STACK, 8));
+		xa_->ldr(Xbyak_aarch64::XReg(op.getIdx()), Xbyak_aarch64::post_ptr(X_TRANSLATOR_STACK, 8));
 #endif //#ifdef XT_AARCH64_STACK_REG
 		db_clear();
 #endif//#ifndef XBYAK_TRANSLATE_AARCH64
@@ -2740,7 +2740,7 @@ public:
 	{
 #ifdef XBYAK_TRANSLATE_AARCH64
 	        /* Unimplemented */
-	        CodeGeneratorAArch64::adr(Xbyak_aarch64::XReg(reg.getIdx()), label);
+	        xa_->adr(Xbyak_aarch64::XReg(reg.getIdx()), label);
 #else
 		mov_imm(reg, dummyAddr);
 		putL(label);
@@ -2828,7 +2828,8 @@ public:
 	// constructor
 #ifdef XBYAK_TRANSLATE_AARCH64
 	CodeGenerator(size_t maxSize = DEFAULT_MAX_CODE_SIZE, void *userPtr = 0, Allocator *allocator = 0, Xbyak_aarch64::AllocatorAArch64 *alloc_aarch64 = 0)
-	        : CodeArray(maxSize, userPtr, allocator), Xbyak_aarch64::CodeGeneratorAArch64(maxSize, userPtr, alloc_aarch64)
+	        : CodeArray(maxSize, userPtr, allocator), Xbyak_aarch64::CodeGenerator(maxSize, userPtr, alloc_aarch64)
+            , xa_(this)
 #else
 	CodeGenerator(size_t maxSize = DEFAULT_MAX_CODE_SIZE, void *userPtr = 0, Allocator *allocator = 0)
 		: CodeArray(maxSize, userPtr, allocator)
@@ -2938,7 +2939,7 @@ public:
 #endif
 			}
 #ifdef XBYAK_TRANSLATE_AARCH64
-			CodeGeneratorAArch64::nop();
+			xa_->nop();
 #endif
 			return;
 		}
@@ -2970,7 +2971,7 @@ public:
 			size -= len;
 		}
 #ifdef XBYAK_TRANSLATE_AARCH64
-		CodeGeneratorAArch64::nop();
+		xa_->nop();
 #endif
 	}
 
@@ -2982,7 +2983,7 @@ public:
 	void align(size_t x = 16, bool useMultiByteNop = true)
 	{
         #ifdef XBYAK_TRANSLATE_AARCH64
-	        CodeGeneratorAArch64::align(x);
+	        xa_->align(x);
         #else //#ifdef XBYAK_TRANSLATE_AARCH64
 		if (x == 1) return;
 		if (x < 1 || (x & (x - 1))) throw Error(ERR_BAD_ALIGN);

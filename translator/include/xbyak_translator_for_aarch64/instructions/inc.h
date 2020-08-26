@@ -20,7 +20,7 @@ void translateINC(xed_decoded_inst_t *p) {
 
   /* 2020/03/11 21:20 */
   bool isValid = false;
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
   /* Col=S103*/
   if (false || (a64.dstWidth == 8 && a64.dstType == A64_OP_REG && true) ||
       (a64.dstWidth == 8 && a64.dstType == A64_OP_MEM && true) ||

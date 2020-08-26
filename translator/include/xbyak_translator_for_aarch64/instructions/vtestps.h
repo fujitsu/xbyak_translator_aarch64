@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/05/01 12:09 */
-#define CG64 CodeGeneratorAArch64
+#define CG64 Xbyak_aarch64::CodeGenerator
 void translateVTESTPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   xa::LabelAArch64 L_zflag, L_cflag;
