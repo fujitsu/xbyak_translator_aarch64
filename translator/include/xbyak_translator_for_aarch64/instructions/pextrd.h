@@ -19,7 +19,7 @@ void translatePEXTRD(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64);
 
 /* 2020/03/11 15:39 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
   xed_uint64_t uimm = 0;
@@ -59,18 +59,18 @@ void translatePEXTRD(xed_decoded_inst_t *p) {
   /* Col=AF103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
-    CG64::mov(xa::WReg(dstIdx), xa::VReg(srcIdx).s[sel]);
+    xa_->mov(xa::WReg(dstIdx), xa::VReg(srcIdx).s[sel]);
   }
   /* Col=AG103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
                 a64.operands[1].opName == XED_OPERAND_REG0 && true)) {
-    CG64::mov(W_TMP_0, xa::VReg(srcIdx).s[sel]);
+    xa_->mov(W_TMP_0, xa::VReg(srcIdx).s[sel]);
   }
   /* Col=AH103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
                 a64.operands[1].opName == XED_OPERAND_REG0 && true)) {
-    CG64::str(W_TMP_0, xa::ptr(X_TMP_ADDR));
+    xa_->str(W_TMP_0, xa::ptr(X_TMP_ADDR));
   }
 
-#undef CG64
+
 }

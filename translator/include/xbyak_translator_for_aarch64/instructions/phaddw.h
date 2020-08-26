@@ -20,7 +20,7 @@ void translatePHADDW(xed_decoded_inst_t *p) {
 
   /* 2020/03/27 14:48 */
   bool isValid = false;
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 
   /* Col=S143*/
   if (false ||
@@ -114,4 +114,4 @@ void translatePHADDW(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

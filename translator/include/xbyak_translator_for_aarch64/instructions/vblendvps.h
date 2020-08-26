@@ -19,7 +19,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64);
 
 /* 2020/03/11 15:30 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
   xt_reg_idx_t src2Idx = XT_REG_INVALID;
@@ -190,7 +190,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_REG2 &&
        a64.operands[0].opWidth == 128 && true)) {
-    CG64::not_(xa::PRegB(maskIdx), P_ALL_ONE, P_MSB_384.b);
+    xa_->not_(xa::PRegB(maskIdx), P_ALL_ONE, P_MSB_384.b);
   }
   /* Col=AN103*/
   if (false ||
@@ -204,7 +204,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_REG2 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::not_(xa::PRegB(maskIdx), P_ALL_ONE, P_MSB_256.b);
+    xa_->not_(xa::PRegB(maskIdx), P_ALL_ONE, P_MSB_256.b);
   }
 
   /* Col=AP103*/
@@ -229,7 +229,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_REG2 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::lsr(xa::ZReg(zTmpIdx).s, xa::ZReg(src3Idx).s, 31);
+    xa_->lsr(xa::ZReg(zTmpIdx).s, xa::ZReg(src3Idx).s, 31);
   }
   /* Col=AQ103*/
   if (false ||
@@ -253,7 +253,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_REG2 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::cmpgt(p10.s, xa::PReg(maskIdx) / xa::T_z, xa::ZReg(zTmpIdx).s, 0);
+    xa_->cmpgt(p10.s, xa::PReg(maskIdx) / xa::T_z, xa::ZReg(zTmpIdx).s, 0);
   }
 
   /* Col=AS103*/
@@ -268,7 +268,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_REG2 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
 
   /* Col=AV103*/
@@ -293,7 +293,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_REG2 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::mov(xa::ZReg(dstIdx).s, p10 / xa::T_m, xa::ZReg(src2Idx).s);
+    xa_->mov(xa::ZReg(dstIdx).s, p10 / xa::T_m, xa::ZReg(src2Idx).s);
   }
   /* Col=AW103*/
   if (false ||
@@ -317,7 +317,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_REG2 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::not_(xa::PRegB(maskIdx), P_ALL_ONE, p10.b);
+    xa_->not_(xa::PRegB(maskIdx), P_ALL_ONE, p10.b);
   }
   /* Col=AX103*/
   if (false ||
@@ -341,7 +341,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_REG2 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::mov(xa::ZReg(dstIdx).s, xa::PReg(maskIdx) / xa::T_m,
+    xa_->mov(xa::ZReg(dstIdx).s, xa::PReg(maskIdx) / xa::T_m,
               xa::ZReg(srcIdx).s);
   }
 
@@ -357,7 +357,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_REG2 &&
        a64.operands[0].opWidth == 128 && true)) {
-    CG64::mov(xa::ZReg(dstIdx).s, P_MSB_384 / xa::T_m, 0);
+    xa_->mov(xa::ZReg(dstIdx).s, P_MSB_384 / xa::T_m, 0);
   }
   /* Col=BB103*/
   if (false ||
@@ -371,7 +371,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_REG2 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::mov(xa::ZReg(dstIdx).s, P_MSB_256 / xa::T_m, 0);
+    xa_->mov(xa::ZReg(dstIdx).s, P_MSB_256 / xa::T_m, 0);
   }
 
   /* Col=BI103*/
@@ -423,5 +423,5 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
     xt_pop_preg();
   }
 
-#undef CG64
+
 }

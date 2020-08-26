@@ -20,7 +20,7 @@ void translatePMOVZXWD(xed_decoded_inst_t *p) {
 
   /* 2020/03/27 13:40 */
   bool isValid = false;
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 
   /* Col=S143*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
@@ -67,4 +67,4 @@ void translatePMOVZXWD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/05/27 09:20 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 void translateVMOVQ(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -53,31 +53,31 @@ void translateVMOVQ(xed_decoded_inst_t *p) {
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[0].opWidth == 128 && true)) {
-    CG64::bic(xa::VReg(dstIdx).b16, xa::VReg(dstIdx).b16, xa::VReg(dstIdx).b16);
+    xa_->bic(xa::VReg(dstIdx).b16, xa::VReg(dstIdx).b16, xa::VReg(dstIdx).b16);
   }
   /* Col=AK119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[0].opWidth == 128 && true)) {
-    CG64::mov(xa::VReg(dstIdx).d[0], xa::XReg(srcIdx));
+    xa_->mov(xa::VReg(dstIdx).d[0], xa::XReg(srcIdx));
   }
   /* Col=AM119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_MEM0 &&
                 a64.operands[0].opWidth == 128 && true)) {
-    CG64::ldr(xa::DReg(dstIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::DReg(dstIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AO119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[0].opWidth == 64 && true)) {
-    CG64::mov(xa::XReg(dstIdx), xa::VReg(srcIdx).d[0]);
+    xa_->mov(xa::XReg(dstIdx), xa::VReg(srcIdx).d[0]);
   }
   /* Col=AQ119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
                 a64.operands[1].opName == XED_OPERAND_REG0 &&
                 a64.operands[0].opWidth == 64 && true)) {
-    CG64::str(xa::DReg(srcIdx), xa::ptr(X_TMP_ADDR));
+    xa_->str(xa::DReg(srcIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=BO119*/
   if (false ||
@@ -97,4 +97,4 @@ void translateVMOVQ(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

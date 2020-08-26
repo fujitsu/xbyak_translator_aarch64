@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/04/08 21:00 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 void translateSAR(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -103,18 +103,18 @@ void translateSAR(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 64 && true)) {
     int count = uimm & 63;
     if (count != 0) {
-      CG64::mov_imm(X_TMP_3, ~uint64_t(0));
-      CG64::asr(X_TMP_1, xa::XReg(dstIdx), uint32_t(uimm - 1));
-      CG64::and_(X_TMP_2, X_TMP_1, 1);
-      CG64::asr(xa::XReg(dstIdx), X_TMP_1, 1);
-      CG64::adds(X_TMP_3, X_TMP_3, X_TMP_2);
+      xa_->mov_imm(X_TMP_3, ~uint64_t(0));
+      xa_->asr(X_TMP_1, xa::XReg(dstIdx), uint32_t(uimm - 1));
+      xa_->and_(X_TMP_2, X_TMP_1, 1);
+      xa_->asr(xa::XReg(dstIdx), X_TMP_1, 1);
+      xa_->adds(X_TMP_3, X_TMP_3, X_TMP_2);
     } else if (count == 1) {
-      CG64::mov(X_TMP_0, 1);
-      CG64::mov_imm(X_TMP_3, ~uint64_t(0));
-      CG64::and_(X_TMP_2, xa::XReg(dstIdx), 1);
-      CG64::asr(xa::XReg(dstIdx), xa::XReg(dstIdx), 1);
-      CG64::adds(X_TMP_3, X_TMP_3, X_TMP_2);
-      CG64::setf8(W_TMP_0);
+      xa_->mov(X_TMP_0, 1);
+      xa_->mov_imm(X_TMP_3, ~uint64_t(0));
+      xa_->and_(X_TMP_2, xa::XReg(dstIdx), 1);
+      xa_->asr(xa::XReg(dstIdx), xa::XReg(dstIdx), 1);
+      xa_->adds(X_TMP_3, X_TMP_3, X_TMP_2);
+      xa_->setf8(W_TMP_0);
     }
   }
   /* Col=BK119*/
@@ -179,4 +179,4 @@ void translateSAR(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

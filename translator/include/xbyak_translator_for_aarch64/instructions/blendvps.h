@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/07/02 10:46 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 void translateBLENDVPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
@@ -44,7 +44,7 @@ void translateBLENDVPS(xed_decoded_inst_t *p) {
   /* Col=AI119*/
   if (false || (a64_opt.operands[1].opName == XED_OPERAND_MEM0 &&
                 isAvailAll1Preg0_7() == true && true)) {
-    CG64::ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AL119*/
   if (false ||
@@ -70,7 +70,7 @@ void translateBLENDVPS(xed_decoded_inst_t *p) {
        isAvailAll1Preg0_7() == true && true) ||
       (a64_opt.operands[1].opName == XED_OPERAND_MEM0 &&
        isAvailAll1Preg0_7() == true && true)) {
-    CG64::cmplt(P_TMP_0.s, P_ALL_ONE_0_7 / xa::T_z, xa::ZReg(maskIdx).s, 0);
+    xa_->cmplt(P_TMP_0.s, P_ALL_ONE_0_7 / xa::T_z, xa::ZReg(maskIdx).s, 0);
   }
   /* Col=AX119*/
   if (false ||
@@ -78,7 +78,7 @@ void translateBLENDVPS(xed_decoded_inst_t *p) {
        isAvailAll1Preg0_7() == true && true) ||
       (a64_opt.operands[1].opName == XED_OPERAND_MEM0 &&
        isAvailAll1Preg0_7() == true && true)) {
-    CG64::not_(P_TMP_1.b, P_ALL_ONE, P_MSB_384.b);
+    xa_->not_(P_TMP_1.b, P_ALL_ONE, P_MSB_384.b);
   }
   /* Col=AY119*/
   if (false ||
@@ -86,7 +86,7 @@ void translateBLENDVPS(xed_decoded_inst_t *p) {
        isAvailAll1Preg0_7() == true && true) ||
       (a64_opt.operands[1].opName == XED_OPERAND_MEM0 &&
        isAvailAll1Preg0_7() == true && true)) {
-    CG64::and_(P_TMP_0.b, P_ALL_ONE, P_TMP_0.b, P_TMP_1.b);
+    xa_->and_(P_TMP_0.b, P_ALL_ONE, P_TMP_0.b, P_TMP_1.b);
   }
   /* Col=BA119*/
   if (false ||
@@ -94,7 +94,7 @@ void translateBLENDVPS(xed_decoded_inst_t *p) {
        isAvailAll1Preg0_7() == true && true) ||
       (a64_opt.operands[1].opName == XED_OPERAND_MEM0 &&
        isAvailAll1Preg0_7() == true && true)) {
-    CG64::mov(xa::ZReg(dstIdx).s, P_TMP_0 / xa::T_m, xa::ZReg(srcIdx).s);
+    xa_->mov(xa::ZReg(dstIdx).s, P_TMP_0 / xa::T_m, xa::ZReg(srcIdx).s);
   }
   /* Col=BQ119*/
   if (false || (a64_opt.operands[1].opName == XED_OPERAND_MEM0 &&
@@ -125,7 +125,7 @@ void translateBLENDVPS(xed_decoded_inst_t *p) {
   }
   /* Col=AA119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AD119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
@@ -143,27 +143,27 @@ void translateBLENDVPS(xed_decoded_inst_t *p) {
   /* Col=AK119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::movs(xa::PRegB(pTmpIdx), P_ALL_ONE.b);
+    xa_->movs(xa::PRegB(pTmpIdx), P_ALL_ONE.b);
   }
   /* Col=AN119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::cmplt(P_TMP_0.s, xa::PReg(pTmpIdx) / xa::T_z, xa::ZReg(maskIdx).s, 0);
+    xa_->cmplt(P_TMP_0.s, xa::PReg(pTmpIdx) / xa::T_z, xa::ZReg(maskIdx).s, 0);
   }
   /* Col=AP119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::not_(xa::PRegB(pTmpIdx), P_ALL_ONE, P_MSB_384.b);
+    xa_->not_(xa::PRegB(pTmpIdx), P_ALL_ONE, P_MSB_384.b);
   }
   /* Col=AQ119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::and_(P_TMP_0.b, P_ALL_ONE, P_TMP_0.b, xa::PRegB(pTmpIdx));
+    xa_->and_(P_TMP_0.b, P_ALL_ONE, P_TMP_0.b, xa::PRegB(pTmpIdx));
   }
   /* Col=AS119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::mov(xa::ZReg(dstIdx).s, P_TMP_0 / xa::T_m, xa::ZReg(srcIdx).s);
+    xa_->mov(xa::ZReg(dstIdx).s, P_TMP_0 / xa::T_m, xa::ZReg(srcIdx).s);
   }
   /* Col=BI119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
@@ -181,4 +181,4 @@ void translateBLENDVPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

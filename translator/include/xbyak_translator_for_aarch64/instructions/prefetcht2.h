@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/04/14 04:24 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 void translatePREFETCHT2(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -23,7 +23,7 @@ void translatePREFETCHT2(xed_decoded_inst_t *p) {
 
   /* Col=X119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::prfm(xa::PLDL3KEEP, xa::ptr(X_TMP_ADDR));
+    xa_->prfm(xa::PLDL3KEEP, xa::ptr(X_TMP_ADDR));
   }
 
   /* Col=BK119*/
@@ -32,4 +32,4 @@ void translatePREFETCHT2(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/07/06 14:26 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 void translateVFMADD132PS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -350,7 +350,7 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 0 && true)) {
-    CG64::not_(P_TMP_0.b, P_ALL_ONE.b, xa::PReg(maskIdx).b);
+    xa_->not_(P_TMP_0.b, P_ALL_ONE.b, xa::PReg(maskIdx).b);
   }
   /* Col=AB119*/
   if (false ||
@@ -364,7 +364,7 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 0 && true)) {
-    CG64::orn(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_MSB_256.b, xa::PReg(maskIdx).b);
+    xa_->orn(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_MSB_256.b, xa::PReg(maskIdx).b);
   }
   /* Col=AC119*/
   if (false ||
@@ -378,7 +378,7 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 0 && true)) {
-    CG64::orn(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_MSB_384.b, xa::PReg(maskIdx).b);
+    xa_->orn(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_MSB_384.b, xa::PReg(maskIdx).b);
   }
 
   /* Col=AE119*/
@@ -833,7 +833,7 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 0 && true)) {
-    CG64::mov(xa::PReg(pTmpIdx).b, P_ALL_ONE.b);
+    xa_->mov(xa::PReg(pTmpIdx).b, P_ALL_ONE.b);
   }
   /* Col=AP119*/
   if (false ||
@@ -931,7 +931,7 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    CG64::fmad(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
+    xa_->fmad(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
                xa::ZRegS(src2Idx), xa::ZRegS(srcIdx));
   }
   /* Col=AU119*/
@@ -996,7 +996,7 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    CG64::fmad(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
+    xa_->fmad(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
                xa::ZRegS(zTmpIdx), xa::ZRegS(srcIdx));
   }
   /* Col=AV119*/
@@ -1031,7 +1031,7 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    CG64::mov(xa::ZRegS(dstIdx), P_MSB_256 / xa::T_m, 0);
+    xa_->mov(xa::ZRegS(dstIdx), P_MSB_256 / xa::T_m, 0);
   }
   /* Col=AW119*/
   if (false ||
@@ -1065,7 +1065,7 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    CG64::mov(xa::ZRegS(dstIdx), P_MSB_384 / xa::T_m, 0);
+    xa_->mov(xa::ZRegS(dstIdx), P_MSB_384 / xa::T_m, 0);
   }
 
   /* Col=AX119*/
@@ -1100,7 +1100,7 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 0 && true)) {
-    CG64::mov(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, 0);
+    xa_->mov(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, 0);
   }
   /* Col=AZ119*/
   if (false ||
@@ -1462,4 +1462,4 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

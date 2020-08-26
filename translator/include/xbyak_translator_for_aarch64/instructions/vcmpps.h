@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/06/30 22:56 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 void translateVCMPPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
@@ -170,7 +170,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64_opt.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64_opt.operands[0].opWidth == 64 && a64_opt.predType == A64_PRED_NO &&
        a64_opt.EVEXb == 0 && isAvailAll1Preg0_7() == true && true)) {
-    CG64::ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=BA119*/
   if (false ||
@@ -180,7 +180,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64_opt.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64_opt.operands[0].opWidth == 64 && a64_opt.predType == A64_PRED_NO &&
        a64_opt.EVEXb == 1 && isAvailAll1Preg0_7() == true && true)) {
-    CG64::ld1rw(xa::ZRegS(zTmpIdx), P_ALL_ONE_0_7 / xa::T_z,
+    xa_->ld1rw(xa::ZRegS(zTmpIdx), P_ALL_ONE_0_7 / xa::T_z,
                 xa::ptr(X_TMP_ADDR));
   }
   /* Col=BC119*/
@@ -205,99 +205,99 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64_opt.EVEXb == 1 && isAvailAll1Preg0_7() == true && true)) {
     switch (uimm) {
     case EQ_OQ:
-      CG64::fcmeq(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmeq(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case LT_OS:
-      CG64::fcmlt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmlt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case LE_OS:
-      CG64::fcmle(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmle(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NEQ_UQ:
-      CG64::fcmne(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmne(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NLT_US:
-      CG64::fcmge(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmge(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NLE_US:
-      CG64::fcmgt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmgt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case EQ_UQ:
-      CG64::fcmeq(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmeq(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NGE_US:
-      CG64::fcmlt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmlt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NGT_US:
-      CG64::fcmle(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmle(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NEQ_OQ:
-      CG64::fcmne(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmne(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case GE_OS:
-      CG64::fcmge(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmge(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case GT_OS:
-      CG64::fcmgt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmgt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case EQ_OS:
-      CG64::fcmeq(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmeq(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case LT_OQ:
-      CG64::fcmlt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmlt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case LE_OQ:
-      CG64::fcmle(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmle(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NEQ_US:
-      CG64::fcmne(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmne(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NLT_UQ:
-      CG64::fcmge(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmge(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NLE_UQ:
-      CG64::fcmgt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmgt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case EQ_US:
-      CG64::fcmeq(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmeq(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NGE_UQ:
-      CG64::fcmlt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmlt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NGT_UQ:
-      CG64::fcmle(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmle(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NEQ_OS:
-      CG64::fcmne(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmne(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case GE_OQ:
-      CG64::fcmge(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmge(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case GT_OQ:
-      CG64::fcmgt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
+      xa_->fcmgt(xa::PRegS(cmpDstIdx), P_ALL_ONE_0_7 / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
 
@@ -929,7 +929,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    CG64::bic(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, xa::PRegB(maskIdx),
+    xa_->bic(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, xa::PRegB(maskIdx),
               P_MSB_384.b);
   }
   /* Col=AB119*/
@@ -946,7 +946,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    CG64::bic(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, xa::PRegB(maskIdx),
+    xa_->bic(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, xa::PRegB(maskIdx),
               P_MSB_256.b);
   }
   /* Col=AC119*/
@@ -975,7 +975,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
-    CG64::not_(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, P_MSB_384.b);
+    xa_->not_(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, P_MSB_384.b);
   }
   /* Col=AD119*/
   if (false ||
@@ -1015,7 +1015,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
-    CG64::not_(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, P_MSB_256.b);
+    xa_->not_(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, P_MSB_256.b);
   }
   /* Col=AF119*/
   if (false ||
@@ -1049,7 +1049,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
-    CG64::mov(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, P_ALL_ONE.b);
+    xa_->mov(xa::PRegB(pTmpIdx), P_ALL_ONE / xa::T_z, P_ALL_ONE.b);
   }
   /* Col=AG119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -1058,7 +1058,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
                 a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
                 a64.operands[0].opWidth == 64 &&
                 a64.predType == A64_PRED_MERG && a64.EVEXb == 0 && true)) {
-    CG64::mov(xa::PRegB(pTmpIdx), xa::PRegB(maskIdx));
+    xa_->mov(xa::PRegB(pTmpIdx), xa::PRegB(maskIdx));
   }
   /* Col=AH119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -1067,7 +1067,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
                 a64.operands[1].regClass == XED_REG_CLASS_XMM &&
                 a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
                 a64.EVEXb == 0 && true)) {
-    CG64::ldr(xa::QReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::QReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AI119*/
   if (false ||
@@ -1675,7 +1675,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    CG64::ld1w(xa::ZRegS(zTmpIdx), xa::PReg(pTmpIdx) / xa::T_z,
+    xa_->ld1w(xa::ZRegS(zTmpIdx), xa::PReg(pTmpIdx) / xa::T_z,
                xa::ptr(X_TMP_ADDR));
   }
   /* Col=AT119*/
@@ -1710,7 +1710,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    CG64::ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AU119*/
   if (false ||
@@ -1732,7 +1732,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 1 && true)) {
-    CG64::ld1rw(xa::ZRegS(zTmpIdx), xa::PReg(pTmpIdx) / xa::T_z,
+    xa_->ld1rw(xa::ZRegS(zTmpIdx), xa::PReg(pTmpIdx) / xa::T_z,
                 xa::ptr(X_TMP_ADDR));
   }
   /* Col=AV119*/
@@ -1755,7 +1755,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
-    CG64::ld1rw(xa::ZRegS(zTmpIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+    xa_->ld1rw(xa::ZRegS(zTmpIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                 xa::ptr(X_TMP_ADDR));
   }
   /* Col=AW119*/
@@ -1882,99 +1882,99 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.EVEXb == 1 && true)) {
     switch (uimm) {
     case EQ_OQ:
-      CG64::fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case LT_OS:
-      CG64::fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case LE_OS:
-      CG64::fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NEQ_UQ:
-      CG64::fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NLT_US:
-      CG64::fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NLE_US:
-      CG64::fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case EQ_UQ:
-      CG64::fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NGE_US:
-      CG64::fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NGT_US:
-      CG64::fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NEQ_OQ:
-      CG64::fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case GE_OS:
-      CG64::fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case GT_OS:
-      CG64::fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case EQ_OS:
-      CG64::fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case LT_OQ:
-      CG64::fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case LE_OQ:
-      CG64::fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NEQ_US:
-      CG64::fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NLT_UQ:
-      CG64::fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NLE_UQ:
-      CG64::fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case EQ_US:
-      CG64::fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NGE_UQ:
-      CG64::fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NGT_UQ:
-      CG64::fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NEQ_OS:
-      CG64::fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case GE_OQ:
-      CG64::fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case GT_OQ:
-      CG64::fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
+      xa_->fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
                   xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
 
@@ -2008,104 +2008,104 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.EVEXb == 0 && true)) {
     switch (uimm) {
     case EQ_OQ:
-      CG64::fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
     case LT_OS:
-      CG64::fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
+      xa_->fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
                   xa::VReg4S(cmpSrcIdx));
       break;
     case LE_OS:
-      CG64::fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
+      xa_->fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
                   xa::VReg4S(cmpSrcIdx));
       break;
     case NEQ_UQ:
-      CG64::fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
-      CG64::not_(xa::VReg16B(cmpDstIdx), xa::VReg16B(cmpDstIdx));
+      xa_->not_(xa::VReg16B(cmpDstIdx), xa::VReg16B(cmpDstIdx));
 
       break;
     case NLT_US:
-      CG64::fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
     case NLE_US:
-      CG64::fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
     case EQ_UQ:
-      CG64::fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
     case NGE_US:
-      CG64::fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
+      xa_->fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
                   xa::VReg4S(cmpSrcIdx));
       break;
     case NGT_US:
-      CG64::fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
+      xa_->fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
                   xa::VReg4S(cmpSrcIdx));
       break;
     case NEQ_OQ:
-      CG64::fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
-      CG64::not_(xa::VReg16B(cmpDstIdx), xa::VReg16B(cmpDstIdx));
+      xa_->not_(xa::VReg16B(cmpDstIdx), xa::VReg16B(cmpDstIdx));
       break;
     case GE_OS:
-      CG64::fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
     case GT_OS:
-      CG64::fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
     case EQ_OS:
-      CG64::fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
     case LT_OQ:
-      CG64::fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
+      xa_->fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
                   xa::VReg4S(cmpSrcIdx));
       break;
     case LE_OQ:
-      CG64::fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
+      xa_->fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
                   xa::VReg4S(cmpSrcIdx));
       break;
     case NEQ_US:
-      CG64::fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
-      CG64::not_(xa::VReg16B(cmpDstIdx), xa::VReg16B(cmpDstIdx));
+      xa_->not_(xa::VReg16B(cmpDstIdx), xa::VReg16B(cmpDstIdx));
       break;
     case NLT_UQ:
-      CG64::fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
     case NLE_UQ:
-      CG64::fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
     case EQ_US:
-      CG64::fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
     case NGE_UQ:
-      CG64::fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
+      xa_->fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
                   xa::VReg4S(cmpSrcIdx));
       break;
     case NGT_UQ:
-      CG64::fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
+      xa_->fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrc2Idx),
                   xa::VReg4S(cmpSrcIdx));
       break;
     case NEQ_OS:
-      CG64::fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmeq(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
-      CG64::not_(xa::VReg16B(cmpDstIdx), xa::VReg16B(cmpDstIdx));
+      xa_->not_(xa::VReg16B(cmpDstIdx), xa::VReg16B(cmpDstIdx));
       break;
     case GE_OQ:
-      CG64::fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmge(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
     case GT_OQ:
-      CG64::fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
+      xa_->fcmgt(xa::VReg4S(cmpDstIdx), xa::VReg4S(cmpSrcIdx),
                   xa::VReg4S(cmpSrc2Idx));
       break;
 
@@ -2143,7 +2143,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    CG64::mov(xa::PRegB(dstIdx), xa::PReg(maskIdx) / xa::T_m,
+    xa_->mov(xa::PRegB(dstIdx), xa::PReg(maskIdx) / xa::T_m,
               xa::PRegB(pTmpIdx));
   }
   /* Col=BD119*/
@@ -2184,7 +2184,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
-    CG64::mov(xa::PRegB(dstIdx), xa::PReg(maskIdx) / xa::T_z,
+    xa_->mov(xa::PRegB(dstIdx), xa::PReg(maskIdx) / xa::T_z,
               xa::PRegB(pTmpIdx));
   }
   /* Col=BE119*/
@@ -2201,7 +2201,7 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
        a64.operands[1].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true)) {
-    CG64::cpy(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z, 255);
+    xa_->cpy(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z, 255);
   }
   /* Col=BH119*/
   if (false ||
@@ -2565,4 +2565,4 @@ void translateVCMPPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

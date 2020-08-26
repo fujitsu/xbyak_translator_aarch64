@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/06/03 15:22 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 void translatePINSRW(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -76,13 +76,13 @@ void translatePINSRW(xed_decoded_inst_t *p) {
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[0].opWidth == 128 && true)) {
-    CG64::mov(xa::VReg8H(zTmpIdx)[uimm], xa::WReg(srcIdx));
+    xa_->mov(xa::VReg8H(zTmpIdx)[uimm], xa::WReg(srcIdx));
   }
   /* Col=AL119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_MEM0 &&
                 a64.operands[0].opWidth == 128 && true)) {
-    CG64::ld1r(xa::VReg8H(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ld1r(xa::VReg8H(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AO119*/
   if (false ||
@@ -92,7 +92,7 @@ void translatePINSRW(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
-    CG64::ptrue(P_TMP_0.h, static_cast<xa::Pattern>(uimm + 1));
+    xa_->ptrue(P_TMP_0.h, static_cast<xa::Pattern>(uimm + 1));
   }
   /* Col=AP119*/
   if (false ||
@@ -103,9 +103,9 @@ void translatePINSRW(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
     if (uimm) {
-      CG64::ptrue(P_TMP_1.h, static_cast<xa::Pattern>(uimm));
+      xa_->ptrue(P_TMP_1.h, static_cast<xa::Pattern>(uimm));
     } else {
-      CG64::pfalse(P_TMP_1.b);
+      xa_->pfalse(P_TMP_1.b);
     }
   }
   /* Col=AQ119*/
@@ -116,7 +116,7 @@ void translatePINSRW(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
-    CG64::bic(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_TMP_0.b, P_TMP_1.b);
+    xa_->bic(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_TMP_0.b, P_TMP_1.b);
   }
 
   /* Col=AV119*/
@@ -127,7 +127,7 @@ void translatePINSRW(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
-    CG64::sel(xa::ZRegH(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegH(zTmpIdx),
+    xa_->sel(xa::ZRegH(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegH(zTmpIdx),
               xa::ZRegH(dstIdx));
   }
 
@@ -160,4 +160,4 @@ void translatePINSRW(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

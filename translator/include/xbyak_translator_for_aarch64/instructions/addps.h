@@ -20,7 +20,7 @@ void translateADDPS(xed_decoded_inst_t *p) {
 
   /* 2020/03/27 09:19 */
   bool isValid = false;
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 
   /* Col=T143*/
   if (false ||
@@ -87,4 +87,4 @@ void translateADDPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

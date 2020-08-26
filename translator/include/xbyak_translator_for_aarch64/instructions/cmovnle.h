@@ -20,7 +20,7 @@ void translateCMOVNLE(xed_decoded_inst_t *p) {
 
   /* 2020/04/15 13:12 */
   bool isValid = false;
-#define CG64 Xbyak_aarch64::CodeGenerator
+
   enum Xbyak::Xbyak_aarch64::Cond condGT = Xbyak::Xbyak_aarch64::GT;
 
   /* Col=S143*/
@@ -67,4 +67,4 @@ void translateCMOVNLE(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

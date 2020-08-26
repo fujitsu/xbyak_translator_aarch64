@@ -21,7 +21,7 @@ void translateVPHADDW(xed_decoded_inst_t *p) {
   /* 2020/03/30 16:09 */
   bool isValid = false;
   xt_reg_idx_t zTmp2Idx = XT_REG_INVALID;
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 
   /* Col=S143*/
   if (false ||
@@ -196,4 +196,4 @@ void translateVPHADDW(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

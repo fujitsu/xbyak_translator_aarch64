@@ -20,7 +20,7 @@ void translateMOVHLPS(xed_decoded_inst_t *p) {
 
   /* 2020/03/23 16:53 */
   bool isValid = false;
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 
   /* Col=T143*/
   if (false || (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO &&
@@ -82,4 +82,4 @@ void translateMOVHLPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

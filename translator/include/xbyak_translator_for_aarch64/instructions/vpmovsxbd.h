@@ -19,7 +19,7 @@ void translateVPMOVSXBD(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
 /* 2020/03/23 13:30 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 
   /* Col=U103*/
   if (false ||
@@ -491,5 +491,5 @@ void translateVPMOVSXBD(xed_decoded_inst_t *p) {
     xt_pop_zreg(); // In some cases, xt_pop_zreg() should be called here.
   }
 
-#undef CG64
+
 }

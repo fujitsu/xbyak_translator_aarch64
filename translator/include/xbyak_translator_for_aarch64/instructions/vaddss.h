@@ -19,7 +19,7 @@ void translateVADDSS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
 /* 2020/03/04 08:21 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 
   /* Col=S103*/
   if (false ||
@@ -375,5 +375,5 @@ void translateVADDSS(xed_decoded_inst_t *p) {
        a64.src2Type == A64_OP_MEM && true)) {
     xt_pop_zreg(); // In some cases, xt_pop_zreg() should be called here.
   }
-#undef CG64
+
 }

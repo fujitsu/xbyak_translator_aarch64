@@ -19,7 +19,7 @@ void translateVSHUFI32X4(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
 /* 2020/03/24 17:16 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
   /* Col=S103*/
   if (false ||
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&

@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/05/22 23:03 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 void translateVPCMPD(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -280,7 +280,7 @@ void translateVPCMPD(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 1 && true)) {
-    CG64::movs(xa::PRegB(pTmpIdx), P_ALL_ONE.b);
+    xa_->movs(xa::PRegB(pTmpIdx), P_ALL_ONE.b);
   }
   /* Col=AI119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -290,7 +290,7 @@ void translateVPCMPD(xed_decoded_inst_t *p) {
                 a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
                 a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
                 a64.EVEXb == 0 && true)) {
-    CG64::ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AJ119*/
   if (false ||
@@ -308,7 +308,7 @@ void translateVPCMPD(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 1 && true)) {
-    CG64::dup(xa::ZRegS(zTmpIdx), xa::ZReg(zTmpIdx).s[0]);
+    xa_->dup(xa::ZRegS(zTmpIdx), xa::ZReg(zTmpIdx).s[0]);
   }
   /* Col=AK119*/
   if (false ||
@@ -352,27 +352,27 @@ void translateVPCMPD(xed_decoded_inst_t *p) {
        a64.EVEXb == 1 && true)) {
     switch (uimm) {
     case 0:
-      CG64::cmpeq(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
+      xa_->cmpeq(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
                   xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // EQ
     case 1:
-      CG64::cmplt(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
+      xa_->cmplt(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
                   xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // LT
     case 2:
-      CG64::cmple(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
+      xa_->cmple(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
                   xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // LE
     case 4:
-      CG64::cmpne(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
+      xa_->cmpne(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
                   xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // NEQ
     case 5:
-      CG64::cmpge(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
+      xa_->cmpge(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
                   xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // NLT
     case 6:
-      CG64::cmpgt(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
+      xa_->cmpgt(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
                   xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // NLE
     case 3:
@@ -554,4 +554,4 @@ void translateVPCMPD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

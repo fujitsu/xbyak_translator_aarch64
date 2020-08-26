@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/06/03 14:05 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 void translatePINSRD(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -58,12 +58,12 @@ void translatePINSRD(xed_decoded_inst_t *p) {
   /* Col=AK119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
-    CG64::mov(xa::VReg4S(zTmpIdx)[uimm], xa::WReg(srcIdx));
+    xa_->mov(xa::VReg4S(zTmpIdx)[uimm], xa::WReg(srcIdx));
   }
   /* Col=AL119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::ld1r(xa::VReg4S(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ld1r(xa::VReg4S(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AO119*/
   if (false ||
@@ -71,7 +71,7 @@ void translatePINSRD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::ptrue(P_TMP_0.s, static_cast<xa::Pattern>(uimm + 1));
+    xa_->ptrue(P_TMP_0.s, static_cast<xa::Pattern>(uimm + 1));
   }
   /* Col=AP119*/
   if (false ||
@@ -80,9 +80,9 @@ void translatePINSRD(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     if (uimm) {
-      CG64::ptrue(P_TMP_1.s, static_cast<xa::Pattern>(uimm));
+      xa_->ptrue(P_TMP_1.s, static_cast<xa::Pattern>(uimm));
     } else {
-      CG64::pfalse(P_TMP_1.b);
+      xa_->pfalse(P_TMP_1.b);
     }
   }
   /* Col=AQ119*/
@@ -91,7 +91,7 @@ void translatePINSRD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::bic(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_TMP_0.b, P_TMP_1.b);
+    xa_->bic(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_TMP_0.b, P_TMP_1.b);
   }
 
   /* Col=AV119*/
@@ -100,7 +100,7 @@ void translatePINSRD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::sel(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmpIdx),
+    xa_->sel(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmpIdx),
               xa::ZRegS(dstIdx));
   }
 
@@ -123,4 +123,4 @@ void translatePINSRD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

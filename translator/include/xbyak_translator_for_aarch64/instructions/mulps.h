@@ -19,7 +19,7 @@ void translateMULPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
   /* 2020/03/19 10:47 */
   bool isValid = false;
-#define CG64 Xbyak_aarch64::CodeGenerator
+
   /* Col=S103*/
   if (false || (a64.srcType == A64_OP_MEM && true)) {
     XT_UNIMPLEMENTED;
@@ -34,20 +34,20 @@ void translateMULPS(xed_decoded_inst_t *p) {
   }
   /* Col=AB103*/
   if (false || (a64.srcType == A64_OP_REG && true)) {
-    CG64::mov(xa::PRegB(a64.pTmpIdx), P_MSB_384.b);
+    xa_->mov(xa::PRegB(a64.pTmpIdx), P_MSB_384.b);
   }
   /* Col=AI103*/
   if (false || (a64.srcType == A64_OP_REG && true)) {
-    CG64::mov(xa::ZRegD(a64.zTmpIdx), xa::ZRegD(a64.dstIdx));
+    xa_->mov(xa::ZRegD(a64.zTmpIdx), xa::ZRegD(a64.dstIdx));
   }
   /* Col=AP103*/
   if (false || (a64.srcType == A64_OP_REG && true)) {
-    CG64::fmul(xa::ZRegS(a64.dstIdx), xa::ZRegS(a64.dstIdx),
+    xa_->fmul(xa::ZRegS(a64.dstIdx), xa::ZRegS(a64.dstIdx),
                xa::ZRegS(a64.srcIdx));
   }
   /* Col=AW103*/
   if (false || (a64.srcType == A64_OP_REG && true)) {
-    CG64::mov(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx) / xa::T_m,
+    xa_->mov(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx) / xa::T_m,
               xa::ZRegS(a64.zTmpIdx));
   }
   /* Col=BN103*/
@@ -63,5 +63,5 @@ void translateMULPS(xed_decoded_inst_t *p) {
     XT_VALID_CHECK;
   }
   XT_VALID_CHECK_IF
-#undef CG64
+
 }

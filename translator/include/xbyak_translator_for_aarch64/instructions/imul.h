@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/05/27 10:16 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 void translateIMUL(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -174,7 +174,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[2].opName == XED_OPERAND_REG2 &&
                 a64.operands[0].opWidth == 64 && true)) {
-    CG64::mov(X_TMP_2, xa::XReg(srcIdx));
+    xa_->mov(X_TMP_2, xa::XReg(srcIdx));
   }
   /* Col=AI119*/
   if (false ||
@@ -187,9 +187,9 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
     if (simm != 0) {
-      CG64::mov_imm(X_TMP_2, static_cast<int64_t>(simm));
+      xa_->mov_imm(X_TMP_2, static_cast<int64_t>(simm));
     } else {
-      CG64::mov_imm(X_TMP_2, static_cast<uint64_t>(uimm));
+      xa_->mov_imm(X_TMP_2, static_cast<uint64_t>(uimm));
     }
   }
   /* Col=AJ119*/
@@ -197,7 +197,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[2].opName == XED_OPERAND_REG2 &&
                 a64.operands[0].opWidth == 64 && true)) {
-    CG64::lsr(X_TMP_0, xa::XReg(dstIdx), 63);
+    xa_->lsr(X_TMP_0, xa::XReg(dstIdx), 63);
   }
   /* Col=AK119*/
   if (false ||
@@ -209,7 +209,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::lsr(X_TMP_0, xa::XReg(srcIdx), 63);
+    xa_->lsr(X_TMP_0, xa::XReg(srcIdx), 63);
   }
   /* Col=AL119*/
   if (false ||
@@ -225,7 +225,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::lsr(X_TMP_1, X_TMP_2, 63);
+    xa_->lsr(X_TMP_1, X_TMP_2, 63);
   }
   /* Col=AM119*/
   if (false ||
@@ -241,7 +241,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::add(X_TMP_0, X_TMP_0, X_TMP_1);
+    xa_->add(X_TMP_0, X_TMP_0, X_TMP_1);
   }
   /* Col=AN119*/
   if (false ||
@@ -257,14 +257,14 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::cmp(X_TMP_0, 1);
+    xa_->cmp(X_TMP_0, 1);
   }
   /* Col=AO119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[2].opName == XED_OPERAND_REG2 &&
                 a64.operands[0].opWidth == 64 && true)) {
-    CG64::b(xa::NE, 16);
+    xa_->b(xa::NE, 16);
   }
   /* Col=AP119*/
   if (false ||
@@ -276,7 +276,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::b(xa::NE, 12);
+    xa_->b(xa::NE, 12);
   }
   /* Col=AQ119*/
   if (false ||
@@ -292,7 +292,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::mov(X_TMP_3, -1);
+    xa_->mov(X_TMP_3, -1);
   }
   /* Col=AR119*/
   if (false ||
@@ -308,14 +308,14 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::sdiv(X_TMP_2, X_TMP_2, X_TMP_3);
+    xa_->sdiv(X_TMP_2, X_TMP_2, X_TMP_3);
   }
   /* Col=AS119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[2].opName == XED_OPERAND_REG2 &&
                 a64.operands[0].opWidth == 64 && true)) {
-    CG64::mov(X_TMP_1, xa::XReg(dstIdx));
+    xa_->mov(X_TMP_1, xa::XReg(dstIdx));
   }
   /* Col=AT119*/
   if (false ||
@@ -327,21 +327,21 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::mov(X_TMP_1, xa::XReg(srcIdx));
+    xa_->mov(X_TMP_1, xa::XReg(srcIdx));
   }
   /* Col=AU119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[2].opName == XED_OPERAND_REG2 &&
                 a64.operands[0].opWidth == 64 && true)) {
-    CG64::mov(X_TMP_4, xa::XReg(srcIdx));
+    xa_->mov(X_TMP_4, xa::XReg(srcIdx));
   }
   /* Col=AV119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[2].opName == XED_OPERAND_REG2 &&
                 a64.operands[0].opWidth == 64 && true)) {
-    CG64::mul(xa::XReg(dstIdx), xa::XReg(dstIdx), X_TMP_2);
+    xa_->mul(xa::XReg(dstIdx), xa::XReg(dstIdx), X_TMP_2);
   }
   /* Col=AW119*/
   if (false ||
@@ -353,7 +353,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::mul(xa::XReg(dstIdx), xa::XReg(srcIdx), X_TMP_2);
+    xa_->mul(xa::XReg(dstIdx), xa::XReg(srcIdx), X_TMP_2);
   }
   /* Col=AX119*/
   if (false ||
@@ -369,7 +369,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::cmp(X_TMP_0, 1);
+    xa_->cmp(X_TMP_0, 1);
   }
   /* Col=AY119*/
   if (false ||
@@ -385,7 +385,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::b(xa::NE, 8);
+    xa_->b(xa::NE, 8);
   }
   /* Col=AZ119*/
   if (false ||
@@ -401,14 +401,14 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::sdiv(xa::XReg(dstIdx), xa::XReg(dstIdx), X_TMP_3);
+    xa_->sdiv(xa::XReg(dstIdx), xa::XReg(dstIdx), X_TMP_3);
   }
   /* Col=BA119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[2].opName == XED_OPERAND_REG2 &&
                 a64.operands[0].opWidth == 64 && true)) {
-    CG64::smulh(X_TMP_3, X_TMP_1, X_TMP_4);
+    xa_->smulh(X_TMP_3, X_TMP_1, X_TMP_4);
   }
   /* Col=BB119*/
   if (false ||
@@ -420,7 +420,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::smulh(X_TMP_3, X_TMP_1, X_TMP_2);
+    xa_->smulh(X_TMP_3, X_TMP_1, X_TMP_2);
   }
   /* Col=BC119*/
   if (false ||
@@ -436,7 +436,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::lsr(X_TMP_0, xa::XReg(dstIdx), 63);
+    xa_->lsr(X_TMP_0, xa::XReg(dstIdx), 63);
   }
   /* Col=BD119*/
   if (false ||
@@ -452,7 +452,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::lsr(X_TMP_1, X_TMP_3, 63);
+    xa_->lsr(X_TMP_1, X_TMP_3, 63);
   }
   /* Col=BE119*/
   if (false ||
@@ -468,7 +468,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::eor(X_TMP_0, X_TMP_0, X_TMP_1);
+    xa_->eor(X_TMP_0, X_TMP_0, X_TMP_1);
   }
   /* Col=BF119*/
   if (false ||
@@ -484,7 +484,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::adds_imm(X_TMP_0, X_TMP_0, 0, X_TMP_1);
+    xa_->adds_imm(X_TMP_0, X_TMP_0, 0, X_TMP_1);
   }
   /* Col=BG119*/
   if (false ||
@@ -500,7 +500,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::b(xa::EQ, 28);
+    xa_->b(xa::EQ, 28);
   }
   /* Col=BH119*/
   if (false ||
@@ -516,7 +516,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::mov_imm(X_TMP_0, uint64_t(0x8000000000000000));
+    xa_->mov_imm(X_TMP_0, uint64_t(0x8000000000000000));
   }
   /* Col=BI119*/
   if (false ||
@@ -532,7 +532,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::mov_imm(X_TMP_1, uint64_t(0x7FFFFFFFFFFFFFFF));
+    xa_->mov_imm(X_TMP_1, uint64_t(0x7FFFFFFFFFFFFFFF));
   }
   /* Col=BJ119*/
   if (false ||
@@ -548,7 +548,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::cmp(X_TMP_0, X_TMP_1);
+    xa_->cmp(X_TMP_0, X_TMP_1);
   }
   /* Col=BO119*/
   if (false ||
@@ -652,4 +652,4 @@ void translateIMUL(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/04/14 19:16 */
-#define CG64 Xbyak_aarch64::CodeGenerator
+
 void translateVGATHERQPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -142,7 +142,7 @@ void translateVGATHERQPS(xed_decoded_inst_t *p) {
                 a64.operands[0].opWidth == 256 &&
                 a64.operands[2].vmIndexRegWidth == 512 &&
                 a64.predType == A64_PRED_MERG && true)) {
-    CG64::mov(xa::PRegB(pTmpIdx), P_ALL_ONE.b);
+    xa_->mov(xa::PRegB(pTmpIdx), P_ALL_ONE.b);
   }
   /* Col=AR119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -151,7 +151,7 @@ void translateVGATHERQPS(xed_decoded_inst_t *p) {
                 a64.operands[0].opWidth == 256 &&
                 a64.operands[2].vmIndexRegWidth == 512 &&
                 a64.predType == A64_PRED_MERG && true)) {
-    CG64::and_(xa::PRegB(pTmpIdx), xa::PReg(pTmpIdx), xa::PRegB(pTmpIdx),
+    xa_->and_(xa::PRegB(pTmpIdx), xa::PReg(pTmpIdx), xa::PRegB(pTmpIdx),
                xa::PRegB(maskIdx));
   }
   /* Col=AS119*/
@@ -161,7 +161,7 @@ void translateVGATHERQPS(xed_decoded_inst_t *p) {
                 a64.operands[0].opWidth == 256 &&
                 a64.operands[2].vmIndexRegWidth == 512 &&
                 a64.predType == A64_PRED_MERG && true)) {
-    CG64::ld1w(xa::ZRegS(zTmpIdx), xa::PReg(pTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ld1w(xa::ZRegS(zTmpIdx), xa::PReg(pTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AU119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -170,7 +170,7 @@ void translateVGATHERQPS(xed_decoded_inst_t *p) {
                 a64.operands[0].opWidth == 256 &&
                 a64.operands[2].vmIndexRegWidth == 512 &&
                 a64.predType == A64_PRED_MERG && true)) {
-    CG64::index(xa::ZRegS(zTmp2Idx), 0, 1);
+    xa_->index(xa::ZRegS(zTmp2Idx), 0, 1);
   }
   /* Col=AX119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -180,13 +180,13 @@ void translateVGATHERQPS(xed_decoded_inst_t *p) {
                 a64.operands[2].vmIndexRegWidth == 512 &&
                 a64.predType == A64_PRED_MERG && true)) {
     for (int i = 0; i < 8; i++) {
-      CG64::dup(xa::ZRegD(zTmpIdx), xa::ZReg(offsetIdx).d[i]);
-      CG64::mov(X_TMP_0, xa::VReg(zTmpIdx).d[0]);
-      CG64::add(X_TMP_0, X_TMP_0, X_TMP_ADDR);
-      CG64::ld1w(xa::ZRegS(zTmpIdx), xa::PReg(pTmpIdx), xa::ptr(X_TMP_0));
-      CG64::dup(xa::ZRegS(zTmp3Idx), xa::ZReg(zTmpIdx).s[0]);
-      CG64::cmpeq(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmp2Idx), i);
-      CG64::mov(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp3Idx));
+      xa_->dup(xa::ZRegD(zTmpIdx), xa::ZReg(offsetIdx).d[i]);
+      xa_->mov(X_TMP_0, xa::VReg(zTmpIdx).d[0]);
+      xa_->add(X_TMP_0, X_TMP_0, X_TMP_ADDR);
+      xa_->ld1w(xa::ZRegS(zTmpIdx), xa::PReg(pTmpIdx), xa::ptr(X_TMP_0));
+      xa_->dup(xa::ZRegS(zTmp3Idx), xa::ZReg(zTmpIdx).s[0]);
+      xa_->cmpeq(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmp2Idx), i);
+      xa_->mov(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp3Idx));
     }
   }
   /* Col=AY119*/
@@ -196,7 +196,7 @@ void translateVGATHERQPS(xed_decoded_inst_t *p) {
                 a64.operands[0].opWidth == 256 &&
                 a64.operands[2].vmIndexRegWidth == 512 &&
                 a64.predType == A64_PRED_MERG && true)) {
-    CG64::mov(xa::ZRegS(dstIdx), P_MSB_256 / xa::T_m, 0);
+    xa_->mov(xa::ZRegS(dstIdx), P_MSB_256 / xa::T_m, 0);
   }
   /* Col=BA119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -205,7 +205,7 @@ void translateVGATHERQPS(xed_decoded_inst_t *p) {
                 a64.operands[0].opWidth == 256 &&
                 a64.operands[2].vmIndexRegWidth == 512 &&
                 a64.predType == A64_PRED_MERG && true)) {
-    CG64::not_(xa::PRegB(maskIdx), P_ALL_ONE, P_ALL_ONE.b);
+    xa_->not_(xa::PRegB(maskIdx), P_ALL_ONE, P_ALL_ONE.b);
   }
   /* Col=BK119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -295,4 +295,4 @@ void translateVGATHERQPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+
