@@ -1373,7 +1373,7 @@ struct JmpLabel {
 class LabelManager;
 
 #ifdef XBYAK_TRANSLATE_AARCH64
-class Label : public Xbyak_aarch64::LabelAArch64 {};
+class Label : public Xbyak_aarch64::Label {};
 #else //#ifdef XBYAK_TRANSLATE_AARCH64
 class Label {
 	mutable LabelManager *mgr;

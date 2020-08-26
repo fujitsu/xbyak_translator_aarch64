@@ -17,7 +17,7 @@
 
 void translateKTESTQ(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
-  xa::LabelAArch64 L_zflag, L_cflag;
+  xa::Label L_zflag, L_cflag;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;

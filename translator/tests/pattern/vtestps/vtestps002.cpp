@@ -144,7 +144,7 @@ public:
            Carry (something differenct from x86_64 CF),
            oVerflow */
 
-        Xbyak_aarch64::LabelAArch64 L0, L1, L2, L3;
+        Xbyak_aarch64::Label L0, L1, L2, L3;
 
         xa_->mov(x_dummyFlag, 0);
 

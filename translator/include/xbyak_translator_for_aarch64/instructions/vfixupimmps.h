@@ -19,7 +19,7 @@ void translateVFIXUPIMMPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
-  xa::LabelAArch64 l_exec, l_table;
+  xa::Label l_exec, l_table;
   bool isValid = false;
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
