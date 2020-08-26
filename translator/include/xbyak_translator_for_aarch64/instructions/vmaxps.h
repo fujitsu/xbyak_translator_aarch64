@@ -1,19 +1,19 @@
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
- * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/06/30 14:27 */
+/* 2020/08/26 14:13 */
 #define CG64 CodeGeneratorAArch64
 void translateVMAXPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -133,6 +133,7 @@ void translateVMAXPS(xed_decoded_inst_t *p) {
        isAvailAll1Preg0_7() == true && true)) {
     zTmpIdx = xt_push_zreg(&a64);
   }
+
   /* Col=AN119*/
   if (false ||
       (a64_opt.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -162,6 +163,7 @@ void translateVMAXPS(xed_decoded_inst_t *p) {
        a64_opt.EVEXb == 0 && isAvailAll1Preg0_7() == true && true)) {
     CG64::mov(xa::ZRegD(zTmpIdx), xa::ZRegD(src2Idx));
   }
+
   /* Col=AY119*/
   if (false ||
       (a64_opt.operands[2].opName == XED_OPERAND_REG2 &&
@@ -221,6 +223,7 @@ void translateVMAXPS(xed_decoded_inst_t *p) {
     CG64::mov(xa::ZRegS(dstIdx), xa::PReg(maskIdx) / xa::T_m,
               xa::ZRegS(zTmpIdx));
   }
+
   /* Col=BF119*/
   if (false ||
       (a64_opt.operands[2].opName == XED_OPERAND_REG2 &&
@@ -278,6 +281,7 @@ void translateVMAXPS(xed_decoded_inst_t *p) {
        isAvailAll1Preg0_7() == true && true)) {
     xt_pop_zreg();
   }
+
   /* Col=BY119*/
   if (false ||
       (a64_opt.operands[2].opName == XED_OPERAND_REG2 &&
@@ -385,10 +389,6 @@ void translateVMAXPS(xed_decoded_inst_t *p) {
        a64.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 1 && true) ||
-      (a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[1].regClass == XED_REG_CLASS_MASK &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
-       a64.EVEXb == 0 && true) ||
       (a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
@@ -598,6 +598,7 @@ void translateVMAXPS(xed_decoded_inst_t *p) {
                 a64.EVEXb == 0 && true)) {
     src2Idx = a64.operands[2].regIdx;
   }
+
   /* Col=Y119*/
   if (false ||
       (a64.operands[3].opName == XED_OPERAND_REG3 &&
@@ -818,6 +819,7 @@ void translateVMAXPS(xed_decoded_inst_t *p) {
        a64.EVEXb == 1 && true)) {
     zTmpIdx = xt_push_zreg(&a64);
   }
+
   /* Col=AD119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_MEM0 &&
                 a64.operands[1].regClass == XED_REG_CLASS_XMM &&
@@ -1190,6 +1192,7 @@ void translateVMAXPS(xed_decoded_inst_t *p) {
        a64.EVEXb == 0 && true)) {
     CG64::mov(xa::ZRegD(zTmpIdx), xa::ZRegD(src2Idx));
   }
+
   /* Col=AO119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_REG2 &&
                 a64.operands[1].regClass == XED_REG_CLASS_XMM &&
@@ -1469,6 +1472,7 @@ void translateVMAXPS(xed_decoded_inst_t *p) {
     CG64::mov(xa::ZRegS(dstIdx), xa::PReg(maskIdx) / xa::T_m,
               xa::ZRegS(zTmpIdx));
   }
+
   /* Col=AX119*/
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -1829,6 +1833,7 @@ void translateVMAXPS(xed_decoded_inst_t *p) {
        a64.EVEXb == 1 && true)) {
     xt_pop_vreg();
   }
+
   /* Col=BQ119*/
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
