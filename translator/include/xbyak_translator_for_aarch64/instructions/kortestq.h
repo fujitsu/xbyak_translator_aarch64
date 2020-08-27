@@ -19,7 +19,7 @@ void translateKORTESTQ(xed_decoded_inst_t *p) {
   uint32_t cflag = 2;
   uint32_t zcond = 0;
   // uint32_t ccond = 65535;
-  enum Xbyak::Xbyak_aarch64::Cond condEQ = Xbyak::Xbyak_aarch64::EQ;
+  enum Xbyak_aarch64::Cond condEQ = Xbyak_aarch64::EQ;
 
   Xbyak_aarch64::PReg ptmp(8);
   Xbyak_aarch64::PReg condR(
@@ -38,7 +38,7 @@ void translateKORTESTQ(xed_decoded_inst_t *p) {
   Xbyak_aarch64::AdrNoOfs adr_reg(addrtmp);
   ldr(condR, adr_reg);
   Xbyak_aarch64::xa_->AND_(
-      ptmp.b, condR / Xbyak::Xbyak_aarch64::T_z, src1.b,
+      ptmp.b, condR / Xbyak_aarch64::T_z, src1.b,
       src2.b); // get AND src1, src2
 
   // push result of "or k1, k2"

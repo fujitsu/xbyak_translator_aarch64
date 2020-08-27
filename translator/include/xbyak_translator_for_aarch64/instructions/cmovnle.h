@@ -21,7 +21,7 @@ void translateCMOVNLE(xed_decoded_inst_t *p) {
   /* 2020/04/15 13:12 */
   bool isValid = false;
 
-  enum Xbyak::Xbyak_aarch64::Cond condGT = Xbyak::Xbyak_aarch64::GT;
+  enum Xbyak_aarch64::Cond condGT = Xbyak_aarch64::GT;
 
   /* Col=S143*/
   if (false ||

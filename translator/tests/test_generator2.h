@@ -75,16 +75,16 @@ enum DataType {
 
 #ifdef XBYAK_TRANSLATE_AARCH64
 constexpr Xbyak_aarch64::Operand::Code callee_saved_gregs[] = {
-    Xbyak::Xbyak_aarch64::Operand::Code::X19,
-    Xbyak::Xbyak_aarch64::Operand::Code::X20,
-    Xbyak::Xbyak_aarch64::Operand::Code::X21,
-    Xbyak::Xbyak_aarch64::Operand::Code::X22,
-    Xbyak::Xbyak_aarch64::Operand::Code::X23,
-    Xbyak::Xbyak_aarch64::Operand::Code::X24,
-    Xbyak::Xbyak_aarch64::Operand::Code::X25,
-    Xbyak::Xbyak_aarch64::Operand::Code::X26,
-    Xbyak::Xbyak_aarch64::Operand::Code::X27,
-    Xbyak::Xbyak_aarch64::Operand::Code::X28,
+    Xbyak_aarch64::Operand::Code::X19,
+    Xbyak_aarch64::Operand::Code::X20,
+    Xbyak_aarch64::Operand::Code::X21,
+    Xbyak_aarch64::Operand::Code::X22,
+    Xbyak_aarch64::Operand::Code::X23,
+    Xbyak_aarch64::Operand::Code::X24,
+    Xbyak_aarch64::Operand::Code::X25,
+    Xbyak_aarch64::Operand::Code::X26,
+    Xbyak_aarch64::Operand::Code::X27,
+    Xbyak_aarch64::Operand::Code::X28,
 };
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
 constexpr Xbyak::Operand::Code callee_saved_gregs[] = {

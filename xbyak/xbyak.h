@@ -241,12 +241,14 @@
         #include "xbyak_translator_utils.h"
 #endif //#ifdef XBYAK_TRANSLATE_AARCH64
 
+#ifdef XBYAK_TRANSLATE_AARCH64
+        #include "xbyak_aarch64.h"
+#endif
+
 namespace Xbyak {
 
 
 #ifdef XBYAK_TRANSLATE_AARCH64
-        #include "xbyak_aarch64.h"
-        //#include "xbyak_aarch64_util.h"
 namespace xa_ = Xbyak_aarch64;
 #endif
 
