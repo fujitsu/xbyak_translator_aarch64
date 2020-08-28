@@ -10,7 +10,7 @@ before_script:
 
 job_1:
   stage: test
-  image: 779e2bd88ba7
+  image: 0b158dd36e5c
   script:
 #    - pwd
 #    - ls

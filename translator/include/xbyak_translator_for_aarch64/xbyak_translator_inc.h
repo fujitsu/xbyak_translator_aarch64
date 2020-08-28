@@ -177,6 +177,7 @@
 #include "instructions/vpsrad.h"
 #include "instructions/vpsrld.h"
 #include "instructions/vpsubb.h"
+#include "instructions/vpsubd.h"
 #include "instructions/vptestmd.h"
 #include "instructions/vpunpckhbw.h"
 #include "instructions/vpunpckhqdq.h"
