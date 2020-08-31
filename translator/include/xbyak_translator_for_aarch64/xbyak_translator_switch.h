@@ -1690,6 +1690,7 @@ case XED_ICLASS_SUB:
 case XED_ICLASS_SUBPD:
   break;
 case XED_ICLASS_SUBPS:
+  translateSUBPS(&xedd);
   break;
 case XED_ICLASS_SUBSD:
   break;

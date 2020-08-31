@@ -79,6 +79,7 @@
 #include "instructions/shr.h"
 #include "instructions/shufps.h"
 #include "instructions/sub.h"
+#include "instructions/subps.h"
 #include "instructions/test.h"
 #include "instructions/vaddps.h"
 #include "instructions/vaddss.h"

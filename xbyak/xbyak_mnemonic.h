@@ -1013,7 +1013,7 @@ void stosw() { db(0x66); db(0xAB); UNIMPLEMENTED; }
 void sub(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x28, 5); decodeAndTransToAArch64(); }
 void sub(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x28); decodeAndTransToAArch64(); }
 void subpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x5C, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
-void subps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x5C, 0x100, isXMM_XMMorMEM); UNIMPLEMENTED; }
+void subps(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x5C, 0x100, isXMM_XMMorMEM); decodeAndTransToAArch64(); }
 void subsd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x5C, 0xF2, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void subss(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x5C, 0xF3, isXMM_XMMorMEM); UNIMPLEMENTED; }
 void sysenter() { db(0x0F); db(0x34); UNIMPLEMENTED; }
