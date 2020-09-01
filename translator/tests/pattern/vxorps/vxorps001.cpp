@@ -20,17 +20,6 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
-    for (int i = 0; i < 8; i++) {
-      inputZReg[0].ud_dt[i] = ~uint64_t(0);
-      inputZReg[3].ud_dt[i] = ~uint64_t(0);
-      inputZReg[6].ud_dt[i] = ~uint64_t(0);
-    }
-    for (int i = 0; i < 8; i++) {
-      inputZReg[1].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-      inputZReg[4].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-      inputZReg[7].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-    }
   }
 
   void setCheckRegFlagAll() {
@@ -39,28 +28,26 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vxorps(Xmm(2), Xmm(0), Xmm(1));
-    vxorps(Ymm(5), Ymm(3), Ymm(4));
-    vxorps(Xmm(8), Xmm(6), Xmm(7));
+    size_t addr0, addr1, addr2, addr3;
+    addr0 = reinterpret_cast<size_t>(&(inputZReg[1].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0]));
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0]));
+    addr3 = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));
 
-    vxorps(Xmm(6), Xmm(7), Xmm(7));
-    vxorps(Xmm(8), Xmm(9), Xmm(8));
-    vxorps(Xmm(10), Xmm(10), Xmm(11));
-    vxorps(Xmm(12), Xmm(12), Xmm(1));
+    mov(rax, addr0);
+    mov(rcx, addr1);
+    mov(rdx, addr2);
+    mov(rbx, addr3);
 
-    vxorps(Ymm(13), Ymm(14), Ymm(14));
-    vxorps(Ymm(15), Ymm(16), Ymm(15));
-    vxorps(Ymm(17), Ymm(17), Ymm(18));
-    vxorps(Ymm(19), Ymm(19), Ymm(20));
+    vxorps(Ymm(0), Ymm(1), ptr[rax]);   
+    vxorps(Ymm(2), Ymm(2), ptr[rcx]);   
+    vxorps(Ymm(20), Ymm(21), ptr[rdx]);  
+    vxorps(Ymm(22), Ymm(12), ptr[rbx]); 
 
-    vxorps(Zmm(21), Zmm(22), Zmm(22));
-    vxorps(Zmm(23), Zmm(24), Zmm(23));
-    vxorps(Zmm(25), Zmm(25), Zmm(26));
-    vxorps(Zmm(27), Zmm(27), Zmm(28));
-
-    vxorps(Xmm(29), Xmm(29), Xmm(29));
-    vxorps(Ymm(30), Ymm(30), Ymm(30));
-    vxorps(Zmm(31), Zmm(31), Zmm(31));
+    mov(rax, 5);
+    mov(rcx, 5);
+    mov(rdx, 5);
+    mov(rbx, 5);
   }
 };
 
@@ -87,7 +74,15 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f();                 /* Execute JIT code */
+    f(); /* Execute JIT code */
+
+#ifndef XBYAK_TRANSLATE_AARCH64
+    /* Bit order of mask registers are different from x86_64 and aarch64.
+       In order to compare output values of mask registers by test script,
+       Bit order of x86_64 mask register values is modified here. */
+    gen.modifyPredReg(SP_DT);
+#endif
+
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */
   }
