@@ -1959,6 +1959,7 @@ case XED_ICLASS_VDIVPS:
 case XED_ICLASS_VDIVSD:
   break;
 case XED_ICLASS_VDIVSS:
+  translateVDIVSS(&xedd);
   break;
 case XED_ICLASS_VDPBF16PS:
   break;
