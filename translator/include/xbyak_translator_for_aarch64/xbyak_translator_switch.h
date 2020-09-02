@@ -2413,6 +2413,7 @@ case XED_ICLASS_VMULPS:
 case XED_ICLASS_VMULSD:
   break;
 case XED_ICLASS_VMULSS:
+  translateVMULSS(&xedd);
   break;
 case XED_ICLASS_VMWRITE:
   break;
