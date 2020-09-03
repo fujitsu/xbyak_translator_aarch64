@@ -1980,6 +1980,7 @@ case XED_ICLASS_VEXPANDPD:
 case XED_ICLASS_VEXPANDPS:
   break;
 case XED_ICLASS_VEXTRACTF128:
+  translateVEXTRACTF128(&xedd);
   break;
 case XED_ICLASS_VEXTRACTF32X4:
   break;
