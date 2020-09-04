@@ -20,13 +20,13 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    // inputZReg[0].us_dt[0] = uint32_t(7);
-    // inputZReg[4].us_dt[0] = uint32_t(7);
 
-    inputPredReg[1] = (1 << 0) | (1 << 2) | (1 << 7) | (1 << 8) |
-                      (1 << 15) | (1 << 28) | (uint64_t(1) << 32) | (uint64_t(1) << 60); /* Both x86_64 and aarch64 */
-
-    inputPredReg[7] = ~uint64_t(0);
+#ifndef __ARM_ARCH
+    inputPredReg[1] = (1 << 0) | (1 << 2) | (1 << 7) | (1 << 8) | (1 << 15);
+#else
+    inputPredReg[1] = (1 << 0) | (1 << 8) | (1 << 28) | (uint64_t(1) << 32) | (uint64_t(1) << 60);
+#endif
+    inputPredReg[7] = ~uint64_t(0); /* Both x86_64 and aarch64 */
   }
 
   void setCheckRegFlagAll() {
@@ -109,6 +109,13 @@ public:
     vmovdqu8(Zmm(13), ptr[rax]);
     vpmovsdb(ptr[rbx], Xmm(16) | k7);
     vmovdqu8(Zmm(17), ptr[rbx]);
+#endif
+
+    mov(rax, 0x1);
+#ifndef __ARM_ARCH
+    kmovq(k1, rax);
+#else
+    ptrue(p1.b, Xbyak_aarch64::VL1);
 #endif
 
     mov(rax,

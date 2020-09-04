@@ -14,10 +14,10 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/05/03 15:50 */
-#define CG64 CodeGeneratorAArch64
+
 void translateVROUNDPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
-  xa::LabelAArch64 L_zflag, L_cflag;
+  xa::Label L_zflag, L_cflag;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
   unsigned int rounding_direction = a64.operands[2].uimm & 0x3;
@@ -69,7 +69,7 @@ void translateVROUNDPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 128 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
-    CG64::ptrue(P_TMP.s, xa::VL4);
+    xa_->ptrue(P_TMP.s, xa::VL4);
   }
   /* Col=AL119*/
   if (false ||
@@ -77,17 +77,17 @@ void translateVROUNDPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::ptrue(P_TMP.s, xa::VL8);
+    xa_->ptrue(P_TMP.s, xa::VL8);
   }
   /* Col=AN119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_MEM0 &&
                 a64.operands[0].opWidth == 128 && true)) {
-    CG64::ldr(xa::QReg(srcIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::QReg(srcIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AO119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_MEM0 &&
                 a64.operands[0].opWidth == 256 && true)) {
-    CG64::ld1w(xa::ZRegS(srcIdx), P_TMP / xa::T_z, xa::ptr(X_TMP_ADDR));
+    xa_->ld1w(xa::ZRegS(srcIdx), P_TMP / xa::T_z, xa::ptr(X_TMP_ADDR));
   }
   /* Col=AQ119*/
   if (false ||
@@ -97,16 +97,16 @@ void translateVROUNDPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 128 && true)) {
     switch (rounding_direction) {
     case 0:
-      CG64::frintn(xa::VReg4S(dstIdx), xa::VReg4S(srcIdx));
+      xa_->frintn(xa::VReg4S(dstIdx), xa::VReg4S(srcIdx));
       break;
     case 1:
-      CG64::frintm(xa::VReg4S(dstIdx), xa::VReg4S(srcIdx));
+      xa_->frintm(xa::VReg4S(dstIdx), xa::VReg4S(srcIdx));
       break;
     case 2:
-      CG64::frintp(xa::VReg4S(dstIdx), xa::VReg4S(srcIdx));
+      xa_->frintp(xa::VReg4S(dstIdx), xa::VReg4S(srcIdx));
       break;
     case 3:
-      CG64::frintz(xa::VReg4S(dstIdx), xa::VReg4S(srcIdx));
+      xa_->frintz(xa::VReg4S(dstIdx), xa::VReg4S(srcIdx));
       break;
     default:
       XT_UNIMPLEMENTED;
@@ -122,16 +122,16 @@ void translateVROUNDPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true)) {
     switch (rounding_direction) {
     case 0:
-      CG64::frintn(xa::ZRegS(dstIdx), P_TMP / xa::T_m, xa::ZRegS(srcIdx));
+      xa_->frintn(xa::ZRegS(dstIdx), P_TMP / xa::T_m, xa::ZRegS(srcIdx));
       break;
     case 1:
-      CG64::frintm(xa::ZRegS(dstIdx), P_TMP / xa::T_m, xa::ZRegS(srcIdx));
+      xa_->frintm(xa::ZRegS(dstIdx), P_TMP / xa::T_m, xa::ZRegS(srcIdx));
       break;
     case 2:
-      CG64::frintp(xa::ZRegS(dstIdx), P_TMP / xa::T_m, xa::ZRegS(srcIdx));
+      xa_->frintp(xa::ZRegS(dstIdx), P_TMP / xa::T_m, xa::ZRegS(srcIdx));
       break;
     case 3:
-      CG64::frintz(xa::ZRegS(dstIdx), P_TMP / xa::T_m, xa::ZRegS(srcIdx));
+      xa_->frintz(xa::ZRegS(dstIdx), P_TMP / xa::T_m, xa::ZRegS(srcIdx));
       break;
     default:
       XT_UNIMPLEMENTED;
@@ -144,7 +144,7 @@ void translateVROUNDPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::mov(xa::ZRegS(dstIdx), P_MSB_256 / xa::T_m, 0);
+    xa_->mov(xa::ZRegS(dstIdx), P_MSB_256 / xa::T_m, 0);
   }
 
   /* Col=BS119*/
@@ -169,4 +169,4 @@ void translateVROUNDPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

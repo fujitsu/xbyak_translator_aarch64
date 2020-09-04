@@ -20,7 +20,7 @@ void translatePMOVZXWD(xed_decoded_inst_t *p) {
 
   /* 2020/03/27 13:40 */
   bool isValid = false;
-#define CG64 CodeGeneratorAArch64
+
 
   /* Col=S143*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
@@ -35,19 +35,19 @@ void translatePMOVZXWD(xed_decoded_inst_t *p) {
   /* Col=Y143*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZRegD(a64.zTmpIdx), xa::PReg(15),
+    xa_->mov(xa::ZRegD(a64.zTmpIdx), xa::PReg(15),
                               xa::ZRegD(a64.dstIdx));
   }
 
   /* Col=AD143*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::uxtl(xa::VReg4S(a64.dstIdx), xa::VReg4H(a64.srcIdx));
+    xa_->uxtl(xa::VReg4S(a64.dstIdx), xa::VReg4H(a64.srcIdx));
   }
   /* Col=AF143*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZRegD(a64.dstIdx), xa::PReg(14),
+    xa_->mov(xa::ZRegD(a64.dstIdx), xa::PReg(14),
                               xa::ZRegD(a64.zTmpIdx));
   }
 
@@ -67,4 +67,4 @@ void translatePMOVZXWD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

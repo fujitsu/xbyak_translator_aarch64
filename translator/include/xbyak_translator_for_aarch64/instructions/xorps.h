@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/04/29 15:53 */
-#define CG64 CodeGeneratorAArch64
+
 void translateXORPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -68,7 +68,7 @@ void translateXORPS(xed_decoded_inst_t *p) {
   /* Col=AE119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::ldr(xa::QReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::QReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AG119*/
   if (false ||
@@ -76,7 +76,7 @@ void translateXORPS(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::ptrue(xa::PRegD(maskIdx), xa::VL2);
+    xa_->ptrue(xa::PRegD(maskIdx), xa::VL2);
   }
 
   /* Col=AI119*/
@@ -85,7 +85,7 @@ void translateXORPS(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::eor(xa::ZRegD(dstIdx), xa::PReg(maskIdx), xa::ZRegD(srcIdx));
+    xa_->eor(xa::ZRegD(dstIdx), xa::PReg(maskIdx), xa::ZRegD(srcIdx));
   }
 
   /* Col=BM119*/
@@ -111,4 +111,4 @@ void translateXORPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

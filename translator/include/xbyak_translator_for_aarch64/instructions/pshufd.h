@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/04/03 08:34 */
-#define CG64 CodeGeneratorAArch64
+
 void translatePSHUFD(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -112,7 +112,7 @@ void translatePSHUFD(xed_decoded_inst_t *p) {
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_MEM0 &&
                 a64.operands[0].opWidth == 128 && true)) {
-    CG64::ldr(xa::ZReg(srcIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::ZReg(srcIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AY119*/
   if (false ||
@@ -122,7 +122,7 @@ void translatePSHUFD(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
-    CG64::not_(xa::PRegB(pTmpIdx), P_ALL_ONE, P_MSB_384.b);
+    xa_->not_(xa::PRegB(pTmpIdx), P_ALL_ONE, P_MSB_384.b);
   }
   /* Col=AZ119*/
   if (false ||
@@ -132,7 +132,7 @@ void translatePSHUFD(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
-    CG64::index(xa::ZRegS(zTmpIdx), 0, 1);
+    xa_->index(xa::ZRegS(zTmpIdx), 0, 1);
   }
   /* Col=BA119*/
   if (false ||
@@ -145,9 +145,9 @@ void translatePSHUFD(xed_decoded_inst_t *p) {
     for (int i = 0; i < 4; i++) {
       sel = uimm >> (i * 2);
       sel = sel & 3;
-      CG64::dup(xa::ZRegS(zTmp2Idx), xa::ZReg(srcIdx).s[sel]);
-      CG64::cmpeq(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmpIdx), i);
-      CG64::mov(xa::ZRegS(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp2Idx));
+      xa_->dup(xa::ZRegS(zTmp2Idx), xa::ZReg(srcIdx).s[sel]);
+      xa_->cmpeq(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmpIdx), i);
+      xa_->mov(xa::ZRegS(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp2Idx));
     }
   }
   /* Col=BB119*/
@@ -158,7 +158,7 @@ void translatePSHUFD(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
-    CG64::mov(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
+    xa_->mov(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
               xa::ZRegS(zTmp3Idx));
   }
   /* Col=BF119*/
@@ -219,4 +219,4 @@ void translatePSHUFD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

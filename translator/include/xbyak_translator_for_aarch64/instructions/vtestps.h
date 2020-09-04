@@ -14,10 +14,10 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/05/01 12:09 */
-#define CG64 CodeGeneratorAArch64
+
 void translateVTESTPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
-  xa::LabelAArch64 L_zflag, L_cflag;
+  xa::Label L_zflag, L_cflag;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;
@@ -94,7 +94,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 128 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
-    CG64::ptrue(P_TMP.s, xa::VL4);
+    xa_->ptrue(P_TMP.s, xa::VL4);
   }
   /* Col=AL120*/
   if (false ||
@@ -102,17 +102,17 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::ptrue(P_TMP.s, xa::VL8);
+    xa_->ptrue(P_TMP.s, xa::VL8);
   }
   /* Col=AN120*/
   if (false || (a64.operands[2].opName == XED_OPERAND_MEM0 &&
                 a64.operands[0].opWidth == 128 && true)) {
-    CG64::ldr(xa::QReg(src2Idx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::QReg(src2Idx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AO120*/
   if (false || (a64.operands[2].opName == XED_OPERAND_MEM0 &&
                 a64.operands[0].opWidth == 256 && true)) {
-    CG64::ld1w(xa::ZRegS(src2Idx), xa::PReg(pTmpIdx) / xa::T_z,
+    xa_->ld1w(xa::ZRegS(src2Idx), xa::PReg(pTmpIdx) / xa::T_z,
                xa::ptr(X_TMP_ADDR));
   }
   /* Col=AQ120*/
@@ -125,7 +125,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::and_(xa::ZRegD(zTmpIdx), xa::ZRegD(src2Idx), xa::ZRegD(srcIdx));
+    xa_->and_(xa::ZRegD(zTmpIdx), xa::ZRegD(src2Idx), xa::ZRegD(srcIdx));
   }
 
   /* Col=AR120*/
@@ -138,7 +138,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::cmplt(xa::PRegS(pTmpIdx), P_TMP / xa::T_z, xa::ZReg(zTmpIdx).s, 0);
+    xa_->cmplt(xa::PRegS(pTmpIdx), P_TMP / xa::T_z, xa::ZReg(zTmpIdx).s, 0);
   }
   /* Col=AS120*/
   if (false ||
@@ -150,7 +150,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::cntp(X_TMP_0, P_TMP, xa::PRegS(pTmpIdx));
+    xa_->cntp(X_TMP_0, P_TMP, xa::PRegS(pTmpIdx));
   }
   /* Col=AT120*/
   if (false ||
@@ -162,7 +162,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::cmp(X_TMP_0, 0);
+    xa_->cmp(X_TMP_0, 0);
   }
   /* Col=AU120*/
   if (false ||
@@ -174,7 +174,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::mov(X_TMP_0, 0);
+    xa_->mov(X_TMP_0, 0);
   }
   /* Col=AV120*/
   if (false ||
@@ -186,7 +186,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::b(xa::NE, L_zflag);
+    xa_->b(xa::NE, L_zflag);
   }
   /* Col=AW120*/
   if (false ||
@@ -198,7 +198,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::mov(W_TMP_0, uint32_t(1) << 30);
+    xa_->mov(W_TMP_0, uint32_t(1) << 30);
   }
   /* Col=AX120*/
   if (false ||
@@ -210,7 +210,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    L_aarch64(L_zflag);
+    L(L_zflag);
   }
   /* Col=AZ120*/
   if (false ||
@@ -222,7 +222,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2, 0x0); // Read NZCV register
+    xa_->mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2, 0x0); // Read NZCV register
   }
   /* Col=BA120*/
   if (false ||
@@ -234,7 +234,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::bic(xa::ZRegD(zTmpIdx), xa::ZRegD(src2Idx), xa::ZRegD(srcIdx));
+    xa_->bic(xa::ZRegD(zTmpIdx), xa::ZRegD(src2Idx), xa::ZRegD(srcIdx));
   }
 
   /* Col=BB120*/
@@ -247,7 +247,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::cmplt(xa::PRegS(pTmpIdx), P_TMP / xa::T_z, xa::ZReg(zTmpIdx).s, 0);
+    xa_->cmplt(xa::PRegS(pTmpIdx), P_TMP / xa::T_z, xa::ZReg(zTmpIdx).s, 0);
   }
   /* Col=BC120*/
   if (false ||
@@ -259,7 +259,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::cntp(X_TMP_1, P_TMP, xa::PRegS(pTmpIdx));
+    xa_->cntp(X_TMP_1, P_TMP, xa::PRegS(pTmpIdx));
   }
   /* Col=BD120*/
   if (false ||
@@ -271,7 +271,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::cmp(X_TMP_1, 0);
+    xa_->cmp(X_TMP_1, 0);
   }
   /* Col=BE120*/
   if (false ||
@@ -283,7 +283,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::b(xa::NE, L_cflag);
+    xa_->b(xa::NE, L_cflag);
   }
   /* Col=BF120*/
   if (false ||
@@ -295,7 +295,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::orr(W_TMP_0, W_TMP_0, uint32_t(1) << 29);
+    xa_->orr(W_TMP_0, W_TMP_0, uint32_t(1) << 29);
   }
   /* Col=BG120*/
   if (false ||
@@ -307,7 +307,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    L_aarch64(L_cflag);
+    L(L_cflag);
   }
   /* Col=BJ120*/
   if (false ||
@@ -319,7 +319,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::and_(W_TMP_2, W_TMP_2, ~(uint32_t(0xf) << 28));
+    xa_->and_(W_TMP_2, W_TMP_2, ~(uint32_t(0xf) << 28));
   }
   /* Col=BK120*/
   if (false ||
@@ -331,7 +331,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::orr(W_TMP_2, W_TMP_2, W_TMP_0);
+    xa_->orr(W_TMP_2, W_TMP_2, W_TMP_0);
   }
 
   /* Col=BL120*/
@@ -344,7 +344,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
-    CG64::msr(0x3, 0x3, 0x4, 0x2, 0x0, X_TMP_2); // Write NZCV register
+    xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0, X_TMP_2); // Write NZCV register
   }
   /* Col=BR120*/
   if (false ||
@@ -392,4 +392,4 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

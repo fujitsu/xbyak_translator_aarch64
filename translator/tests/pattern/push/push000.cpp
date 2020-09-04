@@ -45,8 +45,8 @@ public:
     mov(rbx, ptr[rax]);
 
 #ifdef XBYAK_TRANSLATE_AARCH64
-    CodeGeneratorAArch64::mov(X_TRANSLATOR_STACK, CodeGeneratorAArch64::sp);
-    CodeGeneratorAArch64::mov(x8, X_TRANSLATOR_STACK);
+    xa_->mov(X_TRANSLATOR_STACK, xa_->sp);
+    xa_->mov(x8, X_TRANSLATOR_STACK);
 #endif
 
     push(rbx);
@@ -54,7 +54,7 @@ public:
 
 #ifdef XBYAK_TRANSLATE_AARCH64
     // Check if stack address is recovered
-    CodeGeneratorAArch64::sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, x8);
+    xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, x8);
 #endif
     mov(rax, 5);
     mov(r8, 5); // clear temporary register

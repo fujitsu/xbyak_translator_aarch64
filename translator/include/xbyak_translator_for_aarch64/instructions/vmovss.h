@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/04/06 17:41 */
-#define CG64 CodeGeneratorAArch64
+
 void translateVMOVSS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -133,7 +133,7 @@ void translateVMOVSS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_REG1 &&
        a64.operands[3].opName == XED_OPERAND_INVALID &&
        a64.predType == A64_PRED_NO && true)) {
-    CG64::st1(xa::VReg(srcIdx).s[0], xa::ptr(X_TMP_ADDR));
+    xa_->st1(xa::VReg(srcIdx).s[0], xa::ptr(X_TMP_ADDR));
   }
   /* Col=AG119*/
   if (false ||
@@ -146,7 +146,7 @@ void translateVMOVSS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_INVALID &&
        a64.predType == A64_PRED_NO && true)) {
-    CG64::ld1(xa::VReg(dstIdx).s[0], xa::ptr(X_TMP_ADDR));
+    xa_->ld1(xa::VReg(dstIdx).s[0], xa::ptr(X_TMP_ADDR));
   }
   /* Col=AI119*/
   if (false ||
@@ -159,7 +159,7 @@ void translateVMOVSS(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_INVALID &&
        a64.predType == A64_PRED_NO && true)) {
-    CG64::mov(xa::ZRegS(zTmpIdx), 0);
+    xa_->mov(xa::ZRegS(zTmpIdx), 0);
   }
   /* Col=AJ119*/
   if (false ||
@@ -173,7 +173,7 @@ void translateVMOVSS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_INVALID &&
        a64.predType == A64_PRED_NO && true)) {
     for (int i = 1; i < 4; i++) {
-      CG64::mov(xa::VReg(dstIdx).s[i], xa::VReg(zTmpIdx).s[0]);
+      xa_->mov(xa::VReg(dstIdx).s[i], xa::VReg(zTmpIdx).s[0]);
     }
   }
   /* Col=BI119*/
@@ -266,4 +266,4 @@ void translateVMOVSS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

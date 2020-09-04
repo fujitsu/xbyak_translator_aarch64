@@ -46,13 +46,12 @@ Therefore, this example output "7" on std::cout.
 ```
 /* Example code 2 */
 #include "xbyak.h"
-#define CG64 CodeGeneratorAArch64
 using namespace Xbyak;
 class Generator : public CodeGenerator {
 public:
   void genAbiWrapping() {
-    CG64::mov(x7, x0); // This is the function generating AArch64 mov instruction implemented by Xbyak_aarch64.
-    CG64::mov(x6, x1);
+    xa_->mov(x7, x0); // This is the function generating AArch64 mov instruction implemented by Xbyak_aarch64.
+    xa_->mov(x6, x1);
   }
   void genAddFunc() {
     genAbiWrapping();

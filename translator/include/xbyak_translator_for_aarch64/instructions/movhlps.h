@@ -20,7 +20,7 @@ void translateMOVHLPS(xed_decoded_inst_t *p) {
 
   /* 2020/03/23 16:53 */
   bool isValid = false;
-#define CG64 CodeGeneratorAArch64
+
 
   /* Col=T143*/
   if (false || (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO &&
@@ -35,32 +35,32 @@ void translateMOVHLPS(xed_decoded_inst_t *p) {
   /* Col=Y143*/
   if (false || (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::uzp1(xa::PRegD(a64.pTmpIdx), xa::PRegD(14),
+    xa_->uzp1(xa::PRegD(a64.pTmpIdx), xa::PRegD(14),
                                xa::PRegD(15));
   }
   /* Col=Z143*/
   if (false || (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::not_(xa::PRegB(a64.pTmpIdx), xa::PReg(15),
+    xa_->not_(xa::PRegB(a64.pTmpIdx), xa::PReg(15),
                                xa::PRegB(a64.pTmpIdx));
   }
   /* Col=AB143*/
   if (false || (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZRegB(a64.zTmpIdx), xa::PReg(15),
+    xa_->mov(xa::ZRegB(a64.zTmpIdx), xa::PReg(15),
                               xa::ZRegB(a64.srcIdx));
   }
 
   /* Col=AD143*/
   if (false || (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
+    xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
                               8);
   }
   /* Col=AF143*/
   if (false || (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZRegB(a64.dstIdx), xa::PReg(a64.pTmpIdx),
+    xa_->mov(xa::ZRegB(a64.dstIdx), xa::PReg(a64.pTmpIdx),
                               xa::ZRegB(a64.zTmpIdx));
   }
 
@@ -82,4 +82,4 @@ void translateMOVHLPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

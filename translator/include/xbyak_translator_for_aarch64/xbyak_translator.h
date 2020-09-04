@@ -42,6 +42,16 @@ private:
 const xt_reg_idx_t xtDefaultAddrIdx = 28;
 constexpr static unsigned int xtNumOperands = 5;
 
+bool availAll1Preg0_7 = false;
+constexpr static unsigned int translatorVersion = 1;
+
+unsigned int P_ALL_ONE_0_7_IDX = XT_REG_INVALID;
+bool genJitMode = true;
+bool availablePReg[NUM_PRED_REG_INTEL] = {0};
+bool unusedPReg[NUM_PRED_REG_INTEL] = {0};
+bool availableZReg[NUM_Z_REG_INTEL] = {0};
+bool unusedZReg[NUM_Z_REG_INTEL] = {0};
+
 public:
 #ifdef XT_TEST
 constexpr static unsigned int xt_sp_reg_idx = 31;
@@ -73,9 +83,63 @@ Xbyak_aarch64::XReg X_TRANSLATOR_STACK = x22;
 Xbyak_aarch64::PReg P_TMP = p0;
 Xbyak_aarch64::PReg P_TMP_0 = p11;
 Xbyak_aarch64::PReg P_TMP_1 = p12;
+Xbyak_aarch64::PReg P_ALL_ZERO = p10;
 Xbyak_aarch64::PReg P_MSB_256 = p13;
 Xbyak_aarch64::PReg P_MSB_384 = p14;
 Xbyak_aarch64::PReg P_ALL_ONE = p15;
+Xbyak_aarch64::PReg P_ALL_ONE_0_7{XT_REG_INVALID};
+
+inline bool isAvailAll1Preg0_7() { return availAll1Preg0_7; }
+
+uint32_t setAll1Preg0_7(uint32_t index) {
+  if (index > 7) {
+    xt_msg_err(__FILE__, __LINE__, ":Index of All1Preg0_7 must be 0 to 7!");
+    assert(NULL);
+  }
+
+  P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{index};
+  xa_->ptrue(P_ALL_ONE_0_7.b);
+  availAll1Preg0_7 = true;
+  P_ALL_ONE_0_7_IDX = index;
+
+  return index;
+}
+
+void clearAll1Preg0_7() {
+  P_ALL_ONE_0_7 = Xbyak_aarch64::PReg{XT_REG_INVALID};
+  availAll1Preg0_7 = false;
+  P_ALL_ONE_0_7_IDX = XT_REG_INVALID;
+}
+
+uint64_t getTranslatorVersion(){
+  return translatorVersion;
+}
+
+void unSetGenJitMode(){
+  genJitMode = false;
+}
+
+void setGenJitMode(){
+  genJitMode = true;
+}
+
+void initSearchPReg(){
+  for(int i = 0; i < NUM_PRED_REG_INTEL; i++){
+    availablePReg[i] = true;
+    unusedPReg[i] = true;
+  }
+}
+
+void initSearchZReg(){
+  for(int i = 0; i < NUM_Z_REG_INTEL; i++){
+    availableZReg[i] = true;
+    unusedZReg[i] = true;
+  }
+}
+
+bool getGenJitMode(){
+  return genJitMode;
+}
 
 void binCommit() {
   size_t num32bits = CodeArray::size_;
@@ -216,6 +280,12 @@ struct xt_a64fx_operands_structV3_core_t {
   /* For operand of vm64(x|y|z) */
   xt_reg_idx_t vmIndexRegIdx = XT_REG_INVALID;
   xed_uint_t vmIndexRegWidth = 0;
+
+  /* For memory operand */
+  xt_reg_idx_t memBaseIdx = XT_REG_INVALID;
+  xt_reg_idx_t memIndexIdx = XT_REG_INVALID;
+  xed_uint_t memScale = 0;
+  xed_int_t memDisp = 0;
 };
 
 struct xt_a64fx_operands_structV3_t {
@@ -281,7 +351,7 @@ struct xt_a64fx_operands_struct_t {
   /* Immediate value opoerand */
   xed_uint_t ibits = 0;
   xed_uint64_t uimm = 0; /* unsigned */
-  xed_int64_t simm = 0;  /* signed㝪 */
+  xed_int64_t simm = 0;  /* signed */
   xed_uint_t immWidth;   /* IMM value width. 8, 16, 32, 64 */
 
   xed_uint64_t uimm2 = 0; /* 2nd immediate and its type is unsigned */
@@ -387,40 +457,42 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
     return Xbyak_aarch64::XReg(base);
   } else if (base != XT_REG_INVALID && disp != 0 /* Base + disp */
              && index == XT_REG_INVALID) {
-    CodeGeneratorAArch64::add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
+    xa_->add_imm(retReg, Xbyak_aarch64::XReg(base), disp,
+                                  tmp1);
     return retReg;
   } else if (base != XT_REG_INVALID && disp == 0 /* Base + index (*scale) */
              && index != XT_REG_INVALID) {
     if (shift == 0) {
-      CodeGeneratorAArch64::add(retReg, Xbyak_aarch64::XReg(base),
+      xa_->add(retReg, Xbyak_aarch64::XReg(base),
                                 Xbyak_aarch64::XReg(index));
       return retReg; /* Base + disp + index */
     } else {
-      CodeGeneratorAArch64::lsl(retReg, Xbyak_aarch64::XReg(index), shift);
-      CodeGeneratorAArch64::add(retReg, Xbyak_aarch64::XReg(base), retReg);
+      xa_->lsl(retReg, Xbyak_aarch64::XReg(index), shift);
+      xa_->add(retReg, Xbyak_aarch64::XReg(base), retReg);
       return retReg; /* Base + disp + index*scale */
     }
   } else if (base != XT_REG_INVALID && disp != 0 &&
              index != XT_REG_INVALID) { /* Base + disp + index (*scale) */
-    CodeGeneratorAArch64::add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
+    xa_->add_imm(retReg, Xbyak_aarch64::XReg(base), disp,
+                                  tmp1);
 
     if (shift == 0) {
-      CodeGeneratorAArch64::add(retReg, retReg, Xbyak_aarch64::XReg(index));
+      xa_->add(retReg, retReg, Xbyak_aarch64::XReg(index));
       return retReg; /* Base + disp + index */
     } else {
-      CodeGeneratorAArch64::lsl(tmp1, Xbyak_aarch64::XReg(index), shift);
-      CodeGeneratorAArch64::add(retReg, retReg, tmp1);
+      xa_->lsl(tmp1, Xbyak_aarch64::XReg(index), shift);
+      xa_->add(retReg, retReg, tmp1);
       return retReg; /* Base + disp + index*scale */
     }
   } else if (base == XT_REG_INVALID /* disp + index (*scale) */
              && index != XT_REG_INVALID && disp != 0) {
     if (shift == 0) {
-      CodeGeneratorAArch64::add_imm(retReg, Xbyak_aarch64::XReg(index), disp,
+      xa_->add_imm(retReg, Xbyak_aarch64::XReg(index), disp,
                                     tmp1);
       return retReg; /* disp + index */
     } else {
-      CodeGeneratorAArch64::lsl(retReg, Xbyak_aarch64::XReg(index), shift);
-      CodeGeneratorAArch64::add_imm(retReg, retReg, disp, tmp1);
+      xa_->lsl(retReg, Xbyak_aarch64::XReg(index), shift);
+      xa_->add_imm(retReg, retReg, disp, tmp1);
       return retReg; /* disp + index*scale */
     }
   } else if (base == XT_REG_INVALID /* index (*scale) */
@@ -428,7 +500,7 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
     if (shift == 0) {
       return Xbyak_aarch64::XReg(index); /* index */
     } else {
-      CodeGeneratorAArch64::lsl(retReg, Xbyak_aarch64::XReg(index), shift);
+      xa_->lsl(retReg, Xbyak_aarch64::XReg(index), shift);
       return retReg; /* index*scale */
     }
   }
@@ -448,21 +520,28 @@ unsigned int xt_push_vreg(xt_a64fx_operands_structV3_t *a64) {
 }
 
 unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
+  for (int i = 0; i < 32; i++){
+    if (availableZReg[i] == true && unusedZReg[i] == true){
+      unusedZReg[i] = false;
+      return i;
+    }
+  }
+  
   for (size_t i = AARCH64_NUM_ZREG - 1; i >= 0; i--) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i) {
       if (zreg_tmp_used[i] == false) {
         zreg_tmp_used[i] = true;
 
 #ifdef XT_AARCH64_STACK_REG
-        CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
-                                  CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
-        CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
-        CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
+        xa_->sub(xa_->sp,
+                                  xa_->sp, NUM_BYTES_Z_REG);
+        xa_->mov(X_TMP_0, xa_->sp);
+        xa_->str(Xbyak_aarch64::ZReg(i),
                                   Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-        CodeGeneratorAArch64::sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
+        xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
                                   NUM_BYTES_Z_REG);
-        CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
+        xa_->str(Xbyak_aarch64::ZReg(i),
                                   Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
         return i;
@@ -478,6 +557,13 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
 }
 
 unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
+  for (int i = 0; i < 32; i++){
+    if (availableZReg[i] == true && unusedZReg[i] == true){
+      unusedZReg[i] = false;
+      return i;
+    }
+  }
+  
   for (size_t i = AARCH64_NUM_ZREG - 1; i >= 0; i--) {
     bool conflict = false;
     if (zreg_tmp_used[i] == true) {
@@ -493,16 +579,16 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
     if (conflict == false) {
       zreg_tmp_used[i] = true;
 #ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
-                                CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
-      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
+      xa_->sub(xa_->sp,
+                                xa_->sp, NUM_BYTES_Z_REG);
+      xa_->mov(X_TMP_0, xa_->sp);
 
-      CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
+      xa_->str(Xbyak_aarch64::ZReg(i),
                                 Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
+      xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
                                 NUM_BYTES_Z_REG);
-      CodeGeneratorAArch64::str(Xbyak_aarch64::ZReg(i),
+      xa_->str(Xbyak_aarch64::ZReg(i),
                                 Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
       return i;
@@ -517,6 +603,13 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
 }
 
 unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
+  for (int i = 0; i < 8; i++){
+    if (availablePReg[i] == true && unusedPReg[i] == true){
+      unusedPReg[i] = false;
+      return i;
+    }
+  }
+  
   for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i &&
         a64->maskIdx != i && a64->mask2Idx != 0) {
@@ -524,15 +617,15 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
         preg_tmp_used[i] = true;
 
 #ifdef XT_AARCH64_STACK_REG
-        CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
-                                  CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
-        CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
-        CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
+        xa_->sub(xa_->sp,
+                                  xa_->sp, NUM_BYTES_PRED_REG);
+        xa_->mov(X_TMP_0, xa_->sp);
+        xa_->str(Xbyak_aarch64::PReg(i),
                                   Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-        CodeGeneratorAArch64::sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
+        xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
                                   NUM_BYTES_PRED_REG);
-        CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
+        xa_->str(Xbyak_aarch64::PReg(i),
                                   Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
         return i;
@@ -548,6 +641,14 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
 }
 
 unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
+
+  for (int i = 0; i < 8; i++){
+    if (availablePReg[i] == true && unusedPReg[i] == true){
+      unusedPReg[i] = false;
+      return i;
+    }
+  }
+  
   for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
     bool conflict = false;
     if (preg_tmp_used[i] == true) {
@@ -564,15 +665,15 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
       preg_tmp_used[i] = true;
 
 #ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::sub(CodeGeneratorAArch64::sp,
-                                CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
-      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
-      CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
+      xa_->sub(xa_->sp,
+                                xa_->sp, NUM_BYTES_PRED_REG);
+      xa_->mov(X_TMP_0, xa_->sp);
+      xa_->str(Xbyak_aarch64::PReg(i),
                                 Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
+      xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
                                 NUM_BYTES_PRED_REG);
-      CodeGeneratorAArch64::str(Xbyak_aarch64::PReg(i),
+      xa_->str(Xbyak_aarch64::PReg(i),
                                 Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
       return i;
@@ -589,18 +690,25 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
 void xt_pop_vreg() { xt_pop_zreg(); }
 
 void xt_pop_zreg() {
+  for (int i = 0; i < 32; i++){
+    if (availableZReg[i] == true && unusedZReg[i] == false){
+      unusedZReg[i] = true;
+      return;
+    }
+  }
+  
   for (size_t i = 0; i < AARCH64_NUM_ZREG; i++) {
     if (zreg_tmp_used[i] == true) {
 #ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
-      CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i),
+      xa_->mov(X_TMP_0, xa_->sp);
+      xa_->ldr(Xbyak_aarch64::ZReg(i),
                                 Xbyak_aarch64::ptr(X_TMP_0));
-      CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
-                                CodeGeneratorAArch64::sp, NUM_BYTES_Z_REG);
+      xa_->add(xa_->sp,
+                                xa_->sp, NUM_BYTES_Z_REG);
 #else  //#ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::ldr(Xbyak_aarch64::ZReg(i),
+      xa_->ldr(Xbyak_aarch64::ZReg(i),
                                 Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
-      CodeGeneratorAArch64::add(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
+      xa_->add(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
                                 NUM_BYTES_Z_REG);
 #endif //#ifdef XT_AARCH64_STACK_REG
       zreg_tmp_used[i] = false;
@@ -614,18 +722,26 @@ void xt_pop_zreg() {
 }
 
 void xt_pop_preg() {
+
+  for (int i = 0; i < 8; i++){
+    if (availablePReg[i] == true && unusedPReg[i] == false){
+      unusedPReg[i] = true;
+      return;
+    }
+  }
+  
   for (size_t i = TMP_PREG_END; i <= TMP_PREG_START; i++) {
     if (preg_tmp_used[i] == true) {
 #ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::mov(X_TMP_0, CodeGeneratorAArch64::sp);
-      CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i),
+      xa_->mov(X_TMP_0, xa_->sp);
+      xa_->ldr(Xbyak_aarch64::PReg(i),
                                 Xbyak_aarch64::ptr(X_TMP_0));
-      CodeGeneratorAArch64::add(CodeGeneratorAArch64::sp,
-                                CodeGeneratorAArch64::sp, NUM_BYTES_PRED_REG);
+      xa_->add(xa_->sp,
+                                xa_->sp, NUM_BYTES_PRED_REG);
 #else  //#ifdef XT_AARCH64_STACK_REG
-      CodeGeneratorAArch64::ldr(Xbyak_aarch64::PReg(i),
+      xa_->ldr(Xbyak_aarch64::PReg(i),
                                 Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
-      CodeGeneratorAArch64::add(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
+      xa_->add(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
                                 NUM_BYTES_PRED_REG);
 #endif //#ifdef XT_AARCH64_STACK_REG
       preg_tmp_used[i] = false;
@@ -690,9 +806,14 @@ bool decodeOpcode(const Label *label = nullptr) {
 #ifdef XT_DEBUG
   xt_dump_x86_64_decoded_info(&xedd);
 #endif
-
-  xed_iclass_enum_t p = xed_decoded_inst_get_iclass(&xedd);
+  
+  if(genJitMode == true){
+    xed_iclass_enum_t p = xed_decoded_inst_get_iclass(&xedd);
 #include "xbyak_translator_switch.h"
+  }else{
+    searchPReg(&xedd);
+    searchZReg(&xedd);
+  }
 
   return true;
 }
@@ -927,7 +1048,7 @@ void xt_construct_a64fx_operands(xed_decoded_inst_t *p,
 
 void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
                                    xt_a64fx_operands_structV3_t *a64,
-                                   bool vm64 = false) {
+                                   bool vm64 = false, bool rawMemOp = false) {
   unsigned int num_operands;
 
   unsigned int baseIdx = XT_REG_INVALID;
@@ -1065,8 +1186,15 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
 
       disp = xed_decoded_inst_get_memory_displacement(p, memOpIdx);
 
-      X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
-                                   X_TMP_1, X_TMP_2, vm64);
+      if (rawMemOp) {
+        a64->operands[tmpOpIdx].memBaseIdx = baseIdx;
+        a64->operands[tmpOpIdx].memIndexIdx = indexIdx;
+        a64->operands[tmpOpIdx].memScale = scale;
+        a64->operands[tmpOpIdx].memDisp = disp;
+      } else {
+        X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
+                                     X_TMP_1, X_TMP_2, vm64);
+      }
 
       memOpIdx++;
       continue;
@@ -1124,8 +1252,83 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
   } // for (int i = 0; i < num_operands; i++) {
 
 #ifdef XT_DEBUG
-  xt_dump_a64fx_operandsV3(a64);
+  if (!rawMemOp) {
+    xt_dump_a64fx_operandsV3(a64);
+  }
 #endif
+}
+
+void xt_construct_a64fx_operandsV3_rawMemOp(xed_decoded_inst_t *p,
+                                            xt_a64fx_operands_structV3_t *a64,
+                                            bool vm64, bool rawMemOp) {
+  xt_construct_a64fx_operandsV3(p, a64, vm64, rawMemOp);
+  if (rawMemOp) {
+    xt_dump_a64fx_operandsV3(a64);
+  }
+}
+
+void searchPReg(xed_decoded_inst_t *p) {
+  unsigned int num_operands;
+
+  const xed_inst_t *xi = xed_decoded_inst_inst(p);
+
+  /* Get # of operands */
+  num_operands = xed_inst_noperands(xi);
+
+  for (unsigned int i = 0; i < num_operands; i++) {
+    const xed_operand_t *op = xed_inst_operand(xi, i);
+    xed_operand_enum_t opName = xed_operand_name(op);
+
+    /* Begin: parsing register operand */
+    xed_uint_t isReg = xed_operand_is_register(opName);
+    if (isReg == 1) { /* Operand is register */
+      xed_reg_enum_t r = xed_decoded_inst_get_reg(p, opName);
+      unsigned int tmpIdx = xt_get_register_index(r);
+      //bool isSet = false;
+
+      if( xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_MASK) {
+	if( availablePReg[tmpIdx] == true && tmpIdx != P_ALL_ONE_0_7_IDX){
+	  availablePReg[tmpIdx] = false;
+	  unusedPReg[tmpIdx] = false;
+	}
+      }
+      continue; /* End of register operand process */
+    }
+    /* End: parsing register operand */
+  } // for (int i = 0; i < num_operands; i++) {
+}
+
+void searchZReg(xed_decoded_inst_t *p) {
+  unsigned int num_operands;
+
+  const xed_inst_t *xi = xed_decoded_inst_inst(p);
+
+  /* Get # of operands */
+  num_operands = xed_inst_noperands(xi);
+
+  for (unsigned int i = 0; i < num_operands; i++) {
+    const xed_operand_t *op = xed_inst_operand(xi, i);
+    xed_operand_enum_t opName = xed_operand_name(op);
+
+    /* Begin: parsing register operand */
+    xed_uint_t isReg = xed_operand_is_register(opName);
+    if (isReg == 1) { /* Operand is register */
+      xed_reg_enum_t r = xed_decoded_inst_get_reg(p, opName);
+      unsigned int tmpIdx = xt_get_register_index(r);
+      //bool isSet = false;
+
+      if( xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_XMM
+	  || xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_YMM
+	  || xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_ZMM) {
+	if( availableZReg[tmpIdx] == true){
+	  availableZReg[tmpIdx] = false;
+	  unusedZReg[tmpIdx] = false;
+	}
+      }
+      continue; /* End of register operand process */
+    }
+    /* End: parsing register operand */
+  } // for (int i = 0; i < num_operands; i++) {
 }
 
 void decodeAndTransToAArch64() {
@@ -1143,60 +1346,60 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
     break;
   case X86_64_B: {
-    Xbyak_aarch64::LabelAArch64 L0, L1;
-    CodeGeneratorAArch64::mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2,
+    Xbyak_aarch64::Label L0, L1;
+    xa_->mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2,
                               0x0); // Read NZCV register
-    CodeGeneratorAArch64::lsr(X_TMP_0, X_TMP_2, 28);
+    xa_->lsr(X_TMP_0, X_TMP_2, 28);
 
     /* (x86_64's CF)
        aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
-    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
-    CodeGeneratorAArch64::cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
-    CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L0);
-    CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
+    xa_->and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
+    xa_->cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
+    xa_->b(Xbyak_aarch64::NE, L0);
+    xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
-    CodeGeneratorAArch64::b(label);
-    L_aarch64(L0);
-    CodeGeneratorAArch64::cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
-    CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L1);
-    CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
+    xa_->b(label);
+    L(L0);
+    xa_->cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
+    xa_->b(Xbyak_aarch64::NE, L1);
+    xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
-    CodeGeneratorAArch64::b(label);
-    L_aarch64(L1);
+    xa_->b(label);
+    L(L1);
 
-    CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
+    xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
   } break;
   case X86_64_BE: {
-    Xbyak_aarch64::LabelAArch64 L0, L1, L2;
-    CodeGeneratorAArch64::mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2,
+    Xbyak_aarch64::Label L0, L1, L2;
+    xa_->mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2,
                               0x0); // Read NZCV register
-    CodeGeneratorAArch64::lsr(X_TMP_0, X_TMP_2, 28);
+    xa_->lsr(X_TMP_0, X_TMP_2, 28);
 
     /* (x86_64's CF)
        aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
-    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
-    CodeGeneratorAArch64::cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
-    CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L0);
-    CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
+    xa_->and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
+    xa_->cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
+    xa_->b(Xbyak_aarch64::NE, L0);
+    xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
-    CodeGeneratorAArch64::b(label);
-    L_aarch64(L0);
-    CodeGeneratorAArch64::cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
-    CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L1);
-    CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
+    xa_->b(label);
+    L(L0);
+    xa_->cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
+    xa_->b(Xbyak_aarch64::NE, L1);
+    xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
-    CodeGeneratorAArch64::b(label);
-    L_aarch64(L1);
+    xa_->b(label);
+    L(L1);
 
-    CodeGeneratorAArch64::and_(X_TMP_1, X_TMP_0, 0x4);
-    CodeGeneratorAArch64::cmp(X_TMP_1, 0x4);
-    CodeGeneratorAArch64::b(Xbyak_aarch64::NE, L2);
-    CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
+    xa_->and_(X_TMP_1, X_TMP_0, 0x4);
+    xa_->cmp(X_TMP_1, 0x4);
+    xa_->b(Xbyak_aarch64::NE, L2);
+    xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
-    CodeGeneratorAArch64::b(label);
-    L_aarch64(L2);
-    CodeGeneratorAArch64::msr(0x3, 0x3, 0x4, 0x2, 0x0,
+    xa_->b(label);
+    L(L2);
+    xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
                               X_TMP_2); // Recover NZCV register
   } break;
 #if 0
@@ -1207,19 +1410,19 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
     break;
   X86_64_E:
-    CodeGeneratorAArch64::b(Xbyak_aarch64::EQ, label);
+    xa_->b(Xbyak_aarch64::EQ, label);
     break;
   X86_64_G:
-    CodeGeneratorAArch64::b(Xbyak_aarch64::GT, label);
+    xa_->b(Xbyak_aarch64::GT, label);
     break;
   X86_64_GE:
-    CodeGeneratorAArch64::b(Xbyak_aarch64::GE, label);
+    xa_->b(Xbyak_aarch64::GE, label);
     break;
   X86_64_L:
-    CodeGeneratorAArch64::b(Xbyak_aarch64::LT, label);
+    xa_->b(Xbyak_aarch64::LT, label);
     break;
   X86_64_LE:
-    CodeGeneratorAArch64::b(Xbyak_aarch64::LE, label);
+    xa_->b(Xbyak_aarch64::LE, label);
     break;
   X86_64_NA:
   X86_64_NAE:
@@ -1229,7 +1432,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
     break;
   X86_64_NE:
-    CodeGeneratorAArch64::b(Xbyak_aarch64::NE, label);
+    xa_->b(Xbyak_aarch64::NE, label);
     break;
   X86_64_NG:
   X86_64_NGE:

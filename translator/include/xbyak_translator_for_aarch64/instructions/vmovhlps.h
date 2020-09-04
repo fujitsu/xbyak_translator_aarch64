@@ -22,12 +22,12 @@ void translateVMOVHLPS(xed_decoded_inst_t *p) {
 
   /* Col=V103*/
   if (false || (true)) {
-    CodeGeneratorAArch64::mov(xa::VReg2D(a64.dstIdx)[1],
+    xa_->mov(xa::VReg2D(a64.dstIdx)[1],
                               xa::VReg2D(a64.srcIdx)[1]);
   }
   /* Col=W103*/
   if (false || (true)) {
-    CodeGeneratorAArch64::mov(xa::VReg2D(a64.dstIdx)[0],
+    xa_->mov(xa::VReg2D(a64.dstIdx)[0],
                               xa::VReg2D(a64.src2Idx)[1]);
   }
 }

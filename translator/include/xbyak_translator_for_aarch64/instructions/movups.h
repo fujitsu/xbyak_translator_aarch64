@@ -19,7 +19,7 @@ void translateMOVUPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64);
 
 /* 2020/03/10 16:22 */
-#define CG64 CodeGeneratorAArch64
+
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
   xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
@@ -58,18 +58,18 @@ void translateMOVUPS(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::not_(P_TMP_0.b, P_ALL_ONE, P_MSB_384.b);
+    xa_->not_(P_TMP_0.b, P_ALL_ONE, P_MSB_384.b);
   }
 
   /* Col=AM103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
                 a64.operands[1].opName == XED_OPERAND_REG0 && true)) {
-    CG64::str(xa::QReg(srcIdx), xa::ptr(X_TMP_ADDR));
+    xa_->str(xa::QReg(srcIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AN103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::ldr(xa::QReg(srcIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::QReg(srcIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AO103*/
   if (false ||
@@ -77,7 +77,7 @@ void translateMOVUPS(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::mov(xa::ZRegD(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegD(srcIdx));
+    xa_->mov(xa::ZRegD(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegD(srcIdx));
   }
 
   /* Col=AR103*/
@@ -86,5 +86,5 @@ void translateMOVUPS(xed_decoded_inst_t *p) {
     xt_pop_zreg();
   }
 
-#undef CG64
+
 }
