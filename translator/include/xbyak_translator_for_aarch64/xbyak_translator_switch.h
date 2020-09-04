@@ -2077,6 +2077,7 @@ case XED_ICLASS_VFMSUB132SS:
 case XED_ICLASS_VFMSUB213PD:
   break;
 case XED_ICLASS_VFMSUB213PS:
+  translateVFMSUB213PS(&xedd);
   break;
 case XED_ICLASS_VFMSUB213SD:
   break;
