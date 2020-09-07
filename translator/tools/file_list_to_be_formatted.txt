@@ -48,6 +48,7 @@ not.h
 or.h
 paddd.h
 pause.h
+pextrb.h
 pextrd.h
 phaddw.h
 pinsrb.h

@@ -22,15 +22,15 @@ struct xt_a64fx_operands_structV3_t a64;
 xt_construct_a64fx_operandsV3(p, &a64_opt, false, true);
 xt_construct_a64fx_operandsV3(p, &a64);
 bool isValid = false;
-xt_reg_idx_t dstIdx;
-xt_reg_idx_t srcIdx;
-xt_reg_idx_t src2Idx;
-xt_reg_idx_t maskIdx;
-xt_reg_idx_t zTmpIdx;
-xt_reg_idx_t zTmp2Idx;
-xt_reg_idx_t pTmpIdx;
-xt_reg_idx_t dstTmpIdx;
-xt_reg_idx_t srcTmpIdx;
+xt_reg_idx_t dstIdx = XT_REG_INVALID;
+xt_reg_idx_t srcIdx = XT_REG_INVALID;
+xt_reg_idx_t src2Idx = XT_REG_INVALID;
+xt_reg_idx_t maskIdx = XT_REG_INVALID;
+xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
+xt_reg_idx_t zTmp2Idx = XT_REG_INVALID;
+xt_reg_idx_t pTmpIdx = XT_REG_INVALID;
+xt_reg_idx_t dstTmpIdx = XT_REG_INVALID;
+xt_reg_idx_t srcTmpIdx = XT_REG_INVALID;
 
 /* Col=AC119*/
 if(false ||(a64_opt.operands[0].opName==XED_OPERAND_REG0&&a64_opt.operands[1].opName==XED_OPERAND_REG1&&a64_opt.operands[2].opName==XED_OPERAND_REG2&&a64_opt.operands[3].opName==XED_OPERAND_REG3&&a64_opt.operands[0].opWidth==256&&a64_opt.predType==A64_PRED_NO&&a64_opt.EVEXb==0&&isAvailAll1Preg0_7()==true &&true)||(a64_opt.operands[0].opName==XED_OPERAND_REG0&&a64_opt.operands[1].opName==XED_OPERAND_REG1&&a64_opt.operands[2].opName==XED_OPERAND_REG2&&a64_opt.operands[3].opName==XED_OPERAND_REG3&&a64_opt.operands[0].opWidth==512&&a64_opt.predType==A64_PRED_NO&&a64_opt.EVEXb==0&&isAvailAll1Preg0_7()==true &&true)||(a64_opt.operands[0].opName==XED_OPERAND_REG0&&a64_opt.operands[1].opName==XED_OPERAND_REG1&&a64_opt.operands[2].opName==XED_OPERAND_REG2&&a64_opt.operands[3].opName==XED_OPERAND_INVALID&&a64_opt.operands[0].opWidth==256&&isAvailAll1Preg0_7()==true &&true)) {
