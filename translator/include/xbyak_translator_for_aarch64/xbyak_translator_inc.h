@@ -107,6 +107,7 @@
 #include "instructions/vfmadd231ss.h"
 #include "instructions/vfmsub213ps.h"
 #include "instructions/vfnmadd231ps.h"
+#include "instructions/vgatherdps.h"
 #include "instructions/vgatherqps.h"
 #include "instructions/vinsertf128.h"
 #include "instructions/vinsertf64x4.h"
