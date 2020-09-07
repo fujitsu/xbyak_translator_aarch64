@@ -28,17 +28,17 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vandps(Xmm(2), Xmm(0), Xmm(1));
-    vandps(Xmm(3), Xmm(3), Xmm(4));
-    vandps(Xmm(5), Xmm(6), Xmm(5));
-    vandps(Xmm(8), Xmm(7), Xmm(7));
-    vandps(Xmm(9), Xmm(9), Xmm(9));
+    vandps(Ymm(2), Ymm(0), Ymm(1));
+    vandps(Ymm(3), Ymm(3), Ymm(4));
+    vandps(Ymm(5), Ymm(6), Ymm(5));
+    vandps(Ymm(8), Ymm(7), Ymm(7));
+    vandps(Ymm(9), Ymm(9), Ymm(9));
 
-    vandps(Xmm(22), Xmm(20), Xmm(21));
-    vandps(Xmm(23), Xmm(23), Xmm(24));
-    vandps(Xmm(25), Xmm(26), Xmm(25));
-    vandps(Xmm(28), Xmm(27), Xmm(27));
-    vandps(Xmm(29), Xmm(29), Xmm(29));
+    vandps(Ymm(22), Ymm(20), Ymm(21));
+    vandps(Ymm(23), Ymm(23), Ymm(24));
+    vandps(Ymm(25), Ymm(26), Ymm(25));
+    vandps(Ymm(28), Ymm(27), Ymm(27));
+    vandps(Ymm(29), Ymm(29), Ymm(29));
 
   }
 };
