@@ -41,7 +41,7 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vxorps(Xmm(2), Xmm(0), Xmm(1));
     vxorps(Ymm(5), Ymm(3), Ymm(4));
-    vxorps(Xmm(8), Xmm(6), Xmm(7));
+    vxorps(Zmm(1), Zmm(3), Zmm(4));
 
     vxorps(Xmm(6), Xmm(7), Xmm(7));
     vxorps(Xmm(8), Xmm(9), Xmm(8));
