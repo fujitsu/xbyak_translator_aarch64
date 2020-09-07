@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/09/07 10:12 */
+/* 2020/09/07 13:44 */
 #define CG64 CodeGeneratorAArch64
 void translateVGATHERDPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -102,7 +102,7 @@ void translateVGATHERDPS(xed_decoded_inst_t *p) {
     CG64::mov(xa::ZRegS(dstIdx), P_MSB_256/xa::T_m, 0);
   }
   /* Col=BA119*/
-  if(false ||(a64.operands[0].opName==XED_OPERAND_REG0&&a64.operands[1].opName==XED_OPERAND_MEM0&&a64.operands[2].opName==XED_OPERAND_REG1&&a64.operands[0].opWidth==256&&a64.operands[1].vmIndexRegWidth==256&&true)||(a64.operands[0].opName==XED_OPERAND_REG0&&a64.operands[1].opName==XED_OPERAND_REG1&&a64.operands[2].opName==XED_OPERAND_MEM0&&a64.operands[0].opWidth==512&&a64.operands[2].vmIndexRegWidth==512&&a64.predType==A64_PRED_MERG&&true)) {
+  if(false ||(a64.operands[0].opName==XED_OPERAND_REG0&&a64.operands[1].opName==XED_OPERAND_REG1&&a64.operands[2].opName==XED_OPERAND_MEM0&&a64.operands[0].opWidth==512&&a64.operands[2].vmIndexRegWidth==512&&a64.predType==A64_PRED_MERG&&true)) {
     CG64::not_(xa::PRegB(maskIdx), P_ALL_ONE, P_ALL_ONE.b);
   }
   /* Col=BB119*/
@@ -112,11 +112,11 @@ void translateVGATHERDPS(xed_decoded_inst_t *p) {
   /* Col=BK119*/
   if(false ||(a64.operands[0].opName==XED_OPERAND_REG0&&a64.operands[1].opName==XED_OPERAND_MEM0&&a64.operands[2].opName==XED_OPERAND_REG1&&a64.operands[0].opWidth==256&&a64.operands[1].vmIndexRegWidth==256&&true)||(a64.operands[0].opName==XED_OPERAND_REG0&&a64.operands[1].opName==XED_OPERAND_REG1&&a64.operands[2].opName==XED_OPERAND_MEM0&&a64.operands[0].opWidth==512&&a64.operands[2].vmIndexRegWidth==512&&a64.predType==A64_PRED_MERG&&true)) {
     xt_pop_zreg();
-  }  
-/* Col=BL119*/
-    if(false ||(a64.operands[0].opName==XED_OPERAND_REG0&&a64.operands[1].opName==XED_OPERAND_MEM0&&a64.operands[2].opName==XED_OPERAND_REG1&&a64.operands[0].opWidth==256&&a64.operands[1].vmIndexRegWidth==256&&true)||(a64.operands[0].opName==XED_OPERAND_REG0&&a64.operands[1].opName==XED_OPERAND_REG1&&a64.operands[2].opName==XED_OPERAND_MEM0&&a64.operands[0].opWidth==512&&a64.operands[2].vmIndexRegWidth==512&&a64.predType==A64_PRED_MERG&&true)) {
-      xt_pop_zreg();
-    }
+  }
+  /* Col=BL119*/
+  if(false ||(a64.operands[0].opName==XED_OPERAND_REG0&&a64.operands[1].opName==XED_OPERAND_MEM0&&a64.operands[2].opName==XED_OPERAND_REG1&&a64.operands[0].opWidth==256&&a64.operands[1].vmIndexRegWidth==256&&true)||(a64.operands[0].opName==XED_OPERAND_REG0&&a64.operands[1].opName==XED_OPERAND_REG1&&a64.operands[2].opName==XED_OPERAND_MEM0&&a64.operands[0].opWidth==512&&a64.operands[2].vmIndexRegWidth==512&&a64.predType==A64_PRED_MERG&&true)) {
+    xt_pop_zreg();
+  }
   /* Col=BM119*/
   if(false ||(a64.operands[0].opName==XED_OPERAND_REG0&&a64.operands[1].opName==XED_OPERAND_MEM0&&a64.operands[2].opName==XED_OPERAND_REG1&&a64.operands[0].opWidth==256&&a64.operands[1].vmIndexRegWidth==256&&true)||(a64.operands[0].opName==XED_OPERAND_REG0&&a64.operands[1].opName==XED_OPERAND_REG1&&a64.operands[2].opName==XED_OPERAND_MEM0&&a64.operands[0].opWidth==512&&a64.operands[2].vmIndexRegWidth==512&&a64.predType==A64_PRED_MERG&&true)) {
     xt_pop_zreg();
