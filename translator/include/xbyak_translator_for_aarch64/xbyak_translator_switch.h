@@ -283,6 +283,7 @@ case XED_ICLASS_CVTPI2PD:
 case XED_ICLASS_CVTPI2PS:
   break;
 case XED_ICLASS_CVTPS2DQ:
+  translateCVTPS2DQ(&xedd);
   break;
 case XED_ICLASS_CVTPS2PD:
   break;

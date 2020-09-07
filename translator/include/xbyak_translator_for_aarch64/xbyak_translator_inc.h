@@ -23,6 +23,7 @@
 #include "instructions/cmp.h"
 #include "instructions/cmpps.h"
 #include "instructions/cvtdq2ps.h"
+#include "instructions/cvtps2dq.h"
 #include "instructions/dec.h"
 #include "instructions/imul.h"
 #include "instructions/inc.h"

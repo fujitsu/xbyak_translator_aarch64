@@ -20,6 +20,7 @@ cmovnle.h
 cmp.h
 cmpps.h
 cvtdq2ps.h
+cvtps2dq.h
 dec.h
 imul.h
 inc.h
