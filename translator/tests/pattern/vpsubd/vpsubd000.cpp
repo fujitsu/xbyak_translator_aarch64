@@ -20,17 +20,20 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
-    for (int i = 0; i < 8; i++) {
-      inputZReg[0].ud_dt[i] = ~uint64_t(0);
-      inputZReg[3].ud_dt[i] = ~uint64_t(0);
-      inputZReg[6].ud_dt[i] = ~uint64_t(0);
+#if 0
+    /*
+    for (int i = 0; i < 16; i++) {
+      inputZReg[0].us_dt[i] = ~uint64_t(0);
+      inputZReg[3].us_dt[i] = ~uint64_t(0);
+      inputZReg[6].us_dt[i] = ~uint64_t(0);
     }
-    for (int i = 0; i < 8; i++) {
-      inputZReg[1].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-      inputZReg[4].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-      inputZReg[7].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+    for (int i = 0; i < 16; i++) {
+      inputZReg[1].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[4].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+      inputZReg[7].us_dt[i] = uint32_t(0xFF00FF00AA55AA55);
     }
+    */
+#endif
   }
 
   void setCheckRegFlagAll() {
@@ -39,28 +42,17 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vxorps(Xmm(2), Xmm(0), Xmm(1));
-    vxorps(Ymm(5), Ymm(3), Ymm(4));
-    vxorps(Zmm(1), Zmm(3), Zmm(4));
+    vpsubd(Ymm(0), Ymm(1), Ymm(2));
+    vpsubd(Ymm(3), Ymm(3), Ymm(4));
+    vpsubd(Ymm(5), Ymm(6), Ymm(5));
+    vpsubd(Ymm(7), Ymm(8), Ymm(8));
+    vpsubd(Ymm(9), Ymm(9), Ymm(9));
 
-    vxorps(Xmm(6), Xmm(7), Xmm(7));
-    vxorps(Xmm(8), Xmm(9), Xmm(8));
-    vxorps(Xmm(10), Xmm(10), Xmm(11));
-    vxorps(Xmm(12), Xmm(12), Xmm(1));
-
-    vxorps(Ymm(13), Ymm(14), Ymm(14));
-    vxorps(Ymm(15), Ymm(16), Ymm(15));
-    vxorps(Ymm(17), Ymm(17), Ymm(18));
-    vxorps(Ymm(19), Ymm(19), Ymm(20));
-
-    vxorps(Zmm(21), Zmm(22), Zmm(22));
-    vxorps(Zmm(23), Zmm(24), Zmm(23));
-    vxorps(Zmm(25), Zmm(25), Zmm(26));
-    vxorps(Zmm(27), Zmm(27), Zmm(28));
-
-    vxorps(Xmm(29), Xmm(29), Xmm(29));
-    vxorps(Ymm(30), Ymm(30), Ymm(30));
-    vxorps(Zmm(31), Zmm(31), Zmm(31));
+    vpsubd(Zmm(10), Zmm(11), Zmm(12));
+    vpsubd(Zmm(13), Zmm(13), Zmm(14));
+    vpsubd(Zmm(15), Zmm(16), Zmm(15));
+    vpsubd(Zmm(17), Zmm(18), Zmm(18));
+    vpsubd(Zmm(19), Zmm(19), Zmm(19));
   }
 };
 

@@ -19,18 +19,15 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
-
-    for (int i = 0; i < 8; i++) {
-      inputZReg[0].ud_dt[i] = ~uint64_t(0);
-      inputZReg[3].ud_dt[i] = ~uint64_t(0);
-      inputZReg[6].ud_dt[i] = ~uint64_t(0);
+    //    setInputZregAllRandomHex();
+    setDumpZRegMode(SP_DT);
+    setInputZregAllRandomFloat();
+    /*
+    for (int i = 0; i < 16; i++) {
+      inputZReg[11].sp_dt[i] = inputZReg[12].sp_dt[i];
+      inputZReg[21].sp_dt[i] = inputZReg[22].sp_dt[i];
     }
-    for (int i = 0; i < 8; i++) {
-      inputZReg[1].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-      inputZReg[4].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-      inputZReg[7].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-    }
+    */
   }
 
   void setCheckRegFlagAll() {
@@ -39,28 +36,23 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vxorps(Xmm(2), Xmm(0), Xmm(1));
-    vxorps(Ymm(5), Ymm(3), Ymm(4));
-    vxorps(Zmm(1), Zmm(3), Zmm(4));
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
+     * r15 */
+    /* Register index is VEX range. */
+    vminps(Xmm(0), Xmm(1), Xmm(2));
+    vminps(Xmm(3), Xmm(3), Xmm(4));    /* dstIdx = srcIdx */
+    vminps(Xmm(5), Xmm(6), Xmm(5));    /* dstIdx = srcIdx2 */
+    vminps(Xmm(7), Xmm(8), Xmm(8));    /* srcIdx = srcIdx2 */
+    vminps(Xmm(9), Xmm(9), Xmm(9));    /* dstIdx = srcIdx = srcIdx2*/
+    vminps(Xmm(10), Xmm(11), Xmm(12)); /* src = src2 */
 
-    vxorps(Xmm(6), Xmm(7), Xmm(7));
-    vxorps(Xmm(8), Xmm(9), Xmm(8));
-    vxorps(Xmm(10), Xmm(10), Xmm(11));
-    vxorps(Xmm(12), Xmm(12), Xmm(1));
-
-    vxorps(Ymm(13), Ymm(14), Ymm(14));
-    vxorps(Ymm(15), Ymm(16), Ymm(15));
-    vxorps(Ymm(17), Ymm(17), Ymm(18));
-    vxorps(Ymm(19), Ymm(19), Ymm(20));
-
-    vxorps(Zmm(21), Zmm(22), Zmm(22));
-    vxorps(Zmm(23), Zmm(24), Zmm(23));
-    vxorps(Zmm(25), Zmm(25), Zmm(26));
-    vxorps(Zmm(27), Zmm(27), Zmm(28));
-
-    vxorps(Xmm(29), Xmm(29), Xmm(29));
-    vxorps(Ymm(30), Ymm(30), Ymm(30));
-    vxorps(Zmm(31), Zmm(31), Zmm(31));
+    /* Register index is EVEX range. */
+    vminps(Xmm(10), Xmm(11), Xmm(12));
+    vminps(Xmm(13), Xmm(13), Xmm(14)); /* dstIdx = srcIdx */
+    vminps(Xmm(15), Xmm(16), Xmm(15)); /* dstIdx = srcIdx2 */
+    vminps(Xmm(17), Xmm(18), Xmm(18)); /* srcIdx = srcIdx2 */
+    vminps(Xmm(19), Xmm(19), Xmm(19)); /* dstIdx = srcIdx = srcIdx2*/
+    vminps(Xmm(20), Xmm(21), Xmm(22)); /* src = src2 */
   }
 };
 

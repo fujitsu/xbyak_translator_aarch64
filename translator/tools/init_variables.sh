@@ -51,6 +51,8 @@ format_files() {
 		| sed -e "s/xt_reg_idx_t srcIdx\;/xt_reg_idx_t srcIdx = XT_REG_INVALID\;/" \
 		| sed -e "s/xt_reg_idx_t src2Idx\;/xt_reg_idx_t src2Idx = XT_REG_INVALID\;/" \
 		| sed -e "s/xt_reg_idx_t src3Idx\;/xt_reg_idx_t src3Idx = XT_REG_INVALID\;/" \
+		| sed -e "s/xt_reg_idx_t dstTmpIdx\;/xt_reg_idx_t dstTmpIdx = XT_REG_INVALID\;/" \
+		| sed -e "s/xt_reg_idx_t srcTmpIdx\;/xt_reg_idx_t srcTmpIdx = XT_REG_INVALID\;/" \
 		| sed -e "s/xt_reg_idx_t maskIdx\;/xt_reg_idx_t maskIdx = XT_REG_INVALID\;/" \
 		| sed -e "s/xt_reg_idx_t offsetIdx\;/xt_reg_idx_t offsetIdx = XT_REG_INVALID\;/" \
 		| sed -e "s/int64_t simm\;/int64_t simm = 0\;/" \
@@ -78,7 +80,5 @@ format_files() {
 trap atexit EXIT
 trap 'rc=$?; trap - EXIT; atexit; exit $?' INT PIPE TERM
 
-clang_ver_check
 gen_format_file_list
 format_files
-

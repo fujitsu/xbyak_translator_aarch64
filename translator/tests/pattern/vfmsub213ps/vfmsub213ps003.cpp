@@ -19,17 +19,13 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
+    setInputZregAllRandomFloat();
+    setDumpZRegMode(SP_DT); // set float mode
 
-    for (int i = 0; i < 8; i++) {
-      inputZReg[0].ud_dt[i] = ~uint64_t(0);
-      inputZReg[3].ud_dt[i] = ~uint64_t(0);
-      inputZReg[6].ud_dt[i] = ~uint64_t(0);
-    }
-    for (int i = 0; i < 8; i++) {
-      inputZReg[1].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-      inputZReg[4].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
-      inputZReg[7].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
+    for (unsigned int j = 0; j < NUM_Z_REG; j++) {
+      for (unsigned int i = 0; i < NUM_BYTES_Z_REG / sizeof(float); i++) {
+        inputZReg[j].sp_dt[i] = float((0.5 + i) * (j));
+      }
     }
   }
 
@@ -39,28 +35,59 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vxorps(Xmm(2), Xmm(0), Xmm(1));
-    vxorps(Ymm(5), Ymm(3), Ymm(4));
-    vxorps(Zmm(1), Zmm(3), Zmm(4));
+    size_t addr;
+    size_t addr1;
+    size_t addr2;
+    size_t addr3;
+    size_t addr4;
+    size_t addr5;
+    size_t addr6;
+    size_t addr7;
+    size_t addr8;
+    size_t addr9;
 
-    vxorps(Xmm(6), Xmm(7), Xmm(7));
-    vxorps(Xmm(8), Xmm(9), Xmm(8));
-    vxorps(Xmm(10), Xmm(10), Xmm(11));
-    vxorps(Xmm(12), Xmm(12), Xmm(1));
+/* Address is aligned */
+#if 1
+    /* VEX encode */
+    addr = reinterpret_cast<size_t>(&(inputZReg[2].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[4].ud_dt[0]));
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[5].ud_dt[0]));
+    addr3 = reinterpret_cast<size_t>(&(inputZReg[8].ud_dt[0]));
+    addr4 = reinterpret_cast<size_t>(&(inputZReg[9].ud_dt[0]));
 
-    vxorps(Ymm(13), Ymm(14), Ymm(14));
-    vxorps(Ymm(15), Ymm(16), Ymm(15));
-    vxorps(Ymm(17), Ymm(17), Ymm(18));
-    vxorps(Ymm(19), Ymm(19), Ymm(20));
+    mov(rax, addr);
+    vfmsub213ps(Ymm(0), Ymm(1), ptr[rax]);
+    mov(rax, addr1);
+    vfmsub213ps(Ymm(3), Ymm(3), ptr[rax]);
+    mov(rax, addr2);
+    vfmsub213ps(Ymm(5), Ymm(6), ptr[rax]);
+    mov(rax, addr3);
+    vfmsub213ps(Ymm(7), Ymm(8), ptr[rax]);
+    mov(rax, addr4);
+    vfmsub213ps(Ymm(9), Ymm(9), ptr[rax]);
 
-    vxorps(Zmm(21), Zmm(22), Zmm(22));
-    vxorps(Zmm(23), Zmm(24), Zmm(23));
-    vxorps(Zmm(25), Zmm(25), Zmm(26));
-    vxorps(Zmm(27), Zmm(27), Zmm(28));
+    /* EVEX encode */
+    addr5 = reinterpret_cast<size_t>(&(inputZReg[18].ud_dt[0]));
+    addr6 = reinterpret_cast<size_t>(&(inputZReg[20].ud_dt[0]));
+    addr7 = reinterpret_cast<size_t>(&(inputZReg[21].ud_dt[0]));
+    addr8 = reinterpret_cast<size_t>(&(inputZReg[23].ud_dt[0]));
+    addr9 = reinterpret_cast<size_t>(&(inputZReg[24].ud_dt[0]));
 
-    vxorps(Xmm(29), Xmm(29), Xmm(29));
-    vxorps(Ymm(30), Ymm(30), Ymm(30));
-    vxorps(Zmm(31), Zmm(31), Zmm(31));
+    mov(rax, addr5);
+    vfmsub213ps(Ymm(16), Ymm(17), ptr[rax]);
+    mov(rax, addr6);
+    vfmsub213ps(Ymm(19), Ymm(19), ptr[rax]);
+    mov(rax, addr7);
+    vfmsub213ps(Ymm(21), Ymm(22), ptr[rax]);
+    mov(rax, addr8);
+    vfmsub213ps(Ymm(22), Ymm(23), ptr[rax]);
+    mov(rax, addr9);
+    vfmsub213ps(Ymm(24), Ymm(24), ptr[rax]);
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+    mov(rbx,
+        size_t(0xf)); // Clear RAX for diff check between x86_64 and aarch64
+#endif
   }
 };
 

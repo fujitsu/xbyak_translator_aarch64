@@ -20,7 +20,8 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-
+#if 0
+    /*
     for (int i = 0; i < 8; i++) {
       inputZReg[0].ud_dt[i] = ~uint64_t(0);
       inputZReg[3].ud_dt[i] = ~uint64_t(0);
@@ -31,6 +32,8 @@ public:
       inputZReg[4].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
       inputZReg[7].ud_dt[i] = uint32_t(0xFF00FF00AA55AA55);
     }
+    */
+#endif
   }
 
   void setCheckRegFlagAll() {
@@ -39,28 +42,20 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vxorps(Xmm(2), Xmm(0), Xmm(1));
-    vxorps(Ymm(5), Ymm(3), Ymm(4));
-    vxorps(Zmm(1), Zmm(3), Zmm(4));
+    size_t addr;
 
-    vxorps(Xmm(6), Xmm(7), Xmm(7));
-    vxorps(Xmm(8), Xmm(9), Xmm(8));
-    vxorps(Xmm(10), Xmm(10), Xmm(11));
-    vxorps(Xmm(12), Xmm(12), Xmm(1));
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[7]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rax, addr);
 
-    vxorps(Ymm(13), Ymm(14), Ymm(14));
-    vxorps(Ymm(15), Ymm(16), Ymm(15));
-    vxorps(Ymm(17), Ymm(17), Ymm(18));
-    vxorps(Ymm(19), Ymm(19), Ymm(20));
+    vpsubd(Ymm(0), Ymm(1), ptr[rax]);
+    vpsubd(Ymm(2), Ymm(2), ptr[rax]);
 
-    vxorps(Zmm(21), Zmm(22), Zmm(22));
-    vxorps(Zmm(23), Zmm(24), Zmm(23));
-    vxorps(Zmm(25), Zmm(25), Zmm(26));
-    vxorps(Zmm(27), Zmm(27), Zmm(28));
+    vpsubd(Ymm(20), Ymm(21), ptr[rax]);
+    vpsubd(Ymm(22), Ymm(22), ptr[rax]);
 
-    vxorps(Xmm(29), Xmm(29), Xmm(29));
-    vxorps(Ymm(30), Ymm(30), Ymm(30));
-    vxorps(Zmm(31), Zmm(31), Zmm(31));
+    mov(rax, 5);
   }
 };
 
