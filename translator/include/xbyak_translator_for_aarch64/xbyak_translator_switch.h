@@ -2202,7 +2202,7 @@ case XED_ICLASS_VFRCZSS:
 case XED_ICLASS_VGATHERDPD:
   break;
 case XED_ICLASS_VGATHERDPS:
-  translateVGATHERDPS(&xedd);
+  //  translateVGATHERDPS(&xedd);
   break;
 case XED_ICLASS_VGATHERPF0DPD:
   break;
