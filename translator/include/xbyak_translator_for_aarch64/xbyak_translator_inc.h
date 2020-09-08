@@ -42,6 +42,7 @@
 #include "instructions/movq.h"
 #include "instructions/movsd.h"
 #include "instructions/movss.h"
+#include "instructions/movsx.h"
 #include "instructions/movups.h"
 #include "instructions/mulps.h"
 #include "instructions/mulss.h"

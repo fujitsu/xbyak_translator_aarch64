@@ -727,7 +727,7 @@ void movsldup(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x12, 0xF3, is
 void movss(const Address& addr, const Xmm& xmm) { db(0xF3); opModM(addr, xmm, 0x0F, 0x11); decodeAndTransToAArch64(); }
 void movss(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x10, 0xF3); decodeAndTransToAArch64(); }
 void movsw() { db(0x66); db(0xA5); UNIMPLEMENTED; }
-void movsx(const Reg& reg, const Operand& op) { opMovxx(reg, op, 0xBE); UNIMPLEMENTED; }
+void movsx(const Reg& reg, const Operand& op) { opMovxx(reg, op, 0xBE); decodeAndTransToAArch64(); }
 void movupd(const Address& addr, const Xmm& xmm) { db(0x66); opModM(addr, xmm, 0x0F, 0x11); UNIMPLEMENTED; }
 void movupd(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x10, 0x66); UNIMPLEMENTED; }
 void movups(const Address& addr, const Xmm& xmm) { opModM(addr, xmm, 0x0F, 0x11); decodeAndTransToAArch64(); }
