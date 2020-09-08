@@ -44,6 +44,7 @@
 #include "instructions/movss.h"
 #include "instructions/movsx.h"
 #include "instructions/movups.h"
+#include "instructions/movzx.h"
 #include "instructions/mulps.h"
 #include "instructions/mulss.h"
 #include "instructions/not.h"

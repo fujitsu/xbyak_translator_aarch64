@@ -45,6 +45,7 @@ movsd.h
 movss.h
 movsx.h
 movups.h
+movzx.h
 mulps.h
 mulss.h
 not.h

@@ -956,6 +956,7 @@ case XED_ICLASS_MOVUPS:
   translateMOVUPS(&xedd);
   break;
 case XED_ICLASS_MOVZX:
+  translateMOVZX(&xedd);
   break;
 case XED_ICLASS_MOV_CR:
   break;
