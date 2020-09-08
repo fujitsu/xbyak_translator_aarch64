@@ -111,35 +111,27 @@ void clearAll1Preg0_7() {
   P_ALL_ONE_0_7_IDX = XT_REG_INVALID;
 }
 
-uint64_t getTranslatorVersion(){
-  return translatorVersion;
-}
+uint64_t getTranslatorVersion() { return translatorVersion; }
 
-void unSetGenJitMode(){
-  genJitMode = false;
-}
+void unSetGenJitMode() { genJitMode = false; }
 
-void setGenJitMode(){
-  genJitMode = true;
-}
+void setGenJitMode() { genJitMode = true; }
 
-void initSearchPReg(){
-  for(int i = 0; i < NUM_PRED_REG_INTEL; i++){
+void initSearchPReg() {
+  for (int i = 0; i < NUM_PRED_REG_INTEL; i++) {
     availablePReg[i] = true;
     unusedPReg[i] = true;
   }
 }
 
-void initSearchZReg(){
-  for(int i = 0; i < NUM_Z_REG_INTEL; i++){
+void initSearchZReg() {
+  for (int i = 0; i < NUM_Z_REG_INTEL; i++) {
     availableZReg[i] = true;
     unusedZReg[i] = true;
   }
 }
 
-bool getGenJitMode(){
-  return genJitMode;
-}
+bool getGenJitMode() { return genJitMode; }
 
 void binCommit() {
   size_t num32bits = CodeArray::size_;
@@ -520,13 +512,13 @@ unsigned int xt_push_vreg(xt_a64fx_operands_structV3_t *a64) {
 }
 
 unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
-  for (int i = 0; i < 32; i++){
-    if (availableZReg[i] == true && unusedZReg[i] == true){
+  for (int i = 0; i < 32; i++) {
+    if (availableZReg[i] == true && unusedZReg[i] == true) {
       unusedZReg[i] = false;
       return i;
     }
   }
-  
+
   for (size_t i = AARCH64_NUM_ZREG - 1; i >= 0; i--) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i) {
       if (zreg_tmp_used[i] == false) {
@@ -557,13 +549,13 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
 }
 
 unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
-  for (int i = 0; i < 32; i++){
-    if (availableZReg[i] == true && unusedZReg[i] == true){
+  for (int i = 0; i < 32; i++) {
+    if (availableZReg[i] == true && unusedZReg[i] == true) {
       unusedZReg[i] = false;
       return i;
     }
   }
-  
+
   for (size_t i = AARCH64_NUM_ZREG - 1; i >= 0; i--) {
     bool conflict = false;
     if (zreg_tmp_used[i] == true) {
@@ -603,13 +595,13 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
 }
 
 unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
-  for (int i = 0; i < 8; i++){
-    if (availablePReg[i] == true && unusedPReg[i] == true){
+  for (int i = 0; i < 8; i++) {
+    if (availablePReg[i] == true && unusedPReg[i] == true) {
       unusedPReg[i] = false;
       return i;
     }
   }
-  
+
   for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
     if (a64->dstIdx != i && a64->srcIdx != i && a64->src2Idx != i &&
         a64->maskIdx != i && a64->mask2Idx != 0) {
@@ -642,13 +634,13 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
 
 unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
 
-  for (int i = 0; i < 8; i++){
-    if (availablePReg[i] == true && unusedPReg[i] == true){
+  for (int i = 0; i < 8; i++) {
+    if (availablePReg[i] == true && unusedPReg[i] == true) {
       unusedPReg[i] = false;
       return i;
     }
   }
-  
+
   for (size_t i = TMP_PREG_START; i >= TMP_PREG_END; i--) {
     bool conflict = false;
     if (preg_tmp_used[i] == true) {
@@ -690,13 +682,13 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
 void xt_pop_vreg() { xt_pop_zreg(); }
 
 void xt_pop_zreg() {
-  for (int i = 0; i < 32; i++){
-    if (availableZReg[i] == true && unusedZReg[i] == false){
+  for (int i = 0; i < 32; i++) {
+    if (availableZReg[i] == true && unusedZReg[i] == false) {
       unusedZReg[i] = true;
       return;
     }
   }
-  
+
   for (size_t i = 0; i < AARCH64_NUM_ZREG; i++) {
     if (zreg_tmp_used[i] == true) {
 #ifdef XT_AARCH64_STACK_REG
@@ -723,13 +715,13 @@ void xt_pop_zreg() {
 
 void xt_pop_preg() {
 
-  for (int i = 0; i < 8; i++){
-    if (availablePReg[i] == true && unusedPReg[i] == false){
+  for (int i = 0; i < 8; i++) {
+    if (availablePReg[i] == true && unusedPReg[i] == false) {
       unusedPReg[i] = true;
       return;
     }
   }
-  
+
   for (size_t i = TMP_PREG_END; i <= TMP_PREG_START; i++) {
     if (preg_tmp_used[i] == true) {
 #ifdef XT_AARCH64_STACK_REG
@@ -806,11 +798,11 @@ bool decodeOpcode(const Label *label = nullptr) {
 #ifdef XT_DEBUG
   xt_dump_x86_64_decoded_info(&xedd);
 #endif
-  
-  if(genJitMode == true){
+
+  if (genJitMode == true) {
     xed_iclass_enum_t p = xed_decoded_inst_get_iclass(&xedd);
 #include "xbyak_translator_switch.h"
-  }else{
+  } else {
     searchPReg(&xedd);
     searchZReg(&xedd);
   }
@@ -1284,13 +1276,14 @@ void searchPReg(xed_decoded_inst_t *p) {
     if (isReg == 1) { /* Operand is register */
       xed_reg_enum_t r = xed_decoded_inst_get_reg(p, opName);
       unsigned int tmpIdx = xt_get_register_index(r);
-      //bool isSet = false;
+      // bool isSet = false;
 
-      if( xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_MASK) {
-	if( availablePReg[tmpIdx] == true && tmpIdx != P_ALL_ONE_0_7_IDX){
-	  availablePReg[tmpIdx] = false;
-	  unusedPReg[tmpIdx] = false;
-	}
+      if (xed_reg_class(xed_decoded_inst_get_reg(p, opName)) ==
+          XED_REG_CLASS_MASK) {
+        if (availablePReg[tmpIdx] == true && tmpIdx != P_ALL_ONE_0_7_IDX) {
+          availablePReg[tmpIdx] = false;
+          unusedPReg[tmpIdx] = false;
+        }
       }
       continue; /* End of register operand process */
     }
@@ -1315,15 +1308,18 @@ void searchZReg(xed_decoded_inst_t *p) {
     if (isReg == 1) { /* Operand is register */
       xed_reg_enum_t r = xed_decoded_inst_get_reg(p, opName);
       unsigned int tmpIdx = xt_get_register_index(r);
-      //bool isSet = false;
+      // bool isSet = false;
 
-      if( xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_XMM
-	  || xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_YMM
-	  || xed_reg_class(xed_decoded_inst_get_reg(p, opName)) == XED_REG_CLASS_ZMM) {
-	if( availableZReg[tmpIdx] == true){
-	  availableZReg[tmpIdx] = false;
-	  unusedZReg[tmpIdx] = false;
-	}
+      if (xed_reg_class(xed_decoded_inst_get_reg(p, opName)) ==
+              XED_REG_CLASS_XMM ||
+          xed_reg_class(xed_decoded_inst_get_reg(p, opName)) ==
+              XED_REG_CLASS_YMM ||
+          xed_reg_class(xed_decoded_inst_get_reg(p, opName)) ==
+              XED_REG_CLASS_ZMM) {
+        if (availableZReg[tmpIdx] == true) {
+          availableZReg[tmpIdx] = false;
+          unusedZReg[tmpIdx] = false;
+        }
       }
       continue; /* End of register operand process */
     }
