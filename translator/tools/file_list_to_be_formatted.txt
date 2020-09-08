@@ -96,6 +96,7 @@ vbroadcastss.h
 vcmpps.h
 vcvtdq2ps.h
 vcvtps2dq.h
+vcvtsi2ss.h
 vdivps.h
 vdivss.h
 vextractf128.h
