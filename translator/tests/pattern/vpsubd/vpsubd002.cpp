@@ -51,9 +51,13 @@ public:
 
     vpsubd(Ymm(0), Ymm(1), ptr[rax]);
     vpsubd(Ymm(2), Ymm(2), ptr[rax]);
+    vpsubd(Zmm(3), Zmm(4), ptr[rax]);
+    vpsubd(Zmm(5), Zmm(5), ptr[rax]);
 
     vpsubd(Ymm(20), Ymm(21), ptr[rax]);
     vpsubd(Ymm(22), Ymm(22), ptr[rax]);
+    vpsubd(Zmm(23), Zmm(24), ptr[rax]);
+    vpsubd(Zmm(25), Zmm(25), ptr[rax]);
 
     mov(rax, 5);
   }

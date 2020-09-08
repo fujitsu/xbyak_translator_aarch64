@@ -1,19 +1,19 @@
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
- * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * Licensed under the Apache License, Version 2.0 (the License);
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * distributed under the License is distributed on an AS IS BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/08/28 11:19 */
+/* 2020/09/09 08:09 */
 #define CG64 CodeGeneratorAArch64
 void translateVPSUBD(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -22,10 +22,10 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64_opt, false, true);
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t src2Idx;
-  xt_reg_idx_t zTmpIdx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t src2Idx = XT_REG_INVALID;
+  xt_reg_idx_t zTmpIdx = XT_REG_INVALID;
 
   /* Col=T119*/
   if (false ||
@@ -96,10 +96,6 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
-       a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true) ||
-      (a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_MEM0 &&
-       a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.predType == A64_PRED_NO && a64.EVEXb == 1 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
@@ -138,6 +134,10 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].regClass == XED_REG_CLASS_YMM &&
+       a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true)) {
     zTmpIdx = xt_push_zreg(&a64);
   }
@@ -166,7 +166,11 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
-       a64.predType == A64_PRED_NO && true)) {
+       a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
+       a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true)) {
     dstIdx = a64.operands[0].regIdx;
   }
   /* Col=AA119*/
@@ -195,6 +199,7 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_YMM && true)) {
     src2Idx = a64.operands[2].regIdx;
   }
+
   /* Col=AD119*/
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -208,7 +213,11 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
-       a64.predType == A64_PRED_NO && true)) {
+       a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
+       a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true)) {
     srcIdx = a64.operands[2].regIdx;
   }
   /* Col=AE119*/
@@ -234,6 +243,10 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].regClass == XED_REG_CLASS_YMM &&
+       a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true)) {
     CG64::ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
@@ -248,9 +261,14 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].regClass == XED_REG_CLASS_YMM &&
+       a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true)) {
     src2Idx = zTmpIdx;
   }
+
   /* Col=AN119*/
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -280,9 +298,14 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
-       a64.predType == A64_PRED_NO && true)) {
+       a64.predType == A64_PRED_NO && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
+       a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true)) {
     CG64::sub(xa::ZRegS(dstIdx), xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
   }
+
   /* Col=BD119*/
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -301,6 +324,7 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
        a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true)) {
     CG64::mov(xa::ZReg(dstIdx).b, P_MSB_256 / xa::T_m, 0);
   }
+
   /* Col=BI119*/
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -312,6 +336,10 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].regClass == XED_REG_CLASS_YMM &&
+       a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true) ||
+      (a64.operands[2].opName == XED_OPERAND_REG2 &&
+       a64.operands[3].opName == XED_OPERAND_MEM0 &&
+       a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true)) {
     xt_pop_zreg();
   }
