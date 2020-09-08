@@ -22,40 +22,41 @@ void translateSUBPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64_opt, false, true);
   xt_construct_a64fx_operandsV3(p, &a64);
   bool isValid = false;
-  xt_reg_idx_t dstIdx;
-  xt_reg_idx_t srcIdx;
-  xt_reg_idx_t pTmpIdx;
+  xt_reg_idx_t dstIdx = XT_REG_INVALID;
+  xt_reg_idx_t srcIdx = XT_REG_INVALID;
+  xt_reg_idx_t pTmpIdx = XT_REG_INVALID;
 
   /* Col=T119*/
-  if(false ||(a64.operands[1].opName==XED_OPERAND_MEM0&&true)) {
+  if (false || (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     XT_UNIMPLEMENTED;
   }
   /* Col=U119*/
-  if(false ||(a64.operands[1].opName==XED_OPERAND_REG1&&true)) {
+  if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
     pTmpIdx = xt_push_preg(&a64);
   }
   /* Col=AD119*/
-  if(false ||(a64.operands[1].opName==XED_OPERAND_REG1&&true)) {
+  if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
     dstIdx = a64.operands[0].regIdx;
   }
   /* Col=AG119*/
-  if(false ||(a64.operands[1].opName==XED_OPERAND_REG1&&true)) {
+  if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
     srcIdx = a64.operands[1].regIdx;
   }
   /* Col=AJ119*/
-  if(false ||(a64.operands[1].opName==XED_OPERAND_REG1&&true)) {
+  if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
     CG64::not_(xa::PRegB(pTmpIdx), P_ALL_ONE.b, P_MSB_384.b);
   }
   /* Col=AO119*/
-  if(false ||(a64.operands[1].opName==XED_OPERAND_REG1&&true)) {
+  if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
     CG64::fsub(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx), xa::ZRegS(srcIdx));
   }
   /* Col=BJ119*/
-  if(false ||(a64.operands[1].opName==XED_OPERAND_REG1&&true)) {
+  if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
     xt_pop_preg();
   }
   /* Col=BQ119*/
-  if(false ||(a64.operands[1].opName==XED_OPERAND_REG1&&true)||(a64.operands[1].opName==XED_OPERAND_MEM0&&true)) {
+  if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
+      (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     XT_VALID_CHECK;
   }
   XT_VALID_CHECK_IF;
