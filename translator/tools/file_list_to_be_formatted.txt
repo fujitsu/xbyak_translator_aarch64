@@ -81,6 +81,7 @@ shlx.h
 shr.h
 shufps.h
 sub.h
+subps.h
 test.h
 vaddps.h
 vaddss.h
@@ -97,13 +98,18 @@ vcmpps.h
 vcvtdq2ps.h
 vcvtps2dq.h
 vdivps.h
+vdivss.h
+vextractf128.h
 vextractf64x4.h
 vextracti32x8.h
 vfixupimmps.h
 vfmadd132ps.h
 vfmadd213ps.h
 vfmadd231ps.h
+vfmadd231ss.h
+vfmsub213ps.h
 vfnmadd231ps.h
+vgatherdps.h
 vgatherqps.h
 vinsertf128.h
 vinsertf64x4.h
@@ -128,6 +134,7 @@ vmovsd.h
 vmovss.h
 vmovups.h
 vmulps.h
+vmulss.h
 vorps.h
 vpaddb.h
 vpaddd.h
@@ -179,6 +186,7 @@ vpslld.h
 vpsrad.h
 vpsrld.h
 vpsubb.h
+vpsubd.h
 vptestmd.h
 vpunpckhbw.h
 vpunpckhqdq.h
@@ -199,6 +207,7 @@ vshufpd.h
 vshufps.h
 vsqrtps.h
 vsubps.h
+vsubss.h
 vtestps.h
 vucomiss.h
 vunpckhpd.h
