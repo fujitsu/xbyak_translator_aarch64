@@ -1690,6 +1690,7 @@ case XED_ICLASS_SUB:
 case XED_ICLASS_SUBPD:
   break;
 case XED_ICLASS_SUBPS:
+  translateSUBPS(&xedd);
   break;
 case XED_ICLASS_SUBSD:
   break;
@@ -1958,6 +1959,7 @@ case XED_ICLASS_VDIVPS:
 case XED_ICLASS_VDIVSD:
   break;
 case XED_ICLASS_VDIVSS:
+  translateVDIVSS(&xedd);
   break;
 case XED_ICLASS_VDPBF16PS:
   break;
@@ -1978,6 +1980,7 @@ case XED_ICLASS_VEXPANDPD:
 case XED_ICLASS_VEXPANDPS:
   break;
 case XED_ICLASS_VEXTRACTF128:
+  translateVEXTRACTF128(&xedd);
   break;
 case XED_ICLASS_VEXTRACTF32X4:
   break;
@@ -2036,6 +2039,7 @@ case XED_ICLASS_VFMADD231PS:
 case XED_ICLASS_VFMADD231SD:
   break;
 case XED_ICLASS_VFMADD231SS:
+  translateVFMADD231SS(&xedd);
   break;
 
 case XED_ICLASS_VFMADDPD:
@@ -2073,6 +2077,7 @@ case XED_ICLASS_VFMSUB132SS:
 case XED_ICLASS_VFMSUB213PD:
   break;
 case XED_ICLASS_VFMSUB213PS:
+  translateVFMSUB213PS(&xedd);
   break;
 case XED_ICLASS_VFMSUB213SD:
   break;
@@ -2194,6 +2199,7 @@ case XED_ICLASS_VFRCZSS:
 case XED_ICLASS_VGATHERDPD:
   break;
 case XED_ICLASS_VGATHERDPS:
+  translateVGATHERDPS(&xedd);
   break;
 case XED_ICLASS_VGATHERPF0DPD:
   break;
@@ -2412,6 +2418,7 @@ case XED_ICLASS_VMULPS:
 case XED_ICLASS_VMULSD:
   break;
 case XED_ICLASS_VMULSS:
+  translateVMULSS(&xedd);
   break;
 case XED_ICLASS_VMWRITE:
   break;
@@ -3087,6 +3094,7 @@ case XED_ICLASS_VPSUBB:
   translateVPSUBB(&xedd);
   break;
 case XED_ICLASS_VPSUBD:
+  translateVPSUBD(&xedd);
   break;
 case XED_ICLASS_VPSUBQ:
   break;
@@ -3296,6 +3304,7 @@ case XED_ICLASS_VSUBPS:
 case XED_ICLASS_VSUBSD:
   break;
 case XED_ICLASS_VSUBSS:
+  translateVSUBSS(&xedd);
   break;
 case XED_ICLASS_VTESTPD:
   break;
