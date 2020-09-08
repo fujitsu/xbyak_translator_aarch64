@@ -22,53 +22,46 @@ public:
     setInputZregAllRandomHex();
 
     inputPredReg[1] = (1 << 0);
-    inputPredReg[2] = (1 << 0) | (1 << 7) |           /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 28); /* aarch64 */
-    inputPredReg[3] = (1 << 0) | (1 << 7) | (1 << 11) |
-                      (uint64_t(1) << 15) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 28) | (uint64_t(1) << 44) |
-                      (uint64_t(1) << 60); /* aarch64 */
-    inputPredReg[4] = (1 << 0) | (1 << 7) | (1 << 11) | (1 << 13) |
-                      (uint64_t(1) << 15) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 28) | (uint64_t(1) << 44) |
-                      (uint64_t(1) << 52) | (uint64_t(1) << 60); /* aarch64 */
-    inputPredReg[5] = (1 << 0) | (1 << 9) | (1 << 11) | (1 << 13) | (1 << 14) |
-                      (uint64_t(1) << 15) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 36) | (uint64_t(1) << 44) |
-                      (uint64_t(1) << 52) | (uint64_t(1) << 56) |
-                      (uint64_t(1) << 60); /* aarch64 */
+#ifndef __ARM_ARCH /* x86_64 */
+    inputPredReg[2] = (1 << 0) | (1 << 7);
+    inputPredReg[3] = (1 << 0) | (1 << 7) | (1 << 11) | (uint64_t(1) << 15);
+    inputPredReg[4] = (1 << 0) | (1 << 7) | (1 << 11) | (1 << 13) | (uint64_t(1) << 15);
+    inputPredReg[5] = (1 << 0) | (1 << 9) | (1 << 11) | (1 << 13) | (1 << 14) | (uint64_t(1) << 15);
     inputPredReg[6] = (1 << 0) | (1 << 9) | (1 << 10) | (1 << 11) | (1 << 13) |
-                      (uint64_t(1) << 14) | (uint64_t(1) << 15) | /* x86_64 */
-                      (1 << 0) | (uint64_t(1) << 36) | (uint64_t(1) << 40) |
+                      (uint64_t(1) << 14) | (uint64_t(1) << 15);
+    
+#else /* aarch64 */
+    inputPredReg[2] = (1 << 0) | (uint64_t(1) << 28);
+    inputPredReg[3] = (1 << 0) | (uint64_t(1) << 28) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 60); 
+    inputPredReg[4] = (1 << 0) | (uint64_t(1) << 28) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 52) | (uint64_t(1) << 60);
+    inputPredReg[5] = (1 << 0) | (uint64_t(1) << 36) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 52) | (uint64_t(1) << 56) |
+                      (uint64_t(1) << 60); 
+    inputPredReg[6] = (1 << 0) | (uint64_t(1) << 36) | (uint64_t(1) << 40) |
                       (uint64_t(1) << 44) | (uint64_t(1) << 52) |
-                      (uint64_t(1) << 56) | (uint64_t(1) << 60); /* aarch64 */
+                      (uint64_t(1) << 56) | (uint64_t(1) << 60); 
+#endif
     inputPredReg[7] = ~uint64_t(0);
 
+
     for (int i = 0; i < 8; i++) {
-      // inputZReg[21].ud_dt[i] = i*64;
       inputZReg[21].ud_dt[i] = i * 4;
-      inputZReg[4].ud_dt[i] = 0;
     }
 
     for (int i = 2; i < 4; i++) {
-      // inputZReg[21].ud_dt[i] = i*64;
       inputZReg[21].ud_dt[i] = 16;
-      inputZReg[4].ud_dt[i] = 0;
     }
 
     for (int i = 4; i < 6; i++) {
-      // inputZReg[21].ud_dt[i] = i*64;
       inputZReg[21].ud_dt[i] = 32;
-      inputZReg[4].ud_dt[i] = 0;
     }
 
     for (int i = 6; i < 8; i++) {
-      // inputZReg[21].ud_dt[i] = i*64;
       inputZReg[21].ud_dt[i] = 64;
-      inputZReg[4].ud_dt[i] = 0;
     }
 
-    // setInputZregAllRandomFloat();
   }
 
   void setCheckRegFlagAll() {
@@ -80,7 +73,7 @@ public:
     size_t addr;
 
     /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[31].ud_dt[0]));
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
 
     mov(rax, addr);
 
