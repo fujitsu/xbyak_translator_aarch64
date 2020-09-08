@@ -1906,6 +1906,7 @@ case XED_ICLASS_VCVTSD2USI:
 case XED_ICLASS_VCVTSI2SD:
   break;
 case XED_ICLASS_VCVTSI2SS:
+  translateVCVTSI2SS(&xedd);
   break;
 case XED_ICLASS_VCVTSS2SD:
   break;

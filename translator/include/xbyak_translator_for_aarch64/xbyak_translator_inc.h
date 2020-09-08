@@ -95,6 +95,7 @@
 #include "instructions/vcmpps.h"
 #include "instructions/vcvtdq2ps.h"
 #include "instructions/vcvtps2dq.h"
+#include "instructions/vcvtsi2ss.h"
 #include "instructions/vdivps.h"
 #include "instructions/vdivss.h"
 #include "instructions/vextractf128.h"
