@@ -270,6 +270,7 @@ case XED_ICLASS_CRC32:
 case XED_ICLASS_CVTDQ2PD:
   break;
 case XED_ICLASS_CVTDQ2PS:
+  translateCVTDQ2PS(&xedd);
   break;
 case XED_ICLASS_CVTPD2DQ:
   break;
@@ -282,6 +283,7 @@ case XED_ICLASS_CVTPI2PD:
 case XED_ICLASS_CVTPI2PS:
   break;
 case XED_ICLASS_CVTPS2DQ:
+  translateCVTPS2DQ(&xedd);
   break;
 case XED_ICLASS_CVTPS2PD:
   break;
@@ -1111,6 +1113,7 @@ case XED_ICLASS_PDEP:
 case XED_ICLASS_PEXT:
   break;
 case XED_ICLASS_PEXTRB:
+  translatePEXTRB(&xedd);
   break;
 case XED_ICLASS_PEXTRD:
   translatePEXTRD(&xedd);

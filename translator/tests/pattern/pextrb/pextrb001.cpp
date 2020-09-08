@@ -20,6 +20,9 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
+    for(int i=0; i<16; i++) {
+      inputZReg[i].ub_dt[i] = (i << 4) + i;
+    }
   }
 
   void setCheckRegFlagAll() {
@@ -28,17 +31,22 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vandps(Ymm(2), Ymm(0), Ymm(1));
-    vandps(Ymm(3), Ymm(3), Ymm(4));
-    vandps(Ymm(5), Ymm(6), Ymm(5));
-    vandps(Ymm(8), Ymm(7), Ymm(7));
-    vandps(Ymm(9), Ymm(9), Ymm(9));
+    size_t addr;
 
-    vandps(Ymm(22), Ymm(20), Ymm(21));
-    vandps(Ymm(23), Ymm(23), Ymm(24));
-    vandps(Ymm(25), Ymm(26), Ymm(25));
-    vandps(Ymm(28), Ymm(27), Ymm(27));
-    vandps(Ymm(29), Ymm(29), Ymm(29));
+    /* Address is aligned */
+    addr = reinterpret_cast<size_t>(&(inputZReg[31].ub_dt[0]));
+    std::cout << "Address is " << std::hex << addr << std::endl;
+    mov(rax, addr);
+
+    /* Register index is within SSE range. */
+    for (int i = 0; i < 16; i++) {
+      std::cout << "tmp:" << i << std::endl;
+      pextrb(ptr[rax], Xmm(i), i);
+      vmovdqu8(Zmm(16 + i), ptr[rax]);
+    }
+
+    mov(rax,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
   }
 };
 

@@ -28,17 +28,20 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vandps(Ymm(2), Ymm(0), Ymm(1));
-    vandps(Ymm(3), Ymm(3), Ymm(4));
-    vandps(Ymm(5), Ymm(6), Ymm(5));
-    vandps(Ymm(8), Ymm(7), Ymm(7));
-    vandps(Ymm(9), Ymm(9), Ymm(9));
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
+     * r15 */
+    size_t addr1, addr2;
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[0].sp_dt[0]));
+    addr2 = reinterpret_cast<size_t>(&(inputZReg[20].sp_dt[0]));
+    mov(rax, addr1);
+    mov(rcx, addr2);
 
-    vandps(Ymm(22), Ymm(20), Ymm(21));
-    vandps(Ymm(23), Ymm(23), Ymm(24));
-    vandps(Ymm(25), Ymm(26), Ymm(25));
-    vandps(Ymm(28), Ymm(27), Ymm(27));
-    vandps(Ymm(29), Ymm(29), Ymm(29));
+    /* Register index is VEX range. */
+    cvtdq2ps(Xmm(1), ptr[rax]);
+    cvtdq2ps(Xmm(4), ptr[rcx]);
+
+    mov(rax, 5);
+    mov(rcx, 7);
   }
 };
 

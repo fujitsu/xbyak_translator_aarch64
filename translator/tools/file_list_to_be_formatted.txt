@@ -19,6 +19,8 @@ blendvps.h
 cmovnle.h
 cmp.h
 cmpps.h
+cvtdq2ps.h
+cvtps2dq.h
 dec.h
 imul.h
 inc.h
@@ -48,6 +50,7 @@ not.h
 or.h
 paddd.h
 pause.h
+pextrb.h
 pextrd.h
 phaddw.h
 pinsrb.h

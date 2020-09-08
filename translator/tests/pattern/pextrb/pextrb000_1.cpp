@@ -28,17 +28,16 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vandps(Ymm(2), Ymm(0), Ymm(1));
-    vandps(Ymm(3), Ymm(3), Ymm(4));
-    vandps(Ymm(5), Ymm(6), Ymm(5));
-    vandps(Ymm(8), Ymm(7), Ymm(7));
-    vandps(Ymm(9), Ymm(9), Ymm(9));
 
-    vandps(Ymm(22), Ymm(20), Ymm(21));
-    vandps(Ymm(23), Ymm(23), Ymm(24));
-    vandps(Ymm(25), Ymm(26), Ymm(25));
-    vandps(Ymm(28), Ymm(27), Ymm(27));
-    vandps(Ymm(29), Ymm(29), Ymm(29));
+    /* Register index is within SSE range. */
+    pextrb(r8, Xmm(0), 0);
+    pextrb(r9, Xmm(1), 1);
+    pextrb(r10, Xmm(2), 2);
+    pextrb(r11, Xmm(3), 4);
+    pextrb(r12, Xmm(4), 8);
+    pextrb(r13, Xmm(5), 15);
+    pextrb(r14, Xmm(6), 6);
+    pextrb(r15, Xmm(7), 7);
   }
 };
 

@@ -19,7 +19,58 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    setInputZregAllRandomHex();
+    //    setDumpZRegMode(SP_DT);
+    setInputZregAllRandomFloat();
+
+    inputZReg[0].sp_dt[0] = 0.0f;
+    inputZReg[0].sp_dt[1] = 0.4f;
+    inputZReg[0].sp_dt[2] = 0.5f;
+    inputZReg[0].sp_dt[3] = 0.6f;
+
+    inputZReg[1].sp_dt[0] = 1.4f;
+    inputZReg[1].sp_dt[1] = 1.5f;
+    inputZReg[1].sp_dt[2] = 1.6f;
+    inputZReg[1].sp_dt[3] = 2.4f;
+
+    inputZReg[2].sp_dt[0] = 2.5f;
+    inputZReg[2].sp_dt[1] = 2.6f;
+    inputZReg[2].sp_dt[2] = 3.5f;
+    inputZReg[2].sp_dt[3] = 4.5f;
+
+    inputZReg[3].sp_dt[0] = 5.5f;
+    inputZReg[3].us_dt[1] = 0x4efffffd;
+    inputZReg[3].us_dt[2] = 0x4efffffe;
+    inputZReg[3].us_dt[3] =
+        0x4effffff; /* max float number represented by int32_t */
+
+    inputZReg[4].sp_dt[0] = 0.0f;
+    inputZReg[4].sp_dt[1] = -0.4f;
+    inputZReg[4].sp_dt[2] = -0.5f;
+    inputZReg[4].sp_dt[3] = -0.6f;
+    inputZReg[5].sp_dt[0] = -1.4f;
+    inputZReg[5].sp_dt[1] = -1.5f;
+    inputZReg[5].sp_dt[2] = -1.6f;
+    inputZReg[5].sp_dt[3] = -2.4f;
+    inputZReg[6].sp_dt[0] = -2.5f;
+    inputZReg[6].sp_dt[1] = -2.6f;
+    inputZReg[6].sp_dt[2] = -3.5f;
+    inputZReg[6].sp_dt[3] = -4.5f;
+    inputZReg[7].sp_dt[0] = -5.5f;
+    inputZReg[7].us_dt[1] = 0xcefffffd;
+    inputZReg[7].us_dt[2] = 0xcefffffe;
+    inputZReg[7].us_dt[3] =
+        0xceffffff; /* min float number represented by int32_t */
+
+
+    /*    for (int j = 2; j < 32; j++) {
+      for (int i = 0; i < 16; i++) {
+        while (inputZReg[j].sp_dt[i] < -2.14748352e+9 ||
+               2.14748352e+9 < inputZReg[j].sp_dt[i]) {
+          inputZReg[j].uh_dt[2 * i + 0] = getLfsr();
+          inputZReg[j].uh_dt[2 * i + 1] = getLfsr();
+        }
+      }
+      }*/
   }
 
   void setCheckRegFlagAll() {
@@ -28,17 +79,21 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    vandps(Ymm(2), Ymm(0), Ymm(1));
-    vandps(Ymm(3), Ymm(3), Ymm(4));
-    vandps(Ymm(5), Ymm(6), Ymm(5));
-    vandps(Ymm(8), Ymm(7), Ymm(7));
-    vandps(Ymm(9), Ymm(9), Ymm(9));
+    /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
+     * r15 */
+    set_rnd_mode(mkldnn_round_nearest);
+    size_t addr;
 
-    vandps(Ymm(22), Ymm(20), Ymm(21));
-    vandps(Ymm(23), Ymm(23), Ymm(24));
-    vandps(Ymm(25), Ymm(26), Ymm(25));
-    vandps(Ymm(28), Ymm(27), Ymm(27));
-    vandps(Ymm(29), Ymm(29), Ymm(29));
+    /* Register index is VEX range. */
+    for(int i=0; i<8; i++) {
+      addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
+      mov(rbx, addr);
+      cvtps2dq(Xmm(8+i), ptr[rbx]);
+    }
+
+    mov(rbx,
+        size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
+
   }
 };
 
