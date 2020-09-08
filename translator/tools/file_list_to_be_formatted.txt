@@ -43,6 +43,7 @@ movhlps.h
 movq.h
 movsd.h
 movss.h
+movsx.h
 movups.h
 mulps.h
 mulss.h
