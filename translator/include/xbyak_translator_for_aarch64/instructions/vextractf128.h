@@ -28,26 +28,26 @@ void translateVEXTRACTF128(xed_decoded_inst_t *p) {
   uint uimm;
 
   /* Col=T119*/
-  if(false ||(a64.operands[0].opName==XED_OPERAND_MEM0&&true)) {
+  if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 && true)) {
     XT_UNIMPLEMENTED;
   }
   /* Col=AD119*/
-  if(false ||(a64.operands[0].opName==XED_OPERAND_REG0&&true)) {
+  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 && true)) {
     dstIdx = a64.operands[0].regIdx;
   }
   /* Col=AG119*/
-  if(false ||(a64.operands[0].opName==XED_OPERAND_REG0&&true)) {
+  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 && true)) {
     srcIdx = a64.operands[1].regIdx;
   }
   /* Col=AH119*/
-  if(false ||(a64.operands[0].opName==XED_OPERAND_REG0&&true)) {
+  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 && true)) {
     uimm = a64.operands[2].uimm;
   }
   /* Col=AK119*/
-  if(false ||(a64.operands[0].opName==XED_OPERAND_REG0&&true)) {
-    if( (uimm & 1) == 0){
+  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 && true)) {
+    if ((uimm & 1) == 0) {
       CG64::mov(xa::VReg(dstIdx).b16, xa::VReg(srcIdx).b16);
-    }else{
+    } else {
       zTmpIdx = xt_push_zreg(&a64);
       CG64::mov(xa::ZRegD(zTmpIdx), xa::ZRegD(srcIdx));
       CG64::ext(xa::ZRegB(zTmpIdx), xa::ZRegB(srcIdx), 16);
@@ -56,7 +56,8 @@ void translateVEXTRACTF128(xed_decoded_inst_t *p) {
     }
   }
   /* Col=BQ119*/
-  if(false ||(a64.operands[0].opName==XED_OPERAND_REG0&&true)||(a64.operands[0].opName==XED_OPERAND_MEM0&&true)) {
+  if (false || (a64.operands[0].opName == XED_OPERAND_REG0 && true) ||
+      (a64.operands[0].opName == XED_OPERAND_MEM0 && true)) {
     XT_VALID_CHECK;
   }
   XT_VALID_CHECK_IF;
