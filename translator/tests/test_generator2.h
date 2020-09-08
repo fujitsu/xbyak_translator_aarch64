@@ -47,6 +47,10 @@ typedef enum {
   mkldnn_round_nearest = 1,
   /** Round down */
   mkldnn_round_down = 2,
+  /** Round up */
+  mkldnn_round_up = 3,
+  /** Round zero */
+  mkldnn_round_zero = 4
 } mkldnn_round_mode_t;
 
 using namespace Xbyak;
@@ -124,6 +128,12 @@ void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
   case mkldnn_round_down:
     mxcsr |= (1u << 13);
     break;
+  case mkldnn_round_up:
+    mxcsr |= (1u << 14);
+    break;
+  case mkldnn_round_zero:
+    mxcsr |= (1u << 13) | (1u << 14);
+    break;
   default:
     assert(!"unreachable");
   }
@@ -145,6 +155,12 @@ void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
     break;
   case mkldnn_round_down:
     fpcr |= (2u << 22);
+    break;
+  case mkldnn_round_up:
+    fpcr |= (1u << 22);
+    break;
+  case mkldnn_round_zero:
+    fpcr |= (3u << 22);
     break;
   default:
     assert(!"unreachable");
