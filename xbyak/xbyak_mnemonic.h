@@ -732,7 +732,7 @@ void movupd(const Address& addr, const Xmm& xmm) { db(0x66); opModM(addr, xmm, 0
 void movupd(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x10, 0x66); UNIMPLEMENTED; }
 void movups(const Address& addr, const Xmm& xmm) { opModM(addr, xmm, 0x0F, 0x11); decodeAndTransToAArch64(); }
 void movups(const Xmm& xmm, const Operand& op) { opMMX(xmm, op, 0x10, 0x100); decodeAndTransToAArch64(); }
-void movzx(const Reg& reg, const Operand& op) { opMovxx(reg, op, 0xB6); UNIMPLEMENTED; }
+void movzx(const Reg& reg, const Operand& op) { opMovxx(reg, op, 0xB6); decodeAndTransToAArch64(); }
 void mpsadbw(const Xmm& xmm, const Operand& op, int imm) { opGen(xmm, op, 0x42, 0x66, isXMM_XMMorMEM, static_cast<uint8>(imm), 0x3A); UNIMPLEMENTED; }
 void mul(const Operand& op) { opR_ModM(op, 0, 4, 0xF6); UNIMPLEMENTED; }
 void mulpd(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x59, 0x66, isXMM_XMMorMEM); UNIMPLEMENTED; }
