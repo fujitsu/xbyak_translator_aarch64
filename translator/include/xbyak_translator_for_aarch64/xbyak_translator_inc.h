@@ -19,6 +19,7 @@
 #include "instructions/addss.h"
 #include "instructions/and.h"
 #include "instructions/blendvps.h"
+#include "instructions/cmovl.h"
 #include "instructions/cmovnle.h"
 #include "instructions/cmovz.h"
 #include "instructions/cmp.h"
