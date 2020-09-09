@@ -2640,6 +2640,7 @@ case XED_ICLASS_VPERMI2D:
 case XED_ICLASS_VPERMI2PD:
   break;
 case XED_ICLASS_VPERMI2PS:
+  translateVPERMI2PS(&xedd);
   break;
 case XED_ICLASS_VPERMI2Q:
   break;
