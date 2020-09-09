@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -20,6 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
+    inputZReg[0].ud_dt[0] = uint64_t(0xabcd0123456789ab);
   }
 
   void setCheckRegFlagAll() {
@@ -28,42 +28,69 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
+    /* Here write JIT code with x86_64 mnemonic function to be tested. */
+    /* RAX, RCX, RDX, RBX, RSP, RBP, RSI, RDI,
+       R8,  R9,  R10, R11, R12, R13, R14, R15 */
+#define CMOV cmovnle
+    
+    size_t addr;
 
-    mov(r8, int64_t(0x8));
-    mov(r9, int64_t(0x9));
-    mov(r10, int64_t(0x1));
-    // mov(r11, int64_t(0x4));
-    /*
-    //    mov(r11, int64_t(0x0));
-    mov(rax, int64_t(0));
-    mov(r12, int64_t(0xFFFFFFFFFFFFFFFF));
-    //    mov(r13, int64_t(0x0));
-    mov(r14, int64_t(0x8000000000000000));
-    mov(r15, int64_t(0x7FFFFFFFFFFFFFFF));
-    */
-    //    mov(r11, int64_t(0x0));
-    and_(r10, uint32_t(0x4));
-    mov(r12, int64_t(0xFFFF000000000000));
-    //    mov(r13, int64_t(0x0));
-    mov(r14, int64_t(0x8000000000000000));
-    mov(r15, int64_t(0x7FFF000000000000));
+    mov(r8, ~uint64_t(0));
+    mov(r9, ~uint64_t(0));
+    mov(r10, ~uint64_t(0));
+    mov(r11, ~uint64_t(0));
+    mov(r12, ~uint64_t(0));
+    mov(r13, ~uint64_t(0));
+    mov(rbp, ~uint64_t(0));
+    mov(rsi, ~uint64_t(0));
+    mov(rdi, ~uint64_t(0));
 
-    cmp(r14, r13); // (ZF,SF,OF) = (0,1,0)
+    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
+    mov(r15, addr);
+    
+    mov(rax, uint64_t(2));
+    mov(rcx, uint64_t(1));
 
-    /*
-    #ifdef XBYAK_TRANSLATE_AARCH64
-        Xbyak_aarch64::XReg x_tmpFlag{x0};
-        mrs(x_tmpFlag, 0x3, 0x3, 0x4, 0x2, 0x0);
-    #endif
-    */
-    cmovg(r9, r8);
+    // 64 bits
+    // equal
+    cmp(rax, rax);
+    CMOV(r8, ptr[r15]);
 
-    //#ifdef XBYAK_TRANSLATE_AARCH64
-    //      Xbyak_aarch64::XReg x_tmpFlag{x0};
-    //      Xbyak_aarch64::XReg y_tmpFlag{x12};
-    //      msr(0x3, 0x3, 0x4, 0x2, 0x0, y_tmpFlag);
-    //      mrs(x_tmpFlag, 0x3, 0x3, 0x4, 0x2, 0x0);
-    //#endif
+    // greater 
+    cmp(rax, rcx);
+    CMOV(r9, ptr[r15]);
+
+    // less
+    cmp(rcx, rax);
+    CMOV(r10, ptr[r15]);
+
+    // 32 bits
+    // equal
+    cmp(rax, rax);
+    CMOV(r11d, ptr[r15]);
+
+    // greater 
+    cmp(rax, rcx);
+    CMOV(r12d, ptr[r15]);
+
+    // less
+    cmp(rcx, rax);
+    CMOV(r13d, ptr[r15]);
+
+    // 16 bits
+    // equal
+    cmp(rax, rax);
+    CMOV(bp, ptr[r15]);
+
+    // greater 
+    cmp(rax, rcx);
+    CMOV(si, ptr[r15]);
+
+    // less
+    cmp(rcx, rax);
+    CMOV(di, ptr[r15]);
+
+    mov(r15, 5);
   }
 };
 
