@@ -2249,6 +2249,7 @@ case XED_ICLASS_VGF2P8MULB:
 case XED_ICLASS_VHADDPD:
   break;
 case XED_ICLASS_VHADDPS:
+  translateVHADDPS(&xedd);
   break;
 case XED_ICLASS_VHSUBPD:
   break;
