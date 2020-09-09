@@ -82,11 +82,13 @@ public:
      * r15 */
 
     size_t addr0, addr1, addr2, addr3;
-    std::vector<mkldnn_round_mode_t> rmode = {mkldnn_round_nearest, mkldnn_round_down, mkldnn_round_up, mkldnn_round_zero};
+    std::vector<mkldnn_round_mode_t> rmode = { mkldnn_round_nearest, mkldnn_round_down, mkldnn_round_up, mkldnn_round_zero };
+    std::vector<Xbyak::EvexModifierRounding> sae = { T_rn_sae, T_rd_sae, T_ru_sae, T_rz_sae };
     int j = 0;
     
     for(const auto& e : rmode) {
-      set_rnd_mode(e);
+      set_rnd_mode(e); /* This setup makes no sence, because the rounding mode set by operands.
+			  This is to make sure the MXCSR flags is ignored. */
       for(int i=0; i<16; i++) {
 	addr0 = reinterpret_cast<size_t>(&(inputZReg[2*j+0].us_dt[i]));
 	addr1 = reinterpret_cast<size_t>(&(inputZReg[2*j+1].us_dt[i]));
@@ -100,8 +102,8 @@ public:
 	vmovups(Xmm(8), ptr[rcx]);    /* Register index is VEX range. */
 	vmovups(Xmm(31), ptr[rdx]);    /* Register index is EVEX range. */
 	
-	vcvtss2si(rcx, Xmm(8)); /* Instruction under test */
-	vcvtss2si(rdx, Xmm(31)); /* Instruction under test */
+	vcvtss2si(rcx, Xmm(8) | sae[j]); /* Instruction under test */
+	vcvtss2si(rdx, Xmm(31) | sae[j]); /* Instruction under test */
 	
 	mov(rbp, addr2);
 	mov(rsi, addr3);
