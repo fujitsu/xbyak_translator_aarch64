@@ -103,6 +103,8 @@ vbroadcastss.h
 vcmpps.h
 vcvtdq2ps.h
 vcvtps2dq.h
+vcvtsi2ss.h
+vcvtss2si.h
 vdivps.h
 vdivss.h
 vextractf128.h
@@ -117,6 +119,7 @@ vfmsub213ps.h
 vfnmadd231ps.h
 vgatherdps.h
 vgatherqps.h
+vhaddps.h
 vinsertf128.h
 vinsertf64x4.h
 vinserti32x4.h

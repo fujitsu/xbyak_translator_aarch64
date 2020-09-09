@@ -1913,10 +1913,12 @@ case XED_ICLASS_VCVTSD2USI:
 case XED_ICLASS_VCVTSI2SD:
   break;
 case XED_ICLASS_VCVTSI2SS:
+  translateVCVTSI2SS(&xedd);
   break;
 case XED_ICLASS_VCVTSS2SD:
   break;
 case XED_ICLASS_VCVTSS2SI:
+  translateVCVTSS2SI(&xedd);
   break;
 case XED_ICLASS_VCVTSS2USI:
   break;
@@ -2254,6 +2256,7 @@ case XED_ICLASS_VGF2P8MULB:
 case XED_ICLASS_VHADDPD:
   break;
 case XED_ICLASS_VHADDPS:
+  translateVHADDPS(&xedd);
   break;
 case XED_ICLASS_VHSUBPD:
   break;

@@ -18,7 +18,7 @@ void translateVPSLLD(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-  /* 2020/03/18 15:15 */
+  /* 2020/09/09 16:05 */
   bool isValid = false;
 #define CG64 CodeGeneratorAArch64
 
@@ -105,8 +105,6 @@ void translateVPSLLD(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.srcType == A64_OP_MEM && a64.src2Type == A64_OP_IMM && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
-       a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_IMM && true) ||
-      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_MEM && a64.src2Type == A64_OP_IMM && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 1 &&
        a64.srcType == A64_OP_MEM && a64.src2Type == A64_OP_IMM && true) ||
@@ -126,6 +124,8 @@ void translateVPSLLD(xed_decoded_inst_t *p) {
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_IMM && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
+       a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_IMM && true) ||
+      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_IMM && true)) {
     CodeGeneratorAArch64::lsl(xa::ZRegS(a64.dstIdx), xa::ZRegS(a64.srcIdx),
                               a64.uimm);
@@ -141,6 +141,19 @@ void translateVPSLLD(xed_decoded_inst_t *p) {
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_IMM && true)) {
     CodeGeneratorAArch64::mov(xa::ZReg(a64.dstIdx).s, P_MSB_256 / xa::T_m, 0);
+  }
+
+  /* Col=AP143*/
+  if (false ||
+      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
+       a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_IMM && true)) {
+    CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, xa::PRegB(a64.maskIdx));
+  }
+  /* Col=AQ143*/
+  if (false ||
+      (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
+       a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_IMM && true)) {
+    CodeGeneratorAArch64::mov(xa::ZRegS(a64.dstIdx), P_TMP_0 / xa::T_m, 0);
   }
 
   /* Col=BP143*/
