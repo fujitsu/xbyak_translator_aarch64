@@ -160,6 +160,7 @@
 #include "instructions/vpermd.h"
 #include "instructions/vpermilpd.h"
 #include "instructions/vpermilps.h"
+#include "instructions/vpermi2ps.h"
 #include "instructions/vpermt2ps.h"
 #include "instructions/vpermw.h"
 #include "instructions/vpextrb.h"

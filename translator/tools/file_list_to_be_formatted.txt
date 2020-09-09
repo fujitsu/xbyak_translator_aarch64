@@ -159,6 +159,7 @@ vpdpbusd.h
 vperm2f128.h
 vperm2i128.h
 vpermd.h
+vpermi2ps.h
 vpermilpd.h
 vpermilps.h
 vpermw.h
