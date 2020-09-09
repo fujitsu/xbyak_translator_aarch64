@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/09/09 16:40 */
+/* 2020/09/09 16:22 */
 #define CG64 CodeGeneratorAArch64
-void translateCMOVNLE(xed_decoded_inst_t *p) {
+void translateCMOVL(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
   struct xt_a64fx_operands_structV3_t a64;
@@ -91,7 +91,7 @@ void translateCMOVNLE(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 32 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 32 && true)) {
-    CG64::csel(xa::WReg(dstIdx), xa::WReg(srcIdx), xa::WReg(dstIdx), xa::GT);
+    CG64::csel(xa::WReg(dstIdx), xa::WReg(srcIdx), xa::WReg(dstIdx), xa::LT);
   }
   /* Col=AL119*/
   if (false ||
@@ -99,7 +99,7 @@ void translateCMOVNLE(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 64 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::csel(xa::XReg(dstIdx), xa::XReg(srcIdx), xa::XReg(dstIdx), xa::GT);
+    CG64::csel(xa::XReg(dstIdx), xa::XReg(srcIdx), xa::XReg(dstIdx), xa::LT);
   }
 
   /* Col=AP119*/
@@ -116,7 +116,7 @@ void translateCMOVNLE(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 16 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 16 && true)) {
-    CG64::csel(xa::XReg(dstIdx), X_TMP_1, xa::XReg(dstIdx), xa::GT);
+    CG64::csel(xa::XReg(dstIdx), X_TMP_1, xa::XReg(dstIdx), xa::LT);
   }
 
   /* Col=BQ119*/

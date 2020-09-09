@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
@@ -28,38 +27,63 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
+    /* RAX, RCX, RDX, RBX, RSP, RBP, RSI, RDI,
+       R8,  R9,  R10, R11, R12, R13, R14, R15 */
+#define CMOV cmovl
+    
+    mov(r8, ~uint64_t(0));
+    mov(r9, ~uint64_t(0));
+    mov(r10, ~uint64_t(0));
+    mov(r11, ~uint64_t(0));
+    mov(r12, ~uint64_t(0));
+    mov(r13, ~uint64_t(0));
+    mov(rbp, ~uint64_t(0));
+    mov(rsi, ~uint64_t(0));
+    mov(rdi, ~uint64_t(0));
 
-    mov(eax, int64_t(0x8));
-    mov(ebx, int64_t(0x9));
-    mov(ecx, int64_t(0x10));
-    mov(edx, int64_t(0x11));
+    mov(r15, uint64_t(0xabcd0123456789ab));
 
-    //    mov(r11, int64_t(0x0));
-    mov(r12, int64_t(0xFFFF000000000000));
-    //    mov(r13, int64_t(0x0));
-    mov(r14, int64_t(0x8000000000000000));
-    mov(r15, int64_t(0x7FFF000000000000));
+    mov(rax, uint64_t(2));
+    mov(rcx, uint64_t(1));
 
-    cmp(r15, r14);
+    // 64 bits
+    // equal
+    cmp(rax, rax);
+    CMOV(r8, r15);
 
-    /*
-    #ifdef XBYAK_TRANSLATE_AARCH64
-        Xbyak_aarch64::XReg x_tmpFlag{x0};
-        mrs(x_tmpFlag, 0x3, 0x3, 0x4, 0x2, 0x0);
-    #endif
-    */
-    cmovg(ebx, eax);
+    // greater 
+    cmp(rax, rcx);
+    CMOV(r9, r15);
 
-    cmp(r15, r11);
+    // less
+    cmp(rcx, rax);
+    CMOV(r10, r15);
 
-    cmovg(ecx, edx);
+    // 32 bits
+    // equal
+    cmp(rax, rax);
+    CMOV(r11d, r15d);
 
-    //#ifdef XBYAK_TRANSLATE_AARCH64
-    //      Xbyak_aarch64::XReg x_tmpFlag{x0};
-    //      Xbyak_aarch64::XReg y_tmpFlag{x12};
-    //      msr(0x3, 0x3, 0x4, 0x2, 0x0, y_tmpFlag);
-    //      mrs(x_tmpFlag, 0x3, 0x3, 0x4, 0x2, 0x0);
-    //#endif
+    // greater 
+    cmp(rax, rcx);
+    CMOV(r12d, r15d);
+
+    // less
+    cmp(rcx, rax);
+    CMOV(r13d, r15d);
+
+    // 16 bits
+    // equal
+    cmp(rax, rax);
+    CMOV(bp, r15w);
+
+    // greater 
+    cmp(rax, rcx);
+    CMOV(si, r15w);
+
+    // less
+    cmp(rcx, rax);
+    CMOV(di, r15w);
   }
 };
 
