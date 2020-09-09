@@ -224,6 +224,7 @@ case XED_ICLASS_CMOVP:
 case XED_ICLASS_CMOVS:
   break;
 case XED_ICLASS_CMOVZ:
+  translateCMOVZ(&xedd);
   break;
 case XED_ICLASS_CMP:
   translateCMP(&xedd);

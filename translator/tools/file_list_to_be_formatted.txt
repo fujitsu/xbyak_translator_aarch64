@@ -17,6 +17,7 @@ addss.h
 and.h
 blendvps.h
 cmovnle.h
+cmovz.h
 cmp.h
 cmpps.h
 cvtdq2ps.h

@@ -20,6 +20,7 @@
 #include "instructions/and.h"
 #include "instructions/blendvps.h"
 #include "instructions/cmovnle.h"
+#include "instructions/cmovz.h"
 #include "instructions/cmp.h"
 #include "instructions/cmpps.h"
 #include "instructions/cvtdq2ps.h"

@@ -128,7 +128,7 @@ void cmovae(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | 
 void cmovb(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 2); UNIMPLEMENTED; }//-V524
 void cmovbe(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 6); UNIMPLEMENTED; }//-V524
 void cmovc(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 2); UNIMPLEMENTED; }//-V524
-void cmove(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 4); UNIMPLEMENTED; }//-V524
+void cmove(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 4); decodeAndTransToAArch64();; }//-V524
 void cmovg(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 15); decodeAndTransToAArch64(); }//-V524
 void cmovge(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 13); UNIMPLEMENTED; }//-V524
 void cmovl(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 12); UNIMPLEMENTED; }//-V524
@@ -152,7 +152,7 @@ void cmovp(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i
 void cmovpe(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 10); UNIMPLEMENTED; }//-V524
 void cmovpo(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 11); UNIMPLEMENTED; }//-V524
 void cmovs(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 8); UNIMPLEMENTED; }//-V524
-void cmovz(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 4); UNIMPLEMENTED; }//-V524
+void cmovz(const Reg& reg, const Operand& op) { opModRM(reg, op, op.isREG(16 | i32e), op.isMEM(), 0x0F, 0x40 | 4); decodeAndTransToAArch64(); }//-V524
 void cmp(const Operand& op, uint32 imm) { opRM_I(op, imm, 0x38, 7); decodeAndTransToAArch64(); }
 void cmp(const Operand& op1, const Operand& op2) { opRM_RM(op1, op2, 0x38); decodeAndTransToAArch64(); }
 void cmpeqpd(const Xmm& x, const Operand& op) { cmppd(x, op, 0); UNIMPLEMENTED; }
