@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   ci_test_job:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     name: Test for xbyak_translator_aarch64
     steps:
     - name: Checkout
