@@ -162,6 +162,7 @@ vpermd.h
 vpermilpd.h
 vpermilps.h
 vpermw.h
+vpermt2ps.h
 vpextrb.h
 vphaddd.h
 vphaddw.h
