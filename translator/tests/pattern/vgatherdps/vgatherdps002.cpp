@@ -29,7 +29,7 @@ public:
     inputPredReg[5] = (1 << 0) | (1 << 9) | (1 << 11) | (1 << 13) | (1 << 14) | (uint64_t(1) << 15);
     inputPredReg[6] = (1 << 0) | (1 << 9) | (1 << 10) | (1 << 11) | (1 << 13) |
                       (uint64_t(1) << 14) | (uint64_t(1) << 15);
-    
+    inputPredReg[7] = uint64_t(0xffff);
 #else /* aarch64 */
     inputPredReg[2] = (1 << 0) | (uint64_t(1) << 28);
     inputPredReg[3] = (1 << 0) | (uint64_t(1) << 28) | (uint64_t(1) << 44) |
@@ -42,24 +42,31 @@ public:
     inputPredReg[6] = (1 << 0) | (uint64_t(1) << 36) | (uint64_t(1) << 40) |
                       (uint64_t(1) << 44) | (uint64_t(1) << 52) |
                       (uint64_t(1) << 56) | (uint64_t(1) << 60); 
+    inputPredReg[7] = (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) |
+      (1 << 16) | (1 << 20) | (1 << 24) | (1 << 28) |
+      (uint64_t(1) << 32) | (uint64_t(1) << 36) | (uint64_t(1) << 40) | (uint64_t(1) << 44) |
+      (uint64_t(1) << 48) | (uint64_t(1) << 52) | (uint64_t(1) << 56) | (uint64_t(1) << 60);
 #endif
-    inputPredReg[7] = ~uint64_t(0);
 
 
     for (int i = 0; i < 8; i++) {
-      inputZReg[21].ud_dt[i] = i * 4;
+      inputZReg[21].us_dt[i] = i * 4;
+      inputZReg[22].us_dt[i] = i * 4;
     }
 
-    for (int i = 2; i < 4; i++) {
-      inputZReg[21].ud_dt[i] = 16;
+    for (int i = 8; i < 10; i++) {
+      inputZReg[21].us_dt[i] = 16;
+      inputZReg[22].us_dt[i] = 16;
     }
 
-    for (int i = 4; i < 6; i++) {
-      inputZReg[21].ud_dt[i] = 32;
+    for (int i = 10; i < 12; i++) {
+      inputZReg[21].us_dt[i] = -32;
+      inputZReg[22].us_dt[i] = -32;
     }
 
-    for (int i = 6; i < 8; i++) {
-      inputZReg[21].ud_dt[i] = 64;
+    for (int i = 12; i < 16; i++) {
+      inputZReg[21].us_dt[i] = -64;
+      inputZReg[22].us_dt[i] = -64;
     }
 
   }
@@ -73,18 +80,18 @@ public:
     size_t addr;
 
     /* Address is aligned */
-    addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
+    addr = reinterpret_cast<size_t>(&(inputZReg[16].us_dt[0]));
 
     mov(rax, addr);
 
-    vgatherdps(Zmm(1) | k1, ptr[rax + Zmm(21)]);
-    vgatherdps(Zmm(2) | k2, ptr[rax + Zmm(21)]);
-    vgatherdps(Zmm(3) | k3, ptr[rax + Zmm(21)]);
-    vgatherdps(Zmm(4) | k4, ptr[rax + Zmm(21)]);
-    vgatherdps(Zmm(5) | k5, ptr[rax + Zmm(21)]);
-    vgatherdps(Zmm(6) | k6, ptr[rax + Zmm(21)]);
-    vgatherdps(Zmm(7) | k7, ptr[rax + Zmm(21)]);
-
+    /* Dest register index must be different from Index register index. */
+    vgatherdps(Ymm(1) | k1, ptr[rax + Ymm(21)*2 + 0x10]);
+    vgatherdps(Ymm(2) | k2, ptr[rax + Ymm(21)*2 - 0x10]);
+    vgatherdps(Ymm(3) | k3, ptr[rax + Ymm(21)*2]);
+    vgatherdps(Ymm(4) | k4, ptr[rax + Ymm(21)*2]);
+    vgatherdps(Ymm(5) | k5, ptr[rax + Ymm(21)*4]);
+    vgatherdps(Ymm(6) | k6, ptr[rax + Ymm(22)*4]);
+    vgatherdps(Ymm(7) | k7, ptr[rax + Ymm(22)*2]);
     mov(rax, 5);
   }
 };
@@ -113,6 +120,12 @@ int main(int argc, char *argv[]) {
      * inputZReg. */
     gen.dumpInputReg();
     f();                 /* Execute JIT code */
+
+#ifndef __ARM_ARCH
+    // Adjust Pred reg values to x64's mask reg
+    gen.modifyPredReg(US_DT);
+#endif
+
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */
   }
