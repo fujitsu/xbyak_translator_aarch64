@@ -26,6 +26,6 @@ job_1:
     - cd ../../../../../
     - source dot.zshrc.xbyak.ci
     - cd tests/
-    - make -j48
+    - make -j46
 #  tags: 
 #    - instruction_unit 
