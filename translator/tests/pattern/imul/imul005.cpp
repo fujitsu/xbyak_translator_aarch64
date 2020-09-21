@@ -43,6 +43,9 @@ public:
        r13, r14, r15 */
     size_t addr0, addr1;
 
+    /* 10 elements are required. */
+    std::vector<int8_t> ptn = {127, 126, 7, 1, 0, -1, -7, -61, -127, -128};
+
     /* Address is aligned */
     addr0 = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[16].ud_dt[0]));
@@ -53,11 +56,12 @@ public:
 #define NUM_PTN 10
 #define DATA_SIZE 8
     for (int j = 0; j < NUM_PTN; j++) {
-      for (int i = 0; i < NUM_PTN; i++) {
-        mov(r8, ptr[rax + DATA_SIZE * j]);
-        mov(r9, ptr[rax + DATA_SIZE * i]);
-        imul(r8, r9);
+      int i = 0;
+      for (const auto &e : ptn) {
+        mov(r9, ptr[rax + DATA_SIZE * j]);
+        imul(r8, r9, e);
         mov(ptr[rcx + DATA_SIZE * NUM_PTN * j + DATA_SIZE * i], r8);
+        i++;
       }
     }
 #undef NUM_PTN

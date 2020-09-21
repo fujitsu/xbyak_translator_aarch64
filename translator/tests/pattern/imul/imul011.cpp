@@ -20,6 +20,17 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     //    setInputZregAllRandomHex();
+    int64_t *p = &(inputZReg[0].sd_dt[0]);
+    *p++ = std::numeric_limits<int64_t>::max();
+    *p++ = std::numeric_limits<int64_t>::max() - 1;
+    *p++ = 0x10001;
+    *p++ = 0xffffffff;
+    *p++ = 7;
+    *p++ = -7;
+    *p++ = -65535;
+    *p++ = -65536;
+    *p++ = std::numeric_limits<int64_t>::min() + 1;
+    *p++ = std::numeric_limits<int64_t>::min();
   }
 
   void setCheckRegFlagAll() {
@@ -30,59 +41,46 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
        r13, r14, r15 */
+    size_t addr0, addr1;
 
-    mov(r8, 5);
-    mov(r9, 4);
-    mov(r13, 5);
-    mov(r14, 4);
-    adc(r10, r11);
-    mov(r10, 2);
-    imul(r8, r9, int64_t(0x7F));
-    adc(r11, r10);
-    imul(r13, r14, int64_t(0x7FFFFFFF));
-    adc(r12, r10);
+    /* 10 elements are required. */
+    std::vector<int64_t> ptn = {std::numeric_limits<int64_t>::max(),
+                                std::numeric_limits<int64_t>::max() - 1,
+                                0x10001,
+                                0xffffffff,
+                                7,
+                                -7,
+                                -65535,
+                                -65536,
+                                std::numeric_limits<int64_t>::min() + 1,
+                                std::numeric_limits<int64_t>::min()};
 
-    // mov(edx, ~uint32_t(0));
-    /* initialize carry bit (set carry bit for x86)*/
-    /*
-    mov(edx, ~uint32_t(0));
-    mov(ebx, 1);
-    add(edx, ebx);
-    mov(edx, 1);
-    mov(ebx, 1);
-    adc(edx, ebx);
+    /* Address is aligned */
+    addr0 = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[16].ud_dt[0]));
 
-    mov(rbp, ~uint64_t(0));
-    mov(rsi, ~uint64_t(0));
-    add(rbp, rsi); // initialize carry bit(set carry bit for x86)
-    mov(rbp, ~uint64_t(0));
-    mov(rsi, ~uint64_t(0));
-    adc(rbp, rsi);
+    mov(rax, addr0);
+    mov(rcx, addr1);
 
-    mov(edi, ~uint32_t(0));
-    mov(r8d, ~uint32_t(0));
-    add(edi, r8d); // initialize carry bit(set carry bit for x86)
-    mov(edi, ~uint32_t(0));
-    mov(r8d, ~uint32_t(0));
-    adc(edi, r8d);
+#define NUM_PTN 10
+#define DATA_SIZE 8
+    for (int j = 0; j < NUM_PTN; j++) {
+      int i = 0;
+      for (const auto &e : ptn) {
+        imul(r8, ptr[rax + DATA_SIZE * j], e);
+        mov(ptr[rcx + DATA_SIZE * NUM_PTN * j + DATA_SIZE * i], r8);
+        i++;
+      }
+    }
+#undef NUM_PTN
+#undef DATA_SIZE
 
-    mov(r9, ~uint64_t(0));
-    mov(r10, ~uint64_t(0));
-    add(r9d, r10d); // initialize carry bit(set carry bit for x86)
-    mov(r9, ~uint64_t(0));
-    mov(r10, ~uint64_t(0));
-    adc(r9d, r10d);
+    for (int i = 16; i < 32; i++) {
+      vmovdqu32(Zmm(i), ptr[rcx + 64 * (i - 16)]);
+    }
 
-    mov(r11, ~uint64_t(0));
-    add(r11, r11); // initialize carry bit(set carry bit for x86)
-    mov(r11, ~uint64_t(0));
-    adc(r11, 0);
-
-    mov(r12d, ~uint32_t(0));
-    add(r12d, r12d); // initialize carry bit(set carry bit for x86)
-    mov(r12d, ~uint32_t(0));
-    adc(r12d, 0);
-    */
+    mov(rax, 5);
+    mov(rcx, 5);
   }
 };
 

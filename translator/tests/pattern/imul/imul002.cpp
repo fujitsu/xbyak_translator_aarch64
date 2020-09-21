@@ -20,17 +20,17 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     //    setInputZregAllRandomHex();
-    int64_t *p = &(inputZReg[0].sd_dt[0]);
-    *p++ = std::numeric_limits<int64_t>::max();
-    *p++ = std::numeric_limits<int64_t>::max() - 1;
+    int32_t *p = &(inputZReg[0].ss_dt[0]);
+    *p++ = 0x7fffffff;
+    *p++ = 0x7ffffffe;
     *p++ = 0x10001;
-    *p++ = 0xffffffff;
+    *p++ = 0xffff;
     *p++ = 7;
     *p++ = -7;
     *p++ = -65535;
     *p++ = -65536;
-    *p++ = std::numeric_limits<int64_t>::min() + 1;
-    *p++ = std::numeric_limits<int64_t>::min();
+    *p++ = std::numeric_limits<int32_t>::min() + 1;
+    *p++ = std::numeric_limits<int32_t>::min();
   }
 
   void setCheckRegFlagAll() {
@@ -44,20 +44,19 @@ public:
     size_t addr0, addr1;
 
     /* Address is aligned */
-    addr0 = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
-    addr1 = reinterpret_cast<size_t>(&(inputZReg[16].ud_dt[0]));
+    addr0 = reinterpret_cast<size_t>(&(inputZReg[0].us_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[16].us_dt[0]));
 
     mov(rax, addr0);
     mov(rcx, addr1);
 
 #define NUM_PTN 10
-#define DATA_SIZE 8
+#define DATA_SIZE 4
     for (int j = 0; j < NUM_PTN; j++) {
       for (int i = 0; i < NUM_PTN; i++) {
-        mov(r8, ptr[rax + DATA_SIZE * j]);
-        mov(r9, ptr[rax + DATA_SIZE * i]);
-        imul(r8, r9);
-        mov(ptr[rcx + DATA_SIZE * NUM_PTN * j + DATA_SIZE * i], r8);
+        mov(r8d, ptr[rax + DATA_SIZE * j]);
+        imul(r8d, ptr[rax + DATA_SIZE * i]);
+        mov(ptr[rcx + DATA_SIZE * NUM_PTN * j + DATA_SIZE * i], r8d);
       }
     }
 #undef NUM_PTN

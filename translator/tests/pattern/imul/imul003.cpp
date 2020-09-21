@@ -20,6 +20,17 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     //    setInputZregAllRandomHex();
+    int64_t *p = &(inputZReg[0].sd_dt[0]);
+    *p++ = std::numeric_limits<int64_t>::max();
+    *p++ = std::numeric_limits<int64_t>::max() - 1;
+    *p++ = 0x10001;
+    *p++ = 0xffffffff;
+    *p++ = 7;
+    *p++ = -7;
+    *p++ = -65535;
+    *p++ = -65536;
+    *p++ = std::numeric_limits<int64_t>::min() + 1;
+    *p++ = std::numeric_limits<int64_t>::min();
   }
 
   void setCheckRegFlagAll() {
@@ -30,12 +41,33 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12,
        r13, r14, r15 */
+    size_t addr0, addr1;
 
-    mov(r8, 5);
-    adc(r10, r11);
-    mov(r10, 2);
-    imul(r8, r8);
-    adc(r11, r10);
+    /* Address is aligned */
+    addr0 = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
+    addr1 = reinterpret_cast<size_t>(&(inputZReg[16].ud_dt[0]));
+
+    mov(rax, addr0);
+    mov(rcx, addr1);
+
+#define NUM_PTN 10
+#define DATA_SIZE 8
+    for (int j = 0; j < NUM_PTN; j++) {
+      for (int i = 0; i < NUM_PTN; i++) {
+        mov(r8, ptr[rax + DATA_SIZE * j]);
+        imul(r8, ptr[rax + DATA_SIZE * i]);
+        mov(ptr[rcx + DATA_SIZE * NUM_PTN * j + DATA_SIZE * i], r8);
+      }
+    }
+#undef NUM_PTN
+#undef DATA_SIZE
+
+    for (int i = 16; i < 32; i++) {
+      vmovdqu32(Zmm(i), ptr[rcx + 64 * (i - 16)]);
+    }
+
+    mov(rax, 5);
+    mov(rcx, 5);
   }
 };
 
