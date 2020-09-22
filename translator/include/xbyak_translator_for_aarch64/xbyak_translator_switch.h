@@ -726,7 +726,6 @@ case XED_ICLASS_KORTESTD:
 case XED_ICLASS_KORTESTQ:
   break;
 case XED_ICLASS_KORTESTW:
-  translateKORTESTW(&xedd);
   break;
 case XED_ICLASS_KORW:
   break;
