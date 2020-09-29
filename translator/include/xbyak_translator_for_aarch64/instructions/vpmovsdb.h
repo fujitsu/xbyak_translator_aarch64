@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/09/29 11:05 */
+/* 2020/09/30 08:15 */
 #define CG64 CodeGeneratorAArch64
 void translateVPMOVSDB(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -815,7 +815,7 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
-    CG64::uzp1(P_TMP_0.b, xa::PRegB(pTmpIdx), P_TMP_0.b);
+    CG64::uzp1(P_TMP_0.b, P_TMP_0.b, P_TMP_0.b);
   }
   /* Col=AW119*/
   if (false ||
@@ -864,7 +864,7 @@ void translateVPMOVSDB(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_YMM &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        true)) {
-    CG64::not_(P_TMP_0.b, P_ALL_ONE.b, xa::PRegB(pTmpIdx));
+    CG64::not_(P_TMP_0.b, P_ALL_ONE.b, P_TMP_0.b);
   }
   /* Col=BA119*/
   if (false ||
