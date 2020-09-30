@@ -41,8 +41,8 @@ void translateADDSS(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 32 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::not_(xa::PRegB(a64.pTmpIdx), xa::PReg(15),
-                               xa::PRegB(15));
+    CodeGeneratorAArch64::not_(xa::PRegB(a64.pTmpIdx), xa::P_ALL_ONE,
+                               xa::P_ALL_ONE.b);
   }
   /* Col=X143*/
   if (false ||
@@ -50,7 +50,7 @@ void translateADDSS(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 32 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::zip1(xa::PRegS(a64.pTmpIdx), xa::PRegS(15),
+    CodeGeneratorAArch64::zip1(xa::PRegS(a64.pTmpIdx), xa::P_ALL_ONE.s,
                                xa::PRegS(a64.pTmpIdx));
   }
   /* Col=Y143*/
@@ -60,7 +60,7 @@ void translateADDSS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 32 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_MEM && true)) {
     CodeGeneratorAArch64::zip1(xa::PRegS(a64.pTmpIdx), xa::PRegS(a64.pTmpIdx),
-                               xa::PRegS(13));
+                               xa::P_MSB_256.s);
   }
   /* Col=Z143*/
   if (false ||
@@ -69,7 +69,7 @@ void translateADDSS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 32 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_MEM && true)) {
     CodeGeneratorAArch64::zip1(xa::PRegS(a64.pTmpIdx), xa::PRegS(a64.pTmpIdx),
-                               xa::PRegS(13));
+                               xa::P_MSB_256.s);
   }
   /* Col=AA143*/
   if (false ||
@@ -78,7 +78,7 @@ void translateADDSS(xed_decoded_inst_t *p) {
       (a64.dstWidth == 32 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_MEM && true)) {
     CodeGeneratorAArch64::zip1(xa::PRegS(a64.pTmpIdx), xa::PRegS(a64.pTmpIdx),
-                               xa::PRegS(13));
+                               xa::P_MSB_256.s);
   }
 
   /* Col=AG143*/

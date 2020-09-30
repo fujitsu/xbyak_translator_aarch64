@@ -92,7 +92,7 @@ void translateVPANDD(xed_decoded_inst_t *p) {
   /* Col=W103*/
   if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 1 && a64.src2Type == A64_OP_MEM && true)) {
-    CG64::mov(xa::PReg(a64.pTmpIdx).b, xa::PReg(15).b);
+    CG64::mov(xa::PReg(a64.pTmpIdx).b, xa::P_ALL_ONE.b);
   }
 
   /* Col=Z103*/
