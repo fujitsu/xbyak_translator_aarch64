@@ -39,52 +39,22 @@ format_files() {
     for i in ${LIST} ; do
 	echo "replacing:${i}"
 	if [ -f ${i} ] ; then
-	    <<COMMENTOUT
-	    cat ${i} | sed -e "s/PReg(13)/P_MSB_256/" \
-	       	| sed -e "s/PRegB(13)/P_MSB_256.b/" \
-                | sed -e "s/PRegB(13)/P_MSB_256.b/" \
-     		| sed -e "s/PRegH(13)/P_MSB_256.h/" \
-     		| sed -e "s/PRegS(13)/P_MSB_256.s/" \
-     		| sed -e "s/PRegD(13)/P_MSB_256.d/" \
-		| sed -e "s/PReg(13).b/P_MSB_256.b/" \
-     		| sed -e "s/PReg(13).h/P_MSB_256.h/" \
-     		| sed -e "s/PReg(13).s/P_MSB_256.s/" \
-     		| sed -e "s/PReg(13).d/P_MSB_384.d/" \
-		| sed -e "s/PReg(14)/P_MSB_384/" \
-		| sed -e "s/PRegB(14)/P_MSB_384.b/" \
-     		| sed -e "s/PRegH(14)/P_MSB_384.h/" \
-     		| sed -e "s/PRegS(14)/P_MSB_384.s/" \
-     		| sed -e "s/PRegD(14)/P_MSB_384.d/" \
-		| sed -e "s/PReg(14).b/P_MSB_384.b/" \
-     		| sed -e "s/PReg(14).h/P_MSB_384.h/" \
-     		| sed -e "s/PReg(14).s/P_MSB_384.s/" \
-     		| sed -e "s/PReg(14).d/P_ALL_ONE.d/" \
-		| sed -e "s/PReg(15)/P_ALL_ONE/" \
-		| sed -e "s/PRegB(15)/P_ALL_ONE.b/" \
-     		| sed -e "s/PRegH(15)/P_ALL_ONE.h/" \
-     		| sed -e "s/PRegS(15)/P_ALL_ONE.s/" \
-     		| sed -e "s/PRegD(15)/P_ALL_ONE.d/" \
-		| sed -e "s/PReg(15).b/P_ALL_ONE.b/" \
-     		| sed -e "s/PReg(15).h/P_ALL_ONE.h/" \
-     		| sed -e "s/PReg(15).s/P_ALL_ONE.s/" \
-     		| sed -e "s/PReg(15).d/P_ALL_ONE.d/" \		      		      		      		      
-COMMENTOUT
-	    cat ${i} | sed -e "s/PReg(13)/P_MSB_256/" \
-	       	| sed -e "s/PRegB(13)/P_MSB_256.b/" \
-                | sed -e "s/PRegB(13)/P_MSB_256.b/" \
-     		| sed -e "s/PRegH(13)/P_MSB_256.h/" \
-     		| sed -e "s/PRegS(13)/P_MSB_256.s/" \
-     		| sed -e "s/PRegD(13)/P_MSB_256.d/" \
-		| sed -e "s/PReg(14)/P_MSB_384/" \
-		| sed -e "s/PRegB(14)/P_MSB_384.b/" \
-     		| sed -e "s/PRegH(14)/P_MSB_384.h/" \
-     		| sed -e "s/PRegS(14)/P_MSB_384.s/" \
-     		| sed -e "s/PRegD(14)/P_MSB_384.d/" \
-		| sed -e "s/PReg(15)/P_ALL_ONE/" \
-		| sed -e "s/PRegB(15)/P_ALL_ONE.b/" \
-     		| sed -e "s/PRegH(15)/P_ALL_ONE.h/" \
-     		| sed -e "s/PRegS(15)/P_ALL_ONE.s/" \
-     		| sed -e "s/PRegD(15)/P_ALL_ONE.d/" \
+	    cat ${i} | sed -e "s/xa::PReg(13)/P_MSB_256/" \
+	       	| sed -e "s/xa::PRegB(13)/P_MSB_256.b/" \
+                | sed -e "s/xa::PRegB(13)/P_MSB_256.b/" \
+     		| sed -e "s/xa::PRegH(13)/P_MSB_256.h/" \
+     		| sed -e "s/xa::PRegS(13)/P_MSB_256.s/" \
+     		| sed -e "s/xa::PRegD(13)/P_MSB_256.d/" \
+		| sed -e "s/xa::PReg(14)/P_MSB_384/" \
+		| sed -e "s/xa::PRegB(14)/P_MSB_384.b/" \
+     		| sed -e "s/xa::PRegH(14)/P_MSB_384.h/" \
+     		| sed -e "s/xa::PRegS(14)/P_MSB_384.s/" \
+     		| sed -e "s/xa::PRegD(14)/P_MSB_384.d/" \
+		| sed -e "s/xa::PReg(15)/P_ALL_ONE/" \
+		| sed -e "s/xa::PRegB(15)/P_ALL_ONE.b/" \
+     		| sed -e "s/xa::PRegH(15)/P_ALL_ONE.h/" \
+     		| sed -e "s/xa::PRegS(15)/P_ALL_ONE.s/" \
+     		| sed -e "s/xa::PRegD(15)/P_ALL_ONE.d/" \
 		      > ${tmpfile}
 	    mv ${tmpfile} ${i}
 	else

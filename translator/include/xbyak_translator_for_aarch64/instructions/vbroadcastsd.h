@@ -59,7 +59,7 @@ void translateVBROADCASTSD(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_MEM && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.srcType == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::mov(xa::PReg(a64.pTmpIdx).b, xa::P_ALL_ONE.b);
+    CodeGeneratorAArch64::mov(xa::PReg(a64.pTmpIdx).b, P_ALL_ONE.b);
   }
   /* Col=AB103*/
   if (false ||

@@ -30,17 +30,17 @@ void translateMOVHLPS(xed_decoded_inst_t *p) {
   /* Col=Y143*/
   if (false || (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::uzp1(P_TMP_0.d, xa::P_MSB_384.d, xa::P_ALL_ONE.d);
+    CodeGeneratorAArch64::uzp1(P_TMP_0.d, P_MSB_384.d, P_ALL_ONE.d);
   }
   /* Col=Z143*/
   if (false || (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, P_TMP_0.b);
+    CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_TMP_0.b);
   }
   /* Col=AB143*/
   if (false || (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZRegB(a64.zTmpIdx), xa::P_ALL_ONE,
+    CodeGeneratorAArch64::mov(xa::ZRegB(a64.zTmpIdx), P_ALL_ONE,
                               xa::ZRegB(a64.srcIdx));
   }
   /* Col=AD143*/

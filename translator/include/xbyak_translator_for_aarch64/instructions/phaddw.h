@@ -41,12 +41,12 @@ void translatePHADDW(xed_decoded_inst_t *p) {
   /* Col=W143*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_MSB_384.b);
+    CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_MSB_384.b);
   }
   /* Col=X143*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZRegD(a64.zTmpIdx), xa::P_ALL_ONE,
+    CodeGeneratorAArch64::mov(xa::ZRegD(a64.zTmpIdx), P_ALL_ONE,
                               xa::ZRegD(a64.dstIdx));
   }
   /* Col=Y143*/
@@ -69,7 +69,7 @@ void translatePHADDW(xed_decoded_inst_t *p) {
   /* Col=AJ143*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZRegD(a64.dstIdx), xa::P_MSB_384,
+    CodeGeneratorAArch64::mov(xa::ZRegD(a64.dstIdx), P_MSB_384,
                               xa::ZRegD(a64.zTmpIdx));
   }
   /* Col=AK143*/

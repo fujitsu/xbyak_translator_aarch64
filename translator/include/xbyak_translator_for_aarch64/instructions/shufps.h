@@ -34,7 +34,7 @@ void translateSHUFPS(xed_decoded_inst_t *p) {
   /* Col=X103*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, xa::P_ALL_ONE,
+    CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, P_ALL_ONE,
                               xa::ZReg(a64.dstIdx).s);
     if ((a64.uimm & 0x3) == 1) {
       CodeGeneratorAArch64::ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
@@ -59,15 +59,15 @@ void translateSHUFPS(xed_decoded_inst_t *p) {
                                 60);
     }
     if (((a64.uimm & 0xc) / 4) == 1) {
-      CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_ALL_ONE.b);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, xa::P_ALL_ONE.s);
+      CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_ALL_ONE.b);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, P_ALL_ONE.s);
       CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, P_TMP_0,
                                 xa::ZReg(a64.dstIdx).s);
     }
     if (((a64.uimm & 0xc) / 4) == 2) {
-      CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_ALL_ONE.b);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, xa::P_ALL_ONE.s);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, xa::P_MSB_384.s);
+      CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_ALL_ONE.b);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, P_ALL_ONE.s);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, P_MSB_384.s);
       CodeGeneratorAArch64::ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
                                 60);
       CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, P_TMP_0,
@@ -76,9 +76,9 @@ void translateSHUFPS(xed_decoded_inst_t *p) {
                                 4);
     }
     if (((a64.uimm & 0xc) / 4) == 3) {
-      CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_ALL_ONE.b);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, xa::P_ALL_ONE.s);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, xa::P_MSB_256.s, P_TMP_0.s);
+      CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_ALL_ONE.b);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, P_ALL_ONE.s);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_MSB_256.s, P_TMP_0.s);
       CodeGeneratorAArch64::ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
                                 56);
       CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, P_TMP_0,
@@ -97,9 +97,9 @@ void translateSHUFPS(xed_decoded_inst_t *p) {
                                 56);
     }
     if (((a64.uimm & 0x30) / 16) == 1) {
-      CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_ALL_ONE.b);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, xa::P_ALL_ONE.s, P_TMP_0.s);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, xa::P_MSB_256.s, P_TMP_0.s);
+      CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_ALL_ONE.b);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_ALL_ONE.s, P_TMP_0.s);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_MSB_256.s, P_TMP_0.s);
       CodeGeneratorAArch64::ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
                                 4);
       CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, P_TMP_0,
@@ -108,16 +108,16 @@ void translateSHUFPS(xed_decoded_inst_t *p) {
                                 60);
     }
     if (((a64.uimm & 0x30) / 16) == 2) {
-      CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_ALL_ONE.b);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, xa::P_ALL_ONE.s);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, xa::P_MSB_256.s);
+      CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_ALL_ONE.b);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, P_ALL_ONE.s);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, P_MSB_256.s);
       CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, P_TMP_0,
                                 xa::ZReg(a64.srcIdx).s);
     }
     if (((a64.uimm & 0x30) / 16) == 3) {
-      CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_ALL_ONE.b);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, xa::P_ALL_ONE.s);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, xa::P_MSB_256.s, P_TMP_0.s);
+      CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_ALL_ONE.b);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, P_ALL_ONE.s);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_MSB_256.s, P_TMP_0.s);
       CodeGeneratorAArch64::ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
                                 60);
       CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, P_TMP_0,
@@ -136,9 +136,9 @@ void translateSHUFPS(xed_decoded_inst_t *p) {
                                 52);
     }
     if (((a64.uimm & 0xc0) / 64) == 1) {
-      CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_ALL_ONE.b);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, xa::P_ALL_ONE.s, P_TMP_0.s);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, xa::P_MSB_256.s, P_TMP_0.s);
+      CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_ALL_ONE.b);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_ALL_ONE.s, P_TMP_0.s);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_MSB_256.s, P_TMP_0.s);
       CodeGeneratorAArch64::ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
                                 8);
       CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, P_TMP_0,
@@ -147,9 +147,9 @@ void translateSHUFPS(xed_decoded_inst_t *p) {
                                 56);
     }
     if (((a64.uimm & 0xc0) / 64) == 2) {
-      CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_ALL_ONE.b);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, xa::P_ALL_ONE.s);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, xa::P_MSB_256.s);
+      CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_ALL_ONE.b);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, P_ALL_ONE.s);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, P_MSB_256.s);
       CodeGeneratorAArch64::ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
                                 4);
       CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, P_TMP_0,
@@ -158,9 +158,9 @@ void translateSHUFPS(xed_decoded_inst_t *p) {
                                 60);
     }
     if (((a64.uimm & 0xc0) / 64) == 3) {
-      CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_ALL_ONE.b);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, xa::P_ALL_ONE.s);
-      CodeGeneratorAArch64::zip1(P_TMP_0.s, xa::P_MSB_256.s, P_TMP_0.s);
+      CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_ALL_ONE.b);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_TMP_0.s, P_ALL_ONE.s);
+      CodeGeneratorAArch64::zip1(P_TMP_0.s, P_MSB_256.s, P_TMP_0.s);
       CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, P_TMP_0,
                                 xa::ZReg(a64.srcIdx).s);
     }
@@ -169,7 +169,7 @@ void translateSHUFPS(xed_decoded_inst_t *p) {
   /* Col=AS103*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_MSB_384.b);
+    CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_MSB_384.b);
   }
 
   /* Col=AU103*/
@@ -182,7 +182,7 @@ void translateSHUFPS(xed_decoded_inst_t *p) {
   /* Col=AS103*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::not_(P_TMP_0.b, xa::P_ALL_ONE, xa::P_MSB_384.b);
+    CodeGeneratorAArch64::not_(P_TMP_0.b, P_ALL_ONE, P_MSB_384.b);
   }
 
   /* Col=AU103*/
