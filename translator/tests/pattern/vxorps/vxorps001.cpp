@@ -39,10 +39,10 @@ public:
     mov(rdx, addr2);
     mov(rbx, addr3);
 
-    vxorps(Ymm(0), Ymm(1), ptr[rax]);   
-    vxorps(Ymm(2), Ymm(2), ptr[rcx]);   
-    vxorps(Ymm(20), Ymm(21), ptr[rdx]);  
-    vxorps(Ymm(22), Ymm(12), ptr[rbx]); 
+    vxorps(Ymm(0), Ymm(1), ptr[rax]);
+    vxorps(Ymm(2), Ymm(2), ptr[rcx]);
+    vxorps(Ymm(20), Ymm(21), ptr[rdx]);
+    vxorps(Ymm(22), Ymm(12), ptr[rbx]);
 
     mov(rax, 5);
     mov(rcx, 5);
