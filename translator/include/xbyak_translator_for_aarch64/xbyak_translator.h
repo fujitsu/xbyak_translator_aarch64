@@ -1183,12 +1183,13 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
         a64->operands[tmpOpIdx].memIndexIdx = indexIdx;
         a64->operands[tmpOpIdx].memScale = scale;
         a64->operands[tmpOpIdx].memDisp = disp;
-      } else if(vm64) {
+      } else if (vm64) {
         a64->operands[tmpOpIdx].memBaseIdx = baseIdx;
         a64->operands[tmpOpIdx].memIndexIdx = indexIdx;
         a64->operands[tmpOpIdx].memScale = scale;
-	CodeGeneratorAArch64::add_imm(X_TMP_ADDR, Xbyak_aarch64::XReg(baseIdx), disp, X_TMP_1);
-      }else {
+        CodeGeneratorAArch64::add_imm(X_TMP_ADDR, Xbyak_aarch64::XReg(baseIdx),
+                                      disp, X_TMP_1);
+      } else {
         X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
                                      X_TMP_1, X_TMP_2, vm64);
       }
