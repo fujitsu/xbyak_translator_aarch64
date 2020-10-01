@@ -35,7 +35,7 @@ void translatePMOVSXBD(xed_decoded_inst_t *p) {
   /* Col=X143*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZRegD(a64.zTmpIdx), xa::PReg(15),
+    CodeGeneratorAArch64::mov(xa::ZRegD(a64.zTmpIdx), P_ALL_ONE,
                               xa::ZRegD(a64.dstIdx));
   }
 
@@ -52,7 +52,7 @@ void translatePMOVSXBD(xed_decoded_inst_t *p) {
   /* Col=AJ143*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZRegD(a64.dstIdx), xa::PReg(14),
+    CodeGeneratorAArch64::mov(xa::ZRegD(a64.dstIdx), P_MSB_384,
                               xa::ZRegD(a64.zTmpIdx));
   }
 

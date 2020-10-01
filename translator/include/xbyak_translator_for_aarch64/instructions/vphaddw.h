@@ -61,7 +61,7 @@ void translateVPHADDW(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, xa::PReg(15),
+    CodeGeneratorAArch64::mov(xa::ZReg(a64.zTmpIdx).s, P_ALL_ONE,
                               xa::ZReg(a64.srcIdx).s);
   }
   /* Col=Z143*/
@@ -70,8 +70,8 @@ void translateVPHADDW(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::PRegB(a64.pTmpIdx), xa::PReg(15),
-                              xa::PRegB(15));
+    CodeGeneratorAArch64::mov(xa::PRegB(a64.pTmpIdx), P_ALL_ONE,
+                              P_ALL_ONE.b);
   }
   /* Col=AB143*/
   if (false ||
@@ -98,7 +98,7 @@ void translateVPHADDW(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.srcType == A64_OP_REG && true)) {
-    CodeGeneratorAArch64::mov(xa::ZReg(zTmp2Idx).s, xa::PReg(15),
+    CodeGeneratorAArch64::mov(xa::ZReg(zTmp2Idx).s, P_ALL_ONE,
                               xa::ZReg(a64.src2Idx).s);
   }
   /* Col=AF143*/
