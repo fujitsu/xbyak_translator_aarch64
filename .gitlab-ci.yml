@@ -8,6 +8,12 @@ before_script:
     - git submodule sync --recursive
     - git submodule update --init --recursive
 
+ClangFormatCheck:
+  stage: test
+  image: 0b158dd36e5c
+  script:
+  - ./.github/automation/clang-format.sh
+
 job_1:
   stage: test
   image: 0b158dd36e5c
