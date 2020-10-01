@@ -51,6 +51,15 @@ format_files() {
 		mv ${tmpfile} ${k}
 	    fi
 	done
+
+	num=`grep -w isValid ${k} | wc -l | cut -f 1 -d " "`
+	num1=`grep -w XT_VALID_CHECK_IF ${k} | wc -l | cut -f 1 -d " "`
+	if [ ${num} -eq 1 ] ; then
+	    if [ ${num1} -eq 0 ] ; then
+		grep -vw "isValid" ${k} > ${tmpfile}
+		mv ${tmpfile} ${k}
+	    fi
+	fi
     done
 }
 
