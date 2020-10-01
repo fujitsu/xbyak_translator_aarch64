@@ -13,15 +13,10 @@ ClangFormatCheck:
   - ROOT_DIR_TRANSLATOR=`pwd`
   - cd translator/include/xbyak_translator_for_aarch64/instructions
   - ../../../tools/init_variables.sh
+  - ../../../tools/remove_unused_variable.sh
   - ../../../tools/replace_preg_name.sh
   - cd ${ROOT_DIR_TRANSLATOR}
   - pwd
-  - ./.github/automation/clang-format.sh
-
-ClangFormatCheck:
-  stage: test
-  image: 677b25a35be8
-  script:
   - ./.github/automation/clang-format.sh
 
 job_1:
