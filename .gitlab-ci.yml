@@ -5,15 +5,27 @@ stages:
     - test
 
 before_script:
-    - git submodule sync --recursive
-    - git submodule update --init --recursive
+
+ClangFormatCheck:
+  stage: test
+  image: bce7edfda510
+  script:
+  - ROOT_DIR_TRANSLATOR=`pwd`
+  - cd translator/include/xbyak_translator_for_aarch64/instructions
+  - ../../../tools/init_variables.sh
+  - ../../../tools/replace_preg_name.sh
+  - cd ${ROOT_DIR_TRANSLATOR}
+  - pwd
+  - ./.github/automation/clang-format.sh
 
 job_1:
   stage: test
-  image: 0b158dd36e5c
+  image: bce7edfda510
   script:
 #    - pwd
 #    - ls
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
     - cd translator/third_party/
     - mkdir build_xed_aarch64
     - cd build_xed_aarch64/
