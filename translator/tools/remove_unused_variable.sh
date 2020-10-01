@@ -18,28 +18,53 @@ set -u
 unset tmpfile
 
 LIST_KEYWORDS="uimm dstIdx srcIdx src2Idx src3Idx maskIdx zTmpIdx zTmp2Idx zTmp3Idx zTmp4Idx pTmpIdx pTmp2Idx"
-FILE_IN=${1}
+LIST_FILE=file_list_to_be_formatted.txt
+
 
 atexit() {
     [[ -n ${tmpfile-} ]] && rm -f "$tmpfile"
 }
 
+gen_format_file_list() {
+    local TMP_LIST_FILE=$(dirname $0)/${LIST_FILE}
+    if [ -f ${TMP_LIST_FILE} ] ; then
+	LIST=`cat ${TMP_LIST_FILE}`
+    else
+	echo "format list file=${LIST_FILE} doesn't exist!"
+	exit 1
+    fi
+}
+
+format_files() {
+    tmpfile=$(mktemp "/tmp/${0##*/}.tmp.XXXXXX")
+
+    for k in ${LIST} ; do
+	echo "removing unused variable:${k}"
+
+	for i in ${LIST_KEYWORDS} ; do
+	    num=`grep "[[:space:]]${i}" ${k} | wc -l | cut -f 1 -d " "`
+	    num1=`grep "(${i}" ${k} | wc -l | cut -f 1 -d " "`
+	    num=$((${num}+${num1}))
+
+	    if [ ${num} -eq 1 ] ; then
+		grep -vw "${i}" ${k} > ${tmpfile}
+		mv ${tmpfile} ${k}
+	    fi
+	done
+
+	num=`grep -w isValid ${k} | wc -l | cut -f 1 -d " "`
+	num1=`grep -w XT_VALID_CHECK_IF ${k} | wc -l | cut -f 1 -d " "`
+	if [ ${num} -eq 1 ] ; then
+	    if [ ${num1} -eq 0 ] ; then
+		grep -vw "isValid" ${k} > ${tmpfile}
+		mv ${tmpfile} ${k}
+	    fi
+	fi
+    done
+}
 
 trap atexit EXIT
 trap 'rc=$?; trap - EXIT; atexit; exit $?' INT PIPE TERM
 
-
-echo "Remove unused varialbe:${FILE_IN}"
-
-
-tmpfile=$(mktemp "/tmp/${0##*/}.tmp.XXXXXX")
-
-for i in ${LIST_KEYWORDS} ; do
-    num=`grep -ew \[:space:\]\+${i} ${FILE_IN} | grep -w ${i} | wc -l`
-#    if [ ${num} -le 1 ] ; then
-#	grep -evw "[:space:]\+${i}" ${FILE_IN} > ${tmpfile}
-#	mv ${tmpfile} ${FILE_IN}
-#    fi
-done
-
-
+gen_format_file_list
+format_files

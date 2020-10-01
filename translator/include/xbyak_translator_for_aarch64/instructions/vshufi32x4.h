@@ -19,7 +19,6 @@ void translateVSHUFI32X4(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
   /* 2020/09/29 14:49 */
-  bool isValid = false;
 #define CG64 CodeGeneratorAArch64
   /* Col=S103*/
   if (false ||
