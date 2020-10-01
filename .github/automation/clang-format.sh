@@ -19,7 +19,29 @@
 echo "Using clang-format version: $(clang-format --version)"
 echo "Starting format check..."
 
-for filename in $(find "$(pwd)" -type f | grep -P ".*\.(c|cpp|h|hpp|cl)$"); do clang-format -style=file -i $filename; done
+tmpfile=$(mktemp)
+find "$(pwd)" -type f | grep -P ".*\.(c|cpp|h|hpp|cl)$" > ${tmpfile}
+num_line=`wc -l ${tmpfile} | cut -f 1 -d " "`
+count=0
+
+while [ ${count} -lt ${num_line} ]
+do
+    i=0
+    array=()
+    while [ ${i} -lt 40 ]
+    do
+	echo "clang-format `sed -n $((${count}+1))p ${tmpfile}`"
+	nohup clang-format -i -style=file `sed -n $((${count}+1))p ${tmpfile}` &
+	array+=($!)
+	count=$((${count}+1))
+	i=$((${i}+1))
+
+	if [ ${count} -ge ${num_line} ] ; then
+	    break;
+	fi
+    done
+    wait ${array[@]}
+done
 
 RETURN_CODE=0
 echo $(git status) | grep "nothing to commit" > /dev/null
