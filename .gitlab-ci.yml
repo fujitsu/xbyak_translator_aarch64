@@ -18,6 +18,12 @@ ClangFormatCheck:
   - pwd
   - ./.github/automation/clang-format.sh
 
+ClangFormatCheck:
+  stage: test
+  image: 677b25a35be8
+  script:
+  - ./.github/automation/clang-format.sh
+
 job_1:
   stage: test
   image: bce7edfda510
