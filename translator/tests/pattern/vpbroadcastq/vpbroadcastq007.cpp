@@ -20,7 +20,7 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    
+
     inputGenReg[8] = 0xabcdef012;
     inputGenReg[9] = 0x123456789a;
     inputGenReg[10] = 0x56789abcdef;
@@ -35,7 +35,7 @@ public:
     inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 7);
 #else
     inputPredReg[2] = (1 << 0) | (1 << 16) | (uint64_t(1) << 32);
-    inputPredReg[3] = (1 << 8) | (1 << 24) | (uint64_t(1) << 40);            
+    inputPredReg[3] = (1 << 8) | (1 << 24) | (uint64_t(1) << 40);
     inputPredReg[4] = (1 << 0) | (1 << 8) | (1 << 16) | (uint64_t(1) << 56);
 #endif
     inputPredReg[7] = ~uint64_t(0); /* Both x86_64 and aarch64 */

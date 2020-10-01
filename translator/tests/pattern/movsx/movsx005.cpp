@@ -22,8 +22,8 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     inputZReg[0].ud_dt[7] = uint64_t(0x000000000000007f);
     inputZReg[1].ud_dt[7] = uint64_t(0x0000000000000080);
-    inputZReg[2].ud_dt[7] =  uint64_t(1);
-    inputZReg[3].ud_dt[7] =  ~uint64_t(0);
+    inputZReg[2].ud_dt[7] = uint64_t(1);
+    inputZReg[3].ud_dt[7] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -39,12 +39,12 @@ public:
     addr1 = reinterpret_cast<size_t>(&(inputZReg[1].ud_dt[7]));
     addr2 = reinterpret_cast<size_t>(&(inputZReg[2].ud_dt[7]));
     addr3 = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[7]));
-    
+
     mov(rax, addr0);
     mov(rcx, addr1);
     mov(rdx, addr2);
     mov(rbx, addr3);
-    
+
     movsx(r12, byte[rax]);
     movsx(r13, byte[rcx]);
     movsx(r14, byte[rdx]);

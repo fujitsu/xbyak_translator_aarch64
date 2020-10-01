@@ -26,10 +26,13 @@ public:
     inputPredReg[3] = ~uint64_t(0);
     inputPredReg[4] = (1 << 1) | (1 << 3) | (1 << 4) | (1 << 6);
 #else
-    inputPredReg[1] = (1 << 0) | (1 << 16) | (uint64_t(1) << 32) | (uint64_t(1) << 48);
-    inputPredReg[2] = (1 << 8) | (1 << 24) | (uint64_t(1) << 40) | (uint64_t(1) << 56);
+    inputPredReg[1] =
+        (1 << 0) | (1 << 16) | (uint64_t(1) << 32) | (uint64_t(1) << 48);
+    inputPredReg[2] =
+        (1 << 8) | (1 << 24) | (uint64_t(1) << 40) | (uint64_t(1) << 56);
     inputPredReg[3] = ~uint64_t(0);
-    inputPredReg[4] = (1 << 8) | (1 << 24) | (uint64_t(1) << 32) | (uint64_t(1) << 48);
+    inputPredReg[4] =
+        (1 << 8) | (1 << 24) | (uint64_t(1) << 32) | (uint64_t(1) << 48);
 #endif
   }
 

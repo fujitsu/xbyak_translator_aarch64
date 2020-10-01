@@ -61,7 +61,6 @@ public:
     inputZReg[7].us_dt[3] =
         0xceffffff; /* min float number represented by int32_t */
 
-
     /*    for (int j = 2; j < 32; j++) {
       for (int i = 0; i < 16; i++) {
         while (inputZReg[j].sp_dt[i] < -2.14748352e+9 ||
@@ -82,7 +81,7 @@ public:
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
     set_rnd_mode(mkldnn_round_down);
-    
+
     /* Register index is VEX range. */
     cvtps2dq(Xmm(8), Xmm(0));
     cvtps2dq(Xmm(9), Xmm(1));

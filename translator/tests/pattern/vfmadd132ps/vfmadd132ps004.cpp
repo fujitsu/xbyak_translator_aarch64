@@ -112,7 +112,6 @@ public:
     ptrue(p4.b, Xbyak_aarch64::VL1);
     ptrue(p5.b, Xbyak_aarch64::VL1);
 #endif
-
   }
 };
 

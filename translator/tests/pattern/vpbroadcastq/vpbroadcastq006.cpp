@@ -32,7 +32,7 @@ public:
     inputPredReg[4] = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 7);
 #else
     inputPredReg[2] = (1 << 0) | (1 << 16) | (uint64_t(1) << 32);
-    inputPredReg[3] = (1 << 8) | (1 << 24) | (uint64_t(1) << 40);            
+    inputPredReg[3] = (1 << 8) | (1 << 24) | (uint64_t(1) << 40);
     inputPredReg[4] = (1 << 0) | (1 << 8) | (1 << 16) | (uint64_t(1) << 56);
 #endif
     inputPredReg[7] = ~uint64_t(0); /* Both x86_64 and aarch64 */
@@ -43,7 +43,7 @@ public:
   }
 
   void genJitTestCode() {
-    /* Here write JIT code with x86_64 mnemonic function to be tested. */  
+    /* Here write JIT code with x86_64 mnemonic function to be tested. */
     vpbroadcastq(Xmm(0) | k1, Xmm(31));
     vpbroadcastq(Ymm(1) | k1, Xmm(30));
     vpbroadcastq(Zmm(2) | k1, Xmm(29));

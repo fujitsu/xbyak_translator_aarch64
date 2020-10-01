@@ -42,7 +42,7 @@ public:
     vmovss(Xmm(22), ptr[rax]);
 #endif
 
-/* Address is unaligned */
+    /* Address is unaligned */
 
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[3].ud_dt[0])) + 3;

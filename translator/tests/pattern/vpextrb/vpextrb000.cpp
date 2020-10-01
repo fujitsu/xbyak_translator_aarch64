@@ -21,9 +21,9 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-    for(int i=0; i<16; i++){
-        inputZReg[3].ub_dt[i] = uint8_t(i);
-        inputZReg[31].ub_dt[i] = uint8_t(i);
+    for (int i = 0; i < 16; i++) {
+      inputZReg[3].ub_dt[i] = uint8_t(i);
+      inputZReg[31].ub_dt[i] = uint8_t(i);
     }
   }
 
@@ -75,7 +75,7 @@ public:
     addr = reinterpret_cast<size_t>(&(inputZReg[27].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[28].ud_dt[0]));
     addr2 = reinterpret_cast<size_t>(&(inputZReg[29].ud_dt[0]));
-    mov(rax, addr);   
+    mov(rax, addr);
     vpextrb(ptr[rax], Xmm(31), 10);
     vmovdqu8(Xmm(17), ptr[rax]);
     mov(rax, addr1);

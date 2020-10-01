@@ -32,7 +32,7 @@ public:
     /* RAX, RCX, RDX, RBX, RSP, RBP, RSI, RDI,
        R8,  R9,  R10, R11, R12, R13, R14, R15 */
 #define CMOV cmovz
-    
+
     size_t addr;
 
     mov(r8, ~uint64_t(0));
@@ -47,7 +47,7 @@ public:
 
     addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
     mov(r15, addr);
-    
+
     mov(rax, uint64_t(2));
     mov(rcx, uint64_t(1));
 
@@ -56,7 +56,7 @@ public:
     cmp(rax, rax);
     CMOV(r8, ptr[r15]);
 
-    // greater 
+    // greater
     cmp(rax, rcx);
     CMOV(r9, ptr[r15]);
 
@@ -69,7 +69,7 @@ public:
     cmp(rax, rax);
     CMOV(r11d, ptr[r15]);
 
-    // greater 
+    // greater
     cmp(rax, rcx);
     CMOV(r12d, ptr[r15]);
 
@@ -82,7 +82,7 @@ public:
     cmp(rax, rax);
     CMOV(bp, ptr[r15]);
 
-    // greater 
+    // greater
     cmp(rax, rcx);
     CMOV(si, ptr[r15]);
 

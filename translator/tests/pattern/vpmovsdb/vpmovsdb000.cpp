@@ -31,7 +31,6 @@ public:
     vpmovsdb(Xmm(0), Xmm(1));
     vpmovsdb(Xmm(2), Zmm(3));
     vpmovsdb(Xmm(4), Ymm(5));
-
   }
 };
 

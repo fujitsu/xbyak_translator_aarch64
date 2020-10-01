@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* undef XT_TEST, XT_AARCH64_STACK_REG
     push/pop instruction add/sub 8 to value of stack pointer register.
-    If SP(x31) register is used as address register on AArch64 
+    If SP(x31) register is used as address register on AArch64
     the access address must be aligned 16 bytes, otherwise exception is occured.
     To avoid exception in this test pattern, use x4 as a stack pointer.
  */

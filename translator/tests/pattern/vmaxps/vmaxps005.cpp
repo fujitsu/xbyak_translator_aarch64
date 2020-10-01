@@ -26,7 +26,7 @@ public:
     inputPredReg[1] = uint64_t(0x0);
     inputPredReg[2] = ~uint64_t(0x0);
     inputPredReg[3] = uint64_t(0x1);
-#ifndef __ARM_ARCH  /* x86_64 */
+#ifndef __ARM_ARCH /* x86_64 */
     inputPredReg[4] = (0x1 << 0) | (0x1 << 15);
     inputPredReg[5] = ~uint64_t(0xffff);
     inputPredReg[6] = uint64_t(0xffff);
@@ -69,7 +69,7 @@ public:
     vmaxps(Zmm(18), Zmm(30) | k4, Zmm(18));
     vmaxps(Zmm(19), Zmm(30) | k5, Zmm(19));
     vmaxps(Zmm(20), Zmm(30) | k6, Zmm(20));
-    
+
     vmaxps(Zmm(22), Zmm(22) | k1, Zmm(31));
     vmaxps(Zmm(23), Zmm(23) | k2, Zmm(31));
     vmaxps(Zmm(24), Zmm(24) | k3, Zmm(31));
@@ -78,7 +78,7 @@ public:
     vmaxps(Zmm(27), Zmm(27) | k6, Zmm(31));
 
     mov(rax, 0x1);
-    for(int i=1; i<7; i++) {
+    for (int i = 1; i < 7; i++) {
 #ifndef __ARM_ARCH
       kmovq(Opmask(i), rax);
 #else

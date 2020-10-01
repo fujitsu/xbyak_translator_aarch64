@@ -51,7 +51,8 @@ public:
 #else
     inputPredReg[2] = (1 << 0) | (1 << 28);
     inputPredReg[3] = (1 << 0) | (1 << 8) | (1 << 28) | (uint64_t(1) << 32);
-    inputPredReg[4] = (1 << 0) | (1 << 8) | (1 << 28) | (uint64_t(1) << 40) | (uint64_t(1) << 60);
+    inputPredReg[4] = (1 << 0) | (1 << 8) | (1 << 28) | (uint64_t(1) << 40) |
+                      (uint64_t(1) << 60);
 #endif
     inputPredReg[7] = ~uint64_t(0); /* Both x86_64 and aarch64 */
   }

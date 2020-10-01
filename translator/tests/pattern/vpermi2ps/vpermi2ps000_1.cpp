@@ -29,11 +29,11 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* z31 - z29 are used as zTmpIdx - zTmp3Idx */
-    for(int i = 0; i < 4; i++) {
-      vpermi2ps(Zmm(7*i + 0), Zmm(7*i + 0), Zmm(7*i + 1));
-      vpermi2ps(Zmm(7*i + 2), Zmm(7*i + 3), Zmm(7*i + 2));
-      vpermi2ps(Zmm(7*i + 4), Zmm(7*i + 5), Zmm(7*i + 5));
-      vpermi2ps(Zmm(7*i + 6), Zmm(7*i + 6), Zmm(7*i + 6));
+    for (int i = 0; i < 4; i++) {
+      vpermi2ps(Zmm(7 * i + 0), Zmm(7 * i + 0), Zmm(7 * i + 1));
+      vpermi2ps(Zmm(7 * i + 2), Zmm(7 * i + 3), Zmm(7 * i + 2));
+      vpermi2ps(Zmm(7 * i + 4), Zmm(7 * i + 5), Zmm(7 * i + 5));
+      vpermi2ps(Zmm(7 * i + 6), Zmm(7 * i + 6), Zmm(7 * i + 6));
     }
   }
 };

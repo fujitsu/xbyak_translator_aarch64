@@ -20,12 +20,12 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-//    inputPredReg[1] = (1 << 0) | (1 << 7); /* Both x86_64 and aarch64 */
-//    inputPredReg[2] = (1 << 1) | (1 << 10); /* Both x86_64 and aarch64 */
-//    inputPredReg[3] = (1 << 2) | (1 << 7); /* Both x86_64 and aarch64 */
-//    inputPredReg[4] = (1 << 3) | (1 << 15); /* Both x86_64 and aarch64 */
-//    inputPredReg[5] = (1 << 0) | (1 << 3); /* Both x86_64 and aarch64 */
-//    inputPredReg[6] = (1 << 1) | (1 << 7); /* Both x86_64 and aarch64 */
+    //    inputPredReg[1] = (1 << 0) | (1 << 7); /* Both x86_64 and aarch64 */
+    //    inputPredReg[2] = (1 << 1) | (1 << 10); /* Both x86_64 and aarch64 */
+    //    inputPredReg[3] = (1 << 2) | (1 << 7); /* Both x86_64 and aarch64 */
+    //    inputPredReg[4] = (1 << 3) | (1 << 15); /* Both x86_64 and aarch64 */
+    //    inputPredReg[5] = (1 << 0) | (1 << 3); /* Both x86_64 and aarch64 */
+    //    inputPredReg[6] = (1 << 1) | (1 << 7); /* Both x86_64 and aarch64 */
     inputPredReg[1] = uint64_t(0); /* Both x86_64 and aarch64 */
 #ifndef __ARM_ARCH
     inputPredReg[2] = (1 << 0) | (1 << 2) | (1 << 4);
@@ -34,7 +34,8 @@ public:
 #else
     inputPredReg[2] = (1 << 0) | (1 << 8) | (1 << 16);
     inputPredReg[3] = (1 << 4) | (1 << 12) | (1 << 20);
-    inputPredReg[4] = (1 << 0) | (1 << 28) | (uint64_t(1) << 40) | (uint64_t(1) << 60);
+    inputPredReg[4] =
+        (1 << 0) | (1 << 28) | (uint64_t(1) << 40) | (uint64_t(1) << 60);
 #endif
     inputPredReg[7] = ~uint64_t(0); /* Both x86_64 and aarch64 */
 
@@ -60,12 +61,12 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-//    vpaddd(Ymm(0) | k1 | T_z, Ymm(1), Ymm(2));
-//    vpaddd(Ymm(3) | k2 | T_z, Ymm(3), Ymm(4));
-//    vpaddd(Zmm(5) | k3 | T_z, Zmm(6), Zmm(5));
-//    vpaddd(Zmm(7) | k4 | T_z, Zmm(8), Zmm(8));
-//    vpaddd(Xmm(9) | k5 | T_z, Xmm(10), Xmm(11));
-//    vpaddd(Xmm(12) | k6 | T_z, Xmm(12), Xmm(13));
+    //    vpaddd(Ymm(0) | k1 | T_z, Ymm(1), Ymm(2));
+    //    vpaddd(Ymm(3) | k2 | T_z, Ymm(3), Ymm(4));
+    //    vpaddd(Zmm(5) | k3 | T_z, Zmm(6), Zmm(5));
+    //    vpaddd(Zmm(7) | k4 | T_z, Zmm(8), Zmm(8));
+    //    vpaddd(Xmm(9) | k5 | T_z, Xmm(10), Xmm(11));
+    //    vpaddd(Xmm(12) | k6 | T_z, Xmm(12), Xmm(13));
     /* VEX */
     vpaddd(Xmm(2) | k1 | T_z, Xmm(0), Xmm(1));
     vpaddd(Xmm(3) | k2 | T_z, Xmm(0), Xmm(1));
@@ -108,7 +109,6 @@ public:
     ptrue(p3.b, Xbyak_aarch64::VL1);
     ptrue(p4.b, Xbyak_aarch64::VL1);
 #endif
-
   }
 };
 

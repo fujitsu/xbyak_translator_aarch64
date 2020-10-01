@@ -32,7 +32,6 @@ public:
      * r15 */
     subps(Xmm(0), Xmm(1));
     subps(Xmm(2), Xmm(2));
-
   }
 };
 

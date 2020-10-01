@@ -44,7 +44,6 @@ public:
     vmulss(Xmm(26), Xmm(26), Xmm(27));
     vmulss(Xmm(28), Xmm(29), Xmm(28));
     vmulss(Xmm(30), Xmm(31), Xmm(31));
-    
   }
 };
 

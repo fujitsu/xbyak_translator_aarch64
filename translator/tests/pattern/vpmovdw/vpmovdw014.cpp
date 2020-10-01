@@ -29,10 +29,11 @@ public:
     }
 #ifndef __ARM_ARCH
     inputPredReg[1] = (1 << 0) | (1 << 1);
-    inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) | (1 << 15); 
+    inputPredReg[2] = (1 << 0) | (1 << 7) | (1 << 8) | (1 << 15);
 #else
     inputPredReg[1] = (1 << 0) | (1 << 4);
-    inputPredReg[2] = (1 << 0) | (1 << 28) | (uint64_t(1) << 32) | (uint64_t(1) << 60); 
+    inputPredReg[2] =
+        (1 << 0) | (1 << 28) | (uint64_t(1) << 32) | (uint64_t(1) << 60);
 #endif
     inputPredReg[7] = ~uint64_t(0);
   }

@@ -20,7 +20,7 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setDumpZRegMode(SP_DT);
-    //setInputZregAllRandomFloat();
+    // setInputZregAllRandomFloat();
     setInputZregAllRandomHex();
     /*
     for (int i = 0; i < 16; i++) {
@@ -50,7 +50,6 @@ public:
 
     mov(rax, 5);
     mov(rcx, 5);
-
   }
 };
 

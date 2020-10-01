@@ -21,9 +21,9 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-    inputPredReg[1] = uint64_t(0); /* Both x86_64 and aarch64 */
-    inputPredReg[2] = 0x100010001; /* Both x86_64 and aarch64 */
-    inputPredReg[3] = 0x400040004; /* Both x86_64 and aarch64 */
+    inputPredReg[1] = uint64_t(0);  /* Both x86_64 and aarch64 */
+    inputPredReg[2] = 0x100010001;  /* Both x86_64 and aarch64 */
+    inputPredReg[3] = 0x400040004;  /* Both x86_64 and aarch64 */
     inputPredReg[4] = 0x1000100010; /* Both x86_64 and aarch64 */
   }
 

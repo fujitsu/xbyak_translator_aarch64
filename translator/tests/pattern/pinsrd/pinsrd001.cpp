@@ -40,7 +40,7 @@ public:
     mov(rbx, addr1);
     for (int i = 0; i < 8; i++) {
       pinsrd(Xmm(i), ptr[rax], i);
-      pinsrd(Xmm(8+i), ptr[rbx], i+1);
+      pinsrd(Xmm(8 + i), ptr[rbx], i + 1);
     }
 
     mov(rax,

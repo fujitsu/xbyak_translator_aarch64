@@ -77,7 +77,7 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
-    //set_rnd_mode(mkldnn_round_nearest);
+    // set_rnd_mode(mkldnn_round_nearest);
 
     mov(rax, ~uint64_t(0));
     mov(rcx, ~uint64_t(1));
@@ -98,7 +98,6 @@ public:
     vcvtsi2ss(Xmm(26), Xmm(26), rcx);
     vcvtsi2ss(Xmm(27), Xmm(28), rbx);
     vcvtsi2ss(Xmm(29), Xmm(29), rbx);
-    
   }
 };
 

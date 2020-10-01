@@ -64,7 +64,7 @@ public:
     vpermi2ps(Zmm(1), Zmm(17), Zmm(31));
     vpermi2ps(Zmm(2), Zmm(18), Zmm(31));
     vpermi2ps(Zmm(3), Zmm(19), Zmm(31));
-    
+
     vpermi2ps(Zmm(4), Zmm(20), Zmm(31));
     vpermi2ps(Zmm(5), Zmm(21), Zmm(31));
     vpermi2ps(Zmm(6), Zmm(22), Zmm(31));

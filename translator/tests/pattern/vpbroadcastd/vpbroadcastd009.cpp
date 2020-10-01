@@ -32,8 +32,10 @@ public:
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     for (int i = 0; i < 32; i++) {
-      if(i % 2 == 0) vpbroadcastd(Xmm(i), r8d);
-      else vpbroadcastd(Ymm(i), r8d);
+      if (i % 2 == 0)
+        vpbroadcastd(Xmm(i), r8d);
+      else
+        vpbroadcastd(Ymm(i), r8d);
     }
   }
 };

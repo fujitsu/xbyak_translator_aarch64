@@ -30,7 +30,7 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     /* rax, rcx, rdx, rbx, rsp, rbp, rsi, rdi, r8, r9, r10, r11, r12, r13, r14,
      * r15 */
-    
+
     vaddss(Xmm(0), Xmm(1), Xmm(2));
     vaddss(Xmm(3), Xmm(3), Xmm(4));
     vaddss(Xmm(5), Xmm(6), Xmm(6));
@@ -42,7 +42,6 @@ public:
     vaddss(Xmm(25), Xmm(26), Xmm(26));
     vaddss(Xmm(27), Xmm(28), Xmm(27));
     vaddss(Xmm(29), Xmm(29), Xmm(29));
-
   }
 };
 

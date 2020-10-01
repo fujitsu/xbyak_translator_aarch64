@@ -83,7 +83,7 @@ public:
     addr1 = reinterpret_cast<size_t>(&(inputZReg[29].ud_dt[0]));
     mov(rbx, addr);
     mov(rcx, addr1);
-    
+
     /* Register index is VEX range. */
     //    vcvtps2dq(Xmm(0), ptr[rbx]);
     vcvtps2dq(Ymm(1), ptr[rbx]);

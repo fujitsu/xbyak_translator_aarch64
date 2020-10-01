@@ -61,7 +61,6 @@ public:
     inputZReg[7].us_dt[3] =
         0xceffffff; /* min float number represented by int32_t */
 
-
     /*    for (int j = 2; j < 32; j++) {
       for (int i = 0; i < 16; i++) {
         while (inputZReg[j].sp_dt[i] < -2.14748352e+9 ||
@@ -85,15 +84,14 @@ public:
     size_t addr;
 
     /* Register index is VEX range. */
-    for(int i=0; i<8; i++) {
+    for (int i = 0; i < 8; i++) {
       addr = reinterpret_cast<size_t>(&(inputZReg[0].ud_dt[0]));
       mov(rbx, addr);
-      cvtps2dq(Xmm(8+i), ptr[rbx]);
+      cvtps2dq(Xmm(8 + i), ptr[rbx]);
     }
 
     mov(rbx,
         size_t(0x5)); // Clear RAX for diff check between x86_64 and aarch64
-
   }
 };
 

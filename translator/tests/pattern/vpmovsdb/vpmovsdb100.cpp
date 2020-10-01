@@ -62,7 +62,6 @@ public:
     vpmovsdb(Xmm(4), Xmm(27));
     vpmovsdb(Xmm(5), Xmm(27));
     vpmovsdb(Xmm(26), Xmm(26));
-
   }
 };
 

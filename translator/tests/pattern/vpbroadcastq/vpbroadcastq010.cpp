@@ -37,7 +37,7 @@ public:
     for (int i = 16; i < 20; i++) {
       vpbroadcastq(Xmm(i), ptr[rax]);
       vpbroadcastq(Ymm(i + 4), ptr[rax]);
-    //   vpbroadcastq(Zmm(i + 8), ptr[rax]);
+      //   vpbroadcastq(Zmm(i + 8), ptr[rax]);
     }
 
     mov(rax, 8);

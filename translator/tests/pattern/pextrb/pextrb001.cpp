@@ -20,7 +20,7 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    for(int i=0; i<16; i++) {
+    for (int i = 0; i < 16; i++) {
       inputZReg[i].ub_dt[i] = (i << 4) + i;
     }
   }

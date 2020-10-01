@@ -57,7 +57,7 @@ public:
     vpmovsdb(ptr[rcx], Zmm(4) | k7);
     vmovdqu8(Zmm(5), ptr[rcx]);
 #endif
-    
+
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[28].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[27].ud_dt[0]));
@@ -72,7 +72,7 @@ public:
     vpmovsdb(ptr[rcx], Ymm(10) | k7);
     vmovdqu8(Zmm(11), ptr[rcx]);
 #endif
-    
+
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[25].ud_dt[0]));
     addr1 = reinterpret_cast<size_t>(&(inputZReg[24].ud_dt[0]));
@@ -87,7 +87,7 @@ public:
     vpmovsdb(ptr[rcx], Xmm(16) | k7);
     vmovdqu8(Zmm(17), ptr[rcx]);
 #endif
-    
+
 /* Address is aligned */
 #if 1
     addr = reinterpret_cast<size_t>(&(inputZReg[15].ud_dt[0]));

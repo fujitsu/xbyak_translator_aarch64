@@ -72,7 +72,6 @@ public:
         size_t(0xf)); // Clear RBX for diff check between x86_64 and aarch64
     mov(rcx,
         size_t(0x5)); // Clear RCX for diff check between x86_64 and aarch64
-    
   }
 };
 

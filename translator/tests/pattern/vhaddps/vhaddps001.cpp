@@ -19,7 +19,7 @@ class TestPtnGenerator : public TestGenerator {
 public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
-    //setInputZregAllRandomHex();
+    // setInputZregAllRandomHex();
     setInputZregAllRandomFloat();
   }
 
@@ -38,7 +38,6 @@ public:
     vhaddps(Ymm(8), Ymm(9), Ymm(8));
     vhaddps(Ymm(10), Ymm(11), Ymm(11));
     vhaddps(Ymm(12), Ymm(12), Ymm(12));
-    
   }
 };
 

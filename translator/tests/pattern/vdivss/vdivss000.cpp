@@ -44,7 +44,6 @@ public:
     vdivss(Xmm(26), Xmm(26), Xmm(27));
     vdivss(Xmm(28), Xmm(29), Xmm(28));
     vdivss(Xmm(30), Xmm(31), Xmm(31));
-    
   }
 };
 

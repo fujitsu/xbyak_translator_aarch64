@@ -24,7 +24,8 @@ public:
 #ifndef __ARM_ARCH
     inputPredReg[1] = (1 << 0) | (1 << 2) | (1 << 7) | (1 << 8) | (1 << 15);
 #else
-    inputPredReg[1] = (1 << 0) | (1 << 8) | (1 << 28) | (uint64_t(1) << 32) | (uint64_t(1) << 60);
+    inputPredReg[1] = (1 << 0) | (1 << 8) | (1 << 28) | (uint64_t(1) << 32) |
+                      (uint64_t(1) << 60);
 #endif
     inputPredReg[7] = ~uint64_t(0); /* Both x86_64 and aarch64 */
   }

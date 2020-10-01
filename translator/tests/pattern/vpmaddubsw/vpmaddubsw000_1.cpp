@@ -21,7 +21,6 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-
     /* signed:   -128, 0, 127
        unsigned: 0, 255 */
     inputZReg[14].ub_dt[0] = 0xFF;
@@ -49,7 +48,7 @@ public:
     /* VEX range */
     vpmaddubsw(Xmm(4), Xmm(14), Xmm(15));
     vpmaddubsw(Ymm(5), Ymm(14), Ymm(15));
-   
+
     /* EVEX range */
     vpmaddubsw(Xmm(16), Xmm(14), Xmm(15));
     vpmaddubsw(Ymm(17), Ymm(14), Ymm(15));

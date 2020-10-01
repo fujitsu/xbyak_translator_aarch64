@@ -20,26 +20,29 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    
+
     inputGenReg[8] = 0xabcdef012;
     inputGenReg[9] = 0x123456789a;
     inputGenReg[10] = 0x56789abcdef;
 
     inputPredReg[1] = uint64_t(0); /* Both x86_64 and aarch64 */
 #ifndef __ARM_ARCH
-    inputPredReg[2] = (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12)
-                     | (1 << 16) | (1 << 20) | (1 << 24) | (1 << 28);
-    inputPredReg[3] = (1 << 2) | (1 << 6) | (1 << 10) | (1 << 14)
-                     | (1 << 18) | (1 << 22) | (1 << 26) | (1 << 30);
-    inputPredReg[4] = (1 << 3) | (1 << 7) | (1 << 11) | (1 << 15)
-                     | (1 << 19) | (1 << 23) | (1 << 27) | (1 << 31);
+    inputPredReg[2] = (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) |
+                      (1 << 20) | (1 << 24) | (1 << 28);
+    inputPredReg[3] = (1 << 2) | (1 << 6) | (1 << 10) | (1 << 14) | (1 << 18) |
+                      (1 << 22) | (1 << 26) | (1 << 30);
+    inputPredReg[4] = (1 << 3) | (1 << 7) | (1 << 11) | (1 << 15) | (1 << 19) |
+                      (1 << 23) | (1 << 27) | (1 << 31);
 #else
-    inputPredReg[2] = (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24)
-                     | (uint64_t(1) << 32) | (uint64_t(1) << 40) | (uint64_t(1) << 48) | (uint64_t(1) << 56);
-    inputPredReg[3] = (1 << 4) | (1 << 12) | (1 << 20) | (1 << 28)
-                     | (uint64_t(1) << 36) | (uint64_t(1) << 44) | (uint64_t(1) << 52) | (uint64_t(1) << 60);
-    inputPredReg[4] = (1 << 6) | (1 << 14) | (1 << 22) | (1 << 30) 
-                     | (uint64_t(1) << 38) | (uint64_t(1) << 46) | (uint64_t(1) << 54) | (uint64_t(1) << 62);
+    inputPredReg[2] = (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+                      (uint64_t(1) << 32) | (uint64_t(1) << 40) |
+                      (uint64_t(1) << 48) | (uint64_t(1) << 56);
+    inputPredReg[3] = (1 << 4) | (1 << 12) | (1 << 20) | (1 << 28) |
+                      (uint64_t(1) << 36) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 52) | (uint64_t(1) << 60);
+    inputPredReg[4] = (1 << 6) | (1 << 14) | (1 << 22) | (1 << 30) |
+                      (uint64_t(1) << 38) | (uint64_t(1) << 46) |
+                      (uint64_t(1) << 54) | (uint64_t(1) << 62);
 #endif
     inputPredReg[7] = ~uint64_t(0); /* Both x86_64 and aarch64 */
   }
@@ -80,7 +83,6 @@ public:
     ptrue(p3.b, Xbyak_aarch64::VL1);
     ptrue(p4.b, Xbyak_aarch64::VL1);
 #endif
-
   }
 };
 

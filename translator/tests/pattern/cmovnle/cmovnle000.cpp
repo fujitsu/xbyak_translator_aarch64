@@ -30,7 +30,7 @@ public:
     /* RAX, RCX, RDX, RBX, RSP, RBP, RSI, RDI,
        R8,  R9,  R10, R11, R12, R13, R14, R15 */
 #define CMOV cmovnle
-    
+
     mov(r8, ~uint64_t(0));
     mov(r9, ~uint64_t(0));
     mov(r10, ~uint64_t(0));
@@ -51,7 +51,7 @@ public:
     cmp(rax, rax);
     CMOV(r8, r15);
 
-    // greater 
+    // greater
     cmp(rax, rcx);
     CMOV(r9, r15);
 
@@ -64,7 +64,7 @@ public:
     cmp(rax, rax);
     CMOV(r11d, r15d);
 
-    // greater 
+    // greater
     cmp(rax, rcx);
     CMOV(r12d, r15d);
 
@@ -77,7 +77,7 @@ public:
     cmp(rax, rax);
     CMOV(bp, r15w);
 
-    // greater 
+    // greater
     cmp(rax, rcx);
     CMOV(si, r15w);
 

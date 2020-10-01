@@ -61,7 +61,6 @@ public:
     inputZReg[7].us_dt[3] =
         0xceffffff; /* min float number represented by int32_t */
 
-
     /*    for (int j = 2; j < 32; j++) {
       for (int i = 0; i < 16; i++) {
         while (inputZReg[j].sp_dt[i] < -2.14748352e+9 ||

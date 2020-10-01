@@ -30,7 +30,7 @@ public:
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
     mov(eax, 0xABCD);
     for (int i = 0; i < 16; i++) {
-      pinsrw(Xmm(i), eax, 3+i);
+      pinsrw(Xmm(i), eax, 3 + i);
     }
   }
 };

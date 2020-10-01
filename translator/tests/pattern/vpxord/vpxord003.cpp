@@ -21,15 +21,24 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 #ifndef __ARM_ARCH
-    inputPredReg[1] = (1 << 0) | (1 << 2) | (1 << 4) | (1 << 6) | (1 << 8) | (1 << 10) | (1 << 12) | (1 << 14);
-    inputPredReg[2] = (1 << 1) | (1 << 3) | (1 << 5) | (1 << 7) | (1 << 9) | (1 << 11) | (1 << 13) | (1 << 15);
+    inputPredReg[1] = (1 << 0) | (1 << 2) | (1 << 4) | (1 << 6) | (1 << 8) |
+                      (1 << 10) | (1 << 12) | (1 << 14);
+    inputPredReg[2] = (1 << 1) | (1 << 3) | (1 << 5) | (1 << 7) | (1 << 9) |
+                      (1 << 11) | (1 << 13) | (1 << 15);
     inputPredReg[3] = ~uint64_t(0);
-    inputPredReg[4] = (1 << 1) | (1 << 3) | (1 << 4) | (1 << 6) | (1 << 9) | (1 << 11) | (1 << 12) | (1 << 14);
+    inputPredReg[4] = (1 << 1) | (1 << 3) | (1 << 4) | (1 << 6) | (1 << 9) |
+                      (1 << 11) | (1 << 12) | (1 << 14);
 #else
-    inputPredReg[1] = (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) | (uint64_t(1) << 32) | (uint64_t(1) << 40) | (uint64_t(1) << 48) | (uint64_t(1) << 56);
-    inputPredReg[2] = (1 << 4) | (1 << 12) | (1 << 20) | (uint64_t(1) << 28) | (uint64_t(1) << 36) | (uint64_t(1) << 44) | (uint64_t(1) << 52) | (uint64_t(1) << 60);
+    inputPredReg[1] = (1 << 0) | (1 << 8) | (1 << 16) | (1 << 24) |
+                      (uint64_t(1) << 32) | (uint64_t(1) << 40) |
+                      (uint64_t(1) << 48) | (uint64_t(1) << 56);
+    inputPredReg[2] = (1 << 4) | (1 << 12) | (1 << 20) | (uint64_t(1) << 28) |
+                      (uint64_t(1) << 36) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 52) | (uint64_t(1) << 60);
     inputPredReg[3] = ~uint64_t(0);
-    inputPredReg[4] = (1 << 4) | (1 << 12) | (1 << 16) | (1 << 24) | (uint64_t(1) << 36) | (uint64_t(1) << 44) | (uint64_t(1) << 48) | (uint64_t(1) << 56);
+    inputPredReg[4] = (1 << 4) | (1 << 12) | (1 << 16) | (1 << 24) |
+                      (uint64_t(1) << 36) | (uint64_t(1) << 44) |
+                      (uint64_t(1) << 48) | (uint64_t(1) << 56);
 #endif
   }
 
@@ -105,7 +114,6 @@ public:
     ptrue(p3.b, Xbyak_aarch64::VL1);
     ptrue(p4.b, Xbyak_aarch64::VL1);
 #endif
-
   }
 };
 

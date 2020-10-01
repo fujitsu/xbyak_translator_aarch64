@@ -43,7 +43,6 @@ public:
     vmaxps(Ymm(7), Ymm(8), Ymm(8));    /* srcIdx = srcIdx2 */
     vmaxps(Ymm(9), Ymm(9), Ymm(9));    /* dstIdx = srcIdx = srcIdx2*/
     vmaxps(Ymm(10), Ymm(11), Ymm(12)); /* src = src2 */
-
   }
 };
 

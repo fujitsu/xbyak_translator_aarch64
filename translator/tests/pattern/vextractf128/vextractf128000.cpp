@@ -41,8 +41,6 @@ public:
 
     vextractf128(Xmm(8), Ymm(9), 15);
     vextractf128(Xmm(10), Ymm(10), 15);
-    
-    
   }
 };
 

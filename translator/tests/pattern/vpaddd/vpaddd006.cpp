@@ -20,12 +20,12 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-//    inputPredReg[1] = (1 << 0) | (1 << 7); /* Both x86_64 and aarch64 */
-//    inputPredReg[2] = (1 << 1) | (1 << 10); /* Both x86_64 and aarch64 */
-//    inputPredReg[3] = (1 << 2) | (1 << 7); /* Both x86_64 and aarch64 */
-//    inputPredReg[4] = (1 << 3) | (1 << 15); /* Both x86_64 and aarch64 */
-//    inputPredReg[5] = (1 << 0) | (1 << 3); /* Both x86_64 and aarch64 */
-//    inputPredReg[6] = (1 << 1) | (1 << 7); /* Both x86_64 and aarch64 */
+    //    inputPredReg[1] = (1 << 0) | (1 << 7); /* Both x86_64 and aarch64 */
+    //    inputPredReg[2] = (1 << 1) | (1 << 10); /* Both x86_64 and aarch64 */
+    //    inputPredReg[3] = (1 << 2) | (1 << 7); /* Both x86_64 and aarch64 */
+    //    inputPredReg[4] = (1 << 3) | (1 << 15); /* Both x86_64 and aarch64 */
+    //    inputPredReg[5] = (1 << 0) | (1 << 3); /* Both x86_64 and aarch64 */
+    //    inputPredReg[6] = (1 << 1) | (1 << 7); /* Both x86_64 and aarch64 */
     inputPredReg[1] = uint64_t(0); /* Both x86_64 and aarch64 */
 #ifndef __ARM_ARCH
     inputPredReg[2] = (1 << 0) | (1 << 2) | (1 << 4);
@@ -34,7 +34,8 @@ public:
 #else
     inputPredReg[2] = (1 << 0) | (1 << 8) | (1 << 16);
     inputPredReg[3] = (1 << 4) | (1 << 12) | (1 << 20);
-    inputPredReg[4] = (1 << 0) | (1 << 28) | (uint64_t(1) << 40) | (uint64_t(1) << 60);
+    inputPredReg[4] =
+        (1 << 0) | (1 << 28) | (uint64_t(1) << 40) | (uint64_t(1) << 60);
 #endif
     inputPredReg[7] = ~uint64_t(0); /* Both x86_64 and aarch64 */
 
@@ -67,16 +68,16 @@ public:
     std::cout << "Address is " << std::hex << addr << std::endl;
     mov(rax, addr);
 
-//    vpaddd(Ymm(0) | k1 | T_z, Ymm(1), ptr[rax]);
-//    vpaddd(Ymm(2) | k2 | T_z, Ymm(2), ptr[rax]);
-//
-//    vpaddd(Zmm(3) | k3 | T_z, Zmm(4), ptr[rax]);
-//    vpaddd(Zmm(5) | k4 | T_z, Zmm(5), ptr[rax]);
-//
-//    vpaddd(Xmm(6) | k5 | T_z, Xmm(7), ptr[rax]);
-//    vpaddd(Xmm(8) | k6 | T_z, Xmm(8), ptr[rax]);
-//
-//    mov(rax, 5);
+    //    vpaddd(Ymm(0) | k1 | T_z, Ymm(1), ptr[rax]);
+    //    vpaddd(Ymm(2) | k2 | T_z, Ymm(2), ptr[rax]);
+    //
+    //    vpaddd(Zmm(3) | k3 | T_z, Zmm(4), ptr[rax]);
+    //    vpaddd(Zmm(5) | k4 | T_z, Zmm(5), ptr[rax]);
+    //
+    //    vpaddd(Xmm(6) | k5 | T_z, Xmm(7), ptr[rax]);
+    //    vpaddd(Xmm(8) | k6 | T_z, Xmm(8), ptr[rax]);
+    //
+    //    mov(rax, 5);
 
     /* VEX */
     vpaddd(Xmm(2) | k1, Xmm(0), ptr[rax]);

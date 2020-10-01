@@ -20,7 +20,7 @@ public:
   void setInitialRegValue() {
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
-    
+
     inputGenReg[8] = 0xabcdef012;
     inputGenReg[9] = 0x123456789a;
     inputGenReg[10] = 0x56789abcdef;
@@ -31,9 +31,12 @@ public:
     inputPredReg[3] = (1 << 2) | (1 << 6) | (1 << 10) | (1 << 14);
     inputPredReg[4] = (1 << 3) | (1 << 7) | (1 << 11) | (1 << 15);
 #else
-    inputPredReg[2] = (1 << 0) | (1 << 16) | (uint64_t(1) << 32) | (uint64_t(1) << 48);
-    inputPredReg[3] = (1 << 8) | (1 << 24) | (uint64_t(1) << 40) | (uint64_t(1) << 56);
-    inputPredReg[4] = (1 << 12) | (1 << 28) | (uint64_t(1) << 44) | (uint64_t(1) << 60);
+    inputPredReg[2] =
+        (1 << 0) | (1 << 16) | (uint64_t(1) << 32) | (uint64_t(1) << 48);
+    inputPredReg[3] =
+        (1 << 8) | (1 << 24) | (uint64_t(1) << 40) | (uint64_t(1) << 56);
+    inputPredReg[4] =
+        (1 << 12) | (1 << 28) | (uint64_t(1) << 44) | (uint64_t(1) << 60);
 #endif
     inputPredReg[7] = ~uint64_t(0); /* Both x86_64 and aarch64 */
   }
@@ -74,7 +77,6 @@ public:
     ptrue(p3.b, Xbyak_aarch64::VL1);
     ptrue(p4.b, Xbyak_aarch64::VL1);
 #endif
-
   }
 };
 

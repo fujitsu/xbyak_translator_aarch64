@@ -21,8 +21,8 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     inputZReg[0].ud_dt[7] = uint64_t(0x0000000000007fff);
     inputZReg[1].ud_dt[7] = uint64_t(0x0000000000008000);
-    inputZReg[2].ud_dt[7] =  uint64_t(1);
-    inputZReg[3].ud_dt[7] =  ~uint64_t(0);
+    inputZReg[2].ud_dt[7] = uint64_t(1);
+    inputZReg[3].ud_dt[7] = ~uint64_t(0);
   }
 
   void setCheckRegFlagAll() {
@@ -43,7 +43,7 @@ public:
     mov(rcx, addr1);
     mov(rdx, addr2);
     mov(rbx, addr3);
-    
+
     movsx(r12, word[rax]);
     movsx(r13, word[rcx]);
     movsx(r14, word[rdx]);

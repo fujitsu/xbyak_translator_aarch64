@@ -24,25 +24,26 @@ public:
 #ifndef __ARM_ARCH /* x86_64 */
     inputPredReg[2] = (1 << 0) | (1 << 7);
     inputPredReg[3] = (1 << 0) | (1 << 7) | (1 << 11) | (uint64_t(1) << 15);
-    inputPredReg[4] = (1 << 0) | (1 << 7) | (1 << 11) | (1 << 13) | (uint64_t(1) << 15);
-    inputPredReg[5] = (1 << 0) | (1 << 9) | (1 << 11) | (1 << 13) | (1 << 14) | (uint64_t(1) << 15);
+    inputPredReg[4] =
+        (1 << 0) | (1 << 7) | (1 << 11) | (1 << 13) | (uint64_t(1) << 15);
+    inputPredReg[5] = (1 << 0) | (1 << 9) | (1 << 11) | (1 << 13) | (1 << 14) |
+                      (uint64_t(1) << 15);
     inputPredReg[6] = (1 << 0) | (1 << 9) | (1 << 10) | (1 << 11) | (1 << 13) |
-      (uint64_t(1) << 14) | (uint64_t(1) << 15);
+                      (uint64_t(1) << 14) | (uint64_t(1) << 15);
 
 #else /* aarch64 */
     inputPredReg[2] = (1 << 0) | (uint64_t(1) << 28);
     inputPredReg[3] = (1 << 0) | (uint64_t(1) << 28) | (uint64_t(1) << 44) |
-      (uint64_t(1) << 60);
+                      (uint64_t(1) << 60);
     inputPredReg[4] = (1 << 0) | (uint64_t(1) << 28) | (uint64_t(1) << 44) |
-      (uint64_t(1) << 52) | (uint64_t(1) << 60);
+                      (uint64_t(1) << 52) | (uint64_t(1) << 60);
     inputPredReg[5] = (1 << 0) | (uint64_t(1) << 36) | (uint64_t(1) << 44) |
-      (uint64_t(1) << 52) | (uint64_t(1) << 56) |
-      (uint64_t(1) << 60);
+                      (uint64_t(1) << 52) | (uint64_t(1) << 56) |
+                      (uint64_t(1) << 60);
     inputPredReg[6] = (1 << 0) | (uint64_t(1) << 36) | (uint64_t(1) << 40) |
-      (uint64_t(1) << 44) | (uint64_t(1) << 52) |
-      (uint64_t(1) << 56) | (uint64_t(1) << 60);
+                      (uint64_t(1) << 44) | (uint64_t(1) << 52) |
+                      (uint64_t(1) << 56) | (uint64_t(1) << 60);
 #endif
-    
   }
 
   void setCheckRegFlagAll() {
@@ -65,7 +66,6 @@ public:
     vpslld(Zmm(23) | k4 | T_z, Zmm(24), 13);
     vpslld(Zmm(25) | k5 | T_z, Zmm(26), 24);
     vpslld(Zmm(27) | k6 | T_z, Zmm(28), 8);
-
   }
 };
 
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f();                 /* Execute JIT code */
+    f(); /* Execute JIT code */
 
 #ifndef XBYAK_TRANSLATE_AARCH64
     /* Bit order of mask registers are different from x86_64 and aarch64.
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
        Bit order of x86_64 mask register values is modified here. */
     gen.modifyPredReg(SP_DT);
 #endif
-    
+
     gen.dumpOutputReg(); /* Dump all register values */
     gen.dumpCheckReg();  /* Dump register values to be checked */
   }

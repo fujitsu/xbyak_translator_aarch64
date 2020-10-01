@@ -28,8 +28,8 @@ public:
 
   void genJitTestCode() {
     /* Here write JIT code with x86_64 mnemonic function to be tested. */
-    mov(r8, 0xabcd);    
-    mov(r9, 0x1234);    
+    mov(r8, 0xabcd);
+    mov(r9, 0x1234);
 
     vpbroadcastb(Zmm(0), Xmm(31));
     vpbroadcastb(Zmm(1), Xmm(31));

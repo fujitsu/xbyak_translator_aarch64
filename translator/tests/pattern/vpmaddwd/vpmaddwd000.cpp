@@ -48,7 +48,6 @@ public:
     vpmaddwd(Ymm(8), Ymm(14), Ymm(8));
     vpmaddwd(Ymm(9), Ymm(9), Ymm(9));
 
-    
     /* EVEX range */
     vpmaddwd(Xmm(16), Xmm(14), Xmm(15));
     vpmaddwd(Xmm(17), Xmm(14), Xmm(15));

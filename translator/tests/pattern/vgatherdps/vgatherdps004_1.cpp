@@ -21,12 +21,12 @@ public:
     /* Here modify arrays of inputGenReg, inputPredReg, inputZReg */
     setInputZregAllRandomHex();
 
-    for(int i=8; i<15; i++) {
-      for(int j=0; j<16; j++) {
-	inputZReg[i].us_dt[j]= 0x7fffffff;
+    for (int i = 8; i < 15; i++) {
+      for (int j = 0; j < 16; j++) {
+        inputZReg[i].us_dt[j] = 0x7fffffff;
       }
     }
-    
+
     inputZReg[8].us_dt[0] = uint64_t(1) << 31;
 
     inputZReg[9].us_dt[0] = uint64_t(1) << 31;
@@ -36,7 +36,7 @@ public:
     inputZReg[10].us_dt[7] = (1 << 31);
     inputZReg[10].us_dt[11] = (1 << 31);
     inputZReg[10].us_dt[15] = (1 << 31);
-    
+
     inputZReg[11].us_dt[0] = (1 << 31);
     inputZReg[11].us_dt[7] = (1 << 31);
     inputZReg[11].us_dt[11] = (1 << 31);
@@ -58,10 +58,9 @@ public:
     inputZReg[13].us_dt[14] = (1 << 31);
     inputZReg[13].us_dt[15] = (1 << 31);
 
-    for(int i=0; i<16; i++) {
+    for (int i = 0; i < 16; i++) {
       inputZReg[14].us_dt[i] = (1 << 31);
     }
-
 
     /* Address index */
     for (int i = 0; i < 8; i++) {
@@ -79,7 +78,6 @@ public:
     for (int i = 12; i < 16; i++) {
       inputZReg[0].us_dt[i] = -64;
     }
-
   }
 
   void setCheckRegFlagAll() {
@@ -95,14 +93,15 @@ public:
 
     mov(rax, addr);
 
-    /* Indices of Dest, Index and Mask register must be different from each other. */
-    vgatherdps(Xmm(7), ptr[rax + Xmm(0)*2 + 0x10], Xmm(8));
-    vgatherdps(Xmm(6), ptr[rax + Xmm(0)*2 - 0x10], Xmm(9));
-    vgatherdps(Xmm(5), ptr[rax + Xmm(0)*2], Xmm(10));
-    vgatherdps(Xmm(4), ptr[rax + Xmm(0)*2], Xmm(11));
-    vgatherdps(Xmm(3), ptr[rax + Xmm(0)*2], Xmm(12));
-    vgatherdps(Xmm(2), ptr[rax + Xmm(0)*2], Xmm(13));
-    vgatherdps(Xmm(1), ptr[rax + Xmm(0)*2], Xmm(14));
+    /* Indices of Dest, Index and Mask register must be different from each
+     * other. */
+    vgatherdps(Xmm(7), ptr[rax + Xmm(0) * 2 + 0x10], Xmm(8));
+    vgatherdps(Xmm(6), ptr[rax + Xmm(0) * 2 - 0x10], Xmm(9));
+    vgatherdps(Xmm(5), ptr[rax + Xmm(0) * 2], Xmm(10));
+    vgatherdps(Xmm(4), ptr[rax + Xmm(0) * 2], Xmm(11));
+    vgatherdps(Xmm(3), ptr[rax + Xmm(0) * 2], Xmm(12));
+    vgatherdps(Xmm(2), ptr[rax + Xmm(0) * 2], Xmm(13));
+    vgatherdps(Xmm(1), ptr[rax + Xmm(0) * 2], Xmm(14));
     mov(rax, 5);
   }
 };
@@ -130,7 +129,7 @@ int main(int argc, char *argv[]) {
     /* Before executing JIT code, dump inputData, inputGenReg, inputPredReg,
      * inputZReg. */
     gen.dumpInputReg();
-    f();                 /* Execute JIT code */
+    f(); /* Execute JIT code */
 
 #ifndef __ARM_ARCH
     // Adjust Pred reg values to x64's mask reg
