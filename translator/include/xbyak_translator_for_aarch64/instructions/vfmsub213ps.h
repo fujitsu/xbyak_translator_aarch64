@@ -1,19 +1,19 @@
 /*******************************************************************************
  * Copyright 2020 FUJITSU LIMITED
  *
- * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * Licensed under the Apache License, Version 2.0 (the License);
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * distributed under the License is distributed on an AS IS BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* 2020/09/04 14:44 */
+/* 2020/10/04 22:03 */
 #define CG64 CodeGeneratorAArch64
 void translateVFMSUB213PS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
@@ -198,6 +198,7 @@ void translateVFMSUB213PS(xed_decoded_inst_t *p) {
        isAvailAll1Preg0_7() == true && true)) {
     CG64::zip1(P_TMP_0.b, xa::PReg(maskIdx).b, xa::PReg(maskIdx).b);
   }
+
   /* Col=AL119*/
   if (false ||
       (a64_opt.operands[2].opName == XED_OPERAND_REG2 &&
@@ -469,6 +470,7 @@ void translateVFMSUB213PS(xed_decoded_inst_t *p) {
        isAvailAll1Preg0_7() == true && true)) {
     src2Idx = a64.operands[3].regIdx;
   }
+
   /* Col=AW119*/
   if (false ||
       (a64_opt.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -512,6 +514,7 @@ void translateVFMSUB213PS(xed_decoded_inst_t *p) {
        isAvailAll1Preg0_7() == true && true)) {
     ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
+
   /* Col=BF119*/
   if (false ||
       (a64_opt.operands[2].opName == XED_OPERAND_REG2 &&
@@ -666,6 +669,7 @@ void translateVFMSUB213PS(xed_decoded_inst_t *p) {
        isAvailAll1Preg0_7() == true && true)) {
     CG64::mov(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, 0);
   }
+
   /* Col=BV119*/
   if (false ||
       (a64_opt.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -721,6 +725,7 @@ void translateVFMSUB213PS(xed_decoded_inst_t *p) {
        a64_opt.EVEXb == 0 && isAvailAll1Preg0_7() == true && true)) {
     return;
   }
+
   /* Col=T119*/
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -827,10 +832,6 @@ void translateVFMSUB213PS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true) ||
-      (a64.operands[2].opName == XED_OPERAND_REG2 &&
-       a64.operands[3].opName == XED_OPERAND_REG3 &&
-       a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
-       a64.EVEXb == 0 && true) ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
@@ -1241,6 +1242,7 @@ void translateVFMSUB213PS(xed_decoded_inst_t *p) {
        a64.EVEXb == 0 && true)) {
     CG64::zip1(P_TMP_0.b, xa::PReg(maskIdx).b, xa::PReg(maskIdx).b);
   }
+
   /* Col=AD119*/
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -1553,6 +1555,7 @@ void translateVFMSUB213PS(xed_decoded_inst_t *p) {
        a64.EVEXb == 0 && true)) {
     src2Idx = a64.operands[3].regIdx;
   }
+
   /* Col=AO119*/
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
@@ -1609,6 +1612,7 @@ void translateVFMSUB213PS(xed_decoded_inst_t *p) {
        a64.EVEXb == 0 && true)) {
     ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
+
   /* Col=AX119*/
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -1795,6 +1799,7 @@ void translateVFMSUB213PS(xed_decoded_inst_t *p) {
        a64.EVEXb == 0 && true)) {
     CG64::mov(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, 0);
   }
+
   /* Col=BI119*/
   if (false ||
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
