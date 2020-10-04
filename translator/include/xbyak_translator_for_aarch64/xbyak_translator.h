@@ -39,7 +39,6 @@
 
 // namespace xbyak_translator {
 private:
-const xt_reg_idx_t xtDefaultAddrIdx = 28;
 constexpr static unsigned int xtNumOperands = 5;
 
 bool availAll1Preg0_7 = false;
@@ -53,6 +52,7 @@ bool availableZReg[NUM_Z_REG_INTEL] = {0};
 bool unusedZReg[NUM_Z_REG_INTEL] = {0};
 
 public:
+constexpr static xt_reg_idx_t xtDefaultAddrIdx = 28;
 #ifdef XT_TEST
 constexpr static unsigned int xt_sp_reg_idx = 31;
 #else
