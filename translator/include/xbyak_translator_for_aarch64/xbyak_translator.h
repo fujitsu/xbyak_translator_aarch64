@@ -75,6 +75,7 @@ Xbyak_aarch64::XReg X_TMP_2 = x25;
 Xbyak_aarch64::XReg X_TMP_3 = x26;
 Xbyak_aarch64::XReg X_TMP_4 = x27;
 Xbyak_aarch64::XReg X_TMP_ADDR = x28;
+const Xbyak_aarch64::XReg X_DEFAULT_ADDR = x28;
 #ifdef XT_TEST
 Xbyak_aarch64::XReg X_TRANSLATOR_STACK{xt_sp_reg_idx};
 #else
@@ -1049,6 +1050,8 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
   xed_uint_t scale = 0;
   xed_int64_t disp = 0;
   unsigned int memOpIdx = 0;
+  X_TMP_ADDR = X_DEFAULT_ADDR;
+
   const xed_inst_t *xi = xed_decoded_inst_inst(p);
 
   /* Get EVEX.b bits */
