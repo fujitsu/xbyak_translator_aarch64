@@ -108,7 +108,7 @@ public:
            Carry (something differenct from x86_64 CF),
            oVerflow */
 
-        Xbyak_aarch64::Label L0, L1, L2, L3, L4;
+        Label L0, L1, L2, L3, L4;
 
         xa_->mov(x_dummyFlag, 0);
 
@@ -120,28 +120,28 @@ public:
         xa_->b(Xbyak_aarch64::NE, L0);
         xa_->orr(x_dummyFlag, x_dummyFlag,
                  x_cf); // Set x86_64's CF flag
-        Xbyak_aarch64::L(L0);
+        L(L0);
 
         xa_->and_(X_TMP_0, x_tmpFlag, 0x4); // extract Z flag
         xa_->cmp(X_TMP_0, 0x4);             // Check if (Z==1)
         xa_->b(Xbyak_aarch64::NE, L2);
         xa_->orr(x_dummyFlag, x_dummyFlag,
                  x_zf); // Set x86_64's ZF flag
-        Xbyak_aarch64::L(L2);
+        L(L2);
 
         xa_->and_(X_TMP_0, x_tmpFlag, 0x8); // extract N flag
         xa_->cmp(X_TMP_0, 0x8);             // Check if (N==1)
         xa_->b(Xbyak_aarch64::NE, L3);
         xa_->orr(x_dummyFlag, x_dummyFlag,
                  x_sf); // Set x86_64's SF flag
-        Xbyak_aarch64::L(L3);
+        L(L3);
 
         xa_->and_(X_TMP_0, x_tmpFlag, 0x1); // extract V flag
         xa_->cmp(X_TMP_0, 0x1);             // Check if (V==1)
         xa_->b(Xbyak_aarch64::NE, L4);
         xa_->orr(x_dummyFlag, x_dummyFlag,
                  x_of); // Set x86_64's OF flag
-        Xbyak_aarch64::L(L4);
+        L(L4);
 #endif
 
         xa_->str(x_dummyFlag, Xbyak_aarch64::ptr(x_tmpAddr));
