@@ -79,16 +79,11 @@ enum DataType {
 
 #ifdef XBYAK_TRANSLATE_AARCH64
 constexpr Xbyak_aarch64::Operand::Code callee_saved_gregs[] = {
-    Xbyak_aarch64::Operand::Code::X19,
-    Xbyak_aarch64::Operand::Code::X20,
-    Xbyak_aarch64::Operand::Code::X21,
-    Xbyak_aarch64::Operand::Code::X22,
-    Xbyak_aarch64::Operand::Code::X23,
-    Xbyak_aarch64::Operand::Code::X24,
-    Xbyak_aarch64::Operand::Code::X25,
-    Xbyak_aarch64::Operand::Code::X26,
-    Xbyak_aarch64::Operand::Code::X27,
-    Xbyak_aarch64::Operand::Code::X28,
+    Xbyak_aarch64::Operand::Code::X19, Xbyak_aarch64::Operand::Code::X20,
+    Xbyak_aarch64::Operand::Code::X21, Xbyak_aarch64::Operand::Code::X22,
+    Xbyak_aarch64::Operand::Code::X23, Xbyak_aarch64::Operand::Code::X24,
+    Xbyak_aarch64::Operand::Code::X25, Xbyak_aarch64::Operand::Code::X26,
+    Xbyak_aarch64::Operand::Code::X27, Xbyak_aarch64::Operand::Code::X28,
 };
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
 constexpr Xbyak::Operand::Code callee_saved_gregs[] = {
@@ -232,28 +227,25 @@ private:
     }
 
     /* sp address must be aligned by 16. */
-    xa_->stp(
-        x29, x30,
-        Xbyak_aarch64::pre_ptr(xa_->sp,
-                               -(static_cast<int64_t>(preserved_stack_size))));
+    xa_->stp(x29, x30,
+             Xbyak_aarch64::pre_ptr(
+                 xa_->sp, -(static_cast<int64_t>(preserved_stack_size))));
     xa_->add(x29, xa_->sp, xreg_bytes * 2);
     if (num_vreg_to_preserve) {
       if (num_vreg_to_preserve != 8) {
         msg_err(__FILE__, __LINE__, "Unimplemented");
       }
-      xa_->st4(
-          (Xbyak_aarch64::VReg2D(vreg_to_preserve_start) -
-           Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 3))[0],
-          Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
-      xa_->st4(
-          (Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 4) -
-           Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 7))[0],
-          Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
+      xa_->st4((Xbyak_aarch64::VReg2D(vreg_to_preserve_start) -
+                Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 3))[0],
+               Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
+      xa_->st4((Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 4) -
+                Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 7))[0],
+               Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
     }
     for (size_t i = 0; i < num_callee_saved_gregs; i += 2) {
       xa_->stp(Xbyak_aarch64::XReg(callee_saved_gregs[i]),
-                                Xbyak_aarch64::XReg(callee_saved_gregs[i + 1]),
-                                Xbyak_aarch64::post_ptr(x29, xreg_bytes * 2));
+               Xbyak_aarch64::XReg(callee_saved_gregs[i + 1]),
+               Xbyak_aarch64::post_ptr(x29, xreg_bytes * 2));
     }
 #else
     for (size_t i = 0; i < num_callee_saved_gregs; i++) {
@@ -277,25 +269,22 @@ private:
       if (num_vreg_to_preserve != 8) {
         msg_err(__FILE__, __LINE__, "Unimplemented");
       }
-      xa_->ld4(
-          (Xbyak_aarch64::VReg2D(vreg_to_preserve_start) -
-           Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 3))[0],
-          Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
-      xa_->ld4(
-          (Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 4) -
-           Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 7))[0],
-          Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
+      xa_->ld4((Xbyak_aarch64::VReg2D(vreg_to_preserve_start) -
+                Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 3))[0],
+               Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
+      xa_->ld4((Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 4) -
+                Xbyak_aarch64::VReg2D(vreg_to_preserve_start + 7))[0],
+               Xbyak_aarch64::post_ptr(x29, vreg_bytes_to_be_preserved * 4));
     }
     for (size_t i = 0; i < num_callee_saved_gregs; i += 2) {
       xa_->ldp(Xbyak_aarch64::XReg(callee_saved_gregs[i]),
-                                Xbyak_aarch64::XReg(callee_saved_gregs[i + 1]),
-                                Xbyak_aarch64::post_ptr(x29, xreg_bytes * 2));
+               Xbyak_aarch64::XReg(callee_saved_gregs[i + 1]),
+               Xbyak_aarch64::post_ptr(x29, xreg_bytes * 2));
     }
 
-    xa_->ldp(
-        x29, x30,
-        Xbyak_aarch64::post_ptr(xa_->sp,
-                                static_cast<int64_t>(preserved_stack_size)));
+    xa_->ldp(x29, x30,
+             Xbyak_aarch64::post_ptr(
+                 xa_->sp, static_cast<int64_t>(preserved_stack_size)));
 #else
     for (int i = num_callee_saved_gregs - 1; i >= 0; i--) {
       pop(Reg64(callee_saved_gregs[i]));
@@ -314,14 +303,12 @@ private:
   void _genJitLoadGenReg() {
 #ifdef XBYAK_TRANSLATE_AARCH64
     /* x0 contains memory address. */
-    xa_->mov_imm(x0,
-                                  reinterpret_cast<uint64_t>(inputGenReg) + 16);
+    xa_->mov_imm(x0, reinterpret_cast<uint64_t>(inputGenReg) + 16);
     for (int i = 2; i < NUM_GEN_REG; i++) {
       if (i != SP_REG_IDX_AARCH64) { /* Avoid overwriting stack pointer */
         ldr(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
       } else {
-        xa_->add(
-            x0, x8, 8); /* Incremente address for next register. */
+        xa_->add(x0, x8, 8); /* Incremente address for next register. */
       }
     }
     xa_->mov_imm(x0, reinterpret_cast<uint64_t>(inputGenReg));
@@ -346,12 +333,10 @@ private:
   void _genJitStoreGenReg() {
 #ifdef XBYAK_TRANSLATE_AARCH64
     /* x0 contains memory address. */
-    stp(x0, x1,
-        Xbyak_aarch64::pre_ptr(xa_->sp,
-                               -16)); // push data of x0 and x1
+    stp(x0, x1, Xbyak_aarch64::pre_ptr(xa_->sp,
+                                       -16)); // push data of x0 and x1
 
-    xa_->mov_imm(x0, reinterpret_cast<uint64_t>(outputGenReg) +
-                                          16);
+    xa_->mov_imm(x0, reinterpret_cast<uint64_t>(outputGenReg) + 16);
     for (int i = 2; i < NUM_GEN_REG; i++) {
       if (i != SP_REG_IDX_AARCH64) {
         str(Xbyak_aarch64::XReg(i), Xbyak_aarch64::post_ptr(x0, 8));
@@ -382,8 +367,7 @@ private:
 
   void _genJitLoadPredReg() {
 #ifdef XBYAK_TRANSLATE_AARCH64
-    stp(x0, x1,
-        Xbyak_aarch64::pre_ptr(xa_->sp, -16)); // push x0, x1
+    stp(x0, x1, Xbyak_aarch64::pre_ptr(xa_->sp, -16)); // push x0, x1
 
     xa_->mov_imm(x0, reinterpret_cast<uint64_t>(inputPredReg));
 
@@ -391,8 +375,7 @@ private:
       ldr(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x0, i));
     }
 
-    ldp(x0, x1,
-        Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
+    ldp(x0, x1, Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(inputPredReg));
@@ -408,18 +391,15 @@ private:
 
   void _genJitStorePredReg() {
 #ifdef XBYAK_TRANSLATE_AARCH64
-    stp(x0, x1,
-        Xbyak_aarch64::pre_ptr(xa_->sp, -16)); // push x0, x1
+    stp(x0, x1, Xbyak_aarch64::pre_ptr(xa_->sp, -16)); // push x0, x1
 
-    xa_->mov_imm(x0,
-                                  reinterpret_cast<uint64_t>(outputPredReg));
+    xa_->mov_imm(x0, reinterpret_cast<uint64_t>(outputPredReg));
 
     for (int i = 0; i < NUM_PRED_REG; i++) {
       str(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(x0, i));
     }
 
-    ldp(x0, x1,
-        Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
+    ldp(x0, x1, Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(outputPredReg));
@@ -435,8 +415,7 @@ private:
 
   void _genJitLoadZReg() {
 #ifdef XBYAK_TRANSLATE_AARCH64
-    stp(x0, x1,
-        Xbyak_aarch64::pre_ptr(xa_->sp, -16)); // push x0, x1
+    stp(x0, x1, Xbyak_aarch64::pre_ptr(xa_->sp, -16)); // push x0, x1
 
     xa_->mov_imm(x0, reinterpret_cast<uint64_t>(inputZReg));
 
@@ -444,8 +423,7 @@ private:
       ldr(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(x0, i));
     }
 
-    ldp(x0, x1,
-        Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
+    ldp(x0, x1, Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(inputZReg));
@@ -461,8 +439,7 @@ private:
 
   void _genJitStoreZReg() {
 #ifdef XBYAK_TRANSLATE_AARCH64
-    stp(x0, x1,
-        Xbyak_aarch64::pre_ptr(xa_->sp, -16)); // push x0, x1
+    stp(x0, x1, Xbyak_aarch64::pre_ptr(xa_->sp, -16)); // push x0, x1
 
     xa_->mov_imm(x0, reinterpret_cast<uint64_t>(outputZReg));
 
@@ -470,8 +447,7 @@ private:
       str(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(x0, i));
     }
 
-    ldp(x0, x1,
-        Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
+    ldp(x0, x1, Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(outputZReg));

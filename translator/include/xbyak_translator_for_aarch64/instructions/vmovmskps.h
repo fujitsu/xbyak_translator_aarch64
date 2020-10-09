@@ -68,7 +68,7 @@ void translateVMOVMSKPS(xed_decoded_inst_t *p) {
       (a64_opt.operands[1].regClass == XED_REG_CLASS_YMM &&
        isAvailAll1Preg0_7() == true && true)) {
     xa_->cmplt(P_TMP_0.s, P_ALL_ONE_0_7 / xa::T_z, xa::ZReg(srcIdx).s,
-                xa::ZReg(zTmpIdx).s);
+               xa::ZReg(zTmpIdx).s);
   }
   /* Col=AX119*/
   if (false ||
@@ -193,7 +193,7 @@ void translateVMOVMSKPS(xed_decoded_inst_t *p) {
   if (false || (a64.operands[1].regClass == XED_REG_CLASS_XMM && true) ||
       (a64.operands[1].regClass == XED_REG_CLASS_YMM && true)) {
     xa_->cmplt(P_TMP_0.s, xa::PReg(pTmpIdx) / xa::T_z, xa::ZReg(srcIdx).s,
-                xa::ZReg(zTmpIdx).s);
+               xa::ZReg(zTmpIdx).s);
   }
   /* Col=AP119*/
   if (false || (a64.operands[1].regClass == XED_REG_CLASS_XMM && true) ||
@@ -263,4 +263,3 @@ void translateVMOVMSKPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

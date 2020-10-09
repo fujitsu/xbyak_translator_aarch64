@@ -18,7 +18,7 @@ void translateVMOVNTPS(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
 
-/* 2020/02/27 17:47 */
+  /* 2020/02/27 17:47 */
 
   xt_reg_idx_t maskIdx = XT_REG_INVALID;
 
@@ -47,7 +47,7 @@ void translateVMOVNTPS(xed_decoded_inst_t *p) {
       (a64.operands[0].opWidth == 256 && true) ||
       (a64.operands[0].opWidth == 512 && true)) {
     xa_->stnt1d(xa::ZRegD(a64.operands[1].regIdx), xa::PReg(maskIdx),
-                 xa::ptr(X_TMP_ADDR));
+                xa::ptr(X_TMP_ADDR));
   }
 
   /* Col=AM103*/
@@ -56,6 +56,4 @@ void translateVMOVNTPS(xed_decoded_inst_t *p) {
       (a64.operands[0].opWidth == 512 && true)) {
     xt_pop_preg();
   }
-
-
 }

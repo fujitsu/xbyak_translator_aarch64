@@ -18,7 +18,7 @@ void translateKMOVD(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
 
-/* 2020/03/10 09:06 */
+  /* 2020/03/10 09:06 */
 
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
@@ -166,7 +166,7 @@ void translateKMOVD(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_MASK &&
        a64.operands[1].regClass == XED_REG_CLASS_GPR && true)) {
     xa_->lsl(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
-              xa::ZRegS(zTmpIdx));
+             xa::ZRegS(zTmpIdx));
   }
 
   /* Col=AK103*/
@@ -255,6 +255,4 @@ void translateKMOVD(xed_decoded_inst_t *p) {
        a64.operands[1].regClass == XED_REG_CLASS_GPR && true)) {
     xt_pop_zreg();
   }
-
-
 }

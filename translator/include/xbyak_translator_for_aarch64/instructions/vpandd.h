@@ -105,21 +105,21 @@ void translateVPANDD(xed_decoded_inst_t *p) {
   if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 1 && a64.src2Type == A64_OP_MEM && true)) {
     xa_->ld1rsw(xa::ZRegD(a64.zTmpIdx), xa::PReg(a64.pTmpIdx),
-                 xa::ptr(X_TMP_ADDR));
+                xa::ptr(X_TMP_ADDR));
   }
 
   /* Col=AI103*/
   if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.src2Type == A64_OP_REG && true)) {
     xa_->and_(xa::ZReg(a64.dstIdx).d, xa::ZReg(a64.srcIdx).d,
-               xa::ZReg(a64.src2Idx).d);
+              xa::ZReg(a64.src2Idx).d);
   }
 
   /* Col=AN103*/
   if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 1 && a64.src2Type == A64_OP_MEM && true)) {
     xa_->uzp1(xa::ZReg(a64.zTmpIdx).s, xa::ZReg(a64.zTmpIdx).s,
-               xa::ZReg(a64.zTmpIdx).s);
+              xa::ZReg(a64.zTmpIdx).s);
   }
 
   /* Col=AQ103*/
@@ -129,7 +129,7 @@ void translateVPANDD(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.src2Type == A64_OP_MEM && true)) {
     xa_->and_(xa::ZReg(a64.dstIdx).d, xa::ZReg(a64.srcIdx).d,
-               xa::ZReg(a64.zTmpIdx).d);
+              xa::ZReg(a64.zTmpIdx).d);
   }
 
   /* Col=AZ103*/
@@ -205,5 +205,4 @@ void translateVPANDD(xed_decoded_inst_t *p) {
     XT_VALID_CHECK;
   }
   XT_VALID_CHECK_IF
-
 }

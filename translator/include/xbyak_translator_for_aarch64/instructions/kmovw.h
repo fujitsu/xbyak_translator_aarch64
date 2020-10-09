@@ -162,7 +162,7 @@ void translateKMOVW(xed_decoded_inst_t *p) {
        a64.operands[0].regClass == XED_REG_CLASS_MASK &&
        a64.operands[1].regClass == XED_REG_CLASS_GPR && true)) {
     xa_->lsl(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
-              xa::ZRegS(zTmpIdx));
+             xa::ZRegS(zTmpIdx));
   }
   /* Col=AK119*/
   if (false ||
@@ -296,4 +296,3 @@ void translateKMOVW(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

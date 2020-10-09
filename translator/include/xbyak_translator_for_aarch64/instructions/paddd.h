@@ -21,7 +21,6 @@ void translatePADDD(xed_decoded_inst_t *p) {
   /* 2020/03/24 10:10 */
   bool isValid = false;
 
-
   /* Col=S143*/
   if (false ||
       (a64.dstWidth == 64 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
@@ -46,7 +45,7 @@ void translatePADDD(xed_decoded_inst_t *p) {
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
     xa_->add(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx),
-                              xa::ZRegS(a64.srcIdx));
+             xa::ZRegS(a64.srcIdx));
   }
 
   /* Col=AX143*/
@@ -69,4 +68,3 @@ void translatePADDD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

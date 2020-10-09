@@ -18,7 +18,7 @@ void translatePEXTRD(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
 
-/* 2020/03/11 15:39 */
+  /* 2020/03/11 15:39 */
 
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
@@ -71,6 +71,4 @@ void translatePEXTRD(xed_decoded_inst_t *p) {
                 a64.operands[1].opName == XED_OPERAND_REG0 && true)) {
     xa_->str(W_TMP_0, xa::ptr(X_TMP_ADDR));
   }
-
-
 }

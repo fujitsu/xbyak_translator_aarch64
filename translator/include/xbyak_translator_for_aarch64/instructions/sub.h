@@ -18,7 +18,7 @@ void translateSUB(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/02/25 18:56 */
+  /* 2020/02/25 18:56 */
 
   /* Col=S103*/
   if (false || (a64.dstWidth == 32 && a64.dstType == A64_OP_REG &&
@@ -29,14 +29,14 @@ void translateSUB(xed_decoded_inst_t *p) {
                  "Invalid uimm=" + std::to_string(a64.uimm));
     }
     xa_->subs_imm(Xbyak_aarch64::WReg(a64.dstIdx),
-                   Xbyak_aarch64::WReg(a64.dstIdx),
-                   static_cast<uint32_t>(a64.uimm), W_TMP_0);
+                  Xbyak_aarch64::WReg(a64.dstIdx),
+                  static_cast<uint32_t>(a64.uimm), W_TMP_0);
   }
   /* Col=T103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_IMM && true)) {
     xa_->subs_imm(Xbyak_aarch64::XReg(a64.dstIdx),
-                   Xbyak_aarch64::XReg(a64.dstIdx), a64.uimm, X_TMP_0);
+                  Xbyak_aarch64::XReg(a64.dstIdx), a64.uimm, X_TMP_0);
   }
 
   /* Col=W103*/
@@ -79,14 +79,12 @@ void translateSUB(xed_decoded_inst_t *p) {
   /* Col=AE103*/
   if (false || (a64.dstWidth == 32 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_REG && true)) {
-    xa_->subs(xa::WReg(a64.dstIdx), xa::WReg(a64.dstIdx),
-               xa::WReg(a64.srcIdx));
+    xa_->subs(xa::WReg(a64.dstIdx), xa::WReg(a64.dstIdx), xa::WReg(a64.srcIdx));
   }
   /* Col=AF103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_REG && true)) {
-    xa_->subs(xa::XReg(a64.dstIdx), xa::XReg(a64.dstIdx),
-               xa::XReg(a64.srcIdx));
+    xa_->subs(xa::XReg(a64.dstIdx), xa::XReg(a64.dstIdx), xa::XReg(a64.srcIdx));
   }
 
   /* Col=AJ103*/
@@ -127,6 +125,4 @@ void translateSUB(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && true)) {
     xa_->str(X_TMP_0, xa::ptr(X_TMP_ADDR));
   }
-
-
 }

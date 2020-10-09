@@ -18,7 +18,7 @@ void translateNOT(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
 
-/* 2020/02/26 23:20 */
+  /* 2020/02/26 23:20 */
 
   /* Col=S103*/
   if (false ||
@@ -48,13 +48,13 @@ void translateNOT(xed_decoded_inst_t *p) {
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[0].opWidth == 32 && true)) {
     xa_->mvn(xa::WReg(a64.operands[0].regIdx),
-              xa::WReg(a64.operands[0].regIdx));
+             xa::WReg(a64.operands[0].regIdx));
   }
   /* Col=AA103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[0].opWidth == 64 && true)) {
     xa_->mvn(xa::XReg(a64.operands[0].regIdx),
-              xa::XReg(a64.operands[0].regIdx));
+             xa::XReg(a64.operands[0].regIdx));
   }
   /* Col=AB103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
@@ -76,6 +76,4 @@ void translateNOT(xed_decoded_inst_t *p) {
                 a64.operands[0].opWidth == 64 && true)) {
     xa_->str(X_TMP_0, xa::ptr(X_TMP_ADDR));
   }
-
-
 }

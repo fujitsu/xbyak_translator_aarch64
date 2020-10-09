@@ -18,7 +18,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
 
-/* 2020/03/11 15:30 */
+  /* 2020/03/11 15:30 */
 
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
@@ -342,7 +342,7 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_REG2 &&
        a64.operands[0].opWidth == 256 && true)) {
     xa_->mov(xa::ZReg(dstIdx).s, xa::PReg(maskIdx) / xa::T_m,
-              xa::ZReg(srcIdx).s);
+             xa::ZReg(srcIdx).s);
   }
 
   /* Col=BA103*/
@@ -422,6 +422,4 @@ void translateVBLENDVPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && true)) {
     xt_pop_preg();
   }
-
-
 }

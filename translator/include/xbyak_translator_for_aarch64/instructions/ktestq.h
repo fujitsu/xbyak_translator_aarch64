@@ -36,7 +36,7 @@ void translateKTESTQ(xed_decoded_inst_t *p) {
   /* Col=AR120*/
   if (false || (true)) {
     xa_->and_(P_TMP.b, P_ALL_ONE / xa::T_z, xa::PRegB(src2Idx),
-               xa::PRegB(srcIdx));
+              xa::PRegB(srcIdx));
   }
   /* Col=AS120*/
   if (false || (true)) {
@@ -70,7 +70,7 @@ void translateKTESTQ(xed_decoded_inst_t *p) {
   /* Col=BB120*/
   if (false || (true)) {
     xa_->bic(P_TMP.b, P_ALL_ONE / xa::T_z, xa::PRegB(src2Idx),
-              xa::PRegB(srcIdx));
+             xa::PRegB(srcIdx));
   }
   /* Col=BC120*/
   if (false || (true)) {
@@ -111,4 +111,3 @@ void translateKTESTQ(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

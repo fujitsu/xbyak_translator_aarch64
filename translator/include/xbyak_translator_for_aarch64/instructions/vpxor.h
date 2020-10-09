@@ -18,8 +18,7 @@ void translateVPXOR(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/02/28 13:48 */
-
+  /* 2020/02/28 13:48 */
 
   /* Col=U103*/
   if (false ||
@@ -52,7 +51,7 @@ void translateVPXOR(xed_decoded_inst_t *p) {
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_REG && true)) {
     xa_->eor(xa::VReg16B(a64.dstIdx), xa::VReg16B(a64.srcIdx),
-              xa::VReg16B(a64.src2Idx));
+             xa::VReg16B(a64.src2Idx));
   }
   /* Col=Z103*/
   if (false ||
@@ -60,7 +59,7 @@ void translateVPXOR(xed_decoded_inst_t *p) {
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
     xa_->eor(xa::VReg16B(a64.dstIdx), xa::VReg16B(a64.srcIdx),
-              xa::VReg16B(a64.zTmpIdx));
+             xa::VReg16B(a64.zTmpIdx));
   }
   /* Col=AA103*/
   if (false ||
@@ -68,7 +67,7 @@ void translateVPXOR(xed_decoded_inst_t *p) {
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_REG && true)) {
     xa_->eor(xa::ZRegD(a64.dstIdx), xa::ZRegD(a64.srcIdx),
-              xa::ZRegD(a64.src2Idx));
+             xa::ZRegD(a64.src2Idx));
   }
   /* Col=AB103*/
   if (false ||
@@ -76,7 +75,7 @@ void translateVPXOR(xed_decoded_inst_t *p) {
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
        a64.src2Type == A64_OP_MEM && true)) {
     xa_->eor(xa::ZRegD(a64.dstIdx), xa::ZRegD(a64.srcIdx),
-              xa::ZRegD(a64.zTmpIdx));
+             xa::ZRegD(a64.zTmpIdx));
   }
 
   /* Col=AD103*/
@@ -103,6 +102,4 @@ void translateVPXOR(xed_decoded_inst_t *p) {
        a64.src2Type == A64_OP_MEM && true)) {
     xa_->mov(xa::ZRegS(a64.dstIdx), P_MSB_256 / xa::T_m, 0);
   }
-
-
 }

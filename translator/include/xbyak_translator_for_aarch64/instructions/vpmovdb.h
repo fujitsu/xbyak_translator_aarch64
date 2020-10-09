@@ -486,7 +486,7 @@ void translateVPMOVDB(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 64 && a64.predType == A64_PRED_MERG &&
        true)) {
     xa_->and_(xa::PReg(pTmpIdx).b, P_ALL_ONE / xa::T_z, xa::PReg(pTmpIdx).b,
-               xa::PReg(maskIdx).b);
+              xa::PReg(maskIdx).b);
   }
   /* Col=AT119*/
   if (false ||
@@ -973,4 +973,3 @@ void translateVPMOVDB(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

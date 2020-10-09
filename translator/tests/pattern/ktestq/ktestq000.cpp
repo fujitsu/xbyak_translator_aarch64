@@ -109,25 +109,25 @@ public:
         xa_->cmp(X_TMP_0, 1);               // Check if V==0
         xa_->b(Xbyak_aarch64::NE, L0);
         xa_->orr(x_dummyFlag, x_dummyFlag,
-                                  x_of); // Set x86_64's OF flag
+                 x_of); // Set x86_64's OF flag
         Xbyak_aarch64::L(L0);
         xa_->and_(X_TMP_0, x_tmpFlag, 0x2); // extract C
         xa_->cmp(X_TMP_0, 0x2);             // Check if C==0
         xa_->b(Xbyak_aarch64::NE, L1);
         xa_->orr(x_dummyFlag, x_dummyFlag,
-                                  x_cf); // Set x86_64's CF flag
+                 x_cf); // Set x86_64's CF flag
         Xbyak_aarch64::L(L1);
         xa_->and_(X_TMP_0, x_tmpFlag, 0x4); // extract Z flag
         xa_->cmp(X_TMP_0, 0x4);             // Check if (Z==1)
         xa_->b(Xbyak_aarch64::NE, L2);
         xa_->orr(x_dummyFlag, x_dummyFlag,
-                                  x_zf); // Set x86_64's ZF flag
+                 x_zf); // Set x86_64's ZF flag
         Xbyak_aarch64::L(L2);
         xa_->and_(X_TMP_0, x_tmpFlag, 0x8); // extract N flag
         xa_->cmp(X_TMP_0, 0x8);             // Check if (N==1)
         xa_->b(Xbyak_aarch64::NE, L3);
         xa_->orr(x_dummyFlag, x_dummyFlag,
-                                  x_sf); // Set x86_64's SF flag
+                 x_sf); // Set x86_64's SF flag
         Xbyak_aarch64::L(L3);
 
         xa_->str(x_dummyFlag, Xbyak_aarch64::ptr(x_tmpAddr));

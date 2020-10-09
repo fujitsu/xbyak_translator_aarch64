@@ -125,7 +125,7 @@ void translateVGATHERDPS(xed_decoded_inst_t *p) {
       (a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && true)) {
     xa_->cmplt(xa::PRegS(pTmpIdx), xa::PReg(pTmpIdx) / xa::T_z,
-                xa::ZRegS(srcIdx), 0);
+               xa::ZRegS(srcIdx), 0);
   }
 
   /* Col=AN119*/
@@ -133,14 +133,14 @@ void translateVGATHERDPS(xed_decoded_inst_t *p) {
                 a64.operands[0].opWidth == 256 && true)) {
     // At last, VGATHERDPS destroies the mask register.
     xa_->bic(xa::PRegB(maskIdx), P_ALL_ONE / xa::T_z, xa::PRegB(maskIdx),
-              P_MSB_256.b);
+             P_MSB_256.b);
   }
   /* Col=AO119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[0].opWidth == 128 && true)) {
     // At last, VGATHERDPS destroies the mask register.
     xa_->bic(xa::PRegB(maskIdx), P_ALL_ONE / xa::T_z, xa::PRegB(maskIdx),
-              P_MSB_384.b);
+             P_MSB_384.b);
   }
   /* Col=AP119*/
   if (false ||
@@ -187,7 +187,7 @@ void translateVGATHERDPS(xed_decoded_inst_t *p) {
       (a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[0].opWidth == 512 && true)) {
     xa_->ld1w(xa::ZRegS(zTmpIdx), xa::PReg(maskIdx) / xa::T_z,
-               xa::ptr(X_TMP_ADDR, xa::ZRegS(zTmpIdx), xa::SXTW));
+              xa::ptr(X_TMP_ADDR, xa::ZRegS(zTmpIdx), xa::SXTW));
   }
   /* Col=AV119*/
   if (false ||
@@ -202,7 +202,7 @@ void translateVGATHERDPS(xed_decoded_inst_t *p) {
       (a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[0].opWidth == 512 && true)) {
     xa_->mov(xa::ZRegS(dstIdx), xa::PReg(maskIdx) / xa::T_m,
-              xa::ZRegS(zTmpIdx));
+             xa::ZRegS(zTmpIdx));
   }
 
   /* Col=BA119*/
@@ -278,4 +278,3 @@ void translateVGATHERDPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

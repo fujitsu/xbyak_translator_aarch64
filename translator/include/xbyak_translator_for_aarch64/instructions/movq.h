@@ -18,7 +18,7 @@ void translateMOVQ(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/02/21 21:51 */
+  /* 2020/02/21 21:51 */
 
   /* Col=S103*/
   if (false ||
@@ -136,7 +136,7 @@ void translateMOVQ(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && a64.srcWidth == 64 &&
        a64.srcRegClass == XED_REG_CLASS_GPR && true)) {
     xa_->mov(xa::ZRegD(a64.dstIdx), xa::PReg(a64.pTmpIdx) / xa::T_m,
-              xa::XReg(a64.srcIdx));
+             xa::XReg(a64.srcIdx));
   }
 
   /* Col=AU103*/
@@ -166,6 +166,4 @@ void translateMOVQ(xed_decoded_inst_t *p) {
        a64.srcRegClass == XED_REG_CLASS_INVALID && true)) {
     xt_pop_preg();
   }
-
-
 }

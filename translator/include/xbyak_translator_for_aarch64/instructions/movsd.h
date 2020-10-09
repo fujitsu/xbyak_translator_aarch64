@@ -21,7 +21,6 @@ void translateMOVSD(xed_decoded_inst_t *p) {
   /* 2020/09/17 16:50 */
   bool isValid = false;
 
-
   /* Col=U103*/
   if (false || (a64.dstWidth == 128 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_MEM && true)) {
@@ -78,5 +77,4 @@ void translateMOVSD(xed_decoded_inst_t *p) {
   }
 
   XT_VALID_CHECK_IF
-
 }

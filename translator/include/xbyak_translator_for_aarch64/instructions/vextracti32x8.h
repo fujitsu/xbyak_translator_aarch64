@@ -62,8 +62,7 @@ void translateVEXTRACTI32X8(xed_decoded_inst_t *p) {
       (a64.dstWidth == 256 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true)) {
     if ((a64.uimm & 0x1) == 1) {
-      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
-                                32);
+      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx), 32);
     }
   }
 

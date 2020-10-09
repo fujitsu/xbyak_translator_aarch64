@@ -450,14 +450,12 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
     return Xbyak_aarch64::XReg(base);
   } else if (base != XT_REG_INVALID && disp != 0 /* Base + disp */
              && index == XT_REG_INVALID) {
-    xa_->add_imm(retReg, Xbyak_aarch64::XReg(base), disp,
-                                  tmp1);
+    xa_->add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
     return retReg;
   } else if (base != XT_REG_INVALID && disp == 0 /* Base + index (*scale) */
              && index != XT_REG_INVALID) {
     if (shift == 0) {
-      xa_->add(retReg, Xbyak_aarch64::XReg(base),
-                                Xbyak_aarch64::XReg(index));
+      xa_->add(retReg, Xbyak_aarch64::XReg(base), Xbyak_aarch64::XReg(index));
       return retReg; /* Base + disp + index */
     } else {
       xa_->lsl(retReg, Xbyak_aarch64::XReg(index), shift);
@@ -466,8 +464,7 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
     }
   } else if (base != XT_REG_INVALID && disp != 0 &&
              index != XT_REG_INVALID) { /* Base + disp + index (*scale) */
-    xa_->add_imm(retReg, Xbyak_aarch64::XReg(base), disp,
-                                  tmp1);
+    xa_->add_imm(retReg, Xbyak_aarch64::XReg(base), disp, tmp1);
 
     if (shift == 0) {
       xa_->add(retReg, retReg, Xbyak_aarch64::XReg(index));
@@ -480,8 +477,7 @@ Xbyak_aarch64::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
   } else if (base == XT_REG_INVALID /* disp + index (*scale) */
              && index != XT_REG_INVALID && disp != 0) {
     if (shift == 0) {
-      xa_->add_imm(retReg, Xbyak_aarch64::XReg(index), disp,
-                                    tmp1);
+      xa_->add_imm(retReg, Xbyak_aarch64::XReg(index), disp, tmp1);
       return retReg; /* disp + index */
     } else {
       xa_->lsl(retReg, Xbyak_aarch64::XReg(index), shift);
@@ -526,16 +522,13 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
         zreg_tmp_used[i] = true;
 
 #ifdef XT_AARCH64_STACK_REG
-        xa_->sub(xa_->sp,
-                                  xa_->sp, NUM_BYTES_Z_REG);
+        xa_->sub(xa_->sp, xa_->sp, NUM_BYTES_Z_REG);
         xa_->mov(X_TMP_0, xa_->sp);
-        xa_->str(Xbyak_aarch64::ZReg(i),
-                                  Xbyak_aarch64::ptr(X_TMP_0));
+        xa_->str(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-        xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
-                                  NUM_BYTES_Z_REG);
+        xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_Z_REG);
         xa_->str(Xbyak_aarch64::ZReg(i),
-                                  Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
+                 Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
         return i;
       }
@@ -572,17 +565,13 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
     if (conflict == false) {
       zreg_tmp_used[i] = true;
 #ifdef XT_AARCH64_STACK_REG
-      xa_->sub(xa_->sp,
-                                xa_->sp, NUM_BYTES_Z_REG);
+      xa_->sub(xa_->sp, xa_->sp, NUM_BYTES_Z_REG);
       xa_->mov(X_TMP_0, xa_->sp);
 
-      xa_->str(Xbyak_aarch64::ZReg(i),
-                                Xbyak_aarch64::ptr(X_TMP_0));
+      xa_->str(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-      xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
-                                NUM_BYTES_Z_REG);
-      xa_->str(Xbyak_aarch64::ZReg(i),
-                                Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
+      xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_Z_REG);
+      xa_->str(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
       return i;
     }
@@ -610,16 +599,13 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
         preg_tmp_used[i] = true;
 
 #ifdef XT_AARCH64_STACK_REG
-        xa_->sub(xa_->sp,
-                                  xa_->sp, NUM_BYTES_PRED_REG);
+        xa_->sub(xa_->sp, xa_->sp, NUM_BYTES_PRED_REG);
         xa_->mov(X_TMP_0, xa_->sp);
-        xa_->str(Xbyak_aarch64::PReg(i),
-                                  Xbyak_aarch64::ptr(X_TMP_0));
+        xa_->str(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-        xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
-                                  NUM_BYTES_PRED_REG);
+        xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_PRED_REG);
         xa_->str(Xbyak_aarch64::PReg(i),
-                                  Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
+                 Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
         return i;
       }
@@ -658,16 +644,12 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
       preg_tmp_used[i] = true;
 
 #ifdef XT_AARCH64_STACK_REG
-      xa_->sub(xa_->sp,
-                                xa_->sp, NUM_BYTES_PRED_REG);
+      xa_->sub(xa_->sp, xa_->sp, NUM_BYTES_PRED_REG);
       xa_->mov(X_TMP_0, xa_->sp);
-      xa_->str(Xbyak_aarch64::PReg(i),
-                                Xbyak_aarch64::ptr(X_TMP_0));
+      xa_->str(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
-      xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
-                                NUM_BYTES_PRED_REG);
-      xa_->str(Xbyak_aarch64::PReg(i),
-                                Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
+      xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_PRED_REG);
+      xa_->str(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
       return i;
     }
@@ -694,15 +676,11 @@ void xt_pop_zreg() {
     if (zreg_tmp_used[i] == true) {
 #ifdef XT_AARCH64_STACK_REG
       xa_->mov(X_TMP_0, xa_->sp);
-      xa_->ldr(Xbyak_aarch64::ZReg(i),
-                                Xbyak_aarch64::ptr(X_TMP_0));
-      xa_->add(xa_->sp,
-                                xa_->sp, NUM_BYTES_Z_REG);
+      xa_->ldr(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(X_TMP_0));
+      xa_->add(xa_->sp, xa_->sp, NUM_BYTES_Z_REG);
 #else  //#ifdef XT_AARCH64_STACK_REG
-      xa_->ldr(Xbyak_aarch64::ZReg(i),
-                                Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
-      xa_->add(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
-                                NUM_BYTES_Z_REG);
+      xa_->ldr(Xbyak_aarch64::ZReg(i), Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
+      xa_->add(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_Z_REG);
 #endif //#ifdef XT_AARCH64_STACK_REG
       zreg_tmp_used[i] = false;
       return;
@@ -727,15 +705,11 @@ void xt_pop_preg() {
     if (preg_tmp_used[i] == true) {
 #ifdef XT_AARCH64_STACK_REG
       xa_->mov(X_TMP_0, xa_->sp);
-      xa_->ldr(Xbyak_aarch64::PReg(i),
-                                Xbyak_aarch64::ptr(X_TMP_0));
-      xa_->add(xa_->sp,
-                                xa_->sp, NUM_BYTES_PRED_REG);
+      xa_->ldr(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(X_TMP_0));
+      xa_->add(xa_->sp, xa_->sp, NUM_BYTES_PRED_REG);
 #else  //#ifdef XT_AARCH64_STACK_REG
-      xa_->ldr(Xbyak_aarch64::PReg(i),
-                                Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
-      xa_->add(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK,
-                                NUM_BYTES_PRED_REG);
+      xa_->ldr(Xbyak_aarch64::PReg(i), Xbyak_aarch64::ptr(X_TRANSLATOR_STACK));
+      xa_->add(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_PRED_REG);
 #endif //#ifdef XT_AARCH64_STACK_REG
       preg_tmp_used[i] = false;
       return;
@@ -1190,8 +1164,7 @@ void xt_construct_a64fx_operandsV3(xed_decoded_inst_t *p,
         a64->operands[tmpOpIdx].memBaseIdx = baseIdx;
         a64->operands[tmpOpIdx].memIndexIdx = indexIdx;
         a64->operands[tmpOpIdx].memScale = scale;
-        xa_->add_imm(X_TMP_ADDR, Xbyak_aarch64::XReg(baseIdx),
-                                      disp, X_TMP_1);
+        xa_->add_imm(X_TMP_ADDR, Xbyak_aarch64::XReg(baseIdx), disp, X_TMP_1);
       } else {
         X_TMP_ADDR = xt_get_addr_reg(baseIdx, disp, indexIdx, scale, X_TMP_ADDR,
                                      X_TMP_1, X_TMP_2, vm64);
@@ -1353,47 +1326,47 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
   case X86_64_B: {
     Xbyak_aarch64::Label L0, L1;
     xa_->mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2,
-                              0x0); // Read NZCV register
+             0x0); // Read NZCV register
     xa_->lsr(X_TMP_0, X_TMP_2, 28);
 
     /* (x86_64's CF)
        aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
     xa_->and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
-    xa_->cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
+    xa_->cmp(X_TMP_1, 0x1);           // Check if (C==0 && V==1)
     xa_->b(Xbyak_aarch64::NE, L0);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
-                              X_TMP_2); // Recover NZCV register
+             X_TMP_2); // Recover NZCV register
     xa_->b(label);
     L(L0);
     xa_->cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
     xa_->b(Xbyak_aarch64::NE, L1);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
-                              X_TMP_2); // Recover NZCV register
+             X_TMP_2); // Recover NZCV register
     xa_->b(label);
     L(L1);
 
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
-                              X_TMP_2); // Recover NZCV register
+             X_TMP_2); // Recover NZCV register
   } break;
   case X86_64_BE: {
     Xbyak_aarch64::Label L0, L1, L2;
     xa_->mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2,
-                              0x0); // Read NZCV register
+             0x0); // Read NZCV register
     xa_->lsr(X_TMP_0, X_TMP_2, 28);
 
     /* (x86_64's CF)
        aarch64's ((V==1 &&C==0) || (V==0 && C==0)) */
     xa_->and_(X_TMP_1, X_TMP_0, 0x3); // extract C and V flags
-    xa_->cmp(X_TMP_1, 0x1); // Check if (C==0 && V==1)
+    xa_->cmp(X_TMP_1, 0x1);           // Check if (C==0 && V==1)
     xa_->b(Xbyak_aarch64::NE, L0);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
-                              X_TMP_2); // Recover NZCV register
+             X_TMP_2); // Recover NZCV register
     xa_->b(label);
     L(L0);
     xa_->cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
     xa_->b(Xbyak_aarch64::NE, L1);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
-                              X_TMP_2); // Recover NZCV register
+             X_TMP_2); // Recover NZCV register
     xa_->b(label);
     L(L1);
 
@@ -1401,11 +1374,11 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     xa_->cmp(X_TMP_1, 0x4);
     xa_->b(Xbyak_aarch64::NE, L2);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
-                              X_TMP_2); // Recover NZCV register
+             X_TMP_2); // Recover NZCV register
     xa_->b(label);
     L(L2);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
-                              X_TMP_2); // Recover NZCV register
+             X_TMP_2); // Recover NZCV register
   } break;
 #if 0
   X86_64_C:

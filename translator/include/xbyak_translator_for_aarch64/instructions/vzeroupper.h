@@ -18,8 +18,7 @@ void translateVZEROUPPER(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/02/21 23:29 */
-
+  /* 2020/02/21 23:29 */
 
   /* Col=X103*/
   if (false || (true)) {
@@ -27,6 +26,4 @@ void translateVZEROUPPER(xed_decoded_inst_t *p) {
       xa_->mov(xa::ZRegD(i), P_MSB_384 / xa::T_m, 0);
     }
   }
-
-
 }

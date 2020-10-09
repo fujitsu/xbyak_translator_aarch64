@@ -1290,9 +1290,9 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
     xa_->dup(xa::ZRegS(zTmpIdx), ((uimm >> 4) & 0xf));
     xa_->dup(xa::ZRegS(zTmp2Idx), 1);
     xa_->lsl(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
-              xa::ZRegS(zTmpIdx));
+             xa::ZRegS(zTmpIdx));
     xa_->scvtf(xa::ZRegS(zTmpIdx), xa::PReg(maskIdx) / xa::T_m,
-                xa::ZRegS(zTmp2Idx));
+               xa::ZRegS(zTmp2Idx));
   }
 
   /* Col=AN119*/
@@ -1403,9 +1403,9 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
   2^M * SRC[31:0]
   ZRegS(zTmpIdx) = (float)scale * ZRegS(srcIdx) */
     xa_->mov(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
-              xa::ZRegS(srcIdx));
+             xa::ZRegS(srcIdx));
     xa_->fmul(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
-               xa::ZRegS(zTmpIdx));
+              xa::ZRegS(zTmpIdx));
   }
   /* Col=AO119*/
   if (false ||
@@ -1485,14 +1485,14 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
     xa_->sub(W_TMP_0, W_TMP_0, 1);
     xa_->dup(xa::ZRegS(zTmp3Idx), W_TMP_0);
     xa_->fcmle(P_TMP_0.s, xa::PReg(maskIdx) / xa::T_z, xa::ZRegS(zTmp2Idx),
-                xa::ZRegS(zTmp3Idx));
+               xa::ZRegS(zTmp3Idx));
     xa_->mov(W_TMP_1, 0x4f000000);
     xa_->sub(W_TMP_1, W_TMP_1, 1);
     xa_->dup(xa::ZRegS(zTmp3Idx), W_TMP_1);
     xa_->fcmge(P_TMP_1.s, xa::PReg(maskIdx) / xa::T_z, xa::ZRegS(zTmp2Idx),
-                xa::ZRegS(zTmp3Idx));
+               xa::ZRegS(zTmp3Idx));
     xa_->orr(xa::PRegB(pTmpIdx), xa::PReg(maskIdx) / xa::T_z, P_TMP_0.b,
-              P_TMP_1.b);
+             P_TMP_1.b);
   }
   /* Col=AP119*/
   if (false ||
@@ -1604,19 +1604,19 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
     switch (rounding_direction) {
     case 0:
       xa_->frintn(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
-                   xa::ZRegS(zTmp2Idx));
+                  xa::ZRegS(zTmp2Idx));
       break;
     case 1:
       xa_->frintm(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
-                   xa::ZRegS(zTmp2Idx));
+                  xa::ZRegS(zTmp2Idx));
       break;
     case 2:
       xa_->frintp(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
-                   xa::ZRegS(zTmp2Idx));
+                  xa::ZRegS(zTmp2Idx));
       break;
     case 3:
       xa_->frintz(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
-                   xa::ZRegS(zTmp2Idx));
+                  xa::ZRegS(zTmp2Idx));
       break;
     default:
       XT_UNIMPLEMENTED;
@@ -1730,7 +1730,7 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
     /* scale down
   ZRegS(zTmp2Idx) = (float)2^-M * (float)ZRegS(zTmp2Idx) */
     xa_->fdiv(xa::ZRegS(zTmp2Idx), xa::PReg(maskIdx) / xa::T_m,
-               xa::ZRegS(zTmpIdx));
+              xa::ZRegS(zTmpIdx));
   }
   /* Col=AR119*/
   if (false ||
@@ -1810,14 +1810,14 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
       xa_->mov_imm(W_TMP_0, 0xbf800000);
     }
     xa_->fcmeq(P_TMP_0.s, xa::PReg(maskIdx) / xa::T_z, xa::ZRegS(zTmp2Idx),
-                xa::ZRegS(zTmpIdx));
+               xa::ZRegS(zTmpIdx));
     xa_->fcmlt(P_TMP_1.s, xa::PReg(maskIdx) / xa::T_z, xa::ZRegS(srcIdx),
-                xa::ZRegS(zTmpIdx));
+               xa::ZRegS(zTmpIdx));
     xa_->and_(xa::PRegB(pTmp2Idx), xa::PReg(maskIdx) / xa::T_z, P_TMP_0.b,
-               P_TMP_1.b);
+              P_TMP_1.b);
     if (rounding_direction == 0) {
       xa_->fneg(xa::ZRegS(zTmp2Idx), xa::PReg(pTmp2Idx) / xa::T_m,
-                 xa::ZRegS(zTmp2Idx));
+                xa::ZRegS(zTmp2Idx));
     } else {
       xa_->cpy(xa::ZRegS(zTmp2Idx), xa::PReg(pTmp2Idx) / xa::T_m, W_TMP_0);
     }
@@ -1895,7 +1895,7 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
     /* If values after scale up is over flow, set result to SRC[31:0].
   (Adjust to Intel's behaviour) */
     xa_->mov(xa::ZRegS(zTmp2Idx), xa::PReg(pTmpIdx) / xa::T_m,
-              xa::ZRegS(srcIdx));
+             xa::ZRegS(srcIdx));
   }
 
   /* Col=AT119*/
@@ -2003,7 +2003,7 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
     xa_->mov(xa::ZRegS(dstIdx), xa::PReg(maskIdx) / xa::T_m,
-              xa::ZRegS(zTmp2Idx));
+             xa::ZRegS(zTmp2Idx));
   }
   /* Col=AV119*/
   if (false ||
@@ -2874,4 +2874,3 @@ void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

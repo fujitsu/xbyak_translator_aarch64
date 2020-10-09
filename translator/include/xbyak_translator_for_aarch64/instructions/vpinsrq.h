@@ -28,14 +28,12 @@ void translateVPINSRQ(xed_decoded_inst_t *p) {
   /* Col=X103*/
   if (false || (a64.src2Type == A64_OP_REG && true) ||
       (a64.src2Type == A64_OP_MEM && true)) {
-    xa_->mov(xa::VReg(a64.dstIdx).b16,
-                              xa::VReg(a64.srcIdx).b16);
+    xa_->mov(xa::VReg(a64.dstIdx).b16, xa::VReg(a64.srcIdx).b16);
   }
 
   /* Col=Z103*/
   if (false || (a64.src2Type == A64_OP_REG && true)) {
-    xa_->ins_(xa::VReg2D(a64.dstIdx)[a64.uimm],
-                               xa::XReg(a64.src2Idx));
+    xa_->ins_(xa::VReg2D(a64.dstIdx)[a64.uimm], xa::XReg(a64.src2Idx));
   }
   /* Col=AA103*/
   if (false || (a64.src2Type == A64_OP_MEM && true)) {

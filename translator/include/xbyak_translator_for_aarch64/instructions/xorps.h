@@ -111,4 +111,3 @@ void translateXORPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

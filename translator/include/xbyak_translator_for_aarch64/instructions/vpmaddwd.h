@@ -661,7 +661,7 @@ void translateVPMADDWD(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     xa_->sxth(xa::ZRegS(zTmpIdx), xa::PReg(pTmpIdx) / xa::T_m,
-               xa::ZRegS(zTmpIdx));
+              xa::ZRegS(zTmpIdx));
   }
   /* Col=AT119*/
   if (false ||
@@ -691,7 +691,7 @@ void translateVPMADDWD(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     xa_->sxth(xa::ZRegS(zTmp2Idx), xa::PReg(pTmpIdx) / xa::T_m,
-               xa::ZRegS(zTmp2Idx));
+              xa::ZRegS(zTmp2Idx));
   }
   /* Col=AU119*/
   if (false ||
@@ -721,7 +721,7 @@ void translateVPMADDWD(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     xa_->sxth(xa::ZRegS(zTmp3Idx), xa::PReg(pTmpIdx) / xa::T_m,
-               xa::ZRegS(zTmp3Idx));
+              xa::ZRegS(zTmp3Idx));
   }
   /* Col=AV119*/
   if (false ||
@@ -751,7 +751,7 @@ void translateVPMADDWD(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     xa_->sxth(xa::ZRegS(zTmp4Idx), xa::PReg(pTmpIdx) / xa::T_m,
-               xa::ZRegS(zTmp4Idx));
+              xa::ZRegS(zTmp4Idx));
   }
   /* Col=AW119*/
   if (false ||
@@ -781,7 +781,7 @@ void translateVPMADDWD(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     xa_->mul(xa::ZRegS(zTmpIdx), xa::PReg(pTmpIdx) / xa::T_m,
-              xa::ZRegS(zTmp3Idx));
+             xa::ZRegS(zTmp3Idx));
   }
   /* Col=AX119*/
   if (false ||
@@ -811,7 +811,7 @@ void translateVPMADDWD(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO && true)) {
     xa_->mul(xa::ZRegS(zTmp2Idx), xa::PReg(pTmpIdx) / xa::T_m,
-              xa::ZRegS(zTmp4Idx));
+             xa::ZRegS(zTmp4Idx));
   }
   /* Col=AY119*/
   if (false ||
@@ -1145,4 +1145,3 @@ void translateVPMADDWD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

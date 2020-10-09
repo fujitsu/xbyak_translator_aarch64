@@ -18,8 +18,7 @@ void translateVPMOVSXBD(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_struct_t a64;
   xt_construct_a64fx_operands(p, &a64);
 
-/* 2020/03/23 13:30 */
-
+  /* 2020/03/23 13:30 */
 
   /* Col=U103*/
   if (false ||
@@ -158,7 +157,7 @@ void translateVPMOVSXBD(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true)) {
     xa_->zip1(xa::ZReg(a64.zTmpIdx).b, xa::ZReg(a64.srcIdx).b,
-                               xa::ZReg(a64.srcIdx).b);
+              xa::ZReg(a64.srcIdx).b);
   }
   /* Col=AA103*/
   if (false ||
@@ -185,7 +184,7 @@ void translateVPMOVSXBD(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
     xa_->zip1(xa::ZReg(a64.zTmpIdx).b, xa::ZReg(a64.zTmpIdx).b,
-                               xa::ZReg(a64.zTmpIdx).b);
+              xa::ZReg(a64.zTmpIdx).b);
   }
   /* Col=AB103*/
   if (false ||
@@ -234,7 +233,7 @@ void translateVPMOVSXBD(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
     xa_->zip1(xa::ZReg(a64.zTmpIdx).h, xa::ZReg(a64.zTmpIdx).h,
-                               xa::ZReg(a64.zTmpIdx).h);
+              xa::ZReg(a64.zTmpIdx).h);
   }
 
   /* Col=AD103*/
@@ -307,9 +306,8 @@ void translateVPMOVSXBD(xed_decoded_inst_t *p) {
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    xa_->sxtb(xa::ZReg(a64.dstIdx).s,
-                               xa::PReg(a64.pTmpIdx) / xa::T_m,
-                               xa::ZReg(a64.zTmpIdx).s);
+    xa_->sxtb(xa::ZReg(a64.dstIdx).s, xa::PReg(a64.pTmpIdx) / xa::T_m,
+              xa::ZReg(a64.zTmpIdx).s);
   }
   /* Col=AF103*/
   if (false ||
@@ -325,9 +323,8 @@ void translateVPMOVSXBD(xed_decoded_inst_t *p) {
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    xa_->sxtb(xa::ZReg(a64.dstIdx).s,
-                               xa::PReg(a64.maskIdx) / xa::T_m,
-                               xa::ZReg(a64.zTmpIdx).s);
+    xa_->sxtb(xa::ZReg(a64.dstIdx).s, xa::PReg(a64.maskIdx) / xa::T_m,
+              xa::ZReg(a64.zTmpIdx).s);
   }
 
   /* Col=AH103*/
@@ -344,8 +341,7 @@ void translateVPMOVSXBD(xed_decoded_inst_t *p) {
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    xa_->not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE.b,
-                               xa::PRegB(a64.maskIdx));
+    xa_->not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE.b, xa::PRegB(a64.maskIdx));
   }
 
   /* Col=AJ103*/
@@ -362,8 +358,7 @@ void translateVPMOVSXBD(xed_decoded_inst_t *p) {
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_ZERO && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    xa_->mov(xa::ZReg(a64.dstIdx).s,
-                              xa::PReg(a64.pTmpIdx) / xa::T_m, 0);
+    xa_->mov(xa::ZReg(a64.dstIdx).s, xa::PReg(a64.pTmpIdx) / xa::T_m, 0);
   }
   /* Col=AK103*/
   if (false ||
@@ -490,6 +485,4 @@ void translateVPMOVSXBD(xed_decoded_inst_t *p) {
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
     xt_pop_zreg(); // In some cases, xt_pop_zreg() should be called here.
   }
-
-
 }

@@ -21,7 +21,6 @@ void translateADDPS(xed_decoded_inst_t *p) {
   /* 2020/03/27 09:19 */
   bool isValid = false;
 
-
   /* Col=T143*/
   if (false ||
       (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
@@ -52,14 +51,14 @@ void translateADDPS(xed_decoded_inst_t *p) {
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
     xa_->fadd(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx),
-                               xa::ZRegS(a64.srcIdx));
+              xa::ZRegS(a64.srcIdx));
   }
 
   /* Col=AC143*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_MEM && true)) {
     xa_->fadd(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx),
-                               xa::ZRegS(a64.zTmpIdx));
+              xa::ZRegS(a64.zTmpIdx));
   }
 
   /* Col=AW143*/
@@ -86,4 +85,3 @@ void translateADDPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

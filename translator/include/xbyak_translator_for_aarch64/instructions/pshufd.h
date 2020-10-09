@@ -159,7 +159,7 @@ void translatePSHUFD(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
     xa_->mov(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-              xa::ZRegS(zTmp3Idx));
+             xa::ZRegS(zTmp3Idx));
   }
   /* Col=BF119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -219,4 +219,3 @@ void translatePSHUFD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

@@ -31,4 +31,3 @@ void translatePREFETCHT0(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

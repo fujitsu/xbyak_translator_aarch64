@@ -48,14 +48,14 @@ void translateXADD_LOCK(xed_decoded_inst_t *p) {
                 a64.operands[1].opName == XED_OPERAND_REG0 &&
                 a64.operands[0].opWidth == 32 && true)) {
     xa_->ldaddal(xa::WReg(a64.operands[1].regIdx),
-                  xa::WReg(a64.operands[1].regIdx), xa::ptr(X_TMP_ADDR));
+                 xa::WReg(a64.operands[1].regIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AD119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 &&
                 a64.operands[1].opName == XED_OPERAND_REG0 &&
                 a64.operands[0].opWidth == 64 && true)) {
     xa_->ldaddal(xa::XReg(a64.operands[1].regIdx),
-                  xa::XReg(a64.operands[1].regIdx), xa::ptr(X_TMP_ADDR));
+                 xa::XReg(a64.operands[1].regIdx), xa::ptr(X_TMP_ADDR));
   }
 
   /* Col=BO119*/
@@ -88,4 +88,3 @@ void translateXADD_LOCK(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

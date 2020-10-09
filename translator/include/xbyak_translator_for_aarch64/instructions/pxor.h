@@ -60,14 +60,14 @@ void translatePXOR(xed_decoded_inst_t *p) {
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_REG && true)) {
     xa_->eor(xa::ZRegD(a64.dstIdx), xa::PReg(a64.pTmpIdx),
-                              xa::ZRegD(a64.srcIdx));
+             xa::ZRegD(a64.srcIdx));
   }
 
   /* Col=AG103*/
   if (false || (a64.dstWidth == 128 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 0 && a64.srcType == A64_OP_MEM && true)) {
     xa_->eor(xa::ZRegD(a64.dstIdx), xa::PReg(a64.pTmpIdx),
-                              xa::ZRegD(a64.zTmpIdx));
+             xa::ZRegD(a64.zTmpIdx));
   }
 
   /* Col=BB103*/

@@ -1459,7 +1459,7 @@ void translateVPUNPCKLDQ(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
     xa_->and_(xa::PRegB(pTmpIdx), P_ALL_ONE, xa::PRegB(pTmpIdx),
-               xa::PRegB(maskIdx));
+              xa::PRegB(maskIdx));
   }
   /* Col=AV119*/
   if (false ||
@@ -1524,19 +1524,19 @@ void translateVPUNPCKLDQ(xed_decoded_inst_t *p) {
       int idx = index[i];
       xa_->dup(xa::ZRegS(zTmp2Idx), xa::ZReg(srcIdx).s[idx]);
       xa_->cmphs(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmpIdx),
-                  uint32_t(i * 4));
+                 uint32_t(i * 4));
       xa_->mov(xa::ZRegS(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp2Idx));
       xa_->dup(xa::ZRegS(zTmp2Idx), xa::ZReg(src2Idx).s[idx]);
       xa_->cmphs(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmpIdx),
-                  uint32_t(i * 4 + 1));
+                 uint32_t(i * 4 + 1));
       xa_->mov(xa::ZRegS(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp2Idx));
       xa_->dup(xa::ZRegS(zTmp2Idx), xa::ZReg(srcIdx).s[idx + 1]);
       xa_->cmphs(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmpIdx),
-                  uint32_t(i * 4 + 2));
+                 uint32_t(i * 4 + 2));
       xa_->mov(xa::ZRegS(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp2Idx));
       xa_->dup(xa::ZRegS(zTmp2Idx), xa::ZReg(src2Idx).s[idx + 1]);
       xa_->cmphs(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmpIdx),
-                  uint32_t(i * 4 + 3));
+                 uint32_t(i * 4 + 3));
       xa_->mov(xa::ZRegS(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp2Idx));
     }
   }
@@ -1603,19 +1603,19 @@ void translateVPUNPCKLDQ(xed_decoded_inst_t *p) {
       int idx = index[i];
       xa_->dup(xa::ZRegS(zTmp2Idx), xa::ZReg(srcIdx).s[idx]);
       xa_->cmphs(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmpIdx),
-                  uint32_t(i * 4));
+                 uint32_t(i * 4));
       xa_->mov(xa::ZRegS(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp2Idx));
       xa_->dup(xa::ZRegS(zTmp2Idx), xa::ZReg(zTmp4Idx).s[idx]);
       xa_->cmphs(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmpIdx),
-                  uint32_t(i * 4 + 1));
+                 uint32_t(i * 4 + 1));
       xa_->mov(xa::ZRegS(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp2Idx));
       xa_->dup(xa::ZRegS(zTmp2Idx), xa::ZReg(srcIdx).s[idx + 1]);
       xa_->cmphs(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmpIdx),
-                  uint32_t(i * 4 + 2));
+                 uint32_t(i * 4 + 2));
       xa_->mov(xa::ZRegS(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp2Idx));
       xa_->dup(xa::ZRegS(zTmp2Idx), xa::ZReg(zTmp4Idx).s[idx + 1]);
       xa_->cmphs(P_TMP_0.s, xa::PReg(pTmpIdx), xa::ZRegS(zTmpIdx),
-                  uint32_t(i * 4 + 3));
+                 uint32_t(i * 4 + 3));
       xa_->mov(xa::ZRegS(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmp2Idx));
     }
   }
@@ -1735,7 +1735,7 @@ void translateVPUNPCKLDQ(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
     xa_->mov(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-              xa::ZRegS(zTmp3Idx));
+             xa::ZRegS(zTmp3Idx));
   }
   /* Col=AZ119*/
   if (false ||
@@ -2589,4 +2589,3 @@ void translateVPUNPCKLDQ(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

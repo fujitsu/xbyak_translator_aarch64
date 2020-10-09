@@ -101,7 +101,7 @@ void translatePINSRD(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     xa_->sel(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmpIdx),
-              xa::ZRegS(dstIdx));
+             xa::ZRegS(dstIdx));
   }
 
   /* Col=BB119*/
@@ -123,4 +123,3 @@ void translatePINSRD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

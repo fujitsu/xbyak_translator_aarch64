@@ -152,7 +152,7 @@ void translateVGATHERQPS(xed_decoded_inst_t *p) {
                 a64.operands[2].vmIndexRegWidth == 512 &&
                 a64.predType == A64_PRED_MERG && true)) {
     xa_->and_(xa::PRegB(pTmpIdx), xa::PReg(pTmpIdx), xa::PRegB(pTmpIdx),
-               xa::PRegB(maskIdx));
+              xa::PRegB(maskIdx));
   }
   /* Col=AS119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -295,4 +295,3 @@ void translateVGATHERQPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

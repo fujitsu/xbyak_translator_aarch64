@@ -128,7 +128,7 @@ void translatePINSRW(xed_decoded_inst_t *p) {
        a64.operands[1].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && true)) {
     xa_->sel(xa::ZRegH(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegH(zTmpIdx),
-              xa::ZRegH(dstIdx));
+             xa::ZRegH(dstIdx));
   }
 
   /* Col=BB119*/
@@ -160,4 +160,3 @@ void translatePINSRW(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

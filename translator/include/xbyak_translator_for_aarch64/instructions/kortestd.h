@@ -40,12 +40,10 @@ void translateKORTESTD(xed_decoded_inst_t *p) {
   ldr(ptmp1, adr_reg);
   ldr(ptmp2, adr_reg);
   ldr(condR, adr_reg);
-  Xbyak_aarch64::xa_->AND_(
-      ptmp1.b, condR / Xbyak_aarch64::T_z, src1.b,
-      ptmp1.b); // get src1[31:0]
-  Xbyak_aarch64::xa_->AND_(
-      ptmp2.b, condR / Xbyak_aarch64::T_z, src2.b,
-      ptmp2.b); // get src2[31:0]
+  Xbyak_aarch64::xa_->AND_(ptmp1.b, condR / Xbyak_aarch64::T_z, src1.b,
+                           ptmp1.b); // get src1[31:0]
+  Xbyak_aarch64::xa_->AND_(ptmp2.b, condR / Xbyak_aarch64::T_z, src2.b,
+                           ptmp2.b); // get src2[31:0]
   orr(ptmp1.b, condR / Xbyak_aarch64::T_z, ptmp1.b, ptmp2.b);
 
   // push result of "or k1, k2"

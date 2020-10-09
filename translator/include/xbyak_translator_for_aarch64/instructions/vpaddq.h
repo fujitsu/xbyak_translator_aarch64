@@ -940,7 +940,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
     xa_->mov(xa::ZReg(dstIdx).d, xa::PReg(maskIdx) / xa::T_m,
-              xa::ZReg(zTmpIdx).d);
+             xa::ZReg(zTmpIdx).d);
   }
   /* Col=AW119*/
   if (false ||
@@ -1280,4 +1280,3 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

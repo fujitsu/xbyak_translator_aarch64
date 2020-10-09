@@ -104,19 +104,19 @@ void translateVCVTPS2DQ(xed_decoded_inst_t *p) {
        a64_opt.EVEXb == 0 && isAvailAll1Preg0_7() == true && true)) {
     if (a64.EVEXrc == 1) // Round to nearest even (00B)
       xa_->frintn(xa::ZRegS(dstIdx), P_ALL_ONE_0_7 / xa::T_m,
-                   xa::ZRegS(srcIdx));
+                  xa::ZRegS(srcIdx));
     else if (a64.EVEXrc == 2) // Round down(01B)
       xa_->frintm(xa::ZRegS(dstIdx), P_ALL_ONE_0_7 / xa::T_m,
-                   xa::ZRegS(srcIdx));
+                  xa::ZRegS(srcIdx));
     else if (a64.EVEXrc == 3) // Round up(10B)
       xa_->frintp(xa::ZRegS(dstIdx), P_ALL_ONE_0_7 / xa::T_m,
-                   xa::ZRegS(srcIdx));
+                  xa::ZRegS(srcIdx));
     else if (a64.EVEXrc == 4) // Round toward zero(11B)
       xa_->frintz(xa::ZRegS(dstIdx), P_ALL_ONE_0_7 / xa::T_m,
-                   xa::ZRegS(srcIdx));
+                  xa::ZRegS(srcIdx));
     else // FPCR
       xa_->frinti(xa::ZRegS(dstIdx), P_ALL_ONE_0_7 / xa::T_m,
-                   xa::ZRegS(srcIdx));
+                  xa::ZRegS(srcIdx));
     xa_->fcvtzs(xa::ZRegS(dstIdx), P_ALL_ONE_0_7 / xa::T_m, xa::ZRegS(dstIdx));
   }
   /* Col=BL119*/
@@ -609,7 +609,7 @@ void translateVCVTPS2DQ(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true)) {
     xa_->ld1w(xa::ZRegS(srcIdx), xa::PReg(pTmpIdx) / xa::T_z,
-               xa::ptr(X_TMP_ADDR));
+              xa::ptr(X_TMP_ADDR));
   }
   /* Col=AP119*/
   if (false ||
@@ -662,21 +662,21 @@ void translateVCVTPS2DQ(xed_decoded_inst_t *p) {
        a64.EVEXb == 0 && true)) {
     if (a64.EVEXrc == 1) // Round to nearest even (00B)
       xa_->frintn(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-                   xa::ZRegS(srcIdx));
+                  xa::ZRegS(srcIdx));
     else if (a64.EVEXrc == 2) // Round down(01B)
       xa_->frintm(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-                   xa::ZRegS(srcIdx));
+                  xa::ZRegS(srcIdx));
     else if (a64.EVEXrc == 3) // Round up(10B)
       xa_->frintp(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-                   xa::ZRegS(srcIdx));
+                  xa::ZRegS(srcIdx));
     else if (a64.EVEXrc == 4) // Round toward zero(11B)
       xa_->frintz(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-                   xa::ZRegS(srcIdx));
+                  xa::ZRegS(srcIdx));
     else // FPCR
       xa_->frinti(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-                   xa::ZRegS(srcIdx));
+                  xa::ZRegS(srcIdx));
     xa_->fcvtzs(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-                 xa::ZRegS(dstIdx));
+                xa::ZRegS(dstIdx));
   }
   /* Col=BC119*/
   if (false ||
@@ -1041,4 +1041,3 @@ void translateVCVTPS2DQ(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

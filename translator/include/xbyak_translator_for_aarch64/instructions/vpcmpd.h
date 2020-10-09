@@ -353,27 +353,27 @@ void translateVPCMPD(xed_decoded_inst_t *p) {
     switch (uimm) {
     case 0:
       xa_->cmpeq(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
-                  xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
+                 xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // EQ
     case 1:
       xa_->cmplt(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
-                  xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
+                 xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // LT
     case 2:
       xa_->cmple(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
-                  xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
+                 xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // LE
     case 4:
       xa_->cmpne(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
-                  xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
+                 xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // NEQ
     case 5:
       xa_->cmpge(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
-                  xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
+                 xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // NLT
     case 6:
       xa_->cmpgt(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
-                  xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
+                 xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
       break; // NLE
     case 3:
     case 7:
@@ -554,4 +554,3 @@ void translateVPCMPD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

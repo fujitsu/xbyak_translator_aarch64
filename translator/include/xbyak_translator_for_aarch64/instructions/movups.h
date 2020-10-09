@@ -18,7 +18,7 @@ void translateMOVUPS(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
 
-/* 2020/03/10 16:22 */
+  /* 2020/03/10 16:22 */
 
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
@@ -85,6 +85,4 @@ void translateMOVUPS(xed_decoded_inst_t *p) {
                 a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     xt_pop_zreg();
   }
-
-
 }

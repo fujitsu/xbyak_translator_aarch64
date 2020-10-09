@@ -68,23 +68,20 @@ void translateVMOVDQU(xed_decoded_inst_t *p) {
   /* Col=AL103*/
   if (false || (a64.dstWidth == 256 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_REG && true)) {
-    xa_->mov(xa::ZReg(a64.dstIdx).b,
-                              xa::PReg(a64.pTmpIdx) / xa::T_m, 0);
+    xa_->mov(xa::ZReg(a64.dstIdx).b, xa::PReg(a64.pTmpIdx) / xa::T_m, 0);
   }
 
   /* Col=AN103*/
   if (false || (a64.dstWidth == 256 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_MEM && true)) {
-    xa_->ld1b(xa::ZReg(a64.dstIdx).b,
-                               xa::PReg(a64.pTmpIdx) / xa::T_z,
-                               xa::ptr(X_TMP_ADDR));
+    xa_->ld1b(xa::ZReg(a64.dstIdx).b, xa::PReg(a64.pTmpIdx) / xa::T_z,
+              xa::ptr(X_TMP_ADDR));
   }
   /* Col=AO103*/
   if (false || (a64.dstWidth == 256 && a64.dstType == A64_OP_MEM &&
                 a64.srcType == A64_OP_REG && true)) {
-    xa_->st1b(xa::ZReg(a64.srcIdx).b,
-                               xa::PReg(a64.pTmpIdx) / xa::T_z,
-                               xa::ptr(X_TMP_ADDR));
+    xa_->st1b(xa::ZReg(a64.srcIdx).b, xa::PReg(a64.pTmpIdx) / xa::T_z,
+              xa::ptr(X_TMP_ADDR));
   }
 
   /* Col=AQ103*/

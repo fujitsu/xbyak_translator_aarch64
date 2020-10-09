@@ -18,7 +18,7 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
 
-/* 2020/03/10 22:22 */
+  /* 2020/03/10 22:22 */
 
   bool isValid = false;
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
@@ -465,7 +465,7 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
        a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
        a64.predType == A64_PRED_MERG && true)) {
     xa_->and_(xa::PRegB(pTmpIdx), P_ALL_ONE, xa::PRegB(maskIdx),
-               xa::PRegB(pTmpIdx));
+              xa::PRegB(pTmpIdx));
   }
   /* Col=AJ103*/
   if (false ||
@@ -488,7 +488,7 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
        a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
        a64.predType == A64_PRED_MERG && true)) {
     xa_->and_(xa::PRegB(pTmpIdx), P_ALL_ONE, xa::PRegB(maskIdx),
-               xa::PRegB(pTmpIdx));
+              xa::PRegB(pTmpIdx));
   }
   /* Col=AK103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -638,8 +638,7 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
                 a64.operands[2].regClass == XED_REG_CLASS_XMM &&
                 a64.operands[3].regClass == XED_REG_CLASS_XMM &&
                 a64.predType == A64_PRED_NO && true)) {
-    xa_->sel(xa::ZRegD(dstIdx), P_TMP_0, xa::ZRegD(srcIdx),
-              xa::ZRegD(src2Idx));
+    xa_->sel(xa::ZRegD(dstIdx), P_TMP_0, xa::ZRegD(srcIdx), xa::ZRegD(src2Idx));
   }
   /* Col=AV103*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
@@ -773,7 +772,7 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
                 a64.operands[3].regClass == XED_REG_CLASS_INVALID &&
                 a64.predType == A64_PRED_MERG && true)) {
     xa_->mov(xa::ZRegD(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-              xa::ZRegD(zTmpIdx));
+             xa::ZRegD(zTmpIdx));
   }
   /* Col=BC103*/
   if (false ||
@@ -999,5 +998,4 @@ void translateVMOVSD(xed_decoded_inst_t *p) {
   }
 
   XT_VALID_CHECK_IF;
-
 }

@@ -351,7 +351,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && a64.operands[2].opWidth == 8 && true)) {
     xa_->mov_imm(X_TMP_1, static_cast<int64_t>(
-                               static_cast<int8_t>(a64.operands[2].uimm)));
+                              static_cast<int8_t>(a64.operands[2].uimm)));
   }
   /* Col=AJ119*/
   if (false ||
@@ -366,7 +366,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 16 && a64.operands[2].opWidth == 16 &&
        true)) {
     xa_->mov_imm(X_TMP_1, static_cast<int64_t>(
-                               static_cast<int16_t>(a64.operands[2].uimm)));
+                              static_cast<int16_t>(a64.operands[2].uimm)));
   }
   /* Col=AK119*/
   if (false ||
@@ -391,7 +391,7 @@ void translateIMUL(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 64 && a64.operands[2].opWidth == 32 &&
        true)) {
     xa_->mov_imm(X_TMP_1, static_cast<int64_t>(
-                               static_cast<int32_t>(a64.operands[2].uimm)));
+                              static_cast<int32_t>(a64.operands[2].uimm)));
   }
 
   /* Col=AR119*/
@@ -597,4 +597,3 @@ void translateIMUL(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

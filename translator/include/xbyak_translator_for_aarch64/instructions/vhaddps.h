@@ -91,7 +91,7 @@ void translateVHADDPS(xed_decoded_inst_t *p) {
   if (false || (a64.operands[2].opName == XED_OPERAND_REG2 &&
                 a64.operands[0].regClass == XED_REG_CLASS_YMM && true)) {
     xa_->faddp(xa::VReg(zTmp3Idx).s4, xa::VReg(srcIdx).s4,
-                xa::VReg(src2Idx).s4);
+               xa::VReg(src2Idx).s4);
   }
   /* Col=AJ119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -122,7 +122,7 @@ void translateVHADDPS(xed_decoded_inst_t *p) {
   if (false || (a64.operands[2].opName == XED_OPERAND_REG2 &&
                 a64.operands[0].regClass == XED_REG_CLASS_YMM && true)) {
     xa_->faddp(xa::VReg(zTmpIdx).s4, xa::VReg(zTmpIdx).s4,
-                xa::VReg(zTmp2Idx).s4);
+               xa::VReg(zTmp2Idx).s4);
   }
   /* Col=AU119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -168,4 +168,3 @@ void translateVHADDPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

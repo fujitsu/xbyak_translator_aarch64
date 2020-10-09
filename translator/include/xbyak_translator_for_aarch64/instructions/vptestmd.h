@@ -233,7 +233,7 @@ void translateVPTESTMD(xed_decoded_inst_t *p) {
        a64_opt.predType == A64_PRED_NO && isAvailAll1Preg0_7() == true &&
        true)) {
     xa_->cmpne(xa::PRegS(dstIdx), P_ALL_ONE_0_7 / xa::T_z, xa::ZRegS(zTmpIdx),
-                0);
+               0);
   }
   /* Col=AY119*/
   if (false ||
@@ -744,7 +744,7 @@ void translateVPTESTMD(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_ZMM &&
        a64.predType == A64_PRED_MERG && true)) {
     xa_->cmpne(xa::PRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_z,
-                xa::ZRegS(zTmpIdx), 0);
+               xa::ZRegS(zTmpIdx), 0);
   }
   /* Col=AQ119*/
   if (false ||
@@ -805,7 +805,7 @@ void translateVPTESTMD(xed_decoded_inst_t *p) {
        a64.operands[2].regClass == XED_REG_CLASS_YMM &&
        a64.predType == A64_PRED_MERG && true)) {
     xa_->and_(xa::PRegB(dstIdx), P_ALL_ONE, xa::PRegB(dstIdx),
-               xa::PRegB(pTmpIdx));
+              xa::PRegB(pTmpIdx));
   }
   /* Col=BH119*/
   if (false ||
@@ -951,4 +951,3 @@ void translateVPTESTMD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

@@ -29,8 +29,7 @@ void translateVMOVHPS(xed_decoded_inst_t *p) {
   /* Col=Y103*/
   if (false || (a64.dstType == A64_OP_REG && a64.srcType == A64_OP_REG &&
                 a64.src2Type == A64_OP_MEM && true)) {
-    xa_->mov(xa::VReg2D(a64.dstIdx)[0],
-                              xa::VReg2D(a64.srcIdx)[0]);
+    xa_->mov(xa::VReg2D(a64.dstIdx)[0], xa::VReg2D(a64.srcIdx)[0]);
   }
 
   /* Col=AH103*/

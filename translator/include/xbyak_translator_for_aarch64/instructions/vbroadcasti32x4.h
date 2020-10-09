@@ -65,7 +65,7 @@ void translateVBROADCASTI32X4(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 1 &&
        a64.srcType == A64_OP_MEM && true)) {
     xa_->splice(xa::ZRegD(a64.dstIdx), xa::PRegD(a64.pTmpIdx),
-                                 xa::ZRegD(a64.dstIdx));
+                xa::ZRegD(a64.dstIdx));
   }
 
   /* Col=AN103*/
@@ -84,7 +84,7 @@ void translateVBROADCASTI32X4(xed_decoded_inst_t *p) {
   if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 1 && a64.srcType == A64_OP_MEM && true)) {
     xa_->splice(xa::ZRegD(a64.dstIdx), xa::PRegD(a64.pTmpIdx),
-                                 xa::ZRegD(a64.dstIdx));
+                xa::ZRegD(a64.dstIdx));
   }
 
   /* Col=BB103*/

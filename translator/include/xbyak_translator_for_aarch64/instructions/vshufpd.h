@@ -96,11 +96,9 @@ void translateVSHUFPD(xed_decoded_inst_t *p) {
        a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true)) {
-    xa_->mov(xa::ZReg(a64.zTmpIdx).s, P_ALL_ONE,
-                              xa::ZReg(a64.srcIdx).s);
+    xa_->mov(xa::ZReg(a64.zTmpIdx).s, P_ALL_ONE, xa::ZReg(a64.srcIdx).s);
     if ((a64.uimm & 0x1) != 0) {
-      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
-                                8);
+      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx), 8);
     }
   }
   /* Col=Y103*/
@@ -110,14 +108,11 @@ void translateVSHUFPD(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true)) {
     if (((a64.uimm & 0x2) / 2) == 0) {
-      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
-                                8);
-      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.src2Idx),
-                                56);
+      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx), 8);
+      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.src2Idx), 56);
     } else {
       xa_->zip1(P_TMP_0.d, P_MSB_256.d, P_ALL_ONE.d);
-      xa_->mov(xa::ZRegD(a64.zTmpIdx), P_TMP_0,
-                                xa::ZRegD(a64.src2Idx));
+      xa_->mov(xa::ZRegD(a64.zTmpIdx), P_TMP_0, xa::ZRegD(a64.src2Idx));
     }
   }
   /* Col=Z103*/
@@ -127,17 +122,13 @@ void translateVSHUFPD(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true)) {
     if (((a64.uimm & 0x4) / 4) == 0) {
-      xa_->mov(xa::ZRegD(a64.zTmpIdx), P_MSB_384,
-                                xa::ZRegD(a64.srcIdx));
+      xa_->mov(xa::ZRegD(a64.zTmpIdx), P_MSB_384, xa::ZRegD(a64.srcIdx));
     } else {
-      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
-                                56);
+      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx), 56);
       xa_->zip1(P_TMP_0.d, P_MSB_256.d, P_ALL_ONE.d);
       xa_->and_(P_TMP_0.b, P_ALL_ONE, P_TMP_0.b, P_MSB_384.b);
-      xa_->mov(xa::ZRegD(a64.zTmpIdx), P_TMP_0,
-                                xa::ZRegD(a64.srcIdx));
-      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
-                                8);
+      xa_->mov(xa::ZRegD(a64.zTmpIdx), P_TMP_0, xa::ZRegD(a64.srcIdx));
+      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx), 8);
     }
   }
   /* Col=AA103*/
@@ -147,18 +138,14 @@ void translateVSHUFPD(xed_decoded_inst_t *p) {
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true)) {
     if (((a64.uimm & 0x8) / 8) == 0) {
-      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
-                                8);
+      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx), 8);
       xa_->eor(P_TMP_0.b, P_ALL_ONE, P_MSB_256.b, P_MSB_384.b);
-      xa_->mov(xa::ZRegD(a64.zTmpIdx), P_TMP_0,
-                                xa::ZRegD(a64.src2Idx));
-      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx),
-                                56);
+      xa_->mov(xa::ZRegD(a64.zTmpIdx), P_TMP_0, xa::ZRegD(a64.src2Idx));
+      xa_->ext(xa::ZRegB(a64.zTmpIdx), xa::ZRegB(a64.zTmpIdx), 56);
     } else {
       xa_->zip1(P_TMP_0.d, P_MSB_256.d, P_ALL_ONE.d);
       xa_->and_(P_TMP_0.b, P_ALL_ONE, P_TMP_0.b, P_MSB_384.b);
-      xa_->mov(xa::ZRegD(a64.zTmpIdx), P_TMP_0,
-                                xa::ZRegD(a64.src2Idx));
+      xa_->mov(xa::ZRegD(a64.zTmpIdx), P_TMP_0, xa::ZRegD(a64.src2Idx));
     }
   }
 
@@ -168,8 +155,7 @@ void translateVSHUFPD(xed_decoded_inst_t *p) {
        a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO && a64.EVEXb == 0 &&
        a64.src2Type == A64_OP_REG && true)) {
-    xa_->mov(xa::ZRegB(a64.dstIdx), P_ALL_ONE,
-                              xa::ZRegB(a64.zTmpIdx));
+    xa_->mov(xa::ZRegB(a64.dstIdx), P_ALL_ONE, xa::ZRegB(a64.zTmpIdx));
   }
 
   /* Col=AZ103*/

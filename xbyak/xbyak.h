@@ -245,7 +245,7 @@
 namespace Xbyak {
 
 #ifdef XBYAK_TRANSLATE_AARCH64
-namespace xa_ = Xbyak_aarch64;
+namespace xa = Xbyak_aarch64;
 #endif
 
 enum {
@@ -2519,8 +2519,8 @@ public:
 //public:
 #ifdef XBYAK_TRANSLATE_AARCH64
 	void L(const std::string &label) {}
-	void L(xa_::Label &label) { xa_->L(label); }
-	xa_::Label L() { xa_::Label label; L(label); return label; }
+	void L(xa::Label &label) { xa_->L(label); }
+	xa::Label L() { xa::Label label; L(label); return label; }
 #else
 	void L(const std::string& label) { labelMgr_.defineSlabel(label); }
 	void L(Label& label) { labelMgr_.defineClabel(label); }
@@ -2618,9 +2618,9 @@ public:
 		xa_->sub(xa_->sp,
 					  xa_->sp, NUM_BYTES_GEN_REG);
 		xa_->mov(X_TMP_0, xa_->sp);
-		xa_->str(xa_::XReg(op.getIdx()), xa_::ptr(X_TMP_0));
+		xa_->str(xa::XReg(op.getIdx()), xa::ptr(X_TMP_0));
 #else //#ifdef XT_AARCH64_STACK_REG
-		xa_->str(xa_::XReg(op.getIdx()), xa_::pre_ptr(X_TRANSLATOR_STACK, -8));
+		xa_->str(xa::XReg(op.getIdx()), xa::pre_ptr(X_TRANSLATOR_STACK, -8));
 #endif //#ifdef XT_AARCH64_STACK_REG
 		db_clear();
 #endif//#ifndef XBYAK_TRANSLATE_AARCH64
@@ -2633,11 +2633,11 @@ public:
 		decode_size_ = 0;
 #ifdef XT_AARCH64_STACK_REG
 		xa_->mov(X_TMP_0, xa_->sp);
-		xa_->ldr(xa_::XReg(op.getIdx()), xa_::ptr(X_TMP_0));
+		xa_->ldr(xa::XReg(op.getIdx()), xa::ptr(X_TMP_0));
 		xa_->add(xa_->sp,
 					  xa_->sp, NUM_BYTES_GEN_REG);
 #else //#ifdef XT_AARCH64_STACK_REG
-		xa_->ldr(xa_::XReg(op.getIdx()), xa_::post_ptr(X_TRANSLATOR_STACK, 8));
+		xa_->ldr(xa::XReg(op.getIdx()), xa::post_ptr(X_TRANSLATOR_STACK, 8));
 #endif //#ifdef XT_AARCH64_STACK_REG
 		db_clear();
 #endif//#ifndef XBYAK_TRANSLATE_AARCH64
@@ -2741,7 +2741,7 @@ public:
 	{
 #ifdef XBYAK_TRANSLATE_AARCH64
 	        /* Unimplemented */
-	        xa_->adr(xa_::XReg(reg.getIdx()), label);
+	        xa_->adr(xa::XReg(reg.getIdx()), label);
 #else
 		mov_imm(reg, dummyAddr);
 		putL(label);
@@ -2828,8 +2828,8 @@ public:
 	enum { NONE = 256 };
 	// constructor
 #ifdef XBYAK_TRANSLATE_AARCH64
-	CodeGenerator(size_t maxSize = DEFAULT_MAX_CODE_SIZE, void *userPtr = 0, Allocator *allocator = 0, xa_::Allocator *alloc_aarch64 = 0)
-	        : Xbyak::CodeArray(maxSize, userPtr, allocator), xa_::CodeGenerator(maxSize, userPtr, alloc_aarch64)
+	CodeGenerator(size_t maxSize = DEFAULT_MAX_CODE_SIZE, void *userPtr = 0, Allocator *allocator = 0, xa::Allocator *alloc_aarch64 = 0)
+	        : Xbyak::CodeArray(maxSize, userPtr, allocator), xa::CodeGenerator(maxSize, userPtr, alloc_aarch64)
 			, xa_(this)
 #else
 	CodeGenerator(size_t maxSize = DEFAULT_MAX_CODE_SIZE, void *userPtr = 0, Allocator *allocator = 0)

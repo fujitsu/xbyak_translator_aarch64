@@ -38,13 +38,13 @@ void translateMULPS(xed_decoded_inst_t *p) {
   /* Col=AP103*/
   if (false || (a64.srcType == A64_OP_REG && true)) {
     xa_->fmul(xa::ZRegS(a64.dstIdx), xa::ZRegS(a64.dstIdx),
-               xa::ZRegS(a64.srcIdx));
+              xa::ZRegS(a64.srcIdx));
   }
 
   /* Col=AW103*/
   if (false || (a64.srcType == A64_OP_REG && true)) {
     xa_->mov(xa::ZRegS(a64.dstIdx), P_MSB_384 / xa::T_m,
-              xa::ZRegS(a64.zTmpIdx));
+             xa::ZRegS(a64.zTmpIdx));
   }
 
   /* Col=BN103*/
@@ -57,5 +57,4 @@ void translateMULPS(xed_decoded_inst_t *p) {
     XT_VALID_CHECK;
   }
   XT_VALID_CHECK_IF
-
 }

@@ -113,7 +113,7 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
   if (false || (a64.operands[2].opName == XED_OPERAND_MEM0 &&
                 a64.operands[0].opWidth == 256 && true)) {
     xa_->ld1w(xa::ZRegS(src2Idx), xa::PReg(pTmpIdx) / xa::T_z,
-               xa::ptr(X_TMP_ADDR));
+              xa::ptr(X_TMP_ADDR));
   }
   /* Col=AQ120*/
   if (false ||
@@ -392,4 +392,3 @@ void translateVTESTPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

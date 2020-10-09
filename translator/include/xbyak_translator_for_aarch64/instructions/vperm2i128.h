@@ -18,7 +18,7 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
 
-/* 2020/03/16 11:26 */
+  /* 2020/03/16 11:26 */
 
   bool isValid = false;
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
@@ -90,7 +90,7 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
     }
     xa_->ptrue(xa::PRegD(pTmpIdx), xa::VL2);
     xa_->sel(xa::ZRegD(dstIdx), xa::PReg(pTmpIdx), xa::ZRegD(srcIdx),
-              xa::ZRegD(src2Idx));
+             xa::ZRegD(src2Idx));
     xa_->mov(xa::ZRegD(dstIdx), P_MSB_256 / xa::T_m, 0);
     xt_pop_preg();
     isValid = true;
@@ -163,7 +163,7 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
     xa_->dup(xa::ZRegQ(zTmpIdx), xa::ZRegQ(srcIdx)[lsbElem]);
     xa_->dup(xa::ZRegQ(zTmp2Idx), xa::ZRegQ(src2Idx)[msbElem]);
     xa_->sel(xa::ZRegD(dstIdx), xa::PReg(pTmpIdx), xa::ZRegD(zTmpIdx),
-              xa::ZRegD(zTmp2Idx));
+             xa::ZRegD(zTmp2Idx));
     xa_->mov(xa::ZRegD(dstIdx), P_MSB_256 / xa::T_m, 0);
     xt_pop_zreg();
     xt_pop_zreg();
@@ -257,5 +257,4 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
   }
 
   XT_VALID_CHECK_IF;
-
 }

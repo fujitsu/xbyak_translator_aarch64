@@ -932,7 +932,7 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
     xa_->fmad(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-               xa::ZRegS(src2Idx), xa::ZRegS(srcIdx));
+              xa::ZRegS(src2Idx), xa::ZRegS(srcIdx));
   }
   /* Col=AU119*/
   if (false ||
@@ -997,7 +997,7 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
     xa_->fmad(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-               xa::ZRegS(zTmpIdx), xa::ZRegS(srcIdx));
+              xa::ZRegS(zTmpIdx), xa::ZRegS(srcIdx));
   }
   /* Col=AV119*/
   if (false ||
@@ -1462,4 +1462,3 @@ void translateVFMADD132PS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

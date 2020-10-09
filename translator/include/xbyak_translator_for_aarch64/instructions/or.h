@@ -64,8 +64,8 @@ void translateOR(xed_decoded_inst_t *p) {
                  "Invalid uimm=" + std::to_string(a64.uimm));
     }
     xa_->mov_imm(W_TMP_0, static_cast<uint32_t>(a64.uimm));
-    xa_->orr(Xbyak_aarch64::WReg(a64.dstIdx),
-                              Xbyak_aarch64::WReg(a64.dstIdx), W_TMP_0);
+    xa_->orr(Xbyak_aarch64::WReg(a64.dstIdx), Xbyak_aarch64::WReg(a64.dstIdx),
+             W_TMP_0);
   }
   /* Col=U103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
@@ -78,8 +78,8 @@ void translateOR(xed_decoded_inst_t *p) {
       xed_int64_t tmp = xed_sign_extend_arbitrary_to_64(a64.uimm, bits);
       xa_->mov_imm(X_TMP_1, tmp);
     }
-    xa_->orr(Xbyak_aarch64::XReg(a64.dstIdx),
-                              Xbyak_aarch64::XReg(a64.dstIdx), X_TMP_1);
+    xa_->orr(Xbyak_aarch64::XReg(a64.dstIdx), Xbyak_aarch64::XReg(a64.dstIdx),
+             X_TMP_1);
   }
 
   /* Col=X103*/
@@ -111,8 +111,7 @@ void translateOR(xed_decoded_inst_t *p) {
       xt_msg_err(__FILE__, __LINE__,
                  "Invalid uimm=" + std::to_string(a64.uimm));
     }
-    xa_->orr(W_TMP_0, W_TMP_0,
-                              static_cast<uint32_t>(a64.uimm));
+    xa_->orr(W_TMP_0, W_TMP_0, static_cast<uint32_t>(a64.uimm));
   }
   /* Col=AC103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM &&
@@ -123,14 +122,12 @@ void translateOR(xed_decoded_inst_t *p) {
   /* Col=AF103*/
   if (false || (a64.dstWidth == 32 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_REG && true)) {
-    xa_->orr(xa::WReg(a64.dstIdx), xa::WReg(a64.dstIdx),
-                              xa::WReg(a64.srcIdx));
+    xa_->orr(xa::WReg(a64.dstIdx), xa::WReg(a64.dstIdx), xa::WReg(a64.srcIdx));
   }
   /* Col=AG103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_REG && true)) {
-    xa_->orr(xa::XReg(a64.dstIdx), xa::XReg(a64.dstIdx),
-                              xa::XReg(a64.srcIdx));
+    xa_->orr(xa::XReg(a64.dstIdx), xa::XReg(a64.dstIdx), xa::XReg(a64.srcIdx));
   }
 
   /* Col=AK103*/
@@ -147,14 +144,12 @@ void translateOR(xed_decoded_inst_t *p) {
   /* Col=AR103*/
   if (false || (a64.dstWidth == 32 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_MEM && true)) {
-    xa_->orr(xa::WReg(a64.dstIdx), xa::WReg(a64.dstIdx),
-                              W_TMP_0);
+    xa_->orr(xa::WReg(a64.dstIdx), xa::WReg(a64.dstIdx), W_TMP_0);
   }
   /* Col=AS103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG &&
                 a64.srcType == A64_OP_MEM && true)) {
-    xa_->orr(xa::XReg(a64.dstIdx), xa::XReg(a64.dstIdx),
-                              X_TMP_0);
+    xa_->orr(xa::XReg(a64.dstIdx), xa::XReg(a64.dstIdx), X_TMP_0);
   }
 
   /* Col=AU103*/

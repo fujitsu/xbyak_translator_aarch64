@@ -37,9 +37,8 @@ void translateKORTESTQ(xed_decoded_inst_t *p) {
   mov__(addrtmp, ALL1_BIT64_ADDRESS); //アドレスはいったん適当な値
   Xbyak_aarch64::AdrNoOfs adr_reg(addrtmp);
   ldr(condR, adr_reg);
-  Xbyak_aarch64::xa_->AND_(
-      ptmp.b, condR / Xbyak_aarch64::T_z, src1.b,
-      src2.b); // get AND src1, src2
+  Xbyak_aarch64::xa_->AND_(ptmp.b, condR / Xbyak_aarch64::T_z, src1.b,
+                           src2.b); // get AND src1, src2
 
   // push result of "or k1, k2"
   mov__(addrtmp, sp_);

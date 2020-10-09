@@ -166,10 +166,9 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 32 && a64.predType == A64_PRED_NO && true)) {
     if ((uimm & 0xf) >= 8) {
-      xa_->zip2(xa::VReg16B(zTmpIdx), xa::VReg16B(srcIdx),
-                 xa::VReg16B(srcIdx));
+      xa_->zip2(xa::VReg16B(zTmpIdx), xa::VReg16B(srcIdx), xa::VReg16B(srcIdx));
       xa_->uzp1(xa::VReg16B(zTmpIdx), xa::VReg16B(zTmpIdx),
-                 xa::VReg16B(zTmpIdx));
+                xa::VReg16B(zTmpIdx));
       xa_->ptrue(xa::PReg(pTmpIdx).b, xa::Pattern((uimm & 0xf) - 7));
       xa_->lastb(xa::WReg(dstIdx), xa::PReg(pTmpIdx), xa::ZRegB(zTmpIdx));
     } else {
@@ -190,10 +189,9 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
        a64.operands[1].regClass == XED_REG_CLASS_XMM &&
        a64.operands[0].opWidth == 8 && a64.predType == A64_PRED_NO && true)) {
     if ((uimm & 0xf) >= 8) {
-      xa_->zip2(xa::VReg16B(zTmpIdx), xa::VReg16B(srcIdx),
-                 xa::VReg16B(srcIdx));
+      xa_->zip2(xa::VReg16B(zTmpIdx), xa::VReg16B(srcIdx), xa::VReg16B(srcIdx));
       xa_->uzp1(xa::VReg16B(zTmpIdx), xa::VReg16B(zTmpIdx),
-                 xa::VReg16B(zTmpIdx));
+                xa::VReg16B(zTmpIdx));
       xa_->ptrue(xa::PReg(pTmpIdx).b, xa::Pattern((uimm & 0xf) - 7));
       xa_->lastb(W_TMP_0, xa::PReg(pTmpIdx), xa::ZRegB(zTmpIdx));
     } else {
@@ -302,4 +300,3 @@ void translateVPEXTRB(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

@@ -37,7 +37,7 @@ void translateMULSS(xed_decoded_inst_t *p) {
   /* Col=AP103*/
   if (false || (a64.srcType == A64_OP_REG && true)) {
     xa_->fmul(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx),
-               xa::ZRegS(a64.srcIdx));
+              xa::ZRegS(a64.srcIdx));
   }
 
   /* Col=BO103*/
@@ -49,5 +49,4 @@ void translateMULSS(xed_decoded_inst_t *p) {
     XT_VALID_CHECK;
   }
   XT_VALID_CHECK_IF
-
 }

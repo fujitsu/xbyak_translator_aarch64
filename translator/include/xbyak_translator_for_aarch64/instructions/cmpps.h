@@ -132,27 +132,27 @@ void translateCMPPS(xed_decoded_inst_t *p) {
     switch (uimm) {
     case EQ_OQ:
       xa_->fcmeq(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
-                  xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
+                 xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case LT_OS:
       xa_->fcmlt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
-                  xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
+                 xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case LE_OS:
       xa_->fcmle(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
-                  xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
+                 xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NEQ_UQ:
       xa_->fcmne(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
-                  xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
+                 xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NLT_US:
       xa_->fcmge(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
-                  xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
+                 xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
     case NLE_US:
       xa_->fcmgt(xa::PRegS(cmpDstIdx), xa::PReg(cmpMaskIdx) / xa::T_z,
-                  xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
+                 xa::ZRegS(cmpSrcIdx), xa::ZRegS(cmpSrc2Idx));
       break;
 
     case UNORD_Q:
@@ -186,7 +186,7 @@ void translateCMPPS(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     xa_->mov(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-              xa::ZRegS(zTmpIdx));
+             xa::ZRegS(zTmpIdx));
   }
   /* Col=BM119*/
   if (false ||
@@ -214,4 +214,3 @@ void translateCMPPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

@@ -411,7 +411,7 @@ void translateVFMADD231SS(xed_decoded_inst_t *p) {
        a64_opt.predType == A64_PRED_ZERO && a64_opt.EVEXb == 0 &&
        isAvailAll1Preg0_7() == true && true)) {
     xa_->fmla(xa::ZRegS(dstIdx), P_ALL_ONE_0_7 / xa::T_m, xa::ZRegS(srcIdx),
-               xa::ZRegS(src2Idx));
+              xa::ZRegS(src2Idx));
   }
   /* Col=BM119*/
   if (false ||
@@ -442,7 +442,7 @@ void translateVFMADD231SS(xed_decoded_inst_t *p) {
        a64_opt.predType == A64_PRED_ZERO && a64_opt.EVEXb == 0 &&
        isAvailAll1Preg0_7() == true && true)) {
     xa_->fmla(xa::ZRegS(dstIdx), P_ALL_ONE_0_7 / xa::T_m, xa::ZRegS(srcIdx),
-               xa::ZRegS(zTmpIdx));
+              xa::ZRegS(zTmpIdx));
   }
 
   /* Col=BP119*/
@@ -1480,8 +1480,8 @@ void translateVFMADD231SS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    xa_->fmla(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-               xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
+    xa_->fmla(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m, xa::ZRegS(srcIdx),
+              xa::ZRegS(src2Idx));
   }
   /* Col=BE119*/
   if (false ||
@@ -1525,8 +1525,8 @@ void translateVFMADD231SS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    xa_->fmla(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-               xa::ZRegS(srcIdx), xa::ZRegS(zTmpIdx));
+    xa_->fmla(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx) / xa::T_m, xa::ZRegS(srcIdx),
+              xa::ZRegS(zTmpIdx));
   }
 
   /* Col=BH119*/
@@ -1923,4 +1923,3 @@ void translateVFMADD231SS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

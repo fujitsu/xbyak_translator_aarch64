@@ -2189,7 +2189,7 @@ void translateVPUNPCKHQDQ(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
     xa_->and_(xa::PRegB(pTmpIdx), P_ALL_ONE, xa::PRegB(pTmpIdx),
-               xa::PRegB(maskIdx));
+              xa::PRegB(maskIdx));
   }
   /* Col=AV119*/
   if (false ||
@@ -2254,11 +2254,11 @@ void translateVPUNPCKHQDQ(xed_decoded_inst_t *p) {
       int idx = index[i];
       xa_->dup(xa::ZRegD(zTmp2Idx), xa::ZReg(srcIdx).d[idx]);
       xa_->cmphs(P_TMP_0.d, xa::PReg(pTmpIdx), xa::ZRegD(zTmpIdx),
-                  uint32_t(i * 2));
+                 uint32_t(i * 2));
       xa_->mov(xa::ZRegD(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegD(zTmp2Idx));
       xa_->dup(xa::ZRegD(zTmp2Idx), xa::ZReg(src2Idx).d[idx]);
       xa_->cmphs(P_TMP_0.d, xa::PReg(pTmpIdx), xa::ZRegD(zTmpIdx),
-                  uint32_t(i * 2 + 1));
+                 uint32_t(i * 2 + 1));
       xa_->mov(xa::ZRegD(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegD(zTmp2Idx));
     }
   }
@@ -2382,11 +2382,11 @@ void translateVPUNPCKHQDQ(xed_decoded_inst_t *p) {
       int idx = index[i];
       xa_->dup(xa::ZRegD(zTmp2Idx), xa::ZReg(srcIdx).d[idx]);
       xa_->cmphs(P_TMP_0.d, xa::PReg(pTmpIdx), xa::ZRegD(zTmpIdx),
-                  uint32_t(i * 2));
+                 uint32_t(i * 2));
       xa_->mov(xa::ZRegD(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegD(zTmp2Idx));
       xa_->dup(xa::ZRegD(zTmp2Idx), xa::ZReg(zTmp4Idx).d[idx]);
       xa_->cmphs(P_TMP_0.d, xa::PReg(pTmpIdx), xa::ZRegD(zTmpIdx),
-                  uint32_t(i * 2 + 1));
+                 uint32_t(i * 2 + 1));
       xa_->mov(xa::ZRegD(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegD(zTmp2Idx));
     }
   }
@@ -2563,7 +2563,7 @@ void translateVPUNPCKHQDQ(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
     xa_->mov(xa::ZRegD(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-              xa::ZRegD(zTmp3Idx));
+             xa::ZRegD(zTmp3Idx));
   }
   /* Col=AZ119*/
   if (false ||
@@ -3833,4 +3833,3 @@ void translateVPUNPCKHQDQ(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-

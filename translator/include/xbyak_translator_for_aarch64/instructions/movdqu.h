@@ -18,7 +18,7 @@ void translateMOVDQU(xed_decoded_inst_t *p) {
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);
 
-/* 2020/05/22 22:29 */
+  /* 2020/05/22 22:29 */
 
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
@@ -89,7 +89,7 @@ void translateMOVDQU(xed_decoded_inst_t *p) {
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     xa_->mov(xa::ZRegD(dstIdx), xa::PReg(pTmpIdx) / xa::T_m,
-              xa::ZRegD(zTmpIdx));
+             xa::ZRegD(zTmpIdx));
   }
 
   /* Col=AX103*/
@@ -102,6 +102,4 @@ void translateMOVDQU(xed_decoded_inst_t *p) {
                 a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
     xt_pop_preg();
   }
-
-
 }

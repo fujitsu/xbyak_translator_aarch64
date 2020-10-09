@@ -114,7 +114,7 @@ void translateVFNMADD231PS(xed_decoded_inst_t *p) {
        a64_opt.operands[0].opWidth == 512 && a64_opt.predType == A64_PRED_NO &&
        a64_opt.EVEXb == 0 && isAvailAll1Preg0_7() == true && true)) {
     xa_->fmls(xa::ZRegS(dstIdx), P_ALL_ONE_0_7 / xa::T_m, xa::ZRegS(srcIdx),
-               xa::ZRegS(src2Idx));
+              xa::ZRegS(src2Idx));
   }
   /* Col=BJ119*/
   if (false ||
@@ -511,7 +511,7 @@ void translateVFNMADD231PS(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true)) {
     xa_->ld1w(xa::ZRegS(zTmpIdx), xa::PReg(maskIdx) / xa::T_z,
-               xa::ptr(X_TMP_ADDR));
+              xa::ptr(X_TMP_ADDR));
   }
   /* Col=AT119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_REG2 &&
@@ -563,8 +563,8 @@ void translateVFNMADD231PS(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true)) {
-    xa_->fmls(xa::ZRegS(dstIdx), xa::PReg(maskIdx) / xa::T_m,
-               xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
+    xa_->fmls(xa::ZRegS(dstIdx), xa::PReg(maskIdx) / xa::T_m, xa::ZRegS(srcIdx),
+              xa::ZRegS(src2Idx));
   }
   /* Col=BB119*/
   if (false ||
@@ -799,4 +799,3 @@ void translateVFNMADD231PS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-
