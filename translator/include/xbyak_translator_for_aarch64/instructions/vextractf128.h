@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/09/03 15:49 */
-#define CG64 CodeGeneratorAArch64
+
 void translateVEXTRACTF128(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
@@ -46,12 +46,12 @@ void translateVEXTRACTF128(xed_decoded_inst_t *p) {
   /* Col=AK119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 && true)) {
     if ((uimm & 1) == 0) {
-      CG64::mov(xa::VReg(dstIdx).b16, xa::VReg(srcIdx).b16);
+      xa_->mov(xa::VReg(dstIdx).b16, xa::VReg(srcIdx).b16);
     } else {
       zTmpIdx = xt_push_zreg(&a64);
-      CG64::mov(xa::ZRegD(zTmpIdx), xa::ZRegD(srcIdx));
-      CG64::ext(xa::ZRegB(zTmpIdx), xa::ZRegB(srcIdx), 16);
-      CG64::mov(xa::VReg(dstIdx).b16, xa::VReg(zTmpIdx).b16);
+      xa_->mov(xa::ZRegD(zTmpIdx), xa::ZRegD(srcIdx));
+      xa_->ext(xa::ZRegB(zTmpIdx), xa::ZRegB(srcIdx), 16);
+      xa_->mov(xa::VReg(dstIdx).b16, xa::VReg(zTmpIdx).b16);
       xt_pop_zreg();
     }
   }
@@ -62,4 +62,4 @@ void translateVEXTRACTF128(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

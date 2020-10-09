@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/09/01 09:32 */
-#define CG64 CodeGeneratorAArch64
+
 void translateSUBPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
@@ -44,11 +44,11 @@ void translateSUBPS(xed_decoded_inst_t *p) {
   }
   /* Col=AJ119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
-    CG64::not_(xa::PRegB(pTmpIdx), P_ALL_ONE.b, P_MSB_384.b);
+    xa_->not_(xa::PRegB(pTmpIdx), P_ALL_ONE.b, P_MSB_384.b);
   }
   /* Col=AO119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
-    CG64::fsub(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx), xa::ZRegS(srcIdx));
+    xa_->fsub(xa::ZRegS(dstIdx), xa::PReg(pTmpIdx), xa::ZRegS(srcIdx));
   }
   /* Col=BJ119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
@@ -61,4 +61,4 @@ void translateSUBPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

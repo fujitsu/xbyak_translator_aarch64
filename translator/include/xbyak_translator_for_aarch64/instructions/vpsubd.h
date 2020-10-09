@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/09/09 08:09 */
-#define CG64 CodeGeneratorAArch64
+
 void translateVPSUBD(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
@@ -248,7 +248,7 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true)) {
-    CG64::ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AH119*/
   if (false ||
@@ -277,7 +277,7 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
       (a64.operands[2].opName == XED_OPERAND_MEM0 &&
        a64.operands[3].opName == XED_OPERAND_INVALID &&
        a64.operands[0].regClass == XED_REG_CLASS_XMM && true)) {
-    CG64::sub(xa::VReg(dstIdx).s4, xa::VReg(srcIdx).s4, xa::VReg(src2Idx).s4);
+    xa_->sub(xa::VReg(dstIdx).s4, xa::VReg(srcIdx).s4, xa::VReg(src2Idx).s4);
   }
   /* Col=AO119*/
   if (false ||
@@ -303,7 +303,7 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].regClass == XED_REG_CLASS_ZMM &&
        a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true)) {
-    CG64::sub(xa::ZRegS(dstIdx), xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
+    xa_->sub(xa::ZRegS(dstIdx), xa::ZRegS(srcIdx), xa::ZRegS(src2Idx));
   }
 
   /* Col=BD119*/
@@ -322,7 +322,7 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].regClass == XED_REG_CLASS_YMM &&
        a64.predType == A64_PRED_NO && a64.EVEXb == 0 && true)) {
-    CG64::mov(xa::ZReg(dstIdx).b, P_MSB_256 / xa::T_m, 0);
+    xa_->mov(xa::ZReg(dstIdx).b, P_MSB_256 / xa::T_m, 0);
   }
 
   /* Col=BI119*/
@@ -469,4 +469,4 @@ void translateVPSUBD(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

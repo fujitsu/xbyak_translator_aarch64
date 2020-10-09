@@ -19,7 +19,7 @@ void translateMULPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
   /* 2020/09/17 21:30 */
   bool isValid = false;
-#define CG64 CodeGeneratorAArch64
+
   /* Col=S103*/
   if (false || (a64.srcType == A64_OP_MEM && true)) {
     XT_UNIMPLEMENTED;
@@ -32,18 +32,18 @@ void translateMULPS(xed_decoded_inst_t *p) {
 
   /* Col=AI103*/
   if (false || (a64.srcType == A64_OP_REG && true)) {
-    CG64::mov(xa::ZRegD(a64.zTmpIdx), xa::ZRegD(a64.dstIdx));
+    xa_->mov(xa::ZRegD(a64.zTmpIdx), xa::ZRegD(a64.dstIdx));
   }
 
   /* Col=AP103*/
   if (false || (a64.srcType == A64_OP_REG && true)) {
-    CG64::fmul(xa::ZRegS(a64.dstIdx), xa::ZRegS(a64.dstIdx),
+    xa_->fmul(xa::ZRegS(a64.dstIdx), xa::ZRegS(a64.dstIdx),
                xa::ZRegS(a64.srcIdx));
   }
 
   /* Col=AW103*/
   if (false || (a64.srcType == A64_OP_REG && true)) {
-    CG64::mov(xa::ZRegS(a64.dstIdx), P_MSB_384 / xa::T_m,
+    xa_->mov(xa::ZRegS(a64.dstIdx), P_MSB_384 / xa::T_m,
               xa::ZRegS(a64.zTmpIdx));
   }
 
@@ -57,5 +57,5 @@ void translateMULPS(xed_decoded_inst_t *p) {
     XT_VALID_CHECK;
   }
   XT_VALID_CHECK_IF
-#undef CG64
+
 }

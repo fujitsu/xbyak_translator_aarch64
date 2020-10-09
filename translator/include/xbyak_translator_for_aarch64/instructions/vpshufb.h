@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/07/03 15:52 */
-#define CG64 CodeGeneratorAArch64
+
 void translateVPSHUFB(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
@@ -146,7 +146,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64_opt.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64_opt.operands[0].opWidth == 256 && a64_opt.predType == A64_PRED_NO &&
        isAvailAll1Preg0_7() == true && true)) {
-    CG64::mov(xa::ZRegB(zTmpIdx), 15);
+    xa_->mov(xa::ZRegB(zTmpIdx), 15);
   }
   /* Col=AQ119*/
   if (false ||
@@ -162,7 +162,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64_opt.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64_opt.operands[0].opWidth == 256 && a64_opt.predType == A64_PRED_NO &&
        isAvailAll1Preg0_7() == true && true)) {
-    CG64::and_(xa::ZRegB(zTmpIdx), P_ALL_ONE_0_7, xa::ZRegB(src2Idx));
+    xa_->and_(xa::ZRegB(zTmpIdx), P_ALL_ONE_0_7, xa::ZRegB(src2Idx));
   }
   /* Col=AT119*/
   if (false ||
@@ -179,9 +179,9 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64_opt.operands[0].opWidth == 256 && a64_opt.predType == A64_PRED_NO &&
        isAvailAll1Preg0_7() == true && true)) {
     for (int i = 0; i < 16; i++) {
-      CG64::cmpeq(P_TMP_0.b, P_ALL_ONE_0_7, xa::ZRegB(zTmpIdx), i);
-      CG64::dup(xa::ZRegB(zTmp2Idx), xa::ZRegB(srcIdx)[i]);
-      CG64::mov(xa::ZRegB(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegB(zTmp2Idx));
+      xa_->cmpeq(P_TMP_0.b, P_ALL_ONE_0_7, xa::ZRegB(zTmpIdx), i);
+      xa_->dup(xa::ZRegB(zTmp2Idx), xa::ZRegB(srcIdx)[i]);
+      xa_->mov(xa::ZRegB(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegB(zTmp2Idx));
     }
   }
   /* Col=AU119*/
@@ -199,10 +199,10 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64_opt.operands[0].opWidth == 256 && a64_opt.predType == A64_PRED_NO &&
        isAvailAll1Preg0_7() == true && true)) {
     for (int i = 16; i < 32; i++) {
-      CG64::cmpeq(P_TMP_0.b, P_ALL_ONE_0_7, xa::ZRegB(zTmpIdx), i - 16);
-      CG64::and_(P_TMP_0.b, P_ALL_ONE_0_7, P_TMP_0.b, P_MSB_384.b);
-      CG64::dup(xa::ZRegB(zTmp2Idx), xa::ZRegB(srcIdx)[i]);
-      CG64::mov(xa::ZRegB(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegB(zTmp2Idx));
+      xa_->cmpeq(P_TMP_0.b, P_ALL_ONE_0_7, xa::ZRegB(zTmpIdx), i - 16);
+      xa_->and_(P_TMP_0.b, P_ALL_ONE_0_7, P_TMP_0.b, P_MSB_384.b);
+      xa_->dup(xa::ZRegB(zTmp2Idx), xa::ZRegB(srcIdx)[i]);
+      xa_->mov(xa::ZRegB(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegB(zTmp2Idx));
     }
   }
   /* Col=AX119*/
@@ -219,7 +219,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64_opt.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64_opt.operands[0].opWidth == 256 && a64_opt.predType == A64_PRED_NO &&
        isAvailAll1Preg0_7() == true && true)) {
-    CG64::cmplt(P_TMP_0.b, P_ALL_ONE_0_7, xa::ZRegB(src2Idx), 0);
+    xa_->cmplt(P_TMP_0.b, P_ALL_ONE_0_7, xa::ZRegB(src2Idx), 0);
   }
   /* Col=AY119*/
   if (false ||
@@ -235,7 +235,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64_opt.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64_opt.operands[0].opWidth == 256 && a64_opt.predType == A64_PRED_NO &&
        isAvailAll1Preg0_7() == true && true)) {
-    CG64::mov(xa::ZRegD(dstIdx), xa::ZRegD(zTmp3Idx));
+    xa_->mov(xa::ZRegD(dstIdx), xa::ZRegD(zTmp3Idx));
   }
   /* Col=AZ119*/
   if (false ||
@@ -251,7 +251,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64_opt.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64_opt.operands[0].opWidth == 256 && a64_opt.predType == A64_PRED_NO &&
        isAvailAll1Preg0_7() == true && true)) {
-    CG64::orr(P_TMP_1.b, P_ALL_ONE, P_TMP_0.b, P_MSB_256.b);
+    xa_->orr(P_TMP_1.b, P_ALL_ONE, P_TMP_0.b, P_MSB_256.b);
   }
   /* Col=BB119*/
   if (false ||
@@ -267,7 +267,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64_opt.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64_opt.operands[0].opWidth == 256 && a64_opt.predType == A64_PRED_NO &&
        isAvailAll1Preg0_7() == true && true)) {
-    CG64::mov(xa::ZRegB(dstIdx), P_TMP_1 / xa::T_m, 0);
+    xa_->mov(xa::ZRegB(dstIdx), P_TMP_1 / xa::T_m, 0);
   }
   /* Col=BE119*/
   if (false ||
@@ -565,7 +565,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::mov(xa::PRegB(pTmpIdx), P_ALL_ONE.b);
+    xa_->mov(xa::PRegB(pTmpIdx), P_ALL_ONE.b);
   }
   /* Col=AH119*/
   if (false ||
@@ -579,7 +579,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::mov(xa::ZRegB(zTmpIdx), 15);
+    xa_->mov(xa::ZRegB(zTmpIdx), 15);
   }
   /* Col=AI119*/
   if (false ||
@@ -593,7 +593,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::and_(xa::ZRegB(zTmpIdx), xa::PReg(pTmpIdx), xa::ZRegB(src2Idx));
+    xa_->and_(xa::ZRegB(zTmpIdx), xa::PReg(pTmpIdx), xa::ZRegB(src2Idx));
   }
   /* Col=AL119*/
   if (false ||
@@ -608,9 +608,9 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
     for (int i = 0; i < 16; i++) {
-      CG64::cmpeq(P_TMP_0.b, xa::PReg(pTmpIdx), xa::ZRegB(zTmpIdx), i);
-      CG64::dup(xa::ZRegB(zTmp2Idx), xa::ZRegB(srcIdx)[i]);
-      CG64::mov(xa::ZRegB(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegB(zTmp2Idx));
+      xa_->cmpeq(P_TMP_0.b, xa::PReg(pTmpIdx), xa::ZRegB(zTmpIdx), i);
+      xa_->dup(xa::ZRegB(zTmp2Idx), xa::ZRegB(srcIdx)[i]);
+      xa_->mov(xa::ZRegB(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegB(zTmp2Idx));
     }
   }
   /* Col=AM119*/
@@ -626,10 +626,10 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
     for (int i = 16; i < 32; i++) {
-      CG64::cmpeq(P_TMP_0.b, xa::PReg(pTmpIdx), xa::ZRegB(zTmpIdx), i - 16);
-      CG64::and_(P_TMP_0.b, xa::PReg(pTmpIdx), P_TMP_0.b, P_MSB_384.b);
-      CG64::dup(xa::ZRegB(zTmp2Idx), xa::ZRegB(srcIdx)[i]);
-      CG64::mov(xa::ZRegB(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegB(zTmp2Idx));
+      xa_->cmpeq(P_TMP_0.b, xa::PReg(pTmpIdx), xa::ZRegB(zTmpIdx), i - 16);
+      xa_->and_(P_TMP_0.b, xa::PReg(pTmpIdx), P_TMP_0.b, P_MSB_384.b);
+      xa_->dup(xa::ZRegB(zTmp2Idx), xa::ZRegB(srcIdx)[i]);
+      xa_->mov(xa::ZRegB(zTmp3Idx), P_TMP_0 / xa::T_m, xa::ZRegB(zTmp2Idx));
     }
   }
   /* Col=AP119*/
@@ -644,7 +644,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::cmplt(P_TMP_0.b, xa::PReg(pTmpIdx), xa::ZRegB(src2Idx), 0);
+    xa_->cmplt(P_TMP_0.b, xa::PReg(pTmpIdx), xa::ZRegB(src2Idx), 0);
   }
   /* Col=AQ119*/
   if (false ||
@@ -658,7 +658,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::mov(xa::ZRegD(dstIdx), xa::ZRegD(zTmp3Idx));
+    xa_->mov(xa::ZRegD(dstIdx), xa::ZRegD(zTmp3Idx));
   }
   /* Col=AR119*/
   if (false ||
@@ -672,7 +672,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::orr(xa::PRegB(pTmpIdx), P_ALL_ONE, P_TMP_0.b, P_MSB_256.b);
+    xa_->orr(xa::PRegB(pTmpIdx), P_ALL_ONE, P_TMP_0.b, P_MSB_256.b);
   }
   /* Col=AT119*/
   if (false ||
@@ -686,7 +686,7 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
        a64.operands[2].opName == XED_OPERAND_REG2 &&
        a64.operands[1].regClass == XED_REG_CLASS_MASK &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_NO && true)) {
-    CG64::mov(xa::ZRegB(dstIdx), xa::PReg(pTmpIdx) / xa::T_m, 0);
+    xa_->mov(xa::ZRegB(dstIdx), xa::PReg(pTmpIdx) / xa::T_m, 0);
   }
   /* Col=AW119*/
   if (false ||
@@ -872,4 +872,4 @@ void translateVPSHUFB(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/09/29 17:01 */
-#define CG64 CodeGeneratorAArch64
+
 void translateVPADDQ(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -620,14 +620,14 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true)) {
-    CG64::ld1(xa::VReg(zTmpIdx).d2, xa::ptr(X_TMP_ADDR));
+    xa_->ld1(xa::VReg(zTmpIdx).d2, xa::ptr(X_TMP_ADDR));
   }
   /* Col=AD119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_REG2 &&
                 a64.operands[3].opName == XED_OPERAND_MEM0 &&
                 a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
                 a64.EVEXb == 1 && true)) {
-    CG64::ld1r(xa::VReg(zTmpIdx).d2, xa::ptr(X_TMP_ADDR));
+    xa_->ld1r(xa::VReg(zTmpIdx).d2, xa::ptr(X_TMP_ADDR));
   }
   /* Col=AE119*/
   if (false ||
@@ -667,7 +667,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    CG64::ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::ZReg(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AF119*/
   if (false ||
@@ -703,7 +703,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
-    CG64::ld1rw(xa::ZReg(zTmpIdx).d, P_ALL_ONE / xa::T_z, xa::ptr(X_TMP_ADDR));
+    xa_->ld1rw(xa::ZReg(zTmpIdx).d, P_ALL_ONE / xa::T_z, xa::ptr(X_TMP_ADDR));
   }
   /* Col=AL119*/
   if (false ||
@@ -719,7 +719,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 1 && true)) {
-    CG64::not_(P_TMP_0.b, P_ALL_ONE.b, xa::PRegB(maskIdx));
+    xa_->not_(P_TMP_0.b, P_ALL_ONE.b, xa::PRegB(maskIdx));
   }
   /* Col=AM119*/
   if (false ||
@@ -735,7 +735,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 1 && true)) {
-    CG64::orn(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_MSB_256.b, xa::PRegB(maskIdx));
+    xa_->orn(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_MSB_256.b, xa::PRegB(maskIdx));
   }
   /* Col=AN119*/
   if (false ||
@@ -751,7 +751,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 1 && true)) {
-    CG64::orn(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_MSB_384.b, xa::PRegB(maskIdx));
+    xa_->orn(P_TMP_0.b, P_ALL_ONE / xa::T_z, P_MSB_384.b, xa::PRegB(maskIdx));
   }
   /* Col=AO119*/
   if (false ||
@@ -763,7 +763,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 0 && true)) {
-    CG64::add(xa::VReg(dstIdx).d2, xa::VReg(srcIdx).d2, xa::VReg(src2Idx).d2);
+    xa_->add(xa::VReg(dstIdx).d2, xa::VReg(srcIdx).d2, xa::VReg(src2Idx).d2);
   }
   /* Col=AP119*/
   if (false ||
@@ -779,7 +779,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_NO &&
        a64.EVEXb == 1 && true)) {
-    CG64::add(xa::VReg(dstIdx).d2, xa::VReg(srcIdx).d2, xa::VReg(zTmpIdx).d2);
+    xa_->add(xa::VReg(dstIdx).d2, xa::VReg(srcIdx).d2, xa::VReg(zTmpIdx).d2);
   }
   /* Col=AQ119*/
   if (false ||
@@ -807,7 +807,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 0 && true)) {
-    CG64::add(xa::ZReg(dstIdx).d, xa::ZReg(srcIdx).d, xa::ZReg(src2Idx).d);
+    xa_->add(xa::ZReg(dstIdx).d, xa::ZReg(srcIdx).d, xa::ZReg(src2Idx).d);
   }
   /* Col=AR119*/
   if (false ||
@@ -855,7 +855,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 1 && true)) {
-    CG64::add(xa::ZReg(dstIdx).d, xa::ZReg(srcIdx).d, xa::ZReg(zTmpIdx).d);
+    xa_->add(xa::ZReg(dstIdx).d, xa::ZReg(srcIdx).d, xa::ZReg(zTmpIdx).d);
   }
   /* Col=AS119*/
   if (false ||
@@ -871,7 +871,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_REG3 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 0 && true)) {
-    CG64::add(xa::ZReg(zTmpIdx).d, xa::ZReg(srcIdx).d, xa::ZReg(src2Idx).d);
+    xa_->add(xa::ZReg(zTmpIdx).d, xa::ZReg(srcIdx).d, xa::ZReg(src2Idx).d);
   }
   /* Col=AT119*/
   if (false ||
@@ -899,7 +899,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
-    CG64::add(xa::ZReg(zTmpIdx).d, xa::ZReg(srcIdx).d, xa::ZReg(zTmpIdx).d);
+    xa_->add(xa::ZReg(zTmpIdx).d, xa::ZReg(srcIdx).d, xa::ZReg(zTmpIdx).d);
   }
   /* Col=AV119*/
   if (false ||
@@ -939,7 +939,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
-    CG64::mov(xa::ZReg(dstIdx).d, xa::PReg(maskIdx) / xa::T_m,
+    xa_->mov(xa::ZReg(dstIdx).d, xa::PReg(maskIdx) / xa::T_m,
               xa::ZReg(zTmpIdx).d);
   }
   /* Col=AW119*/
@@ -976,7 +976,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 256 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
-    CG64::mov(xa::ZReg(dstIdx).d, P_MSB_256 / xa::T_m, 0);
+    xa_->mov(xa::ZReg(dstIdx).d, P_MSB_256 / xa::T_m, 0);
   }
   /* Col=AX119*/
   if (false ||
@@ -1008,7 +1008,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 128 && a64.predType == A64_PRED_MERG &&
        a64.EVEXb == 1 && true)) {
-    CG64::mov(xa::ZReg(dstIdx).d, P_MSB_384 / xa::T_m, 0);
+    xa_->mov(xa::ZReg(dstIdx).d, P_MSB_384 / xa::T_m, 0);
   }
   /* Col=AY119*/
   if (false ||
@@ -1048,7 +1048,7 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
        a64.operands[3].opName == XED_OPERAND_MEM0 &&
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_ZERO &&
        a64.EVEXb == 1 && true)) {
-    CG64::mov(xa::ZReg(dstIdx).d, P_TMP_0 / xa::T_m, 0);
+    xa_->mov(xa::ZReg(dstIdx).d, P_TMP_0 / xa::T_m, 0);
   }
   /* Col=BC119*/
   if (false ||
@@ -1280,4 +1280,4 @@ void translateVPADDQ(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

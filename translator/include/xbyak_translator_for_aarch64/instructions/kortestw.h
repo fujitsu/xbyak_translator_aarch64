@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/05/27 10:55 */
-#define CG64 CodeGeneratorAArch64
+
 void translateKORTESTW(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -33,43 +33,43 @@ void translateKORTESTW(xed_decoded_inst_t *p) {
   }
   /* Col=AO119*/
   if (false || (true)) {
-    CG64::orr(P_TMP_0.b, P_ALL_ONE, xa::PRegB(dstIdx), xa::PRegB(srcIdx));
+    xa_->orr(P_TMP_0.b, P_ALL_ONE, xa::PRegB(dstIdx), xa::PRegB(srcIdx));
   }
   /* Col=AP119*/
   if (false || (true)) {
-    CG64::cntp(X_TMP_0, P_ALL_ONE, P_TMP_0.s);
+    xa_->cntp(X_TMP_0, P_ALL_ONE, P_TMP_0.s);
   }
   /* Col=AR119*/
   if (false || (true)) {
-    CG64::mov(X_TMP_1, uint64_t(1));
+    xa_->mov(X_TMP_1, uint64_t(1));
   }
   /* Col=AT119*/
   if (false || (true)) {
-    CG64::cmp(X_TMP_0, 16);
+    xa_->cmp(X_TMP_0, 16);
   }
   /* Col=AU119*/
   if (false || (true)) {
-    CG64::b(xa::NE, 20);
+    xa_->b(xa::NE, 20);
   }
   /* Col=AV119*/
   if (false || (true)) {
-    CG64::mov_imm(X_TMP_1, ~uint64_t(0));
+    xa_->mov_imm(X_TMP_1, ~uint64_t(0));
   }
   /* Col=AW119*/
   if (false || (true)) {
-    CG64::cmp(X_TMP_0, 0);
+    xa_->cmp(X_TMP_0, 0);
   }
   /* Col=AX119*/
   if (false || (true)) {
-    CG64::b(xa::NE, 4 * (1 << 1));
+    xa_->b(xa::NE, 4 * (1 << 1));
   }
   /* Col=AY119*/
   if (false || (true)) {
-    CG64::mov(X_TMP_1, uint64_t(0));
+    xa_->mov(X_TMP_1, uint64_t(0));
   }
   /* Col=AZ119*/
   if (false || (true)) {
-    CG64::adds(X_TMP_1, X_TMP_0, X_TMP_1);
+    xa_->adds(X_TMP_1, X_TMP_0, X_TMP_1);
   }
   /* Col=BO119*/
   if (false || (true)) {
@@ -77,4 +77,4 @@ void translateKORTESTW(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

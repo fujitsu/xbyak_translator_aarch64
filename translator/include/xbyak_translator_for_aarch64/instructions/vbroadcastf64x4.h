@@ -36,19 +36,19 @@ void translateVBROADCASTF64X4(xed_decoded_inst_t *p) {
   /* Col=W103*/
   if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 1 && a64.srcType == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::ldr(xa::ZReg(a64.dstIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ldr(xa::ZReg(a64.dstIdx), xa::ptr(X_TMP_ADDR));
   }
 
   /* Col=Y103*/
   if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 1 && a64.srcType == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::ptrue(xa::PRegD(a64.pTmpIdx), xa::VL4);
+    xa_->ptrue(xa::PRegD(a64.pTmpIdx), xa::VL4);
   }
 
   /* Col=AF103*/
   if (false || (a64.dstWidth == 512 && a64.PredType == A64_PRED_NO &&
                 a64.EVEXb == 1 && a64.srcType == A64_OP_MEM && true)) {
-    CodeGeneratorAArch64::splice(xa::ZRegD(a64.dstIdx), xa::PRegD(a64.pTmpIdx),
+    xa_->splice(xa::ZRegD(a64.dstIdx), xa::PRegD(a64.pTmpIdx),
                                  xa::ZRegD(a64.dstIdx));
   }
 

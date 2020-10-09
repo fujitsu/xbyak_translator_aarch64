@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/04/26 13:02 */
-#define CG64 CodeGeneratorAArch64
+
 void translateSHL(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -121,7 +121,7 @@ void translateSHL(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_REG1 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::and_(W_TMP_0, xa::WReg(srcIdx), 0xff);
+    xa_->and_(W_TMP_0, xa::WReg(srcIdx), 0xff);
   }
 
   /* Col=AJ119*/
@@ -132,7 +132,7 @@ void translateSHL(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 32 && true)) {
-    CG64::lsl(xa::WReg(dstIdx), xa::WReg(dstIdx), a64.operands[1].uimm % 32);
+    xa_->lsl(xa::WReg(dstIdx), xa::WReg(dstIdx), a64.operands[1].uimm % 32);
   }
   /* Col=AK119*/
   if (false ||
@@ -142,19 +142,19 @@ void translateSHL(xed_decoded_inst_t *p) {
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[1].opName == XED_OPERAND_IMM0 &&
        a64.operands[0].opWidth == 64 && true)) {
-    CG64::lsl(xa::XReg(dstIdx), xa::XReg(dstIdx), a64.operands[1].uimm % 64);
+    xa_->lsl(xa::XReg(dstIdx), xa::XReg(dstIdx), a64.operands[1].uimm % 64);
   }
   /* Col=AO119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[0].opWidth == 32 && true)) {
-    CG64::lsl(xa::WReg(dstIdx), xa::WReg(dstIdx), W_TMP_0);
+    xa_->lsl(xa::WReg(dstIdx), xa::WReg(dstIdx), W_TMP_0);
   }
   /* Col=AP119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[0].opWidth == 64 && true)) {
-    CG64::lsl(xa::XReg(dstIdx), xa::XReg(dstIdx), X_TMP_0);
+    xa_->lsl(xa::XReg(dstIdx), xa::XReg(dstIdx), X_TMP_0);
   }
 
   /* Col=BO119*/
@@ -235,4 +235,4 @@ void translateSHL(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

@@ -19,7 +19,7 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operandsV3(p, &a64);
 
 /* 2020/03/16 11:26 */
-#define CG64 CodeGeneratorAArch64
+
   bool isValid = false;
   xt_reg_idx_t dstIdx = XT_REG_INVALID;
   xt_reg_idx_t srcIdx = XT_REG_INVALID;
@@ -55,8 +55,8 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
       lsbElem = 1;
       break;
     }
-    CG64::dup(xa::ZRegQ(dstIdx), xa::ZRegQ(srcIdx)[lsbElem]);
-    CG64::mov(xa::ZRegD(dstIdx), P_MSB_256 / xa::T_m, 0);
+    xa_->dup(xa::ZRegQ(dstIdx), xa::ZRegQ(srcIdx)[lsbElem]);
+    xa_->mov(xa::ZRegD(dstIdx), P_MSB_256 / xa::T_m, 0);
     isValid = true;
     break;
   }
@@ -88,10 +88,10 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
       src2Idx = a64.operands[2].regIdx;
       break;
     }
-    CG64::ptrue(xa::PRegD(pTmpIdx), xa::VL2);
-    CG64::sel(xa::ZRegD(dstIdx), xa::PReg(pTmpIdx), xa::ZRegD(srcIdx),
+    xa_->ptrue(xa::PRegD(pTmpIdx), xa::VL2);
+    xa_->sel(xa::ZRegD(dstIdx), xa::PReg(pTmpIdx), xa::ZRegD(srcIdx),
               xa::ZRegD(src2Idx));
-    CG64::mov(xa::ZRegD(dstIdx), P_MSB_256 / xa::T_m, 0);
+    xa_->mov(xa::ZRegD(dstIdx), P_MSB_256 / xa::T_m, 0);
     xt_pop_preg();
     isValid = true;
     break;
@@ -159,12 +159,12 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
       msbElem = 0;
       break;
     }
-    CG64::ptrue(xa::PRegD(pTmpIdx), xa::VL2);
-    CG64::dup(xa::ZRegQ(zTmpIdx), xa::ZRegQ(srcIdx)[lsbElem]);
-    CG64::dup(xa::ZRegQ(zTmp2Idx), xa::ZRegQ(src2Idx)[msbElem]);
-    CG64::sel(xa::ZRegD(dstIdx), xa::PReg(pTmpIdx), xa::ZRegD(zTmpIdx),
+    xa_->ptrue(xa::PRegD(pTmpIdx), xa::VL2);
+    xa_->dup(xa::ZRegQ(zTmpIdx), xa::ZRegQ(srcIdx)[lsbElem]);
+    xa_->dup(xa::ZRegQ(zTmp2Idx), xa::ZRegQ(src2Idx)[msbElem]);
+    xa_->sel(xa::ZRegD(dstIdx), xa::PReg(pTmpIdx), xa::ZRegD(zTmpIdx),
               xa::ZRegD(zTmp2Idx));
-    CG64::mov(xa::ZRegD(dstIdx), P_MSB_256 / xa::T_m, 0);
+    xa_->mov(xa::ZRegD(dstIdx), P_MSB_256 / xa::T_m, 0);
     xt_pop_zreg();
     xt_pop_zreg();
     xt_pop_preg();
@@ -183,10 +183,10 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
       srcIdx = a64.operands[2].regIdx;
       break;
     }
-    CG64::ptrue(P_TMP_0.d, xa::VL2);
-    CG64::orr(P_TMP_0.b, P_ALL_ONE, P_MSB_256.b, P_TMP_0.b);
-    CG64::dup(xa::ZRegQ(dstIdx), xa::ZRegQ(srcIdx)[0]);
-    CG64::mov(xa::ZRegD(dstIdx), P_TMP_0 / xa::T_m, 0);
+    xa_->ptrue(P_TMP_0.d, xa::VL2);
+    xa_->orr(P_TMP_0.b, P_ALL_ONE, P_MSB_256.b, P_TMP_0.b);
+    xa_->dup(xa::ZRegQ(dstIdx), xa::ZRegQ(srcIdx)[0]);
+    xa_->mov(xa::ZRegD(dstIdx), P_TMP_0 / xa::T_m, 0);
     isValid = true;
     break;
   }
@@ -202,12 +202,12 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
       srcIdx = a64.operands[2].regIdx;
       break;
     }
-    CG64::ptrue(P_TMP_0.d, xa::VL2);
-    CG64::orr(P_TMP_0.b, P_ALL_ONE, P_MSB_256.b, P_TMP_0.b);
+    xa_->ptrue(P_TMP_0.d, xa::VL2);
+    xa_->orr(P_TMP_0.b, P_ALL_ONE, P_MSB_256.b, P_TMP_0.b);
     if (dstIdx != srcIdx) {
-      CG64::mov(xa::ZRegD(dstIdx), xa::ZRegD(srcIdx));
+      xa_->mov(xa::ZRegD(dstIdx), xa::ZRegD(srcIdx));
     }
-    CG64::mov(xa::ZRegD(dstIdx), P_TMP_0 / xa::T_m, 0);
+    xa_->mov(xa::ZRegD(dstIdx), P_TMP_0 / xa::T_m, 0);
     isValid = true;
     break;
   }
@@ -224,9 +224,9 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
       break;
     }
     if (dstIdx != srcIdx) {
-      CG64::mov(xa::ZRegD(dstIdx), xa::ZRegD(srcIdx));
+      xa_->mov(xa::ZRegD(dstIdx), xa::ZRegD(srcIdx));
     }
-    CG64::mov(xa::ZRegD(dstIdx), P_MSB_384 / xa::T_m, 0);
+    xa_->mov(xa::ZRegD(dstIdx), P_MSB_384 / xa::T_m, 0);
     isValid = true;
     break;
   }
@@ -242,8 +242,8 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
       srcIdx = a64.operands[2].regIdx;
       break;
     }
-    CG64::dup(xa::ZRegQ(dstIdx), xa::ZRegQ(srcIdx)[1]);
-    CG64::mov(xa::ZRegD(dstIdx), P_MSB_384 / xa::T_m, 0);
+    xa_->dup(xa::ZRegQ(dstIdx), xa::ZRegQ(srcIdx)[1]);
+    xa_->mov(xa::ZRegD(dstIdx), P_MSB_384 / xa::T_m, 0);
     isValid = true;
     break;
   }
@@ -251,11 +251,11 @@ void translateVPERM2I128(xed_decoded_inst_t *p) {
   switch (uimm & 0x88) {
   case 0x88:
     dstIdx = a64.operands[0].regIdx;
-    CG64::mov(xa::ZRegD(dstIdx), 0);
+    xa_->mov(xa::ZRegD(dstIdx), 0);
     isValid = true;
     break;
   }
 
   XT_VALID_CHECK_IF;
-#undef CG64
+
 }

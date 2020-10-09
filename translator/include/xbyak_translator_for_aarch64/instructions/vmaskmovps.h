@@ -19,7 +19,7 @@ void translateVMASKMOVPS(xed_decoded_inst_t *p) {
   xt_construct_a64fx_operands(p, &a64);
 
 /* 2020/02/28 15:31 */
-#define CG64 CodeGeneratorAArch64
+
 
   /* Col=T103*/
   if (false ||
@@ -40,7 +40,7 @@ void translateVMASKMOVPS(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 128 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_REG && true)) {
-    CG64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE, P_MSB_384.b);
+    xa_->not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE, P_MSB_384.b);
   }
   /* Col=AC103*/
   if (false ||
@@ -48,7 +48,7 @@ void translateVMASKMOVPS(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 256 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_REG && true)) {
-    CG64::not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE, P_MSB_256.b);
+    xa_->not_(xa::PRegB(a64.pTmpIdx), P_ALL_ONE, P_MSB_256.b);
   }
 
   /* Col=AG103*/
@@ -61,7 +61,7 @@ void translateVMASKMOVPS(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 256 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_REG && true)) {
-    CG64::cmplt(xa::PRegS(a64.pTmpIdx), xa::PReg(a64.pTmpIdx) / xa::T_z,
+    xa_->cmplt(xa::PRegS(a64.pTmpIdx), xa::PReg(a64.pTmpIdx) / xa::T_z,
                 xa::ZReg(a64.srcIdx).s, 0);
   }
 
@@ -71,7 +71,7 @@ void translateVMASKMOVPS(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_MEM && true) ||
       (a64.dstWidth == 256 && a64.dstType == A64_OP_REG &&
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_MEM && true)) {
-    CG64::ld1w(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx) / xa::T_z,
+    xa_->ld1w(xa::ZRegS(a64.dstIdx), xa::PReg(a64.pTmpIdx) / xa::T_z,
                xa::ptr(X_TMP_ADDR));
   }
 
@@ -81,7 +81,7 @@ void translateVMASKMOVPS(xed_decoded_inst_t *p) {
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_REG && true) ||
       (a64.dstWidth == 256 && a64.dstType == A64_OP_MEM &&
        a64.srcType == A64_OP_REG && a64.src2Type == A64_OP_REG && true)) {
-    CG64::st1w(xa::ZReg(a64.src2Idx).s, xa::PReg(a64.pTmpIdx) / xa::T_m,
+    xa_->st1w(xa::ZReg(a64.src2Idx).s, xa::PReg(a64.pTmpIdx) / xa::T_m,
                xa::ptr(X_TMP_ADDR));
   }
 
@@ -98,5 +98,5 @@ void translateVMASKMOVPS(xed_decoded_inst_t *p) {
     xt_pop_preg();
   }
 
-#undef CG64
+
 }

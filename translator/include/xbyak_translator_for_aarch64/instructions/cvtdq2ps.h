@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/09/08 00:41 */
-#define CG64 CodeGeneratorAArch64
+
 void translateCVTDQ2PS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
@@ -44,25 +44,25 @@ void translateCVTDQ2PS(xed_decoded_inst_t *p) {
   /* Col=AI119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::ptrue(P_TMP_0.s, xa::VL4);
+    xa_->ptrue(P_TMP_0.s, xa::VL4);
   }
   /* Col=AL119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::ld1(xa::VReg4S(zTmpIdx), xa::ptr(X_TMP_ADDR));
+    xa_->ld1(xa::VReg4S(zTmpIdx), xa::ptr(X_TMP_ADDR));
   }
   /* Col=AM119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true)) {
-    CG64::scvtf(xa::VReg4S(zTmpIdx), xa::VReg4S(srcIdx));
+    xa_->scvtf(xa::VReg4S(zTmpIdx), xa::VReg4S(srcIdx));
   }
 
   /* Col=AN119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::scvtf(xa::VReg4S(zTmpIdx), xa::VReg4S(zTmpIdx));
+    xa_->scvtf(xa::VReg4S(zTmpIdx), xa::VReg4S(zTmpIdx));
   }
   /* Col=AP119*/
   if (false || (a64.operands[1].opName == XED_OPERAND_REG1 && true) ||
       (a64.operands[1].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::mov(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmpIdx));
+    xa_->mov(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegS(zTmpIdx));
   }
 
   /* Col=BF119*/
@@ -78,4 +78,4 @@ void translateCVTDQ2PS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

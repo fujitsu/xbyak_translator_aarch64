@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/09/07 23:07 */
-#define CG64 CodeGeneratorAArch64
+
 void translatePEXTRB(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
@@ -59,12 +59,12 @@ void translatePEXTRB(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 64 && true) ||
       (a64.operands[0].opName == XED_OPERAND_REG0 &&
        a64.operands[0].opWidth == 32 && true)) {
-    CG64::umov(xa::WReg(dstIdx), xa::VReg16B(srcIdx)[uimm]);
+    xa_->umov(xa::WReg(dstIdx), xa::VReg16B(srcIdx)[uimm]);
   }
 
   /* Col=AO119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_MEM0 && true)) {
-    CG64::st1(xa::VReg16B(srcIdx)[uimm], xa::ptr(X_TMP_ADDR));
+    xa_->st1(xa::VReg16B(srcIdx)[uimm], xa::ptr(X_TMP_ADDR));
   }
 
   /* Col=BQ119*/
@@ -78,4 +78,4 @@ void translatePEXTRB(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/06/25 11:58 */
-#define CG64 CodeGeneratorAArch64
+
 void translateMOVAPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
@@ -50,14 +50,14 @@ void translateMOVAPS(xed_decoded_inst_t *p) {
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[0].opWidth == 128 && true)) {
-    CG64::ptrue(P_TMP_0.s, xa::VL4);
+    xa_->ptrue(P_TMP_0.s, xa::VL4);
   }
 
   /* Col=AR119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[0].opWidth == 128 && true)) {
-    CG64::mov(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegS(srcIdx));
+    xa_->mov(xa::ZRegS(dstIdx), P_TMP_0 / xa::T_m, xa::ZRegS(srcIdx));
   }
 
   /* Col=BU119*/
@@ -75,4 +75,4 @@ void translateMOVAPS(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

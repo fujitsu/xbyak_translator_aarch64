@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 /* 2020/09/10 00:04 */
-#define CG64 CodeGeneratorAArch64
+
 void translateVCVTSS2SI(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
@@ -61,20 +61,20 @@ void translateVCVTSS2SI(xed_decoded_inst_t *p) {
                 a64.operands[0].opWidth == 64 && a64.EVEXb == 0 && true)) {
     switch (a64.EVEXrc) {
     case 0:
-      CG64::frinti(xa::SReg(zTmpIdx), xa::SReg(srcIdx));
-      CG64::fcvtzs(xa::XReg(dstIdx), xa::SReg(zTmpIdx));
+      xa_->frinti(xa::SReg(zTmpIdx), xa::SReg(srcIdx));
+      xa_->fcvtzs(xa::XReg(dstIdx), xa::SReg(zTmpIdx));
       break;
     case 1: // Round to nearest even (00B)
-      CG64::fcvtns(xa::XReg(dstIdx), xa::SReg(srcIdx));
+      xa_->fcvtns(xa::XReg(dstIdx), xa::SReg(srcIdx));
       break;
     case 2: // Round down(01B)
-      CG64::fcvtms(xa::XReg(dstIdx), xa::SReg(srcIdx));
+      xa_->fcvtms(xa::XReg(dstIdx), xa::SReg(srcIdx));
       break;
     case 3: // Round up(10B)
-      CG64::fcvtps(xa::XReg(dstIdx), xa::SReg(srcIdx));
+      xa_->fcvtps(xa::XReg(dstIdx), xa::SReg(srcIdx));
       break;
     case 4: // Round toward zero(11B)
-      CG64::fcvtzs(xa::XReg(dstIdx), xa::SReg(srcIdx));
+      xa_->fcvtzs(xa::XReg(dstIdx), xa::SReg(srcIdx));
       break;
     default:
       XT_UNIMPLEMENTED;
@@ -104,4 +104,4 @@ void translateVCVTSS2SI(xed_decoded_inst_t *p) {
   }
   XT_VALID_CHECK_IF;
 }
-#undef CG64
+

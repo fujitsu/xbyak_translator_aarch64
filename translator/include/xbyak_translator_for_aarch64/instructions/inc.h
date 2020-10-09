@@ -20,7 +20,7 @@ void translateINC(xed_decoded_inst_t *p) {
 
   /* 2020/03/11 21:20 */
   bool isValid = false;
-#define CG64 CodeGeneratorAArch64
+
   /* Col=S103*/
   if (false || (a64.dstWidth == 8 && a64.dstType == A64_OP_REG && true) ||
       (a64.dstWidth == 8 && a64.dstType == A64_OP_MEM && true) ||
@@ -34,37 +34,37 @@ void translateINC(xed_decoded_inst_t *p) {
 
   /* Col=AA103*/
   if (false || (a64.dstWidth == 32 && a64.dstType == A64_OP_MEM && true)) {
-    CG64::ldr(W_TMP_0, xa::ptr(X_TMP_ADDR));
+    xa_->ldr(W_TMP_0, xa::ptr(X_TMP_ADDR));
   }
   /* Col=AB103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM && true)) {
-    CG64::ldr(X_TMP_0, xa::ptr(X_TMP_ADDR));
+    xa_->ldr(X_TMP_0, xa::ptr(X_TMP_ADDR));
   }
 
   /* Col=AG103*/
   if (false || (a64.dstWidth == 32 && a64.dstType == A64_OP_REG && true)) {
-    CG64::add(xa::WReg(a64.dstIdx), xa::WReg(a64.dstIdx), 1);
+    xa_->add(xa::WReg(a64.dstIdx), xa::WReg(a64.dstIdx), 1);
   }
   /* Col=AH103*/
   if (false || (a64.dstWidth == 32 && a64.dstType == A64_OP_MEM && true)) {
-    CG64::add(W_TMP_0, W_TMP_0, 1);
+    xa_->add(W_TMP_0, W_TMP_0, 1);
   }
   /* Col=AI103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_REG && true)) {
-    CG64::add(xa::XReg(a64.dstIdx), xa::XReg(a64.dstIdx), 1);
+    xa_->add(xa::XReg(a64.dstIdx), xa::XReg(a64.dstIdx), 1);
   }
   /* Col=AJ103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM && true)) {
-    CG64::add(X_TMP_0, X_TMP_0, 1);
+    xa_->add(X_TMP_0, X_TMP_0, 1);
   }
 
   /* Col=AN103*/
   if (false || (a64.dstWidth == 32 && a64.dstType == A64_OP_MEM && true)) {
-    CG64::str(W_TMP_0, xa::ptr(X_TMP_ADDR));
+    xa_->str(W_TMP_0, xa::ptr(X_TMP_ADDR));
   }
   /* Col=AO103*/
   if (false || (a64.dstWidth == 64 && a64.dstType == A64_OP_MEM && true)) {
-    CG64::str(X_TMP_0, xa::ptr(X_TMP_ADDR));
+    xa_->str(X_TMP_0, xa::ptr(X_TMP_ADDR));
   }
 
   /* Col=BC103*/
@@ -79,5 +79,5 @@ void translateINC(xed_decoded_inst_t *p) {
     XT_VALID_CHECK;
   }
   XT_VALID_CHECK_IF
-#undef CG64
+
 }
