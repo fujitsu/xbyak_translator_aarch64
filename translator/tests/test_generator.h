@@ -69,11 +69,10 @@ union ZReg_t {
 
 #ifdef XBYAK_TRANSLATE_AARCH64
 constexpr Xbyak_aarch64::Operand::Code callee_saved_gregs[] = {
-    Xbyak_aarch64::Operand::Code::X19, Xbyak_aarch64::Operand::Code::X20,
-    Xbyak_aarch64::Operand::Code::X21, Xbyak_aarch64::Operand::Code::X22,
-    Xbyak_aarch64::Operand::Code::X23, Xbyak_aarch64::Operand::Code::X24,
-    Xbyak_aarch64::Operand::Code::X25, Xbyak_aarch64::Operand::Code::X26,
-    Xbyak_aarch64::Operand::Code::X27, Xbyak_aarch64::Operand::Code::X28,
+    xa::Operand::Code::X19, xa::Operand::Code::X20, xa::Operand::Code::X21,
+    xa::Operand::Code::X22, xa::Operand::Code::X23, xa::Operand::Code::X24,
+    xa::Operand::Code::X25, xa::Operand::Code::X26, xa::Operand::Code::X27,
+    xa::Operand::Code::X28,
 };
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
 constexpr Xbyak::Operand::Code callee_saved_gregs[] = {
@@ -956,7 +955,11 @@ public:
   void dumpJitCode() {
     FILE *fp = fopen("hoge", "w");
 
-    fwrite(CodeArray::top_, getSize(), 1, fp);
+#ifdef XBYAK_TRANSLATE_AARCH64
+    fwrite(xa::CodeArray::top_, xa::CodeArray::size_, 4, fp);
+#else
+    fwrite(CodeArray::top_, CodeArray::size_, 1, fp);
+#endif
     fclose(fp);
   }
 };

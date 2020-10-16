@@ -79,11 +79,10 @@ enum DataType {
 
 #ifdef XBYAK_TRANSLATE_AARCH64
 constexpr Xbyak_aarch64::Operand::Code callee_saved_gregs[] = {
-    Xbyak_aarch64::Operand::Code::X19, Xbyak_aarch64::Operand::Code::X20,
-    Xbyak_aarch64::Operand::Code::X21, Xbyak_aarch64::Operand::Code::X22,
-    Xbyak_aarch64::Operand::Code::X23, Xbyak_aarch64::Operand::Code::X24,
-    Xbyak_aarch64::Operand::Code::X25, Xbyak_aarch64::Operand::Code::X26,
-    Xbyak_aarch64::Operand::Code::X27, Xbyak_aarch64::Operand::Code::X28,
+    xa::Operand::Code::X19, xa::Operand::Code::X20, xa::Operand::Code::X21,
+    xa::Operand::Code::X22, xa::Operand::Code::X23, xa::Operand::Code::X24,
+    xa::Operand::Code::X25, xa::Operand::Code::X26, xa::Operand::Code::X27,
+    xa::Operand::Code::X28,
 };
 #else  //#ifdef XBYAK_TRANSLATE_AARCH64
 constexpr Xbyak::Operand::Code callee_saved_gregs[] = {
@@ -163,7 +162,7 @@ void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
     __builtin_aarch64_set_fpcr(fpcr);
 #endif //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
 #else
-  UNUSED(rnd_mode);
+  (void)rnd_mode;
 #endif
 }
 
@@ -1260,7 +1259,11 @@ public:
   void dumpJitCode() {
     FILE *fp = fopen(binFileName.c_str(), "w");
 
-    fwrite(CodeArray::top_, getSize(), 1, fp);
+#ifdef XBYAK_TRANSLATE_AARCH64
+    fwrite(xa::CodeArray::top_, xa::CodeArray::size_, 4, fp);
+#else
+    fwrite(CodeArray::top_, CodeArray::size_, 1, fp);
+#endif
     fclose(fp);
   }
 };
