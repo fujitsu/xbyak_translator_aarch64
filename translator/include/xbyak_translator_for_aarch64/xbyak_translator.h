@@ -405,11 +405,9 @@ xt_reg_idx_t xt_get_register_index(const xed_decoded_inst_t *p,
 }
 
 xa::XReg xt_get_addr_reg(unsigned int base, xed_int64_t disp,
-                                    unsigned int index, xed_uint_t scale,
-                                    const xa::XReg tmp0,
-                                    const xa::XReg tmp1,
-                                    const xa::XReg tmp2,
-                                    bool vm64 = false) {
+                         unsigned int index, xed_uint_t scale,
+                         const xa::XReg tmp0, const xa::XReg tmp1,
+                         const xa::XReg tmp2, bool vm64 = false) {
 
   unsigned int shift = 0;
   if (scale == 0) {
@@ -603,8 +601,7 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
         xa_->str(xa::PReg(i), xa::ptr(X_TMP_0));
 #else  //#ifdef XT_AARCH64_STACK_REG
         xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_PRED_REG);
-        xa_->str(xa::PReg(i),
-                 xa::ptr(X_TRANSLATOR_STACK));
+        xa_->str(xa::PReg(i), xa::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
         return i;
       }
