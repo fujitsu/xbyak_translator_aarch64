@@ -143,7 +143,7 @@ void binCommit() {
   uint32_t *tmp = reinterpret_cast<uint32_t *>(CodeArray::top_);
 
   for (size_t i = 0; i < num32bits; i++) {
-    dd(tmp[i]);
+    xa_->dd(tmp[i]);
   }
 
   db_clear();
@@ -1324,7 +1324,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     xt_msg_err(__FILE__, __LINE__, ":Unsupported branch condition!");
     break;
   case X86_64_B: {
-    Xbyak_aarch64::Label L0, L1;
+    xa::Label L0, L1;
     xa_->mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2,
              0x0); // Read NZCV register
     xa_->lsr(X_TMP_0, X_TMP_2, 28);
@@ -1337,19 +1337,19 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
              X_TMP_2); // Recover NZCV register
     xa_->b(label);
-    L(L0);
+    xa_->L(L0);
     xa_->cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
     xa_->b(Xbyak_aarch64::NE, L1);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
              X_TMP_2); // Recover NZCV register
     xa_->b(label);
-    L(L1);
+    xa_->L(L1);
 
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
              X_TMP_2); // Recover NZCV register
   } break;
   case X86_64_BE: {
-    Xbyak_aarch64::Label L0, L1, L2;
+    xa::Label L0, L1, L2;
     xa_->mrs(X_TMP_2, 0x3, 0x3, 0x4, 0x2,
              0x0); // Read NZCV register
     xa_->lsr(X_TMP_0, X_TMP_2, 28);
@@ -1362,13 +1362,13 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
              X_TMP_2); // Recover NZCV register
     xa_->b(label);
-    L(L0);
+    xa_->L(L0);
     xa_->cmp(X_TMP_1, 0x0); // Check if (C==0 && V==0)
     xa_->b(Xbyak_aarch64::NE, L1);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
              X_TMP_2); // Recover NZCV register
     xa_->b(label);
-    L(L1);
+    xa_->L(L1);
 
     xa_->and_(X_TMP_1, X_TMP_0, 0x4);
     xa_->cmp(X_TMP_1, 0x4);
@@ -1376,7 +1376,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
              X_TMP_2); // Recover NZCV register
     xa_->b(label);
-    L(L2);
+    xa_->L(L2);
     xa_->msr(0x3, 0x3, 0x4, 0x2, 0x0,
              X_TMP_2); // Recover NZCV register
   } break;
