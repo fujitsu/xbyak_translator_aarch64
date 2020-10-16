@@ -166,22 +166,22 @@ void translateVFIXUPIMMPS(xed_decoded_inst_t *p) {
     b(l_exec);
     // gen table
     L(l_table);
-    dd(0xFFFFFFFF); // dummy for dest[31:0]
-    dd(0xFFFFFFFF); // dummy for tsrc[31:0]
-    dd(0x7FC00000); // QNAN(tsrc[31:0])
-    dd(0xFFC00000); // QNAN_Indefinite
-    dd(0xFF800000); // -INF
-    dd(0x7F800000); // +INF
-    dd(0x7F800000); // dummy for tsrc.sign? -INF:+INF
-    dd(0x80000000); // -0;
-    dd(0x00000000); // +0;
-    dd(0xBF800000); // -1;
-    dd(0x3F800000); // +1;
-    dd(0x3F000000); // 1/2;
-    dd(0x42B40000); // 90.0
-    dd(0x3FC90FDB); // PI/2
-    dd(0x7F7FFFFF); // MAX_FLOAT
-    dd(0xFF7FFFFF); // -MIN_FLOAT
+    xa_->dd(0xFFFFFFFF); // dummy for dest[31:0]
+    xa_->dd(0xFFFFFFFF); // dummy for tsrc[31:0]
+    xa_->dd(0x7FC00000); // QNAN(tsrc[31:0])
+    xa_->dd(0xFFC00000); // QNAN_Indefinite
+    xa_->dd(0xFF800000); // -INF
+    xa_->dd(0x7F800000); // +INF
+    xa_->dd(0x7F800000); // dummy for tsrc.sign? -INF:+INF
+    xa_->dd(0x80000000); // -0;
+    xa_->dd(0x00000000); // +0;
+    xa_->dd(0xBF800000); // -1;
+    xa_->dd(0x3F800000); // +1;
+    xa_->dd(0x3F000000); // 1/2;
+    xa_->dd(0x42B40000); // 90.0
+    xa_->dd(0x3FC90FDB); // PI/2
+    xa_->dd(0x7F7FFFFF); // MAX_FLOAT
+    xa_->dd(0xFF7FFFFF); // -MIN_FLOAT
     L(l_exec);
   }
   /* Col=AL120*/

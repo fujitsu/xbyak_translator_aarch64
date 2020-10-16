@@ -1166,7 +1166,7 @@ public:
 #endif
 	}
 	void dw(uint32 code) { db(code, 2); }
-//	void dd(uint32 code) { db(code, 4); }
+	void dd(uint32 code) { db(code, 4); }
 	void dq(uint64 code) { db(code, 8); }
 #ifndef XBYAK_TRANSLATE_AARCH64
 	const uint8 *getCode() const { return top_; }
@@ -1924,7 +1924,7 @@ private:
 		if (mod == mod01) {
 			db(disp);
 		} else if (mod == mod10 || (mod == mod00 && !baseBit)) {
-			dd(disp);
+			CodeArray::dd(disp);
 		}
 	}
 #ifndef XBYAK_TRANSLATE_AARCH64
@@ -2037,7 +2037,7 @@ private:
 					if (isAutoGrow()) throw Error(ERR_INVALID_RIP_IN_AUTO_GROW);
 					disp -= (size_t)getCurr() + 4 + immSize;
 				}
-				dd(inner::VerifyInInt32(disp));
+				CodeArray::dd(inner::VerifyInInt32(disp));
 			}
 		}
 	}
@@ -2615,8 +2615,7 @@ public:
 #ifdef XBYAK_TRANSLATE_AARCH64
 		decode_size_ = 0;
 #ifdef XT_AARCH64_STACK_REG
-		xa_->sub(xa_->sp,
-					  xa_->sp, NUM_BYTES_GEN_REG);
+		xa_->sub(xa_->sp, xa_->sp, NUM_BYTES_GEN_REG);
 		xa_->mov(X_TMP_0, xa_->sp);
 		xa_->str(xa::XReg(op.getIdx()), xa::ptr(X_TMP_0));
 #else //#ifdef XT_AARCH64_STACK_REG
@@ -2634,8 +2633,7 @@ public:
 #ifdef XT_AARCH64_STACK_REG
 		xa_->mov(X_TMP_0, xa_->sp);
 		xa_->ldr(xa::XReg(op.getIdx()), xa::ptr(X_TMP_0));
-		xa_->add(xa_->sp,
-					  xa_->sp, NUM_BYTES_GEN_REG);
+		xa_->add(xa_->sp, xa_->sp, NUM_BYTES_GEN_REG);
 #else //#ifdef XT_AARCH64_STACK_REG
 		xa_->ldr(xa::XReg(op.getIdx()), xa::post_ptr(X_TRANSLATOR_STACK, 8));
 #endif //#ifdef XT_AARCH64_STACK_REG
