@@ -166,22 +166,22 @@ void translateVFIXUPIMMPS(xed_decoded_inst_t *p) {
     b(l_exec);
     // gen table
     L_aarch64(l_table);
-    dw_aarch64(0xFFFFFFFF); // dummy for dest[31:0]
-    dw_aarch64(0xFFFFFFFF); // dummy for tsrc[31:0]
-    dw_aarch64(0x7FC00000); // QNAN(tsrc[31:0])
-    dw_aarch64(0xFFC00000); // QNAN_Indefinite
-    dw_aarch64(0xFF800000); // -INF
-    dw_aarch64(0x7F800000); // +INF
-    dw_aarch64(0x7F800000); // dummy for tsrc.sign? -INF:+INF
-    dw_aarch64(0x80000000); // -0;
-    dw_aarch64(0x00000000); // +0;
-    dw_aarch64(0xBF800000); // -1;
-    dw_aarch64(0x3F800000); // +1;
-    dw_aarch64(0x3F000000); // 1/2;
-    dw_aarch64(0x42B40000); // 90.0
-    dw_aarch64(0x3FC90FDB); // PI/2
-    dw_aarch64(0x7F7FFFFF); // MAX_FLOAT
-    dw_aarch64(0xFF7FFFFF); // -MIN_FLOAT
+    CG64::dd(0xFFFFFFFF); // dummy for dest[31:0]
+    CG64::dd(0xFFFFFFFF); // dummy for tsrc[31:0]
+    CG64::dd(0x7FC00000); // QNAN(tsrc[31:0])
+    CG64::dd(0xFFC00000); // QNAN_Indefinite
+    CG64::dd(0xFF800000); // -INF
+    CG64::dd(0x7F800000); // +INF
+    CG64::dd(0x7F800000); // dummy for tsrc.sign? -INF:+INF
+    CG64::dd(0x80000000); // -0;
+    CG64::dd(0x00000000); // +0;
+    CG64::dd(0xBF800000); // -1;
+    CG64::dd(0x3F800000); // +1;
+    CG64::dd(0x3F000000); // 1/2;
+    CG64::dd(0x42B40000); // 90.0
+    CG64::dd(0x3FC90FDB); // PI/2
+    CG64::dd(0x7F7FFFFF); // MAX_FLOAT
+    CG64::dd(0xFF7FFFFF); // -MIN_FLOAT
     L_aarch64(l_exec);
   }
   /* Col=AL120*/

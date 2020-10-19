@@ -1924,7 +1924,7 @@ private:
 		if (mod == mod01) {
 			db(disp);
 		} else if (mod == mod10 || (mod == mod00 && !baseBit)) {
-			dd(disp);
+			CodeArray::dd(disp);
 		}
 	}
 #ifndef XBYAK_TRANSLATE_AARCH64
@@ -2037,7 +2037,7 @@ private:
 					if (isAutoGrow()) throw Error(ERR_INVALID_RIP_IN_AUTO_GROW);
 					disp -= (size_t)getCurr() + 4 + immSize;
 				}
-				dd(inner::VerifyInInt32(disp));
+				CodeArray::dd(inner::VerifyInInt32(disp));
 			}
 		}
 	}

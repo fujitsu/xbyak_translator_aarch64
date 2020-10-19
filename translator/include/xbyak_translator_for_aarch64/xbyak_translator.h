@@ -143,7 +143,7 @@ void binCommit() {
   uint32_t *tmp = reinterpret_cast<uint32_t *>(CodeArray::top_);
 
   for (size_t i = 0; i < num32bits; i++) {
-    dw_aarch64(tmp[i]);
+    CodeGeneratorAArch64::dd(tmp[i]);
   }
 
   db_clear();
