@@ -129,9 +129,8 @@ void translateVPMOVSXBW(xed_decoded_inst_t *p) {
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true) ||
       (a64.dstWidth == 512 && a64.PredType == A64_PRED_MERG && a64.EVEXb == 0 &&
        a64.dstType == A64_OP_REG && a64.srcType == A64_OP_MEM && true)) {
-    xa_->ld1b(xa::ZRegB(a64.zTmpIdx),
-                               xa::PReg(a64.pTmpIdx) / xa::T_z,
-                               xa::ptr(X_TMP_ADDR));
+    xa_->ld1b(xa::ZRegB(a64.zTmpIdx), xa::PReg(a64.pTmpIdx) / xa::T_z,
+              xa::ptr(X_TMP_ADDR));
   }
   /* Col=AD103*/
   if (false ||

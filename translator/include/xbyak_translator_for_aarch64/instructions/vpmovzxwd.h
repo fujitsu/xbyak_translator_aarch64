@@ -282,7 +282,7 @@ void translateVPMOVZXWD(xed_decoded_inst_t *p) {
        a64_opt.operands[0].opWidth == 512 && a64_opt.predType == A64_PRED_NO &&
        isAvailAll1Preg0_7() == true && true)) {
     xa_->ld1h(xa::ZRegH(zTmpIdx), xa::PReg(pTmpIdx) / xa::T_z,
-               xa::ptr(X_TMP_ADDR));
+              xa::ptr(X_TMP_ADDR));
   }
   /* Col=AO119*/
   if (false ||
@@ -1127,7 +1127,7 @@ void translateVPMOVZXWD(xed_decoded_inst_t *p) {
        a64.operands[0].opWidth == 512 && a64.predType == A64_PRED_MERG &&
        true)) {
     xa_->ld1h(xa::ZRegH(zTmpIdx), xa::PReg(pTmpIdx) / xa::T_z,
-               xa::ptr(X_TMP_ADDR));
+              xa::ptr(X_TMP_ADDR));
   }
   /* Col=AG119*/
   if (false ||
