@@ -79,6 +79,9 @@
 #ifndef XT_AARCH64_STACK_REG
 	#define XT_AARCH64_STACK_REG
 #endif
+#ifndef XBYAK_AARCH64_LIB
+	#define XBYAK_AARCH64_LIB 1
+#endif
 
 /*!
 	@file xbyak.h

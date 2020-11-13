@@ -6,7 +6,7 @@ all: $(EXE)
 XED_DIR=../translator/third_party/build_xed_aarch64/kits/xed/
 
 CFLAGS+=-std=c++11 -O2 -DNDEBUG -g -I ../xbyak -I ../translator/third_party/xbyak_aarch64/xbyak_aarch64/ -I ../translator/include/xbyak_translator_for_aarch64/ -I $(XED_DIR)/include/
-LDFLAGS+=-L ../lib -lxbyak_translator_aarch64 -L $(XED_DIR)/lib/ -lxed
+LDFLAGS+=-L ../lib -lxbyak_translator_aarch64 -lxbyak_aarch64 -L $(XED_DIR)/lib/ -lxed
 
 %.o: %.cpp
 	$(CXX) -c $< -o $@ $(CFLAGS)
