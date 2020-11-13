@@ -62,6 +62,24 @@
 #pragma once
 #ifndef XBYAK_XBYAK_H_
 #define XBYAK_XBYAK_H_
+
+#ifndef XBYAK64
+	#define XBYAK64
+#endif
+
+#ifndef DNNL_AARCH64_JIT_AARCH64
+	#define DNNL_AARCH64_JIT_AARCH64
+#endif
+#ifndef XBYAK_AARCH64_FOR_DNNL
+	#define XBYAK_AARCH64_FOR_DNNL // should be remove in the future
+#endif
+#ifndef XBYAK_TRANSLATE_AARCH64
+	#define XBYAK_TRANSLATE_AARCH64
+#endif
+#ifndef XT_AARCH64_STACK_REG
+	#define XT_AARCH64_STACK_REG
+#endif
+
 /*!
 	@file xbyak.h
 	@brief Xbyak ; JIT assembler for x86(IA32)/x64 by C++
@@ -150,7 +168,9 @@
 
 // #define XBYAK_DISABLE_AVX512
 
-//#define XBYAK_USE_MMAP_ALLOCATOR
+#ifndef XBYAK_USE_MMAP_ALLOCATOR
+	#define XBYAK_USE_MMAP_ALLOCATOR
+#endif
 #if !defined(__GNUC__) || defined(__MINGW32__)
 	#undef XBYAK_USE_MMAP_ALLOCATOR
 #endif
