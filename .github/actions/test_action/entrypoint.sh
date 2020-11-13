@@ -29,6 +29,7 @@ cd xed/bin/
 CI_XED_PATH=`pwd`
 cd ../../../../../
 source dot.zshrc.xbyak.ci
+make -C src
 cd tests/
 export QEMU_AARCH64=/local_qemu_5.0.0/bin/qemu-aarch64
 make -j2
