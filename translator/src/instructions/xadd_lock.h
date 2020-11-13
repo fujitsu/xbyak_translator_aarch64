@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/05/29 14:25 */
 
-void translateXADD_LOCK(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateXADD_LOCK(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);

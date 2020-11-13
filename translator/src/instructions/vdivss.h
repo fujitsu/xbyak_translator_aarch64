@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/09/02 14:50 */
 
-void translateVDIVSS(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateVDIVSS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
   struct xt_a64fx_operands_structV3_t a64;

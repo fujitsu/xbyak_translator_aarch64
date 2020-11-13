@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/06/29 16:31 */
 
-void translateVMOVMSKPS(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateVMOVMSKPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
   struct xt_a64fx_operands_structV3_t a64;

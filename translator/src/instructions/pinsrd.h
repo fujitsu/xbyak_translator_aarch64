@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/06/03 14:05 */
 
-void translatePINSRD(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translatePINSRD(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);

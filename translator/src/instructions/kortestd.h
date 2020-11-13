@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-void translateKORTESTD(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateKORTESTD(xed_decoded_inst_t *p) {
   unsigned int srcIdx1, srcIdx2;
   uint32_t zflag = 8;
   uint32_t cflag = 2;

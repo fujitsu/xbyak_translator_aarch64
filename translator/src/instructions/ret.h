@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-void translateRET(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateRET(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   (void)p;
   xa_->ret();

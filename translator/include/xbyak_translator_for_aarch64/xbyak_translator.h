@@ -717,7 +717,7 @@ void xt_pop_preg() {
   assert(NULL);
 }
 
-#include "xbyak_translator_inc.h"
+#include "xbyak_translator_inc_def.h"
 
 bool decodeOpcode(const Label *label = nullptr) {
   xed_state_t dstate;

@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/07/06 14:26 */
 
-void translateVFMADD132PS(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateVFMADD132PS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);

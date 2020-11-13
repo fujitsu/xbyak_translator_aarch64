@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/05/27 10:55 */
 
-void translateKORTESTW(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateKORTESTW(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);

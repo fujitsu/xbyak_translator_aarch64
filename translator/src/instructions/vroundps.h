@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/05/03 15:50 */
 
-void translateVROUNDPS(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateVROUNDPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   xa::Label L_zflag, L_cflag;
   struct xt_a64fx_operands_structV3_t a64;

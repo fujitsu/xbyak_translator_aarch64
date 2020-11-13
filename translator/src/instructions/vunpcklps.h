@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/03/26 12:19 */
 
-void translateVUNPCKLPS(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateVUNPCKLPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);

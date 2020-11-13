@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-void translateKMOVB(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateKMOVB(xed_decoded_inst_t *p) {
 
   /*
    * assumption:

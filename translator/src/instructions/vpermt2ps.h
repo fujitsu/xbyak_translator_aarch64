@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/09/09 11:56 */
 
-void translateVPERMT2PS(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateVPERMT2PS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
   struct xt_a64fx_operands_structV3_t a64;

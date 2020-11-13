@@ -13,5 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-void translatePREFETCHW(xed_decoded_inst_t *p) { /* Empty implementation*/
+void Xbyak::CodeGenerator::translatePREFETCHW(xed_decoded_inst_t *p) { /* Empty implementation*/
 }

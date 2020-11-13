@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/07/03 15:52 */
 
-void translateVPSHUFB(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateVPSHUFB(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
   struct xt_a64fx_operands_structV3_t a64;

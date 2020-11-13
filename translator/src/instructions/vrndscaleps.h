@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/05/26 12:22 */
 
-void translateVRNDSCALEPS(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateVRNDSCALEPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64;
   xt_construct_a64fx_operandsV3(p, &a64);

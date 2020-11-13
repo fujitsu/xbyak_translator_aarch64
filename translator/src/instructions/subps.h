@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/09/01 09:32 */
 
-void translateSUBPS(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateSUBPS(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   struct xt_a64fx_operands_structV3_t a64_opt;
   struct xt_a64fx_operands_structV3_t a64;

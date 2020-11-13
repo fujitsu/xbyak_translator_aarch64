@@ -15,7 +15,7 @@
  *******************************************************************************/
 /* 2020/05/01 15:37 */
 
-void translateKTESTQ(xed_decoded_inst_t *p) {
+void Xbyak::CodeGenerator::translateKTESTQ(xed_decoded_inst_t *p) {
   namespace xa = Xbyak_aarch64;
   xa::Label L_zflag, L_cflag;
   struct xt_a64fx_operands_structV3_t a64;
