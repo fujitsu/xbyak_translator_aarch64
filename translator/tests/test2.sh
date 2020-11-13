@@ -193,7 +193,7 @@ gen_compile_option() {
 	CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64/xbyak_aarch64"
 	CFLAGS="${CFLAGS} -I../third_party/build_xed_${EXEC_ARCH}/kits/xed/include"
 	CFLAGS="${CFLAGS} -L${LIBXED_PATH}"
-	LIB_OPT="${LIB_OPT} -lxed"
+	LIB_OPT="-L../../lib -lxbyak_translator_aarch64 -lxbyak_aarch64 ${LIB_OPT} -lxed"
     fi
 
     TP_NAME=`dirname $1`/`basename $1 .cpp`
