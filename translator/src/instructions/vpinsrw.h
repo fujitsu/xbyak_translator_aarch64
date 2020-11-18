@@ -56,11 +56,11 @@ void Xbyak::CodeGenerator::translateVPINSRW(xed_decoded_inst_t *p) {
   }
   /* Col=AS119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_REG2 && true)) {
-    xa_->ins_(xa::VReg8H(dstIdx)[uimm], xa::WReg(src2Idx));
+    xa_->ins(xa::VReg8H(dstIdx)[uimm], xa::WReg(src2Idx));
   }
   /* Col=AT119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_MEM0 && true)) {
-    xa_->ins_(xa::VReg8H(dstIdx)[uimm], W_TMP_0);
+    xa_->ins(xa::VReg8H(dstIdx)[uimm], W_TMP_0);
   }
   /* Col=BO119*/
   if (false || (a64.operands[2].opName == XED_OPERAND_REG2 && true) ||
