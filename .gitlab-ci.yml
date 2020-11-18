@@ -6,39 +6,42 @@ stages:
 
 before_script:
 
-ClangFormatCheck:
-  stage: test
-  image: bce7edfda510
-  script:
-  - ROOT_DIR_TRANSLATOR=`pwd`
-  - cd translator/include/xbyak_translator_for_aarch64/instructions
-  - ../../../tools/init_variables.sh
-  - ../../../tools/remove_unused_variable.sh
-  - ../../../tools/replace_preg_name.sh
-  - cd ${ROOT_DIR_TRANSLATOR}
-  - pwd
-  - ./.github/automation/clang-format.sh
+#ClangFormatCheck:
+#  stage: test
+#  image: bce7edfda510
+#  script:
+#  - ROOT_DIR_TRANSLATOR=`pwd`
+#  - cd translator/include/xbyak_translator_for_aarch64/instructions
+#  - ../../../tools/init_variables.sh
+#  - ../../../tools/remove_unused_variable.sh
+#  - ../../../tools/replace_preg_name.sh
+#  - cd ${ROOT_DIR_TRANSLATOR}
+#  - pwd
+#  - ./.github/automation/clang-format.sh
 
-job_1:
+gcc:
   stage: test
   image: bce7edfda510
   script:
-#    - pwd
-#    - ls
+    - source .github/env/setenv-gcc
     - git submodule sync --recursive
     - git submodule update --init --recursive
-    - cd translator/third_party/
-    - mkdir build_xed_aarch64
-    - cd build_xed_aarch64/
-    - ../xed/mfile.py --host-cpu=aarch64 --shared examples install
-    - cd kits/
-    - XED=`ls | grep install`
-    - ln -sf $XED xed
-    - cd xed/bin/
-    - CI_XED_PATH=`pwd`
-    - cd ../../../../../
-    - source dot.zshrc.xbyak.ci
-    - cd tests/
-    - make -j46
-#  tags: 
-#    - instruction_unit 
+    - .github/automation/xed.sh -n
+    - make -C translator/third_party/xbyak_aarch64
+    - make
+    - cd translator/tests
+    - make -j$(nproc)
+
+# At the moment, FCC can not build xbyak_translator_aarch64
+#fcc:
+#  stage: test
+#  image: bce7edfda510
+#  script:
+#    - source .github/env/setenv-fcc
+#    - git submodule sync --recursive
+#    - git submodule update --init --recursive
+#    - .github/automation/xed.sh -n
+#    - make -C translator/third_party/xbyak_aarch64
+#    - make
+#    - cd translator/tests
+#    - make -j$(nproc)
