@@ -20,6 +20,7 @@ all_result:$(TP_CHECK)
 
 clean:
 	-rm *.log *.bin *.asm
+	-rm log/*.log
 	-find pattern -name "*.check" -exec rm {} \;
 	-find pattern -name "*.check.ng" -exec rm {} \;
 	-find pattern -name "*.result" -exec rm {} \;

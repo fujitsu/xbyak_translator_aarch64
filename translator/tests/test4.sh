@@ -32,9 +32,6 @@
 # aarch64  , aarch64 , x86_64   , NG
 # aarch64  , aarch64 , aarch64  , OK (Executable on native environment)
 #*******************************************************************************
-QEMU_AARCH64_KAWAKAMI=/home/kawakami/local_xbyak/bin/qemu-aarch64
-
-CXX=g++
 OBJDUMP=objdump
 
 CFLAGS=""
@@ -74,15 +71,13 @@ bad_combination_exit() {
     exit 1
 }
 
-
 check_option() {
     DUMP_OPT="-m AArch64"
     if [ ${HOST_ARCH:-"unknown"} = "x86_64" ] ; then
 	QEMU_ON=1
-	TOOL_PREFIX="/usr/bin/aarch64-linux-gnu-"
 	DUMP_PREFIX=${DUMP_PREFIX:="/usr/bin/aarch64-linux-gnu-"}
     fi
-}		
+}
 
 gen_compile_option() {
     LIBXED_PATH="../third_party/build_xed_${EXEC_ARCH}/kits/xed/lib"
@@ -106,20 +101,9 @@ gen_compile_option() {
     LOG_NAME=`basename ${TP_NAME_ARCH}`
 }
 
-compile_precompiled_header() {
-    if [ ! -f test_generator2.h.gch ] ; then
-	# Compile, execute, dissassemble
-	${TOOL_PREFIX:-""}${CXX} ${CFLAGS} -x c++-header -o test_generator2.h.gch test_generator2.h
-	if [ ! $? -eq 0 ] ; then
-	    echo "pre-compile error!"
-	    exit 1
-	fi
-    fi
-}
-
 compile_test_file() {
     # Compile, execute, dissassemble
-    ${TOOL_PREFIX:-""}${CXX} ${CFLAGS} -o ${TP_NAME_ARCH} ${TP_NAME}.cpp ${LIB_OPT}
+    ${CXX} ${CFLAGS} -o ${TP_NAME_ARCH} ${TP_NAME}.cpp ${LIB_OPT}
     if [ ! $? -eq 0 ] ; then
 	echo "compile error!"
 	exit 1
@@ -155,12 +139,12 @@ exec_test() {
 dump_disassemble() {
     local BIN_FILE=${TP_NAME_ARCH}.bin
     local ASM_FILE=${LOG_NAME}.asm
-    
+
     ${OBJDUMP} -D -b binary ${DUMP_OPT} ${BIN_FILE} > ${ASM_FILE}
 }
 
 extract_log() {
-    tmpfile=/tmp/${LOG_NAME}.`whoami`.check.log
+    tmpfile=./log/${LOG_NAME}.`whoami`.check.log
     grep -w Check ${LOG_NAME}.log > ${tmpfile}
 }
 
@@ -215,8 +199,9 @@ do
 done
 shift $((OPTIND - 1))
 
-
-
+if [ ! -d log ] ; then
+    mkdir log
+fi
 
 #echo "num of args=$#"
 if [ ! $# = 1 ] ; then
@@ -226,7 +211,6 @@ get_host_arch
 check_option
 #debug_dump_option
 gen_compile_option $@
-compile_precompiled_header
 compile_test_file
 if [ ${OUTPUT_JIT_ON:-0} = 1 ] ; then
     exec_test
