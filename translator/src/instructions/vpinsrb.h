@@ -33,10 +33,10 @@ void Xbyak::CodeGenerator::translateVPINSRB(xed_decoded_inst_t *p) {
 
   /* Col=Z103*/
   if (false || (a64.src2Type == A64_OP_REG && true)) {
-    xa_->ins_(xa::VReg16B(a64.dstIdx)[a64.uimm], xa::WReg(a64.src2Idx));
+    xa_->ins(xa::VReg16B(a64.dstIdx)[a64.uimm], xa::WReg(a64.src2Idx));
   }
   /* Col=AA103*/
   if (false || (a64.src2Type == A64_OP_MEM && true)) {
-    xa_->ins_(xa::VReg16B(a64.dstIdx)[a64.uimm], W_TMP_0);
+    xa_->ins(xa::VReg16B(a64.dstIdx)[a64.uimm], W_TMP_0);
   }
 }
