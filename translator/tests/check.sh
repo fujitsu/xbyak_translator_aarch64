@@ -30,7 +30,7 @@ if [ -f $1.ng ] ; then
     rm $1.ng
 fi
 
-diff -y -W 300 ${TP_DIR}/${TP_BASE}.jit_x86_64.exec_x86_64.check.log /tmp/${TP_BASE}.jit_aarch64.exec_aarch64.${USER_NAME}.check.log > $1
+diff -y -W 300 ${TP_DIR}/${TP_BASE}.jit_x86_64.exec_x86_64.check.log ./log/${TP_BASE}.jit_aarch64.exec_aarch64.${USER_NAME}.check.log > $1
 
 LINE_NUM=`wc -l $1 | cut -f 1 -d " "`
 DIFF_LINE_NUM=`grep "|" $1 | wc -l | cut -f 1 -d " "`

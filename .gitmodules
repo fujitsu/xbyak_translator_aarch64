@@ -1,9 +1,9 @@
-[submodule "translator/third_party/xed"]
-	path = translator/third_party/xed
-	url = https://github.com/fujitsu/xed
-[submodule "translator/third_party/mbuild"]
-	path = translator/third_party/mbuild
-	url = https://github.com/fujitsu/mbuild
 [submodule "translator/third_party/xbyak_aarch64"]
 	path = translator/third_party/xbyak_aarch64
 	url = https://github.com/fujitsu/xbyak_aarch64
+[submodule "translator/third_party/mbuild"]
+	path = translator/third_party/mbuild
+	url = https://github.com/intelxed/mbuild.git
+[submodule "translator/third_party/xed"]
+	path = translator/third_party/xed
+	url = https://github.com/intelxed/xed.git
