@@ -135,12 +135,13 @@ void initSearchZReg() {
 bool getGenJitMode() { return genJitMode; }
 
 void binCommit() {
-  size_t num32bits = CodeArray::size_;
+  size_t num32bits = Xbyak::CodeArray::size_;
 
   num32bits = (num32bits + 3) - ((num32bits + 3) % 4);
   num32bits /= 4;
 
-  uint32_t *tmp = reinterpret_cast<uint32_t *>(CodeArray::top_);
+  const uint32_t *tmp =
+      reinterpret_cast<const uint32_t *>(Xbyak::CodeArray::top_);
 
   for (size_t i = 0; i < num32bits; i++) {
     xa_->dd(tmp[i]);
@@ -354,7 +355,7 @@ struct xt_a64fx_operands_struct_t {
       false; /* ture:dst operand is mask register, false:otherwise */
 };
 
-void db_clear() { CodeArray::size_ = 0; }
+void db_clear() { Xbyak::CodeArray::size_ = 0; }
 
 xt_reg_idx_t xt_get_register_index(const xed_reg_enum_t r) {
   if (XED_REG_RAX <= r && r <= XED_REG_R15) {
@@ -737,16 +738,16 @@ bool decodeOpcode(const Label *label = nullptr) {
   xed3_operand_set_mpxmode(&xedd, 0);
   xed3_operand_set_cet(&xedd, 0);
 
+  const uint8_t *top = Xbyak::CodeArray::top_;
+  size_t size = Xbyak::CodeArray::size_;
 #ifdef XT_DEBUG
   printf("Attempting to decode: ");
-  for (unsigned int i = 0; i < CodeArray::size_; i++)
-    printf("%02x ", XED_STATIC_CAST(xed_uint_t, CodeArray::top_[i]));
+  for (size_t i = 0; i < size; i++)
+    printf("%02x ", top[i]);
   printf("\n");
 #endif
 
-  xed_error = xed_decode(
-      &xedd, XED_REINTERPRET_CAST(const xed_uint8_t *, CodeArray::top_),
-      CodeArray::size_);
+  xed_error = xed_decode(&xedd, top, size);
 
   switch (xed_error) {
   case XED_ERROR_NONE:

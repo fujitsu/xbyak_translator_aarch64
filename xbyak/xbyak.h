@@ -1947,7 +1947,7 @@ private:
 		if (mod == mod01) {
 			db(disp);
 		} else if (mod == mod10 || (mod == mod00 && !baseBit)) {
-			CodeArray::dd(disp);
+			Xbyak::CodeArray::dd(disp);
 		}
 	}
 #ifndef XBYAK_TRANSLATE_AARCH64
@@ -2060,7 +2060,7 @@ private:
 					if (isAutoGrow()) throw Error(ERR_INVALID_RIP_IN_AUTO_GROW);
 					disp -= (size_t)getCurr() + 4 + immSize;
 				}
-				CodeArray::dd(inner::VerifyInInt32(disp));
+				Xbyak::CodeArray::dd(inner::VerifyInInt32(disp));
 			}
 		}
 	}
@@ -2650,7 +2650,7 @@ public:
 	
 	void pop(const Operand& op)
 	{
-	        opPushPop(op, 0x8F, 0, 0x58);
+	    opPushPop(op, 0x8F, 0, 0x58);
 #ifdef XBYAK_TRANSLATE_AARCH64
 		decode_size_ = 0;
 #ifdef XT_AARCH64_STACK_REG
