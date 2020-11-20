@@ -233,7 +233,7 @@ void divss(const Xmm& xmm, const Operand& op) { opGen(xmm, op, 0x5E, 0xF3, isXMM
 void dppd(const Xmm& xmm, const Operand& op, int imm) { opGen(xmm, op, 0x41, 0x66, isXMM_XMMorMEM, static_cast<uint8>(imm), 0x3A); UNIMPLEMENTED; }
 void dpps(const Xmm& xmm, const Operand& op, int imm) { opGen(xmm, op, 0x40, 0x66, isXMM_XMMorMEM, static_cast<uint8>(imm), 0x3A); UNIMPLEMENTED; }
 void emms() { db(0x0F); db(0x77); UNIMPLEMENTED; }
-void enter(uint16 x, uint8 y) { CodeArray::db(0xC8); CodeArray::dw(x); db(y); UNIMPLEMENTED; }
+void enter(uint16 x, uint8 y) { Xbyak::CodeArray::db(0xC8); Xbyak::CodeArray::dw(x); Xbyak::CodeArray::db(y); UNIMPLEMENTED; }
 void extractps(const Operand& op, const Xmm& xmm, uint8 imm) { opExt(op, xmm, 0x17, imm); UNIMPLEMENTED; }
 void f2xm1() { db(0xD9); db(0xF0); UNIMPLEMENTED; }
 void fabs() { db(0xD9); db(0xE1); UNIMPLEMENTED; }
