@@ -1117,6 +1117,9 @@ public:
 		T_NEAR,
 		T_AUTO // T_SHORT if possible
 	};
+	// for debug test
+	bool isTestMode() const;
+	void setTestMode(bool b);
 private:
 	CodeGenerator operator=(const CodeGenerator&); // don't call
 	static const size_t AARCH64_NUM_VREG = 32;
@@ -1809,6 +1812,9 @@ public:
 #endif
 		  //, isDefaultJmpNEAR_(false)
 	{
+#ifdef XT_TEST
+		setTestMode(true);
+#endif
 	}
 	void reset()
 	{
