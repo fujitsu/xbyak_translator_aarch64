@@ -16,5 +16,5 @@
 #===============================================================================
 export CC=/usr/bin/aarch64-linux-gnu-gcc
 export CXX=/usr/bin/aarch64-linux-gnu-g++
-export CFLAGS="-DXT_TEST -DDXT_AARCH64_STACK_REG"
+export CFLAGS="-DXT_TEST -DXT_AARCH64_STACK_REG"
 export QEMU_AARCH64=qemu-aarch64
