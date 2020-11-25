@@ -148,6 +148,10 @@ extract_log() {
     grep -w Check ${LOG_NAME}.log > ${tmpfile}
 }
 
+remove_exe() {
+    rm ./${TP_NAME_ARCH}
+}
+
 debug_dump_option() {
     echo "HOST_ARCH=${HOST_ARCH}"
     echo "JIT_ARCH =${JIT_ARCH}"
@@ -169,7 +173,7 @@ unset EXEC_JIT_ON
 
 DATE_STR=`date +"%Y%m%d-%H%M%S"`
 
-while getopts axAXeEhH OPT
+while getopts axAXeEhHR OPT
 do
     case $OPT in
 	a) JIT_ARCH=aarch64
@@ -188,6 +192,8 @@ do
 	   ;;
 	E) OUTPUT_JIT_ON=1
 	   EXEC_JIT_ON=1
+	   ;;
+	R) REMOVE_EXE_ON=1
 	   ;;
 	h) usage_exit
 	   ;;
@@ -219,3 +225,6 @@ fi
 #    dump_disassemble
 #fi
 extract_log
+if [ ${REMOVE_EXE_ON:-0} = 1 ] ; then
+    remove_exe
+fi

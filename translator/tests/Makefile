@@ -10,7 +10,7 @@ USER_NAME=$(shell whoami)
 all:all_result
 
 .cpp.check:
-	@-./test4.sh -a -A -E $< > /dev/null
+	@-./test4.sh -a -A -E -R $< > /dev/null
 	@-./check.sh $@
 	@-grep -e OK -e NG $@*
 
