@@ -53,11 +53,6 @@ bool unusedZReg[NUM_Z_REG_INTEL] = {0};
 
 public:
 constexpr static xt_reg_idx_t xtDefaultAddrIdx = 28;
-#ifdef XT_TEST
-constexpr static unsigned int xt_sp_reg_idx = 31;
-#else
-constexpr static unsigned int xt_sp_reg_idx = 4;
-#endif
 // Stack size for translator >= (SVE reg. size) * 5 + (predicate reg. size) * 2
 constexpr static unsigned int xt_stack_size = 512 * 8;
 // If xt_stack_offset >= 4096, then use sub_imm() in preamble() in
@@ -76,11 +71,7 @@ xa::XReg X_TMP_3 = x26;
 xa::XReg X_TMP_4 = x27;
 xa::XReg X_TMP_ADDR = x28;
 const xa::XReg X_DEFAULT_ADDR = x28;
-#ifdef XT_TEST
-xa::XReg X_TRANSLATOR_STACK{xt_sp_reg_idx};
-#else
 xa::XReg X_TRANSLATOR_STACK = x22;
-#endif
 xa::PReg P_TMP = p0;
 xa::PReg P_TMP_0 = p11;
 xa::PReg P_TMP_1 = p12;

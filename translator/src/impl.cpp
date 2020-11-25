@@ -1,4 +1,16 @@
 #include "xbyak.h"
+
+static bool s_testMode = false;
+bool Xbyak::CodeGenerator::isTestMode() const { return s_testMode; }
+void Xbyak::CodeGenerator::setTestMode(bool b) {
+  s_testMode = b;
+  if (b) {
+    X_TRANSLATOR_STACK = xa::XReg{31};
+  } else {
+    X_TRANSLATOR_STACK = x22;
+  }
+}
+
 #include "xbyak_translator_inc.h"
 
 #define UNIMPLEMENTED                                                          \
