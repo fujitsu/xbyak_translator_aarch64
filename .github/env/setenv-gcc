@@ -16,4 +16,4 @@
 #===============================================================================
 export CC=gcc
 export CXX=g++
-export CFLAGS="-DXT_TEST -DDXT_AARCH64_STACK_REG"
+export CFLAGS="-DXT_TEST -DXT_AARCH64_STACK_REG"

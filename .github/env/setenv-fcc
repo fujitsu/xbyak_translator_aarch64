@@ -16,4 +16,4 @@
 #===============================================================================
 export CC="fcc -Nclang"
 export CXX="FCC -Nclang"
-export CFLAGS="-DXT_TEST -DDXT_AARCH64_STACK_REG"
+export CFLAGS="-DXT_TEST -DXT_AARCH64_STACK_REG"
