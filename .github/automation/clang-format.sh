@@ -20,7 +20,7 @@ echo "Using clang-format version: $(clang-format --version)"
 echo "Starting format check..."
 
 tmpfile=$(mktemp)
-find "$(pwd)" -type f | grep -P ".*\.(c|cpp|h|hpp|cl)$" | grep -v xbyak.h > ${tmpfile}
+find "$(pwd)" -type f | grep -P ".*\.(c|cpp|h|hpp|cl)$" | grep -v xbyak.h |grep -v xbyak_mnemonic.h > ${tmpfile}
 num_line=`wc -l ${tmpfile} | cut -f 1 -d " "`
 count=0
 
