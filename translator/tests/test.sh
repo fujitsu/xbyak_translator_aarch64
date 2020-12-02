@@ -39,9 +39,8 @@ CFLAGS=""
 CFLAGS="${CFLAGS} -std=c++11"
 CFLAGS="${CFLAGS} -g"
 CFLAGS="${CFLAGS} -DDEBUG"
-CFLAGS="${CFLAGS} -I../../xbyak"
-CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64/xbyak_aarch64"
-CFLAGS="${CFLAGS} -I../include/xbyak_translator_for_aarch64"
+CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64"
+CFLAGS="${CFLAGS} -I../include"
 
 #*******************************************************************************
 # Function definition
@@ -178,8 +177,8 @@ gen_compile_option() {
 	CFLAGS="${CFLAGS} -DDNNL_AARCH64_JIT_AARCH64"
 	CFLAGS="${CFLAGS} -DXBYAK_AARCH64_FOR_DNNL"
 	CFLAGS="${CFLAGS} -DXBYAK_TRANSLATE_AARCH64"
-	CFLAGS="${CFLAGS} -I../include/xbyak_translator_for_aarch64"
-	CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64/xbyak_aarch64"
+	CFLAGS="${CFLAGS} -I../include"
+	CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64"
 	CFLAGS="${CFLAGS} -I../third_party/build_xed_${EXEC_ARCH}/kits/xed/include"
 	CFLAGS="${CFLAGS} -L${LIBXED_PATH}"
 	LIB_OPT="${LIB_OPT} -lxed"

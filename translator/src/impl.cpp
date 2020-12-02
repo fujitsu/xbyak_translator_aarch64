@@ -1,4 +1,4 @@
-#include "xbyak.h"
+#include <xbyak_translator_aarch64/xbyak.h>
 
 static bool s_testMode = false;
 bool Xbyak::CodeGenerator::isTestMode() const { return s_testMode; }

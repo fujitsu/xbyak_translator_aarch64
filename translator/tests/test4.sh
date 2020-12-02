@@ -41,9 +41,8 @@ CFLAGS="${CFLAGS} -DDEBUG"
 CFLAGS="${CFLAGS} -Wall"
 CFLAGS="${CFLAGS} -Wmaybe-uninitialized"
 CFLAGS="${CFLAGS} -I."
-CFLAGS="${CFLAGS} -I../../xbyak"
-CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64/xbyak_aarch64"
-CFLAGS="${CFLAGS} -I../include/xbyak_translator_for_aarch64"
+CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64"
+CFLAGS="${CFLAGS} -I../include"
 
 #*******************************************************************************
 # Function definition
@@ -89,8 +88,8 @@ gen_compile_option() {
 	CFLAGS="${CFLAGS} -DXT_AARCH64_STACK_REG"
 	CFLAGS="${CFLAGS} -DXT_DEBUG"
 	CFLAGS="${CFLAGS} -DXT_TEST"
-	CFLAGS="${CFLAGS} -I../include/xbyak_translator_for_aarch64"
-	CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64/xbyak_aarch64"
+	CFLAGS="${CFLAGS} -I../include"
+	CFLAGS="${CFLAGS} -I../third_party/xbyak_aarch64"
 	CFLAGS="${CFLAGS} -I../third_party/build_xed_${EXEC_ARCH}/kits/xed/include"
 	CFLAGS="${CFLAGS} -L${LIBXED_PATH}"
 	LIB_OPT="-L../../lib -lxbyak_translator_aarch64 -lxbyak_aarch64 ${LIB_OPT} -lxed"
