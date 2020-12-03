@@ -32,8 +32,7 @@
 #include <typeinfo>
 #include <vector>
 
-#include "xbyak.h"
-#include "xbyak_util.h"
+#include <xbyak_translator_aarch64/xbyak.h>
 
 typedef uint8_t xbyak_code_ptr_t;
 

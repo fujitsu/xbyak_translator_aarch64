@@ -45,32 +45,31 @@ Therefore, this example output "7" on std::cout.
 
 ```
 /* Example code 2 */
-#include "xbyak.h"
-#define CG64 CodeGeneratorAArch64
-using namespace Xbyak;
-class Generator : public CodeGenerator {
+#include <xbyak_translator_aarch64/xbyak.h>
+
+class Code : public Xbyak::CodeGenerator {
 public:
-  void genAbiWrapping() {
-    CG64::mov(x7, x0); // This is the function generating AArch64 mov instruction implemented by Xbyak_aarch64.
-    CG64::mov(x6, x1);
-  }
-  void genAddFunc() {
+  Code() {
     genAbiWrapping();
     add(rdi, rsi);
     mov(rax, rdi);
     ret();
   }
-  const uint8_t *gen() {
-    genAddFunc();
-    ready();
-    return getCode();
+  void genAbiWrapping() {
+    /*
+      This is the function generating AArch64 mov instruction implemented by
+      Xbyak_aarch64.
+    */
+    xa_->mov(x7, x0);
+    xa_->mov(x6, x1);
   }
 };
+
 int main() {
-  Generator gen;
-  int (*f)(int a, int b) = (int (*)(int a, int b))gen.gen();
-  std::cout << f(3,4) << std::endl;
-  return 0;
+  Code c;
+  c.ready();
+  auto f = c.getCode<int (*)(int, int)>();
+  std::cout << f(3, 4) << std::endl;
 }
 ```
 

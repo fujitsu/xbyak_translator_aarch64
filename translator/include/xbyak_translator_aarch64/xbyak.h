@@ -188,7 +188,7 @@ extern "C" {
 #endif
 
 #include "xbyak_translator_utils.h"
-#include "xbyak_aarch64.h"
+#include <xbyak_aarch64/xbyak_aarch64.h>
 
 namespace Xbyak {
 
