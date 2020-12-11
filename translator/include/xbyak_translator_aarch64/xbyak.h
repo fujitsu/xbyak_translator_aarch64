@@ -192,6 +192,8 @@ extern "C" {
 
 namespace Xbyak {
 
+#include "xbyak_translator_debug.h"
+
 namespace xa = Xbyak_aarch64;
 
 enum {

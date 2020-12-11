@@ -84,7 +84,7 @@ constexpr Xbyak_aarch64::Operand::Code callee_saved_gregs[] = {
     xa::Operand::Code::X25, xa::Operand::Code::X26, xa::Operand::Code::X27,
     xa::Operand::Code::X28,
 };
-#else //#ifdef XBYAK_TRANSLATE_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
 constexpr Xbyak::Operand::Code callee_saved_gregs[] = {
     Xbyak::Operand::R12, Xbyak::Operand::R13, Xbyak::Operand::R14,
     Xbyak::Operand::R15, Xbyak::Operand::RBX, Xbyak::Operand::RBP,
@@ -136,7 +136,7 @@ void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
   /* for FCC */
   _FPU_GETCW(fpcr_save);
   unsigned long fpcr = fpcr_save & ~(static_cast<unsigned long>(3u) << 22);
-#else //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+#else  //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
   /* GCC aarch64 */
   fpcr_save = __builtin_aarch64_get_fpcr();
   unsigned int fpcr = fpcr_save & ~(3u << 22);
@@ -160,7 +160,7 @@ void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
   if (fpcr != fpcr_save)
 #if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
     _FPU_SETCW(fpcr);
-#else //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+#else  //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
     __builtin_aarch64_set_fpcr(fpcr);
 #endif //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
 #else
@@ -315,7 +315,7 @@ private:
     }
     xa_->mov_imm(x0, reinterpret_cast<uint64_t>(inputGenReg));
     ldp(Xbyak_aarch64::XReg(0), Xbyak_aarch64::XReg(1), Xbyak_aarch64::ptr(x0));
-#else //#ifdef XBYAK_TRANSLATE_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     mov(rax, reinterpret_cast<uint64_t>(inputGenReg) + 8);
 
     for (int i = 1; i < NUM_GEN_REG_INTEL; i++) {
@@ -350,7 +350,7 @@ private:
         Xbyak_aarch64::post_ptr(xa_->sp,
                                 16)); // pop data of x0, x1
     stp(x2, x3, Xbyak_aarch64::ptr(x0));
-#else //#ifdef XBYAK_TRANSLATE_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(rax);
     mov(rax, reinterpret_cast<uint64_t>(outputGenReg) + 8);
 
@@ -378,7 +378,7 @@ private:
     }
 
     ldp(x0, x1, Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
-#else //#ifdef XBYAK_TRANSLATE_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(inputPredReg));
 
@@ -402,7 +402,7 @@ private:
     }
 
     ldp(x0, x1, Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
-#else //#ifdef XBYAK_TRANSLATE_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(outputPredReg));
 
@@ -426,7 +426,7 @@ private:
     }
 
     ldp(x0, x1, Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
-#else //#ifdef XBYAK_TRANSLATE_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(inputZReg));
 
@@ -450,7 +450,7 @@ private:
     }
 
     ldp(x0, x1, Xbyak_aarch64::post_ptr(xa_->sp, 16)); // pop x0, x1
-#else //#ifdef XBYAK_TRANSLATE_AARCH64
+#else  //#ifdef XBYAK_TRANSLATE_AARCH64
     push(r8);
     mov(r8, reinterpret_cast<uint64_t>(outputZReg));
 
@@ -968,9 +968,9 @@ public:
         } else {
           std::cout << checkNG;
         }
-#else //#ifdef XBYAK_TRANSLATE_AARCH64
+#else                                //#ifdef XBYAK_TRANSLATE_AARCH64
         std::cout << checkOK;
-#endif //#ifdef XBYAK_TRANSLATE_AARCH64
+#endif                               //#ifdef XBYAK_TRANSLATE_AARCH64
       } else if (mode == NO_CHECK) { /* No need to compare */
         std::cout << checkIgnore;
       } else { /* Something wrong */
