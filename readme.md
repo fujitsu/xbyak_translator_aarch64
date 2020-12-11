@@ -119,6 +119,15 @@ Please rewrite those code lines by Xbyak_aarch64 functions.
 You may try Xbyak_translator_aarch64 on QEMU (generic and open source machine emulator and virtualizer).
 We recommend using QEMU version 5.0.0 or higher, if you ports applications which use AVX2/AVX512 instructions by Xbyak.
 
+## M1 mac
+Make symbolic links to link `libxed.dylib`.
+```
+cd sample
+ln -s ../translator/third_party/build_xed_aarch64/kits/xed/lib obj
+cd ../translator/tests/
+ln -s ../third_party/build_xed_aarch64/kits/xed/lib obj
+```
+
 ## Build instructions
 Please refer [build.md](build.md)
 
