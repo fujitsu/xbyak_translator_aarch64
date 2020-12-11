@@ -192,6 +192,8 @@ extern "C" {
 
 namespace Xbyak {
 
+#include "xbyak_translator_debug.h"
+
 namespace xa = Xbyak_aarch64;
 
 enum {
@@ -1761,7 +1763,7 @@ public:
 
 	enum { NONE = 256 };
 	// constructor
-	CodeGenerator(size_t maxSize = DEFAULT_MAX_CODE_SIZE, void *userPtr = 0, Allocator *allocator = 0, xa::Allocator *alloc_aarch64 = 0)
+	CodeGenerator(size_t maxSize = DEFAULT_MAX_CODE_SIZE, void *userPtr = DontSetProtectRWE, Allocator *allocator = 0, xa::Allocator *alloc_aarch64 = 0)
 		: Xbyak::CodeArray(maxSize, userPtr, allocator), xa::CodeGenerator(maxSize, userPtr, alloc_aarch64)
 		, xa_(this)
 		, mm0(0), mm1(1), mm2(2), mm3(3), mm4(4), mm5(5), mm6(6), mm7(7)

@@ -21,6 +21,7 @@
 #define XBYAK_USE_MMAP_ALLOCATOR
 
 #include <algorithm>
+#include <array>
 #include <cassert>
 #include <cstring>
 #include <iomanip>
@@ -107,7 +108,9 @@ unsigned int fpcr_save;
 #endif
 
 void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
-#if defined(MKLDNN_X86_64)
+#ifdef __APPLE__
+  // skip
+#elif defined(MKLDNN_X86_64)
   mxcsr_save = _mm_getcsr();
   unsigned int mxcsr = mxcsr_save & ~(3u << 13);
   switch (rnd_mode) {
@@ -166,7 +169,9 @@ void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
 }
 
 void restore_rnd_mode() {
-#if defined(MKLDNN_X86_64)
+#ifdef __APPLE__
+  // skip
+#elif defined(MKLDNN_X86_64)
   _mm_setcsr(mxcsr_save);
 #elif defined(__ARM_ARCH)
 #if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
@@ -194,7 +199,6 @@ private:
     CMP_INIT_VAL, // Compare to initial value
   };
 
-  unsigned char outputData[NUM_INPUT_DATA];
   uint64_t outputGenReg[NUM_GEN_REG];
   uint64_t outputPredReg[NUM_PRED_REG];
   ZReg_t outputZReg[NUM_Z_REG];
@@ -700,7 +704,8 @@ private:
   }
 
 public:
-  TestGenerator(void *code_ptr = nullptr, size_t code_size = 1024 * 64)
+  TestGenerator(void *code_ptr = DontSetProtectRWE,
+                size_t code_size = 1024 * 64)
       : CodeGenerator(code_size, code_ptr) {
     clearInputDataAll();
     clearOutputDataAll();

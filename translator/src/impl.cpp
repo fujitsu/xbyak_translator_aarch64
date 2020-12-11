@@ -51,3 +51,5 @@ void Xbyak::CodeGenerator::setTestMode(bool b) {
 #include "xbyak_impl.h"
 
 #include "xbyak_mnemonic_impl.h"
+
+#include "debug_impl.h"
