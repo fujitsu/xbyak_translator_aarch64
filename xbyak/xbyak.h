@@ -79,9 +79,6 @@
 #ifndef XBYAK_TRANSLATE_AARCH64
 	#define XBYAK_TRANSLATE_AARCH64
 #endif
-#ifndef XT_AARCH64_STACK_REG
-	#define XT_AARCH64_STACK_REG
-#endif
 #ifndef XBYAK_AARCH64_LIB
 	#define XBYAK_AARCH64_LIB 1
 #endif
@@ -1667,13 +1664,8 @@ public:
 	{
 		opPushPop(op, 0xFF, 6, 0x50);
 		decode_size_ = 0;
-#ifdef XT_AARCH64_STACK_REG
-		xa_->sub(xa_->sp, xa_->sp, NUM_BYTES_GEN_REG);
-		xa_->mov(X_TMP_0, xa_->sp);
-		xa_->str(xa::XReg(op.getIdx()), xa::ptr(X_TMP_0));
-#else //#ifdef XT_AARCH64_STACK_REG
-		xa_->str(xa::XReg(op.getIdx()), xa::pre_ptr(X_TRANSLATOR_STACK, -8));
-#endif //#ifdef XT_AARCH64_STACK_REG
+		/* */
+		xa_->str(xa::XReg(op.getIdx()), xa::pre_ptr(X_SP, -NUM_BYTES_GEN_REG));
 		db_clear();
 	}
 
@@ -1681,13 +1673,7 @@ public:
 	{
 		opPushPop(op, 0x8F, 0, 0x58);
 		decode_size_ = 0;
-#ifdef XT_AARCH64_STACK_REG
-		xa_->mov(X_TMP_0, xa_->sp);
-		xa_->ldr(xa::XReg(op.getIdx()), xa::ptr(X_TMP_0));
-		xa_->add(xa_->sp, xa_->sp, NUM_BYTES_GEN_REG);
-#else //#ifdef XT_AARCH64_STACK_REG
-		xa_->ldr(xa::XReg(op.getIdx()), xa::post_ptr(X_TRANSLATOR_STACK, 8));
-#endif //#ifdef XT_AARCH64_STACK_REG
+		xa_->ldr(xa::XReg(op.getIdx()), xa::post_ptr(X_SP, NUM_BYTES_GEN_REG));
 		db_clear();
 	}
 	void push(const AddressFrame& af, uint32 imm)
@@ -1812,9 +1798,6 @@ public:
 #endif
 		  //, isDefaultJmpNEAR_(false)
 	{
-#ifdef XT_TEST
-		setTestMode(true);
-#endif
 	}
 	void reset()
 	{

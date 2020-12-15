@@ -195,7 +195,6 @@ private:
     CMP_INIT_VAL, // Compare to initial value
   };
 
-  unsigned char outputData[NUM_INPUT_DATA];
   uint64_t outputGenReg[NUM_GEN_REG];
   uint64_t outputPredReg[NUM_PRED_REG];
   ZReg_t outputZReg[NUM_Z_REG];
@@ -1242,6 +1241,11 @@ public:
     /* Generate jit code to set initial value to GenReg, PredReg, ZReg,
        except x86_64's sp and aarch64 sp */
     _genJitLoadAllReg();
+
+#ifdef XBYAK_TRANSLATE_AARCH64
+    xa_->mov(X_SP, xa_->sp);
+    xa_->sub_imm(X_TRANSLATOR_STACK, X_SP, xt_stack_offset, X_TMP_0);
+#endif
 
     /* Generate JIT code to be tested. */
     genJitTestCode();

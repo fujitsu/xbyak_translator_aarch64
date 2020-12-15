@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 #*******************************************************************************
 # Copyright 2019-2020 FUJITSU LIMITED
 #
@@ -22,8 +22,14 @@ for i in ${LIST} ; do
 
     if [ -f ${TP_BASE}.check.ng ] ; then
 	grep NG ${TP_BASE}.check.ng
+	if [ $? != 0 ] ; then
+	    echo "NOT FOUND:${TP_BASE}"
+	fi
     elif [ -f ${TP_BASE}.check ] ; then
 	grep OK ${TP_BASE}.check
+	if [ $? != 0 ] ; then
+	    echo "NOT FOUND:${TP_BASE}"
+	fi
     else
 	echo "NO:${TP_BASE}"
     fi

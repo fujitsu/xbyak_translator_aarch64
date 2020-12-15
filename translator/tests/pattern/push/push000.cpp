@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-/* undef XT_TEST, XT_AARCH64_STACK_REG
-    push/pop instruction add/sub 8 to value of stack pointer register.
-    If SP(x31) register is used as address register on AArch64
-    the access address must be aligned 16 bytes, otherwise exception is occured.
-    To avoid exception in this test pattern, use x4 as a stack pointer.
- */
-#undef XT_TEST
-#undef XT_AARCH64_STACK_REG
-
 #include "test_generator2.h"
 
 class TestPtnGenerator : public TestGenerator {
@@ -44,20 +35,10 @@ public:
     mov(rax, addr);
     mov(rbx, ptr[rax]);
 
-#ifdef XBYAK_TRANSLATE_AARCH64
-    xa_->mov(X_TRANSLATOR_STACK, xa_->sp);
-    xa_->mov(x8, X_TRANSLATOR_STACK);
-#endif
-
     push(rbx);
     pop(rcx);
 
-#ifdef XBYAK_TRANSLATE_AARCH64
-    // Check if stack address is recovered
-    xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, x8);
-#endif
     mov(rax, 5);
-    mov(r8, 5); // clear temporary register
   }
 };
 

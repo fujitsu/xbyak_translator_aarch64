@@ -75,24 +75,16 @@ void Xbyak::CodeGenerator::translateKMOVQ(xed_decoded_inst_t *p) {
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[0].regClass == XED_REG_CLASS_GPR &&
                 a64.operands[1].regClass == XED_REG_CLASS_MASK && true)) {
-    if (isTestMode()) {
-      xa_->sub(X_TMP_ADDR, xa_->sp, 8);
-    } else {
-      xa_->sub(X_TMP_ADDR, xa::XReg(SP_REG_IDX_X86_64), 8);
-    }
-    xa_->str(xa::PReg(srcIdx), xa::ptr(X_TMP_ADDR));
+    xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_PRED_REG);
+    xa_->str(xa::PReg(srcIdx), xa::ptr(X_TRANSLATOR_STACK));
   }
   /* Col=AL119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
                 a64.operands[1].opName == XED_OPERAND_REG1 &&
                 a64.operands[0].regClass == XED_REG_CLASS_MASK &&
                 a64.operands[1].regClass == XED_REG_CLASS_GPR && true)) {
-    if (isTestMode()) {
-      xa_->sub(X_TMP_ADDR, xa_->sp, 8);
-    } else {
-      xa_->sub(X_TMP_ADDR, xa::XReg(SP_REG_IDX_X86_64), 8);
-    }
-    xa_->str(xa::XReg(srcIdx), xa::ptr(X_TMP_ADDR));
+    xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_PRED_REG);
+    xa_->str(xa::PReg(srcIdx), xa::ptr(X_TRANSLATOR_STACK));
   }
   /* Col=AM119*/
   if (false || (a64.operands[0].opName == XED_OPERAND_REG0 &&
