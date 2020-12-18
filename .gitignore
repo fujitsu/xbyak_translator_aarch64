@@ -4,3 +4,6 @@ translator/tests/pattern/*/*.check
 translator/tests/pattern/*/*.result
 translator/tests/pattern/sandbox/
 translator/tests/test_generator2.h.gch
+lib/libxbyak_aarch64.a
+lib/libxbyak_translator_aarch64.a
+translator/src/impl.d
