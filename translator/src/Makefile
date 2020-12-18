@@ -1,7 +1,7 @@
 TARGET=../../lib/libxbyak_translator_aarch64.a
 all: $(TARGET)
 
-XED_DIR=../third_party/build_xed_aarch64/kits/xed/
+XED_DIR=../third_party/build_xed_aarch64/kits/xed
 
 CFLAGS+=-std=c++11 -DNDEBUG -g -I ../../xbyak -I ../third_party/xbyak_aarch64/ -I ../include/ -I $(XED_DIR)/include/ -fPIC
 ifneq ($(DEBUG),1)
