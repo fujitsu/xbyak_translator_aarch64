@@ -109,12 +109,6 @@ unsigned int mxcsr_save;
 uint32_t fpcr_save;
 #endif
 
-#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-#define _FPU_GETCW(fpcr) __asm__ __volatile__("mrs    %0, fpcr" : "=r"(fpcr))
-
-#define _FPU_SETCW(fpcr) __asm__ __volatile__("msr    fpcr, %0" : : "r"(fpcr))
-#endif
-
 void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
 #if defined(MKLDNN_X86_64)
   mxcsr_save = _mm_getcsr();
