@@ -35,6 +35,18 @@
 
 #include <xbyak_translator_aarch64/xbyak.h>
 
+#ifdef __ARM_ARCH
+inline uint32_t get_fpcr() {
+  uint64_t x;
+  asm __volatile__("mrs %[x], fpcr" : [ x ] "=r"(x));
+  return x;
+}
+inline void set_fpcr(uint32_t x) {
+  uint64_t xx = x;
+  asm __volatile__("msr fpcr, %[x]" ::[x] "r"(xx));
+}
+#endif
+
 typedef uint8_t xbyak_code_ptr_t;
 
 /** Rounding mode */
@@ -94,11 +106,7 @@ constexpr Xbyak::Operand::Code callee_saved_gregs[] = {
 #if defined(MKLDNN_X86_64)
 unsigned int mxcsr_save;
 #else
-#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-unsigned long fpcr_save;
-#else
-unsigned int fpcr_save;
-#endif
+uint32_t fpcr_save;
 #endif
 
 #if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
@@ -108,9 +116,7 @@ unsigned int fpcr_save;
 #endif
 
 void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
-#ifdef __APPLE__
-  // skip
-#elif defined(MKLDNN_X86_64)
+#if defined(MKLDNN_X86_64)
   mxcsr_save = _mm_getcsr();
   unsigned int mxcsr = mxcsr_save & ~(3u << 13);
   switch (rnd_mode) {
@@ -131,16 +137,10 @@ void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
   }
   if (mxcsr != mxcsr_save)
     _mm_setcsr(mxcsr);
-#elif defined(__ARM_ARCH)
-#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-  /* for FCC */
-  _FPU_GETCW(fpcr_save);
-  unsigned long fpcr = fpcr_save & ~(static_cast<unsigned long>(3u) << 22);
-#else  //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-  /* GCC aarch64 */
-  fpcr_save = __builtin_aarch64_get_fpcr();
-  unsigned int fpcr = fpcr_save & ~(3u << 22);
-#endif //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+#else
+  fpcr_save = get_fpcr();
+  uint32_t fpcr = fpcr_save & ~(3u << 22);
+#endif
   switch (rnd_mode) {
   case mkldnn_round_nearest:
     fpcr |= (0u << 22);
@@ -157,28 +157,20 @@ void set_rnd_mode(mkldnn_round_mode_t rnd_mode) {
   default:
     assert(!"unreachable");
   }
-  if (fpcr != fpcr_save)
-#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-    _FPU_SETCW(fpcr);
-#else  //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-    __builtin_aarch64_set_fpcr(fpcr);
-#endif //#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
+  if (fpcr != fpcr_save) {
+#ifdef __ARM_ARCH
+    set_fpcr(fpcr);
 #else
-  (void)rnd_mode;
+    (void)rnd_mode;
 #endif
+  }
 }
 
 void restore_rnd_mode() {
-#ifdef __APPLE__
-  // skip
-#elif defined(MKLDNN_X86_64)
+#if defined(MKLDNN_X86_64)
   _mm_setcsr(mxcsr_save);
-#elif defined(__ARM_ARCH)
-#if defined(__CLANG_FUJITSU) || defined(__FUJITSU)
-  _FPU_SETCW(fpcr_save);
 #else
-  __builtin_aarch64_set_fpcr(fpcr_save);
-#endif
+  set_fpcr(fpcr_save);
 #endif
 }
 
