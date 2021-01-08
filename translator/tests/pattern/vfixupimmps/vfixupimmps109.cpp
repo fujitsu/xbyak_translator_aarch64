@@ -30,7 +30,7 @@ public:
     for (int j = 0; j < 32; j++) {
       for (int i = 0; i < 16; i++) {
         uint32_t exp, frac;
-        uint32_t sign = (getLfsr() % 2) ? (uint64_t(1) << 63) : 0;
+        uint32_t sign = (getLfsr() % 2) ? (1u << 31) : 0;
 
         switch (getLfsr() % 3) {
         case 0:
