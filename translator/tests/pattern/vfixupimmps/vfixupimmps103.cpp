@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2020 FUJITSU LIMITED
+ * Copyright 2020-2021 FUJITSU LIMITED
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ public:
     for (int j = 0; j < 32; j++) {
       for (int i = 0; i < 16; i++) {
         uint32_t exp, frac;
-        uint32_t sign = (getLfsr() % 2) ? (uint64_t(1) << 63) : 0;
+        uint32_t sign = (getLfsr() % 2) ? (1u << 31) : 0;
 
         switch (getLfsr() % 3) {
         case 0:
