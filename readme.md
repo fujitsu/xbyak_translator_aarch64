@@ -140,6 +140,10 @@ Please refer [build.md](build.md)
 - Xbyak [https://github.com/herumi/xbyak](https://github.com/herumi/xbyak)
 - Xbyak_aarch64 [https://github.com/fujitsu/xbyak_aarch64](https://github.com/fujitsu/xbyak_aarch64)
 - DNNL_aarch64 [https://github.com/fujitsu/dnnl_aarch64](https://github.com/fujitsu/dnnl_aarch64)
+- [Xbyak_aarch64; Just-In-Time Assembler for Armv8-A and Scalable Vector Extension](https://connect.linaro.org/resources/lvc21/lvc21-203/)
+- [Development of Deep Learning Library for AArch64 CPU](https://connect.linaro.org/resources/lvc21f/lvc21f-212/)
+- [A Binary Translator to Accelerate Development of Deep Learning Processing Library for AArch64 CPU](https://search.ieice.org/bin/pdf_advpub.php?category=C&lang=E&fname=2021LHP0001&abst=)
+
 
 
 ## License
