@@ -321,7 +321,7 @@ unsigned int xt_push_zreg(xt_a64fx_operands_struct_t *a64) {
         xa_->sub(xa_->sp, xa_->sp, NUM_BYTES_Z_REG);
         xa_->mov(X_TMP_0, xa_->sp);
         xa_->str(xa::ZReg(i), xa::ptr(X_TMP_0));
-#else  //#ifdef XT_AARCH64_STACK_REG
+#else //#ifdef XT_AARCH64_STACK_REG
         xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_Z_REG);
         xa_->str(xa::ZReg(i), xa::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
@@ -364,7 +364,7 @@ unsigned int xt_push_zreg(xt_a64fx_operands_structV3_t *a64) {
       xa_->mov(X_TMP_0, xa_->sp);
 
       xa_->str(xa::ZReg(i), xa::ptr(X_TMP_0));
-#else  //#ifdef XT_AARCH64_STACK_REG
+#else //#ifdef XT_AARCH64_STACK_REG
       xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_Z_REG);
       xa_->str(xa::ZReg(i), xa::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
@@ -397,7 +397,7 @@ unsigned int xt_push_preg(xt_a64fx_operands_struct_t *a64) {
         xa_->sub(xa_->sp, xa_->sp, NUM_BYTES_PRED_REG);
         xa_->mov(X_TMP_0, xa_->sp);
         xa_->str(xa::PReg(i), xa::ptr(X_TMP_0));
-#else  //#ifdef XT_AARCH64_STACK_REG
+#else //#ifdef XT_AARCH64_STACK_REG
         xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_PRED_REG);
         xa_->str(xa::PReg(i), xa::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
@@ -441,7 +441,7 @@ unsigned int xt_push_preg(xt_a64fx_operands_structV3_t *a64) {
       xa_->sub(xa_->sp, xa_->sp, NUM_BYTES_PRED_REG);
       xa_->mov(X_TMP_0, xa_->sp);
       xa_->str(xa::PReg(i), xa::ptr(X_TMP_0));
-#else  //#ifdef XT_AARCH64_STACK_REG
+#else //#ifdef XT_AARCH64_STACK_REG
       xa_->sub(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_PRED_REG);
       xa_->str(xa::PReg(i), xa::ptr(X_TRANSLATOR_STACK));
 #endif //#ifdef XT_AARCH64_STACK_REG
@@ -472,7 +472,7 @@ void xt_pop_zreg() {
       xa_->mov(X_TMP_0, xa_->sp);
       xa_->ldr(xa::ZReg(i), xa::ptr(X_TMP_0));
       xa_->add(xa_->sp, xa_->sp, NUM_BYTES_Z_REG);
-#else  //#ifdef XT_AARCH64_STACK_REG
+#else //#ifdef XT_AARCH64_STACK_REG
       xa_->ldr(xa::ZReg(i), xa::ptr(X_TRANSLATOR_STACK));
       xa_->add(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_Z_REG);
 #endif //#ifdef XT_AARCH64_STACK_REG
@@ -501,7 +501,7 @@ void xt_pop_preg() {
       xa_->mov(X_TMP_0, xa_->sp);
       xa_->ldr(xa::PReg(i), xa::ptr(X_TMP_0));
       xa_->add(xa_->sp, xa_->sp, NUM_BYTES_PRED_REG);
-#else  //#ifdef XT_AARCH64_STACK_REG
+#else //#ifdef XT_AARCH64_STACK_REG
       xa_->ldr(xa::PReg(i), xa::ptr(X_TRANSLATOR_STACK));
       xa_->add(X_TRANSLATOR_STACK, X_TRANSLATOR_STACK, NUM_BYTES_PRED_REG);
 #endif //#ifdef XT_AARCH64_STACK_REG
@@ -1219,7 +1219,7 @@ void decodeAndTransToAArch64(xt_cmp_x86_64_t cmp_mode, const Label &label) {
     break;
   }
 }
-#else  //#ifdef XBYAK_TRANSLATE_AARCH64
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
 void decodeAndTransToAArch64() {}
 #endif //#ifdef XBYAK_TRANSLATE_AARCH64
 

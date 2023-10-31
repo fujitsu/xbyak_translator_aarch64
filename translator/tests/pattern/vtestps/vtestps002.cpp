@@ -101,7 +101,7 @@ public:
     xa_->mov_imm(x_cf, 1 << 0);
     Reg64 r_addr{rdx};
     Reg64 r_tmpAddr{rcx};
-#else  //#ifdef XBYAK_TRANSLATE_AARCH64
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
     Reg64 r_of{rdi};
     Reg64 r_sf{rsi};
     Reg64 r_zf{rbp};
@@ -175,7 +175,7 @@ public:
 
         xa_->str(x_dummyFlag, Xbyak_aarch64::ptr(x_tmpAddr));
         xa_->add(x_tmpAddr, x_tmpAddr, 4);
-#else  //#ifdef XBYAK_TRANSLATE_AARCH64
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
         pushf();        // eflags is stored on statck.
         pop(r_tmpFlag); // eflags is read from stack.
         and_(r_tmpFlag, r_flagMask);

@@ -60,7 +60,7 @@ public:
         L(label_vec[n]);
 #ifdef XBYAK_TRANSLATE_AARCH64
         xa_->lsl(x0, x0, 1);
-#else  //#ifdef XBYAK_TRANSLATE_AARCH64
+#else //#ifdef XBYAK_TRANSLATE_AARCH64
         shl(rax, 1);
 #endif //#ifdef XBYAK_TRANSLATE_AARCH64
         n++;

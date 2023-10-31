@@ -36,8 +36,10 @@ void Xbyak::CodeGenerator::vex(const Reg &reg, const Reg &base,
     db(0xC5);
     db((r ? 0 : 0x80) | vvvv);
   } else {
-    uint32 mmmm =
-        (type & T_0F) ? 1 : (type & T_0F38) ? 2 : (type & T_0F3A) ? 3 : 0;
+    uint32 mmmm = (type & T_0F)     ? 1
+                  : (type & T_0F38) ? 2
+                  : (type & T_0F3A) ? 3
+                                    : 0;
     db(0xC4);
     db((r ? 0 : 0x80) | (x ? 0 : 0x40) | (b ? 0 : 0x20) | mmmm);
     db((w << 7) | vvvv);
@@ -197,8 +199,10 @@ void Xbyak::CodeGenerator::opFpuMem(const Address &addr, uint8 m16, uint8 m32,
                                     uint8 m64, uint8 ext, uint8 m64ext) {
   if (addr.is64bitDisp())
     throw Error(ERR_CANT_USE_64BIT_DISP);
-  uint8 code =
-      addr.isBit(16) ? m16 : addr.isBit(32) ? m32 : addr.isBit(64) ? m64 : 0;
+  uint8 code = addr.isBit(16)   ? m16
+               : addr.isBit(32) ? m32
+               : addr.isBit(64) ? m64
+                                : 0;
   if (!code)
     throw Error(ERR_BAD_MEM_SIZE);
   if (m64ext && addr.isBit(64))
