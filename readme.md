@@ -1,3 +1,5 @@
+# Due to our company's internal policy issues, this repository may be closed for one month starting March 1. We plan to reopen it on April 1, though delays are possible. Upon reopening, the repository URL will be github.com/FujitsuResearch/xbyak_aarch64. We apologize for any inconvenience this may cause.
+
 # Xbyak_translator_aarch64
 
 ## Abstract
