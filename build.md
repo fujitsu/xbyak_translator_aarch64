@@ -153,7 +153,7 @@ This command makes `mov000.cpp` without Xbyak_translator_aarch64,
 it means `mov000.cpp` is built as a pure x86_64 application written in Xbyak,
 and run it on x86_64 native environment (not QEMU). 
 It generates x86_64 machine code, executes the machine code generated, 
-and outputs the register values after execution to std:cout.
+and outputs the register values after execution to std::cout.
 The number of general purpose registers of x86_64 is 16, it is less than that of Armv8-A,
 so that output contains dummy value such as 
 `Output:G[16]:00000000_00000000` to `Output:G[31]:00000000_00000000`.

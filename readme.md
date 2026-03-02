@@ -116,7 +116,7 @@ Please rewrite those code lines by Xbyak_aarch64 functions.
 
 |Hardware|CPU|OS|Compiler|
 |----|----|----|----|
-|Fujitsu PRIMEHPC FX700|A64FX|CentOS Liniux Version 8|g++ (GCC) 8.3.1|
+|Fujitsu PRIMEHPC FX700|A64FX|CentOS Linux Version 8|g++ (GCC) 8.3.1|
 
 You may try Xbyak_translator_aarch64 on QEMU (generic and open source machine emulator and virtualizer).
 We recommend using QEMU version 5.0.0 or higher, if you ports applications which use AVX2/AVX512 instructions by Xbyak.
